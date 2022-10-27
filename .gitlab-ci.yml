@@ -1,5 +1,9 @@
-image:
-    dockerfile: Dockerfile.ci
+image: alpine
+
+prepare:
+    stage: prepare
+    script:
+        - apk add --no-cache libsdl2-dev libsdl2-image-dev libsdl2-mixer-dev libsdl2-ttf-dev cmake g++ make
 
 build:
     stage: build
