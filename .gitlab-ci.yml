@@ -1,5 +1,9 @@
 image: alpine
 
+stages:
+    - prepare
+    - build
+
 prepare:
     stage: prepare
     script:
