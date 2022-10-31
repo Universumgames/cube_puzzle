@@ -47,9 +47,9 @@ bool ExampleGame::HandleEvent( const Event event )
 
 void ExampleState::Init()
 {
-	font = TTF_OpenFont( "../asset/font/RobotoSlab-Bold.ttf", 24 );
+	font = TTF_OpenFont( "asset/font/RobotoSlab-Bold.ttf", 24 );
 	TTF_SetFontHinting( font, TTF_HINTING_LIGHT );
-	image = IMG_LoadTexture( render, "../asset/graphic/background.png" );
+	image = IMG_LoadTexture( render, "asset/graphic/background.png" );
 }
 
 void ExampleState::UnInit()
@@ -157,8 +157,8 @@ void ExampleState::Render( const u32 frame, const u32 totalMSec, const float del
 
 void ExampleState2::Init()
 {
-	font = TTF_OpenFont( "../asset/font/MonkeyIsland-1991-refined.ttf", 24 );
+	font = TTF_OpenFont( "asset/font/MonkeyIsland-1991-refined.ttf", 24 );
 	TTF_SetFontHinting( font, TTF_HINTING_NONE );
-	image = IMG_LoadTexture( render, "../asset/graphic/background.png" );
+	image = IMG_LoadTexture( render, "asset/graphic/background.png" );
 	SDL_SetTextureColorMod( image, 127, 255, 255 );
 }
