@@ -3,29 +3,28 @@
 //
 
 #include "Level.hpp"
+#include "../GameObjects/Player.hpp"
+#include "../GameObjects/CubeMap.hpp"
+#include "../GameObjects/WorldMap.hpp"
 
 #define iterateGameObjects(method) for(auto gameobject:gameObjects){gameobject->method;}
 
-void Level::Events(const u32 frame, const u32 totalMSec, const float deltaT)
-{
+void Level::Events(const u32 frame, const u32 totalMSec, const float deltaT) {
     SDL_PumpEvents();
 
     Event event;
-    while (SDL_PollEvent(&event))
-    {
+    while (SDL_PollEvent(&event)) {
         if (game.HandleEvent(event))
             continue;
         iterateGameObjects(HandleEvent(frame, totalMSec, deltaT, event));
     }
 }
 
-void Level::Update(const u32 frame, const u32 totalMSec, const float deltaT)
-{
+void Level::Update(const u32 frame, const u32 totalMSec, const float deltaT) {
     iterateGameObjects(Update(frame, totalMSec, deltaT));
 }
 
-void Level::Render(const u32 frame, const u32 totalMSec, const float deltaT)
-{
+void Level::Render(const u32 frame, const u32 totalMSec, const float deltaT) {
     iterateGameObjects(Render(frame, totalMSec, deltaT))
     iterateGameObjects(RenderUI(frame, totalMSec, deltaT))
 }
@@ -40,4 +39,12 @@ void Level::Init() {
 void Level::UnInit() {
     GameState::UnInit();
     iterateGameObjects(UnInit())
+}
+
+void Level::load(const std::string &path) {
+    worldMap = new WorldMap(game, render, 10, 10, {WorldField::DEFAULT});
+    cubeMap = new CubeMap(game, render, {});
+    worldMap->setCubeMap(cubeMap);
+    cubeMap->SetWorldMap(worldMap);
+    player = new Player(game, render);
 }

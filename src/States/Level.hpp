@@ -5,8 +5,11 @@
 #pragma once
 
 #include "../gamebase.hpp"
-#include "../GameObjects/Player.hpp"
 #include "../GameObjects/GameObject.hpp"
+
+class Player;
+class CubeMap;
+class WorldMap;
 
 class Level final : public GameState
 {
@@ -19,6 +22,7 @@ public:
 
     void Render(const u32 frame, const u32 totalMSec, const float deltaT) override;
 
+    /// load level from file
     void load(const std::string &path);
 
     void Init() override;
@@ -28,4 +32,6 @@ public:
 private:
     Vector<GameObject *> gameObjects;
     Player* player;
+    CubeMap* cubeMap;
+    WorldMap* worldMap;
 };

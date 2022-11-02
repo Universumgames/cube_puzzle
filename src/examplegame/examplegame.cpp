@@ -1,5 +1,5 @@
 #include "examplegame.hpp"
-#include "../recthelper.h"
+#include "../recthelper.hpp"
 
 ExampleGame::ExampleGame()
 	: Game( "Example SDL Game", Point{ 1280, 960 } )

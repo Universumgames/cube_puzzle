@@ -3,7 +3,9 @@
 //
 
 #pragma once
-#include "../gamebase.hpp"
+#include "../global.hpp"
+
+class Game;
 
 class GameObject {
 protected:
