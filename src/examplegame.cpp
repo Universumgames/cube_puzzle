@@ -1,4 +1,4 @@
-#include "examplegame.h"
+#include "examplegame.hpp"
 
 ExampleGame::ExampleGame()
 	: Game( "Example SDL Game", Point{ 1280, 960 } )

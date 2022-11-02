@@ -1,4 +1,4 @@
-#include "gamebase.h"
+#include "gamebase.hpp"
 
 Game::Game( const char * windowTitle, const Point windowSize, const bool vSync )
 {

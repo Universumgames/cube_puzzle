@@ -1,15 +1,14 @@
-#include "global.h"
+#include "global.hpp"
 
-#include "examplegame.h"
+#include "examplegame.hpp"
 
-extern "C"
-int main( int argc, char* argv[] )
+extern "C" int main(int argc, char *argv[])
 try
 {
 	ExampleGame game;
 	return game.Run();
 }
-catch( ... )
+catch (...)
 {
 	std::cout << "Non-SDL Exception has occured!" << std::endl;
 
