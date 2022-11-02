@@ -1,11 +1,11 @@
 #include "global.hpp"
-
+#include "CubeGame.hpp"
 #include "examplegame.hpp"
 
 extern "C" int main(int argc, char *argv[])
 try
 {
-	ExampleGame game;
+	CubeGame game;
 	return game.Run();
 }
 catch (...)
