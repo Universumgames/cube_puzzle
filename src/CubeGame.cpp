@@ -3,8 +3,8 @@
 //
 
 #include "CubeGame.hpp"
-#include "LevelSelector.hpp"
-#include "Level.hpp"
+#include "States/LevelSelector.hpp"
+#include "States/Level.hpp"
 
 CubeGame::CubeGame() : Game("CubeGame")
 {

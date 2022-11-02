@@ -34,12 +34,7 @@ public:
 
 	virtual void SetNextState(int index) { nextStateIdx = index; }
 
-	SDL_Rect getWindowSize()
-	{
-		SDL_Rect windowSize;
-		SDL_GetWindowSize(window, &windowSize.x, &windowSize.y);
-		return windowSize;
-	}
+	SDL_Rect getWindowSize();
 
 protected:
 	virtual void ActivateNextState();
@@ -82,7 +77,16 @@ public:
 	virtual void Init() {}
 	virtual void UnInit() {}
 
-	virtual void Events(const u32 frame, const u32 totalMSec, const float deltaT) = 0;
+	virtual void Events(const u32 frame, const u32 totalMSec, const float deltaT){
+        SDL_PumpEvents();
+
+        Event event;
+        while (SDL_PollEvent(&event))
+        {
+            if (game.HandleEvent(event))
+                continue;
+        }
+    }
 	virtual void Update(const u32 frame, const u32 totalMSec, const float deltaT) = 0;
 	virtual void Render(const u32 frame, const u32 totalMSec, const float deltaT) = 0;
 };

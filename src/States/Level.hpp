@@ -4,7 +4,9 @@
 
 #pragma once
 
-#include "gamebase.hpp"
+#include "../gamebase.hpp"
+#include "../GameObjects/Player.hpp"
+#include "../GameObjects/GameObject.hpp"
 
 class Level final : public GameState
 {
@@ -16,4 +18,14 @@ public:
     void Update(const u32 frame, const u32 totalMSec, const float deltaT) override;
 
     void Render(const u32 frame, const u32 totalMSec, const float deltaT) override;
+
+    void load(const std::string &path);
+
+    void Init() override;
+
+    void UnInit() override;
+
+private:
+    Vector<GameObject *> gameObjects;
+    Player* player;
 };

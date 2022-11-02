@@ -3,7 +3,7 @@
 //
 
 #pragma once
-#include "gamebase.hpp"
+#include "../gamebase.hpp"
 
 class GameObject {
 protected:
@@ -16,7 +16,8 @@ public:
     virtual void Init() {}
     virtual void UnInit() {}
 
-    virtual void Events( const u32 frame, const u32 totalMSec, const float deltaT ) = 0;
+    virtual void HandleEvent(const u32 frame, const u32 totalMSec, const float deltaT, Event event) = 0;
     virtual void Update( const u32 frame, const u32 totalMSec, const float deltaT ) = 0;
     virtual void Render( const u32 frame, const u32 totalMSec, const float deltaT ) = 0;
+    virtual void RenderUI( const u32 frame, const u32 totalMSec, const float deltaT ){};
 };

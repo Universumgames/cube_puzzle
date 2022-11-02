@@ -113,7 +113,7 @@
                 <mxCell id="14" value="+  isFPSLimited(): bool" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;" parent="6" vertex="1">
                     <mxGeometry y="138" width="410" height="26" as="geometry"/>
                 </mxCell>
-                <mxCell id="15" value="+ Events(frame: uint32_t, totalMSec: uint32_t, deltaT: float): void" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;" parent="6" vertex="1">
+                <mxCell id="15" value="+ HandleEvent(frame: uint32_t, totalMSec: uint32_t, deltaT: float): void" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;" parent="6" vertex="1">
                     <mxGeometry y="164" width="410" height="26" as="geometry"/>
                 </mxCell>
                 <mxCell id="16" value="+ Update(frame: uint32_t, totalMSec: uint32_t, deltaT: float): void" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;" parent="6" vertex="1">

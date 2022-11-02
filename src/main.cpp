@@ -1,6 +1,6 @@
 #include "global.hpp"
 #include "CubeGame.hpp"
-#include "examplegame.hpp"
+#include "examplegame/examplegame.hpp"
 
 extern "C" int main(int argc, char *argv[])
 try

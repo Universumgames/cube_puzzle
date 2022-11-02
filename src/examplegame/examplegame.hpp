@@ -1,8 +1,8 @@
 #pragma once
 
-#include "global.hpp"
+#include "../global.hpp"
 
-#include "gamebase.hpp"
+#include "../gamebase.hpp"
 
 class ExampleState : public GameState
 {
