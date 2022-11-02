@@ -54,8 +54,6 @@ using Renderer = SDL_Renderer;
 using Window = SDL_Window;
 using Font = TTF_Font;
 
-constexpr const Rect *EntireRect = nullptr;
-
 using std::max;
 using std::min;
 
