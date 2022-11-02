@@ -2,7 +2,10 @@
 
 #include "gamebase.hpp"
 
-class CubeGame : public Game
+class CubeGame final : public Game
 {
-    
+public:
+    CubeGame();
+
+    bool HandleEvent(const Event event) override;
 };

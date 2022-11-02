@@ -14,7 +14,7 @@ project(cube_puzzle)
 set(CMAKE_CXX_STANDARD 23)
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin)
 set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} "${CMAKE_SOURCE_DIR}/CMAKE")
-set(SOURCE_FILES src/main.cpp src/global.hpp src/gamebase.hpp src/gamebase.cpp src/examplegame.hpp src/examplegame.cpp src/CubeGame.cpp src/CubeGame.hpp)
+set(SOURCE_FILES src/main.cpp src/global.hpp src/gamebase.hpp src/gamebase.cpp src/examplegame.hpp src/examplegame.cpp src/CubeGame.cpp src/CubeGame.hpp src/LevelSelector.cpp src/LevelSelector.hpp src/Level.cpp src/Level.hpp src/GameObject.cpp src/GameObject.hpp)
 
 Message("")
 Message(STATUS "SOURCE entry point : " ${SOURCE_FILES})
