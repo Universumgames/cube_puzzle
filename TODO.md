@@ -1,5 +1,16 @@
 # ToDo List
 
--   Game Mechaniken detailliert definieren
--   Klassendiagramm erstellen
--   ToDo Liste nach der Erstellung des Klassendiagramms erweitern
+- LevelSelector
+  - loadlist
+  - drawList
+  - loadlevel(int)
+- Level
+  - load
+- CubeMap
+  - map 
+  - minimap
+- Worldmap
+  - worldfield
+- CubeField
+- Player
+  - movement
