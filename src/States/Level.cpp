@@ -41,10 +41,11 @@ void Level::UnInit() {
     iterateGameObjects(UnInit())
 }
 
-void Level::load(const std::string &path) {
-    worldMap = new WorldMap(game, render, 10, 10, {WorldField::DEFAULT});
+LevelData Level::load(const std::string &path, size_t id) {
+    worldMap = new WorldMap(game, render, 10, 10, {WorldField::DEFAULT}, {0,0});
     cubeMap = new CubeMap(game, render, {});
     worldMap->setCubeMap(cubeMap);
     cubeMap->SetWorldMap(worldMap);
     player = new Player(game, render);
+    return {.path = path, .id = id};
 }

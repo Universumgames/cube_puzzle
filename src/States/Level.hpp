@@ -6,6 +6,7 @@
 
 #include "../gamebase.hpp"
 #include "../GameObjects/GameObject.hpp"
+#include "../data/LevelData.hpp"
 
 class Player;
 class CubeMap;
@@ -22,9 +23,10 @@ public:
 
     void Render(const u32 frame, const u32 totalMSec, const float deltaT) override;
 
-    /// load level from file
-    void load(const std::string &path);
+    /// load level from file into memory, called by LevelSelector
+    LevelData load(const std::string &path, size_t id);
 
+    /// init world when gamestate comes active
     void Init() override;
 
     void UnInit() override;

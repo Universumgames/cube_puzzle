@@ -5,12 +5,12 @@
 #include "CubeGame.hpp"
 #include "States/LevelSelector.hpp"
 #include "States/Level.hpp"
+#include "States/LevelSelector.hpp"
 
 CubeGame::CubeGame() : Game("CubeGame")
 {
-    allStates = {
-        new LevelSelector(*this, render),
-        new Level(*this, render)};
+    // Level selctor loads all levels and adds them procedually to the states
+    allStates = {new LevelSelector(*this, render)};
     SetNextState(0);
     SetPerfDrawMode(PerformanceDrawMode::Title);
 }
