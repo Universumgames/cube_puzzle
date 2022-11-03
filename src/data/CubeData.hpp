@@ -1,6 +1,3 @@
-//
-// Created by Tom Arlt on 03.11.22.
-//
 #pragma once
 #include "MoveDirections.hpp"
 #include <string>
@@ -15,20 +12,17 @@
  *           6
 */
 
-// 1 2 6 5
-// 1 4 6 3
-// 1 5 6 2
-// 1 3 6 4
-
 enum class DiceSide{
     NORTH, SOUTH, WEST, EAST, TOP, BOTTOM
 };
 
 class CubeData{
 public:
+    /// default cube is 1up, 5north, 3west
     CubeData();
     void rotate(CubeRollDirection direction);
 
+    /// get dice side facing direction
     int getSide(DiceSide side);
 
     std::string toString();
