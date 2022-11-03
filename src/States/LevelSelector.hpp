@@ -6,7 +6,7 @@
 
 #include "../gamebase.hpp"
 #include "../CubeGame.hpp"
-#include "../Data/LevelData.hpp"
+#include "../data/LevelData.hpp"
 
 
 class LevelSelector final : public GameState
