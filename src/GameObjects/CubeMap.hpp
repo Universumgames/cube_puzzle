@@ -6,14 +6,17 @@
 
 #include "GameObject.hpp"
 #include "CubeField.hpp"
+#include "../data/MoveDirections.hpp"
 
 class WorldMap;
+
+class Player;
 
 class CubeMapSide;
 
 class CubeMap final : public GameObject {
 public:
-    CubeMap(Game &game, SDL_Renderer *render, const Vector<CubeMapSide>& sides);
+    CubeMap(Game &game, SDL_Renderer *render, const Vector<CubeMapSide> &sides);
 
     void SetWorldMap(WorldMap *worldMap) { this->worldMap = worldMap; }
 
@@ -25,16 +28,23 @@ public:
 
     void RenderUI(const u32 frame, const u32 totalMSec, const float deltaT) override;
 
+public:
+    bool movePlayer(PlayerMoveDirection dir);
+
 private:
+    void rollCube(CubeRollDirection rollDirection);
+
     void drawMinimap();
 
     void drawMap();
 
+    /// get side of dice (1-6)
     CubeMapSide *getSide(int i);
 
 private:
     WorldMap *worldMap = nullptr;
     Vector<CubeMapSide *> sides;
+    int currentSideId = 1;
 
     friend class WorldMap;
 };

@@ -23,3 +23,7 @@ void Player::Render(const u32 frame, const u32 totalMSec, const float deltaT) {
 void Player::setCubeMap(CubeMap *cubeMap) {
     this->cubeMap = cubeMap;
 }
+
+bool Player::move(PlayerMoveDirection direction) {
+    return cubeMap->movePlayer(direction);
+}

@@ -17,10 +17,11 @@ void WorldMap::Render(const u32 frame, const u32 totalMSec, const float deltaT) 
 
 }
 
-WorldMap::WorldMap(Game &game, SDL_Renderer *render, int xWidth, int yHeight, Vector<WorldField> map) : GameObject(game, render) {
+WorldMap::WorldMap(Game &game, SDL_Renderer *render, int xWidth, int yHeight, Vector<WorldField> map, Point cubePos) : GameObject(game, render) {
     this->field = map;
     this->xWidth = xWidth;
     this->yHeight = yHeight;
+    this->cubePos = cubePos;
 }
 
 int WorldMap::getFieldIndex(int x, int y) const {

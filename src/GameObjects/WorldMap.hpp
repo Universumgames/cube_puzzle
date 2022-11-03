@@ -5,13 +5,16 @@
 #pragma once
 
 #include "GameObject.hpp"
-#include "WorldField.hpp"
+#include "../data/WorldField.hpp"
+#include "../data/MoveDirections.hpp"
+#include "../data/CubeData.hpp"
 
 class CubeMap;
 
+/// World map is viewed top down
 class WorldMap final : public GameObject {
 public:
-    WorldMap(Game &game, SDL_Renderer *render, int xWidth, int yHeight, Vector<WorldField> map);
+    WorldMap(Game &game, SDL_Renderer *render, int xWidth, int yHeight, Vector<WorldField> map, Point cubePos);
 
     void setCubeMap(CubeMap *cubeMap) { this->cubeMap = cubeMap; }
 
@@ -21,10 +24,14 @@ public:
 
     void Render(const u32 frame, const u32 totalMSec, const float deltaT) override;
 
+
+
 private:
     Vector<WorldField> field;
     int xWidth, yHeight;
     CubeMap *cubeMap;
+    CubeData cubeData;
+    Point cubePos;
 
     int getFieldIndex(int x, int y) const;
 

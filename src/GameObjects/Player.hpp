@@ -4,6 +4,7 @@
 
 #pragma once
 #include "GameObject.hpp"
+#include "../data/MoveDirections.hpp"
 
 class Level;
 class CubeMap;
@@ -19,6 +20,8 @@ public:
     void Update(const u32 frame, const u32 totalMSec, const float deltaT) override;
 
     void Render(const u32 frame, const u32 totalMSec, const float deltaT) override;
+
+    bool move(PlayerMoveDirection direction);
 
 private:
     Level* currentLevel;
