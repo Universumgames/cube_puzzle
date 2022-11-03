@@ -26,18 +26,5 @@
 -   Klassennamen beginnen mit einem Großbuchstaben
 -   Methodennamen (+ Attribute/Variablen) beginnen mit einem Kleinbuchstaben
 
-## Game Window
-
-![](./readme_images/game_window.png)
-
-## Board minimap
-
-![](./readme_images/board_minimap.png)
-
-## World Dice Minimap
-
-![](./readme_images/world_dice_minimap.png)
-
-## 3D Perspektive für die Verständlichkeit
-
-![](./readme_images/3d_perspective.png)
+## Image Set
+![](./readme_images/Screenshot%202022-11-02%20at%2015.27.30.png)
