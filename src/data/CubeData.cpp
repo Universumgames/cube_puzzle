@@ -33,7 +33,7 @@ void CubeData::rotate(CubeRollDirection direction) {
     }
 }
 
-int CubeData::getSide(DiceSide side) {
+int CubeData::getSide(DiceSide side) const {
     switch(side){
         case DiceSide::NORTH:
             return north;
@@ -48,6 +48,7 @@ int CubeData::getSide(DiceSide side) {
         case DiceSide::BOTTOM:
             return 7-up;
     }
+    return 0;
 }
 
 int CubeData::getOpposite(int side) {

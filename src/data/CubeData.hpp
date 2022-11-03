@@ -24,7 +24,7 @@ public:
     void rotate(CubeRollDirection direction);
 
     /// get dice side facing direction
-    int getSide(DiceSide side);
+    int getSide(DiceSide side) const;
 
     std::string toString() const;
 
