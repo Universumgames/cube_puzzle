@@ -16,7 +16,7 @@ class CubeMapSide;
 
 class CubeMap final : public GameObject {
 public:
-    CubeMap(Game &game, SDL_Renderer *render, const Vector<CubeMapSide> &sides, int startSide = 1,
+    CubeMap(Game &game, SDL_Renderer *render, const Vector<CubeMapSide>& sides, int startSide = 1,
             Point playerPos = {0, 0});
 
     void SetWorldMap(WorldMap *worldMap) { this->worldMap = worldMap; }
@@ -35,9 +35,9 @@ public:
 private:
     void rollCube(DiceRollDirection rollDirection);
 
-    void drawMinimap();
+    void drawMinimap(const u32 frame, const u32 totalMSec, const float deltaT);
 
-    void drawMap();
+    void drawMap(const u32 frame, const u32 totalMSec, const float deltaT);
 
     /// get side of dice (1-6)
     CubeMapSide *getSide(int i);
@@ -56,8 +56,8 @@ private:
 
 class CubeMapSide {
 public:
-    CubeMapSide(Vector<CubeField *> &side, int width, int height) : width(width), height(height) { this->side = side; }
-    CubeMapSide(Vector<CubeField *> &side, Point size) : width(size.x), height(size.y) { this->side = side; }
+    CubeMapSide(Vector<CubeField *> side, int width, int height) : width(width), height(height) { this->side = side; }
+    CubeMapSide(Vector<CubeField *> side, Point size) : width(size.x), height(size.y) { this->side = side; }
 
     Vector<CubeField *> side;
     int width, height;

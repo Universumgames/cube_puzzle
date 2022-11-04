@@ -16,19 +16,21 @@ void CubeMap::Update(const u32 frame, const u32 totalMSec, const float deltaT) {
 }
 
 void CubeMap::Render(const u32 frame, const u32 totalMSec, const float deltaT) {
-    drawMap();
+    drawMap(BASIC_GO_DATA_PASSTHROUGH);
 }
 
 void CubeMap::RenderUI(const u32 frame, const u32 totalMSec, const float deltaT) {
-    drawMinimap();
+    drawMinimap(BASIC_GO_DATA_PASSTHROUGH);
 }
 
-void CubeMap::drawMinimap() {
+void CubeMap::drawMinimap(const u32 frame, const u32 totalMSec, const float deltaT) {
 
 }
 
-void CubeMap::drawMap() {
-
+void CubeMap::drawMap(const u32 frame, const u32 totalMSec, const float deltaT) {
+    for (auto side: sides) {
+        side->Render(game, render, BASIC_GO_DATA_PASSTHROUGH);
+    }
 }
 
 
@@ -39,7 +41,7 @@ CubeMapSide *CubeMap::getSide(int i) {
 CubeMap::CubeMap(Game &game1, SDL_Renderer *render1, const Vector<CubeMapSide> &sides1, int startSide, Point playerPos)
         : GameObject(game1, render1) {
     for (auto side: sides1) {
-        this->sides.push_back(&side);
+        this->sides.push_back(new CubeMapSide(side));
     }
     this->currentSideId = startSide;
     this->playerPos = playerPos;
@@ -90,6 +92,6 @@ void CubeMapSide::Update(Game &game, const u32 frame, const u32 totalMSec, const
 
 void CubeMapSide::Render(Game &game, Renderer *render, const u32 frame, const u32 totalMSec, const float deltaT) {
     for (auto *field: side) {
-        field->Render(game, render, {10,10}, {10,10} ,BASIC_GO_DATA_PASSTHROUGH);
+        field->Render(game, render, {10, 10}, {10, 10}, BASIC_GO_DATA_PASSTHROUGH);
     }
 }
