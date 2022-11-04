@@ -1,14 +1,14 @@
 #include "global.hpp"
 #include "CubeGame.hpp"
 #include "examplegame/examplegame.hpp"
-#include "data/CubeData.hpp"
+#include "data/DiceData.hpp"
 
 void tests(){
-    auto data = CubeData();
+    auto data = DiceData();
     cout << data.toString() << std::endl;
-    data.rotate(CubeRollDirection::NORTH);
+    data.rotate(DiceRollDirection::NORTH);
     cout << data.toString() << std::endl;
-    data.rotate(CubeRollDirection::WEST);
+    data.rotate(DiceRollDirection::WEST);
     cout << data.toString() << std::endl;
 }
 

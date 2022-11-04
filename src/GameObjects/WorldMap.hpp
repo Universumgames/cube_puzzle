@@ -7,7 +7,7 @@
 #include "GameObject.hpp"
 #include "../data/WorldField.hpp"
 #include "../data/MoveDirections.hpp"
-#include "../data/CubeData.hpp"
+#include "../data/DiceData.hpp"
 
 class CubeMap;
 
@@ -30,7 +30,7 @@ private:
     Vector<WorldField> field;
     int xWidth, yHeight;
     CubeMap *cubeMap;
-    CubeData cubeData;
+    DiceData cubeData;
     Point cubePos;
 
     int getFieldIndex(int x, int y) const;

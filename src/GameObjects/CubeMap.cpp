@@ -46,7 +46,7 @@ bool CubeMap::movePlayer(PlayerMoveDirection dir) {
     return false;
 }
 
-void CubeMap::rollCube(CubeRollDirection rollDirection) {
+void CubeMap::rollCube(DiceRollDirection rollDirection) {
     int temp = 0;
     switch(rollDirection){
         case NORTH:

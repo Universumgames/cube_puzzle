@@ -8,6 +8,6 @@ enum PlayerMoveDirection {
 };
 
 /// Directions when viewing on monitor (north is up, west is left - on monitor)
-enum CubeRollDirection{
+enum DiceRollDirection{
     NORTH, SOUTH, WEST, EAST
 };

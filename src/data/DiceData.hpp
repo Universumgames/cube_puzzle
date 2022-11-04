@@ -17,11 +17,11 @@ enum class DiceSide{
     NORTH, SOUTH, WEST, EAST, TOP, BOTTOM
 };
 
-class CubeData{
+class DiceData{
 public:
     /// default cube is 1up, 5north, 3west
-    CubeData();
-    void rotate(CubeRollDirection direction);
+    DiceData();
+    void rotate(DiceRollDirection direction);
 
     /// get dice side facing direction
     [[nodiscard]] int getSide(DiceSide side) const;

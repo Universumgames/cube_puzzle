@@ -1,15 +1,15 @@
 //
 // Created by Tom Arlt on 03.11.22.
 //
-#include "CubeData.hpp"
+#include "DiceData.hpp"
 
-CubeData::CubeData() {
+DiceData::DiceData() {
     this->up = 1;
     this->north = 5;
     this->west = 3;
 }
 
-void CubeData::rotate(CubeRollDirection direction) {
+void DiceData::rotate(DiceRollDirection direction) {
     auto oldUp = up;
     auto oldNorth = north;
     auto oldWest = west;
@@ -33,7 +33,7 @@ void CubeData::rotate(CubeRollDirection direction) {
     }
 }
 
-int CubeData::getSide(DiceSide side) const {
+int DiceData::getSide(DiceSide side) const {
     switch(side){
         case DiceSide::NORTH:
             return north;
@@ -51,15 +51,15 @@ int CubeData::getSide(DiceSide side) const {
     return 0;
 }
 
-int CubeData::getOpposite(int side) {
+int DiceData::getOpposite(int side) {
     return 7 - side;
 }
 
-std::string CubeData::toString() const {
+std::string DiceData::toString() const {
     return "n: " + std::to_string(north) + " u:" + std::to_string(up) + " w:" + std::to_string(west);
 }
 
-DiceSide CubeData::getSideFacing(int side) const {
+DiceSide DiceData::getSideFacing(int side) const {
     if(side == north) return DiceSide::NORTH;
     else if(side == west) return DiceSide::WEST;
     else if(side == up) return DiceSide::TOP;

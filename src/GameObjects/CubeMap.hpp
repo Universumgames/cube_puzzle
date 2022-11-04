@@ -32,7 +32,7 @@ public:
     bool movePlayer(PlayerMoveDirection dir);
 
 private:
-    void rollCube(CubeRollDirection rollDirection);
+    void rollCube(DiceRollDirection rollDirection);
 
     void drawMinimap();
 
