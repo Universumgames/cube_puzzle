@@ -14,6 +14,12 @@ void LevelSelector::Events(const u32 frame, const u32 totalMSec, const float del
     while (SDL_PollEvent(&event)) {
         if (game.HandleEvent(event))
             continue;
+        if(event.type == SDL_KEYDOWN){
+            const Keysym & what_key = event.key.keysym;
+            if( what_key.scancode == SDL_SCANCODE_0 ){
+                game.SetNextState(1);
+            }
+        }
     }
 }
 
@@ -45,7 +51,7 @@ void LevelSelector::loadList() {
     }
 
 // create levels
-    for (auto path: paths) {
+    for (const auto& path: paths) {
         loadLevel(path);
     }
 

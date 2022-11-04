@@ -7,6 +7,7 @@
 #include "../GameObjects/CubeMap.hpp"
 #include "../GameObjects/WorldMap.hpp"
 #include "../data/EmptyData.hpp"
+#include "../recthelper.hpp"
 
 #define iterateGameObjects(method) for(auto gameobject:gameObjects){gameobject->method;}
 
@@ -26,8 +27,12 @@ void Level::Update(const u32 frame, const u32 totalMSec, const float deltaT) {
 }
 
 void Level::Render(const u32 frame, const u32 totalMSec, const float deltaT) {
+    SDL_RenderClear(render);
+    SDL_SetRenderDrawColor(render, 0, 255, 0, 255);
+    SDL_RenderFillRect(render, EntireRect);
     iterateGameObjects(Render(BASIC_GO_DATA_PASSTHROUGH))
     iterateGameObjects(RenderUI(BASIC_GO_DATA_PASSTHROUGH))
+    SDL_RenderPresent(render);
 }
 
 Level::Level(Game &game, Renderer *render) : GameState(game, render) {}
