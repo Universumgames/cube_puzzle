@@ -58,3 +58,13 @@ int CubeData::getOpposite(int side) {
 std::string CubeData::toString() const {
     return "n: " + std::to_string(north) + " u:" + std::to_string(up) + " w:" + std::to_string(west);
 }
+
+DiceSide CubeData::getSideFacing(int side) const {
+    if(side == north) return DiceSide::NORTH;
+    else if(side == west) return DiceSide::WEST;
+    else if(side == up) return DiceSide::TOP;
+    else if(side == getOpposite(north)) return DiceSide::SOUTH;
+    else if(side == getOpposite(west)) return DiceSide::EAST;
+    else if(side == getOpposite(up)) return DiceSide::BOTTOM;
+    return DiceSide::NORTH;
+}
