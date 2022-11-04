@@ -34,7 +34,7 @@ public:
 
 	virtual void SetNextState(int index) { nextStateIdx = index; }
 
-	SDL_Rect getWindowSize();
+	Point getWindowSize();
 
 protected:
 	virtual void ActivateNextState();

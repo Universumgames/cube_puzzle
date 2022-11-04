@@ -215,8 +215,8 @@ void Game::OutputPerformanceInfo(const TimePoint current, const Duration needed)
 	}
 }
 
-SDL_Rect Game::getWindowSize() {
-    SDL_Rect windowSize;
+Point Game::getWindowSize() {
+    Point windowSize;
     SDL_GetWindowSize(window, &windowSize.x, &windowSize.y);
     return windowSize;
 }

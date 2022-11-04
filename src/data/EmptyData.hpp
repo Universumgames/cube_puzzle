@@ -1,0 +1,8 @@
+//
+// Created by Tom Arlt on 04.11.22.
+//
+
+#ifndef CUBE_PUZZLE_EMPTYDATA_HPP
+#define CUBE_PUZZLE_EMPTYDATA_HPP
+
+#endif //CUBE_PUZZLE_EMPTYDATA_HPP
