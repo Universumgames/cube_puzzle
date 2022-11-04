@@ -111,6 +111,7 @@ int Game::Run()
 	while (IsRunning())
 	{
 		start = Clock::now();
+        SDL_GetWindowSize(window, &windowSize.x, &windowSize.y);
 
 		ActivateNextState();
 
@@ -216,8 +217,6 @@ void Game::OutputPerformanceInfo(const TimePoint current, const Duration needed)
 }
 
 Point Game::getWindowSize() {
-    Point windowSize;
-    SDL_GetWindowSize(window, &windowSize.x, &windowSize.y);
     return windowSize;
 }
 
