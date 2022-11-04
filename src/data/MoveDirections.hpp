@@ -3,6 +3,7 @@
 //
 #pragma once
 
+/// player movement relative to screen
 enum PlayerMoveDirection {
     UP, DOWN, LEFT, RIGHT
 };

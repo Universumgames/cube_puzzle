@@ -67,3 +67,5 @@ using TimePoint = Clock::time_point;
 using Duration = Clock::duration;
 
 using std::cout, std::cin, std::cerr, std::endl;
+
+#define BASIC_GO_DATA_PASSTHROUGH frame, totalMSec, deltaT
