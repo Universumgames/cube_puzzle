@@ -5,6 +5,7 @@
 #include "LevelSelector.hpp"
 #include "../CubeGame.hpp"
 #include "Level.hpp"
+#include "../recthelper.hpp"
 
 void LevelSelector::Events(const u32 frame, const u32 totalMSec, const float deltaT) {
     SDL_PumpEvents();
@@ -22,9 +23,8 @@ void LevelSelector::Update(const u32 frame, const u32 totalMSec, const float del
 void LevelSelector::Render(const u32 frame, const u32 totalMSec, const float deltaT) {
     SDL_SetRenderDrawColor(render, 0, 0, 0, 255);
     SDL_RenderClear(render);
-    SDL_Rect dst = game.getWindowSize();
-    SDL_SetRenderDrawColor(render, 255, 255, 255, 255);
-    SDL_RenderFillRect(render, &dst);
+    SDL_SetRenderDrawColor(render, 200, 0, 255, 255);
+    SDL_RenderFillRect(render, EntireRect);
     SDL_RenderPresent(render);
 }
 
@@ -36,10 +36,20 @@ void LevelSelector::loadList() {
 
     Vector<std::string> paths;
 
+    /// template level
+    {
+        auto* tempLevel = new Level(game, render);
+        auto levelD = tempLevel->loadTemplateLevel();
+        levelData.push_back(levelD);
+        getCubeGame().allStates.push_back(tempLevel);
+    }
+
 // create levels
     for (auto path: paths) {
         loadLevel(path);
     }
+
+
 }
 
 void LevelSelector::drawList() {

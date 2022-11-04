@@ -31,6 +31,8 @@ public:
 
     void UnInit() override;
 
+    LevelData loadTemplateLevel();
+
 private:
     Vector<GameObject *> gameObjects;
     Player* player;
