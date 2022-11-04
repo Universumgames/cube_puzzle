@@ -66,6 +66,9 @@ public:
 
     [[nodiscard]] int getIndex(int x, int y) const { return x * width + y; }
 
+    Point getFieldSize(Point windowSize);
+    Point getStartingOffset(Point windowSize, Point fieldSize);
+
     void HandleEvent(Game& game, const u32 frame, const u32 totalMSec, const float deltaT, Event event);
 
     void Update(Game& game, const u32 frame, const u32 totalMSec, const float deltaT);

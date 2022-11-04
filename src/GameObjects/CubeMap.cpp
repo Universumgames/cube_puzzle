@@ -91,7 +91,26 @@ void CubeMapSide::Update(Game &game, const u32 frame, const u32 totalMSec, const
 }
 
 void CubeMapSide::Render(Game &game, Renderer *render, const u32 frame, const u32 totalMSec, const float deltaT) {
+    int x = 0, y = 0;
+    Point size = getFieldSize(game.getWindowSize());
+    Point offset = getStartingOffset(game.getWindowSize(), size);
     for (auto *field: side) {
-        field->Render(game, render, {10, 10}, {10, 10}, BASIC_GO_DATA_PASSTHROUGH);
+        field->Render(game, render, size, {size.x * x + offset.x, size.y * y + offset.y}, BASIC_GO_DATA_PASSTHROUGH);
+        x++;
+        if (x >= width) {
+            y++;
+            x = 0;
+        }
     }
+}
+
+Point CubeMapSide::getFieldSize(Point windowSize) {
+    int w = min(windowSize.x, windowSize.y) / width;
+    return {w, w};
+}
+
+Point CubeMapSide::getStartingOffset(Point windowSize, Point fieldSize) {
+    Point center = windowSize / 2;
+    Point totalSize = {width * fieldSize.x, height * fieldSize.y};
+    return center - (totalSize / 2);
 }
