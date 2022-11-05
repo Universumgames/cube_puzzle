@@ -7,6 +7,7 @@
 #include "GameObject.hpp"
 #include "CubeField.hpp"
 #include "../data/MoveDirections.hpp"
+#include "../data/DiceData.hpp"
 
 class WorldMap;
 
@@ -34,6 +35,10 @@ public:
 public:
     bool movePlayer(PlayerMoveDirection dir);
 
+    Point cubePositionToScreenPosition(Point cubePos);
+
+    Point screenPositionToCubePosition(Point screenPos);
+
 private:
     void moveCubeInWorld(DiceRollDirection rollDirection);
 
@@ -52,6 +57,7 @@ private:
     Vector<CubeMapSide *> sides;
     int currentSideId = 1;
     Point playerPos;
+    DiceData diceData;
 
     friend class WorldMap;
 };

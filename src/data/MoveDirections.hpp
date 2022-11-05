@@ -12,7 +12,3 @@ enum class PlayerMoveDirection {
 enum class DiceRollDirection{
     NORTH, SOUTH, WEST, EAST
 };
-
-enum class DiceFaceDirection{
-    UP, DOWN, LEFT, RIGHT
-};

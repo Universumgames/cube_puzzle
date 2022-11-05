@@ -86,6 +86,12 @@ void CubeMap::Init() {
     GameObject::Init();
 }
 
+Point CubeMap::cubePositionToScreenPosition(Point cubePos) {
+    int anchorSide = DiceData::getAnchorSideOfTopLeftCorner(currentSideId);
+    DiceFaceDirection faceDirection = diceData.get
+    return Point();
+}
+
 void CubeMapSide::HandleEvent(Game &game, const u32 frame, const u32 totalMSec, const float deltaT, Event event) {
     for (auto *field: side) {
         field->HandleEvent(game, BASIC_GO_DATA_PASSTHROUGH, event);

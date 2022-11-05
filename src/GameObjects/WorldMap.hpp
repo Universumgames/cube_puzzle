@@ -30,7 +30,6 @@ private:
     Vector<WorldField> field;
     int xWidth, yHeight;
     CubeMap *cubeMap;
-    DiceData cubeData;
     Point cubePos;
 
     int getFieldIndex(int x, int y) const;
