@@ -4,11 +4,15 @@
 #pragma once
 
 /// player movement relative to screen
-enum PlayerMoveDirection {
+enum class PlayerMoveDirection {
     UP, DOWN, LEFT, RIGHT
 };
 
 /// Directions when viewing on monitor (north is up, west is left - on monitor)
-enum DiceRollDirection{
+enum class DiceRollDirection{
     NORTH, SOUTH, WEST, EAST
+};
+
+enum class DiceFaceDirection{
+    UP, DOWN, LEFT, RIGHT
 };

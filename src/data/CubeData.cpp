@@ -14,19 +14,19 @@ void DiceData::rotate(DiceRollDirection direction) {
     auto oldNorth = north;
     auto oldWest = west;
     switch(direction){
-        case NORTH:
+        case DiceRollDirection::NORTH:
             north = oldUp;
             up = getOpposite(oldNorth);
             break;
-        case SOUTH:
+        case DiceRollDirection::SOUTH:
             up = oldNorth;
             north = getOpposite(oldUp);
             break;
-        case WEST:
+        case DiceRollDirection::WEST:
             west = oldUp;
             up = getOpposite(oldWest);
             break;
-        case EAST:
+        case DiceRollDirection::EAST:
             up = oldWest;
             west = getOpposite(oldUp);
             break;

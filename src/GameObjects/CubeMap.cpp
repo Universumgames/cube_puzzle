@@ -59,16 +59,16 @@ bool CubeMap::movePlayer(PlayerMoveDirection dir) {
 void CubeMap::moveCubeInWorld(DiceRollDirection rollDirection) {
     int temp = 0;
     switch (rollDirection) {
-        case NORTH:
+        case DiceRollDirection::NORTH:
             worldMap->cubePos += 1_up;
             break;
-        case SOUTH:
+        case DiceRollDirection::SOUTH:
             worldMap->cubePos += 1_down;
             break;
-        case WEST:
+        case DiceRollDirection::WEST:
             worldMap->cubePos += 1_left;
             break;
-        case EAST:
+        case DiceRollDirection::EAST:
             worldMap->cubePos += 1_right;
             break;
     }
