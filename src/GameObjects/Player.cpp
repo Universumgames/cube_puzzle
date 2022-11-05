@@ -17,7 +17,8 @@ void Player::Update(const u32 frame, const u32 totalMSec, const float deltaT) {
 }
 
 void Player::Render(const u32 frame, const u32 totalMSec, const float deltaT) {
-
+    Point windowSize = game.getWindowSize();
+    drawSprite(game.getSpriteStorage()->temp, render, {0, 1}, {0, 0, min(windowSize.x, windowSize.y) / 5, min(windowSize.x, windowSize.y) / 5});
 }
 
 void Player::setCubeMap(CubeMap *cubeMap) {

@@ -56,6 +56,7 @@ LevelData Level::load(const std::string &path, size_t id) {
 
     gameObjects.push_back(worldMap);
     gameObjects.push_back(cubeMap);
+    gameObjects.push_back(player);
     return {.path = path, .id = id};
 }
 
@@ -67,5 +68,6 @@ LevelData Level::loadTemplateLevel() {
     player = new Player(game, render);
     gameObjects.push_back(worldMap);
     gameObjects.push_back(cubeMap);
+    gameObjects.push_back((player));
     return {.path = "", .id = 1};
 }
