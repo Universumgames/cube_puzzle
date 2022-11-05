@@ -7,6 +7,7 @@
 #include "../gamebase.hpp"
 #include "../GameObjects/GameObject.hpp"
 #include "../data/LevelData.hpp"
+#include "../GameObjects/Text.hpp"
 
 class Player;
 class CubeMap;
@@ -38,4 +39,5 @@ private:
     Player* player;
     CubeMap* cubeMap;
     WorldMap* worldMap;
+    Text* text;
 };

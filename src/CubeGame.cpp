@@ -57,6 +57,11 @@ SpriteStorage *CubeGame::getSpriteStorage() {
                                         SDL_FreeSurface(temp);         \
                                         }
 
+#define loadFont(variable, path, size) { \
+                                        variable = TTF_OpenFont(path, size);         \
+                                        }
+
 void CubeGame::loadSprites() {
-    loadPNGTexture(spriteStorage.temp, render, "./asset/graphic/simples_test.png")
+    loadPNGTexture(spriteStorage.temp, render, "./asset/graphic/AllTestTile.png")
+    loadFont(spriteStorage.basicFont, "./asset/font/RobotSlab-Bold.ttf", 18)
 }

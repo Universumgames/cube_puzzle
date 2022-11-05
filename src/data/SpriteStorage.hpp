@@ -14,4 +14,5 @@ struct SpriteStorage {
     Texture *worldMapSpriteSheet = nullptr;
     Texture *playerSpriteSheet = nullptr;
     Texture *temp = nullptr;
+    Font* basicFont = nullptr;
 };

@@ -35,10 +35,17 @@ void Level::Render(const u32 frame, const u32 totalMSec, const float deltaT) {
     SDL_RenderPresent(render);
 }
 
-Level::Level(Game &game, Renderer *render) : GameState(game, render) {}
+Level::Level(Game &game, Renderer *render) : GameState(game, render) {
+    text = new Text(game, render, {0, 0}, 500, 2, "test level", "./asset/font/RobotoSlab-Bold.ttf", 30,
+                    {255, 255, 255, 255});
+}
 
 void Level::Init() {
     GameState::Init();
+    gameObjects.push_back(worldMap);
+    gameObjects.push_back(cubeMap);
+    gameObjects.push_back((player));
+    gameObjects.push_back(text);
     iterateGameObjects(Init())
 }
 
@@ -48,26 +55,20 @@ void Level::UnInit() {
 }
 
 LevelData Level::load(const std::string &path, size_t id) {
-    worldMap = new WorldMap(game, render, 10, 10, {WorldField::DEFAULT}, {0,0});
+    worldMap = new WorldMap(game, render, 10, 10, {WorldField::DEFAULT}, {0, 0});
     cubeMap = new CubeMap(game, render, {});
     worldMap->setCubeMap(cubeMap);
     cubeMap->SetWorldMap(worldMap);
     player = new Player(game, render);
-
-    gameObjects.push_back(worldMap);
-    gameObjects.push_back(cubeMap);
-    gameObjects.push_back(player);
     return {.path = path, .id = id};
 }
 
 LevelData Level::loadTemplateLevel() {
-    worldMap = new WorldMap(game, render, emptyWorldFieldSize.x, emptyWorldFieldSize.y, emptyWorldField, {0,0});
+    worldMap = new WorldMap(game, render, emptyWorldFieldSize.x, emptyWorldFieldSize.y, emptyWorldField, {0, 0});
     cubeMap = new CubeMap(game, render, emptyCubeMapSides);
     worldMap->setCubeMap(cubeMap);
     cubeMap->SetWorldMap(worldMap);
     player = new Player(game, render);
-    gameObjects.push_back(worldMap);
-    gameObjects.push_back(cubeMap);
-    gameObjects.push_back((player));
+
     return {.path = "", .id = 1};
 }

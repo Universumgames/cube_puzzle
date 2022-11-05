@@ -7,6 +7,7 @@
 #include "../gamebase.hpp"
 #include "../CubeGame.hpp"
 #include "../data/LevelData.hpp"
+#include "../GameObjects/Text.hpp"
 
 
 class LevelSelector final : public GameState
@@ -37,5 +38,6 @@ private:
 private:
     Vector<LevelData> levelData;
     bool levelsLoaded = false;
+    Text* text;
 };
 

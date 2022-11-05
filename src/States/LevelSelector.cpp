@@ -14,9 +14,9 @@ void LevelSelector::Events(const u32 frame, const u32 totalMSec, const float del
     while (SDL_PollEvent(&event)) {
         if (game.HandleEvent(event))
             continue;
-        if(event.type == SDL_KEYDOWN){
-            const Keysym & what_key = event.key.keysym;
-            if( what_key.scancode == SDL_SCANCODE_0 ){
+        if (event.type == SDL_KEYDOWN) {
+            const Keysym &what_key = event.key.keysym;
+            if (what_key.scancode == SDL_SCANCODE_0) {
                 game.SetNextState(1);
             }
         }
@@ -31,6 +31,9 @@ void LevelSelector::Render(const u32 frame, const u32 totalMSec, const float del
     SDL_RenderClear(render);
     SDL_SetRenderDrawColor(render, 200, 0, 255, 255);
     SDL_RenderFillRect(render, EntireRect);
+
+    text->RenderUI(frame, totalMSec, deltaT);
+
     SDL_RenderPresent(render);
 }
 
@@ -44,14 +47,14 @@ void LevelSelector::loadList() {
 
     /// template level
     {
-        auto* tempLevel = new Level(game, render);
+        auto *tempLevel = new Level(game, render);
         auto levelD = tempLevel->loadTemplateLevel();
         levelData.push_back(levelD);
         getCubeGame().allStates.push_back(tempLevel);
     }
 
 // create levels
-    for (const auto& path: paths) {
+    for (const auto &path: paths) {
         loadLevel(path);
     }
 
@@ -76,12 +79,15 @@ void LevelSelector::Init() {
     loadList();
 
     levelsLoaded = true;
+    text = new Text(game, render, {0, 0}, 500, 2, "level selector", "./asset/font/RobotoSlab-Bold.ttf", 30,
+                    {255, 255, 255, 255});
+    text->Init();
 }
 
 void LevelSelector::UnInit() {
     GameState::UnInit();
 }
 
-void LevelSelector::playLevel(const LevelData& level) {
+void LevelSelector::playLevel(const LevelData &level) {
     game.SetNextState(level.id);
 }
