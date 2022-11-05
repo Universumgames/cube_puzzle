@@ -22,8 +22,18 @@ void Level::Events(const u32 frame, const u32 totalMSec, const float deltaT) {
     }
 }
 
+u32 lastMSec = 0;
+u32 lastFrame = 0;
+
 void Level::Update(const u32 frame, const u32 totalMSec, const float deltaT) {
     iterateGameObjects(Update(BASIC_GO_DATA_PASSTHROUGH));
+    if (frame % 50 == 0) {
+        u32 deltaSec = totalMSec - lastMSec;
+        u32 deltaFrame = frame - lastFrame;
+        text->changeText("test level " + std::to_string((double)deltaFrame / ((double)deltaSec / 1000)) + "fps");
+        lastMSec = totalMSec;
+        lastFrame = frame;
+    }
 }
 
 void Level::Render(const u32 frame, const u32 totalMSec, const float deltaT) {
@@ -36,17 +46,17 @@ void Level::Render(const u32 frame, const u32 totalMSec, const float deltaT) {
 }
 
 Level::Level(Game &game, Renderer *render) : GameState(game, render) {
-    text = new Text(game, render, 500, "test level", "./asset/font/RobotoSlab-Bold.ttf", 30, {0, 0}, 1,
-                    {255, 255, 255, 255});
+    this->text = new Text(game, render, 500, "test level", ROBOT_FONT_FILEPATH, 30, {0, 0}, 1, white);
 }
 
 void Level::Init() {
     GameState::Init();
     gameObjects.push_back(worldMap);
     gameObjects.push_back(cubeMap);
-    gameObjects.push_back((player));
+    gameObjects.push_back(player);
     gameObjects.push_back(text);
     iterateGameObjects(Init())
+    game.SetPerfDrawMode(Game::PerformanceDrawMode::None);
 }
 
 void Level::UnInit() {
@@ -63,12 +73,11 @@ LevelData Level::load(const std::string &path, size_t id) {
     return {.path = path, .id = id};
 }
 
-LevelData Level::loadTemplateLevel() {
+LevelData Level::loadTemplateLevel(size_t id) {
     worldMap = new WorldMap(game, render, emptyWorldFieldSize.x, emptyWorldFieldSize.y, emptyWorldField, {0, 0});
     cubeMap = new CubeMap(game, render, emptyCubeMapSides);
     worldMap->setCubeMap(cubeMap);
     cubeMap->SetWorldMap(worldMap);
     player = new Player(game, render);
-
-    return {.path = "", .id = 1};
+    return {.path = "", .id = id};
 }

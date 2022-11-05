@@ -48,7 +48,7 @@ void LevelSelector::loadList() {
     /// template level
     {
         auto *tempLevel = new Level(game, render);
-        auto levelD = tempLevel->loadTemplateLevel();
+        auto levelD = tempLevel->loadTemplateLevel(getCubeGame().allStates.size());
         levelData.push_back(levelD);
         getCubeGame().allStates.push_back(tempLevel);
     }
@@ -79,8 +79,7 @@ void LevelSelector::Init() {
     loadList();
 
     levelsLoaded = true;
-    text = new Text(game, render, 500, "level selector", "./asset/font/RobotoSlab-Bold.ttf", 30, {0, 0}, 1,
-                    {255, 255, 255, 255});
+    text = new Text(game, render, 500, "level selector", ROBOT_FONT_FILEPATH, 30, {0, 0}, 1, white);
     text->Init();
 }
 

@@ -32,7 +32,7 @@ public:
 
     void UnInit() override;
 
-    LevelData loadTemplateLevel();
+    LevelData loadTemplateLevel(size_t id);
 
 private:
     Vector<GameObject *> gameObjects;
