@@ -41,6 +41,7 @@ public:
 
     Point getWindowSize();
 
+    virtual SpriteStorage *getSpriteStorage() { return nullptr; };
 
 protected:
     virtual void ActivateNextState();

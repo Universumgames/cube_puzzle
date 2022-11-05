@@ -7,8 +7,10 @@
 #include "States/Level.hpp"
 #include "States/LevelSelector.hpp"
 
+
 CubeGame::CubeGame() : Game("CubeGame")
 {
+    loadSprites();
     // Level selctor loads all levels and adds them procedually to the states
     allStates = {new LevelSelector(*this, render)};
     SetNextState(0);
@@ -43,4 +45,18 @@ bool CubeGame::HandleEvent(const Event event)
         break;
     }
     return Game::HandleEvent(event);
+}
+
+SpriteStorage *CubeGame::getSpriteStorage() {
+    return &spriteStorage;
+}
+
+#define loadPNGTexture(variable, render, path) { \
+                                        Surface* temp = IMG_Load(path); \
+                                        variable =  SDL_CreateTextureFromSurface(render, temp); \
+                                        SDL_FreeSurface(temp);         \
+                                        }
+
+void CubeGame::loadSprites() {
+    loadPNGTexture(spriteStorage.temp, render, "./asset/graphic/simples_test.png")
 }

@@ -8,7 +8,11 @@
 #include "../recthelper.hpp"
 
 void CubeMap::HandleEvent(const u32 frame, const u32 totalMSec, const float deltaT, Event event) {
+    if(event.type != SDL_KEYDOWN) return;
+    const Keysym & what_key = event.key.keysym;
+    if( what_key.scancode == SDL_SCANCODE_UP ){
 
+    }
 }
 
 void CubeMap::Update(const u32 frame, const u32 totalMSec, const float deltaT) {
@@ -52,7 +56,7 @@ bool CubeMap::movePlayer(PlayerMoveDirection dir) {
     return false;
 }
 
-void CubeMap::rollCube(DiceRollDirection rollDirection) {
+void CubeMap::moveCubeInWorld(DiceRollDirection rollDirection) {
     int temp = 0;
     switch (rollDirection) {
         case NORTH:
@@ -76,6 +80,10 @@ CubeField *CubeMap::getField(int side, int x, int y) {
 
 CubeField *CubeMap::getField(int side, Point p) {
     return getSide(side)->getField(p.x, p.y);
+}
+
+void CubeMap::Init() {
+    GameObject::Init();
 }
 
 void CubeMapSide::HandleEvent(Game &game, const u32 frame, const u32 totalMSec, const float deltaT, Event event) {

@@ -47,7 +47,10 @@ public:
 
     void Render(Game &game, Renderer *render, Point size, Point location, const u32 frame, const u32 totalMSec,
                 const float deltaT) override {
-        CubeField::Render(game, render, size, location, BASIC_GO_DATA_PASSTHROUGH);
+        //CubeField::Render(game, render, size, location, BASIC_GO_DATA_PASSTHROUGH);
+        Rect src = {0,0,16,16};
+        Rect dst = {location.x, location.y, size.x, size.y};
+        SDL_RenderCopy(render, game.getSpriteStorage()->temp, &src, &dst);
     }
 };
 

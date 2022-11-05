@@ -29,11 +29,13 @@ public:
 
     void RenderUI(const u32 frame, const u32 totalMSec, const float deltaT) override;
 
+    void Init() override;
+
 public:
     bool movePlayer(PlayerMoveDirection dir);
 
 private:
-    void rollCube(DiceRollDirection rollDirection);
+    void moveCubeInWorld(DiceRollDirection rollDirection);
 
     void drawMinimap(const u32 frame, const u32 totalMSec, const float deltaT);
 
