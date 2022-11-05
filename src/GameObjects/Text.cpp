@@ -63,8 +63,9 @@ void Text::changeText(std::string text) {
     reloadTexture();
 }
 
-Text::Text(Game &game, SDL_Renderer *render, Point position, int maxWidth, int shadowOffset, std::string text,
-           Font *font, Color color) : GameObject(game, render) {
+Text::Text(Game &game, SDL_Renderer *render, int maxWidth, std::string text, Font *font, Point position,
+           int shadowOffset,
+           Color color) : GameObject(game, render) {
     this->position = position;
     this->shadowOffset = shadowOffset;
     this->text = std::move(text);
@@ -73,8 +74,8 @@ Text::Text(Game &game, SDL_Renderer *render, Point position, int maxWidth, int s
     this->color = color;
 }
 
-Text::Text(Game &game, SDL_Renderer *render, Point position, int maxWidth, int shadowOffset, std::string text,
-           const char *fontPath, int pointSize, Color color) : GameObject(game, render) {
+Text::Text(Game &game, SDL_Renderer *render, int maxWidth, std::string text, const char *fontPath, int pointSize,
+           Point position, int shadowOffset, Color color) : GameObject(game, render) {
     this->position = position;
     this->shadowOffset = shadowOffset;
     this->text = std::move(text);
@@ -98,5 +99,35 @@ void Text::reloadTexture() {
     SDL_FreeSurface(surf);
 
     dst = {position.x, position.y, blendedTextSize.h, blendedTextSize.w};
+    calculateShadowOffset();
+}
 
+void Text::calculateShadowOffset() {
+    shadowOffsets = {
+            Point{-1 * shadowOffset, -1 * shadowOffset},
+            Point{+1 * shadowOffset, -1 * shadowOffset},
+            Point{-1 * shadowOffset, +1 * shadowOffset},
+            Point{+1 * shadowOffset, +1 * shadowOffset},
+            Point{+0 * shadowOffset, +2 * shadowOffset},
+            Point{+2 * shadowOffset, +0 * shadowOffset},
+            Point{+0 * shadowOffset, -2 * shadowOffset},
+            Point{-2 * shadowOffset, +0 * shadowOffset},
+    };
+
+    /**
+     * {
+        Point { -1, -1 },
+                Point { +1, -1 },
+                Point { -1, +1 },
+                Point { +1, +1 },
+                Point { +0, +2 },
+                Point { +2, +0 },
+                Point { +0, -2 },
+                Point { -2, +0 },
+    };
+     */
+}
+
+void Text::changeColor(Color color) {
+    this->color = color;
 }

@@ -36,7 +36,7 @@ void Level::Render(const u32 frame, const u32 totalMSec, const float deltaT) {
 }
 
 Level::Level(Game &game, Renderer *render) : GameState(game, render) {
-    text = new Text(game, render, {0, 0}, 500, 2, "test level", "./asset/font/RobotoSlab-Bold.ttf", 30,
+    text = new Text(game, render, 500, "test level", "./asset/font/RobotoSlab-Bold.ttf", 30, {0, 0}, 1,
                     {255, 255, 255, 255});
 }
 

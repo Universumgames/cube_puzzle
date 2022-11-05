@@ -6,25 +6,15 @@
 
 #include "GameObject.hpp"
 #include <string>
+#include "../data/Colors.hpp"
 
 class Text : public GameObject {
 public:
-    static constexpr const Array<Point,8> shadowOffsets = {
-            Point { -1, -1 },
-            Point { +1, -1 },
-            Point { -1, +1 },
-            Point { +1, +1 },
-            Point { +0, +2 },
-            Point { +2, +0 },
-            Point { +0, -2 },
-            Point { -2, +0 },
-    };
-public:
-    Text(Game &game, SDL_Renderer *render, Point position, int maxWidth, int shadowOffset, std::string text,
-         Font *font, Color color);
+    Text(Game &game, SDL_Renderer *render, int maxWidth, std::string text, Font *font, Point position,
+         int shadowOffset = 1, Color color = white);
 
-    Text(Game &game, SDL_Renderer *render, Point position, int maxWidth, int shadowOffset, std::string text,
-         const char *fontPath, int pointSize, Color color);
+    Text(Game &game, SDL_Renderer *render, int maxWidth, std::string text, const char *fontPath, int pointSize,
+         Point position, int shadowOffset = 1, Color color = white);
 
     ~Text() override;
 
@@ -44,8 +34,12 @@ public:
 
     void changeText(std::string text);
 
+    void changeColor(Color color);
+
 private:
     void reloadTexture();
+
+    void calculateShadowOffset();
 
 private:
     Point position;
@@ -58,5 +52,6 @@ private:
     Rect blendedTextSize;
     Rect dst;
     Color color;
+    Array<Point, 8> shadowOffsets;
 };
 

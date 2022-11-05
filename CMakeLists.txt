@@ -14,7 +14,7 @@ project(cube_puzzle)
 set(CMAKE_CXX_STANDARD 23)
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin)
 set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} "${CMAKE_SOURCE_DIR}/CMAKE")
-set(SOURCE_FILES src/main.cpp src/global.hpp src/gamebase.hpp src/gamebase.cpp src/recthelper.hpp src/CubeGame.cpp src/CubeGame.hpp src/States/LevelSelector.cpp src/States/LevelSelector.hpp src/States/Level.cpp src/States/Level.hpp src/GameObjects/GameObject.cpp src/GameObjects/GameObject.hpp src/GameObjects/Player.cpp src/GameObjects/Player.hpp src/GameObjects/CubeMap.cpp src/GameObjects/CubeMap.hpp src/GameObjects/WorldMap.cpp src/GameObjects/WorldMap.hpp src/GameObjects/CubeField.cpp src/GameObjects/CubeField.hpp src/data/WorldField.hpp src/data/LevelData.hpp src/data/MoveDirections.hpp src/data/DiceData.hpp src/data/CubeData.cpp src/data/EmptyData.hpp src/data/SpriteStorage.hpp src/GameObjects/Text.cpp src/GameObjects/Text.hpp)
+set(SOURCE_FILES src/main.cpp src/global.hpp src/gamebase.hpp src/gamebase.cpp src/recthelper.hpp src/CubeGame.cpp src/CubeGame.hpp src/States/LevelSelector.cpp src/States/LevelSelector.hpp src/States/Level.cpp src/States/Level.hpp src/GameObjects/GameObject.cpp src/GameObjects/GameObject.hpp src/GameObjects/Player.cpp src/GameObjects/Player.hpp src/GameObjects/CubeMap.cpp src/GameObjects/CubeMap.hpp src/GameObjects/WorldMap.cpp src/GameObjects/WorldMap.hpp src/GameObjects/CubeField.cpp src/GameObjects/CubeField.hpp src/data/WorldField.hpp src/data/LevelData.hpp src/data/MoveDirections.hpp src/data/DiceData.hpp src/data/CubeData.cpp src/data/EmptyData.hpp src/data/SpriteStorage.hpp src/GameObjects/Text.cpp src/GameObjects/Text.hpp src/data/Colors.hpp)
 
 Message("")
 Message(STATUS "SOURCE entry point : " ${SOURCE_FILES})

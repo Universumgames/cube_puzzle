@@ -79,7 +79,7 @@ void LevelSelector::Init() {
     loadList();
 
     levelsLoaded = true;
-    text = new Text(game, render, {0, 0}, 500, 2, "level selector", "./asset/font/RobotoSlab-Bold.ttf", 30,
+    text = new Text(game, render, 500, "level selector", "./asset/font/RobotoSlab-Bold.ttf", 30, {0, 0}, 1,
                     {255, 255, 255, 255});
     text->Init();
 }
