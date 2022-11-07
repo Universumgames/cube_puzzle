@@ -138,6 +138,7 @@ bool Text::isEnabled() {
 }
 
 void Text::setEnabled(bool active) {
+    auto oldEn = enabled;
     enabled = active;
-    if (active)reloadTexture();
+    if (active && oldEn != active) reloadTexture();
 }
