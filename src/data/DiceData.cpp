@@ -9,10 +9,11 @@ DiceData::DiceData() {
     this->west = 3;
 }
 
-void DiceData::rotate(DiceRollDirection direction) {
+int DiceData::rotate(DiceRollDirection direction, int side) {
     auto oldUp = up;
     auto oldNorth = north;
     auto oldWest = west;
+    auto oldSideFacing = getSideFacing(side);
     switch (direction) {
         case DiceRollDirection::NORTH:
             north = oldUp;
@@ -31,6 +32,7 @@ void DiceData::rotate(DiceRollDirection direction) {
             west = getOpposite(oldUp);
             break;
     }
+    return getSide(oldSideFacing);
 }
 
 int DiceData::getSide(DiceSide side) const {
@@ -128,11 +130,11 @@ DiceFaceDirection DiceData::getDiceSideOrientation(int side) {
         }
     }else if(side == getOpposite(north)){
         if(anchor == west){
-            return DiceFaceDirection::LEFT;
+            return DiceFaceDirection::RIGHT;
         }else if(anchor == up){
             return DiceFaceDirection::UP;
         }else if(anchor == getOpposite(west)){
-            return DiceFaceDirection::RIGHT;
+            return DiceFaceDirection::LEFT;
         }else if(anchor == getOpposite(up)){
             return DiceFaceDirection::DOWN;
         }

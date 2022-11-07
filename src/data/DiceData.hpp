@@ -26,7 +26,7 @@ class DiceData{
 public:
     /// default cube is 1up, 5north, 3west
     DiceData();
-    void rotate(DiceRollDirection direction);
+    int rotate(DiceRollDirection direction, int side = 0);
 
     /// get dice side facing direction
     [[nodiscard]] int getSide(DiceSide side) const;

@@ -8,6 +8,7 @@
 #include "CubeField.hpp"
 #include "../data/MoveDirections.hpp"
 #include "../data/DiceData.hpp"
+#include "Text.hpp"
 
 class WorldMap;
 
@@ -17,7 +18,7 @@ class CubeMapSide;
 
 class CubeMap final : public GameObject {
 public:
-    CubeMap(Game &game, SDL_Renderer *render, const Vector<CubeMapSide>& sides, int startSide = 1,
+    CubeMap(CubeGame &game, SDL_Renderer *render, const Vector<CubeMapSide>& sides, int startSide = 2,
             Point playerPos = {0, 0});
 
     void SetWorldMap(WorldMap *worldMap) { this->worldMap = worldMap; }
@@ -35,9 +36,6 @@ public:
 public:
     bool movePlayer(PlayerMoveDirection dir);
 
-    Point cubePositionToScreenPosition(Point cubePos);
-
-    Point screenPositionToCubePosition(Point screenPos);
 
 private:
     void moveCubeInWorld(DiceRollDirection rollDirection);
@@ -45,6 +43,11 @@ private:
     void drawMinimap(const u32 frame, const u32 totalMSec, const float deltaT);
 
     void drawMap(const u32 frame, const u32 totalMSec, const float deltaT);
+
+    PlayerMoveDirection screenDirectionToDirectionOnCubeSide(PlayerMoveDirection direction);
+
+    void checkCubeSideEdgeOverstepping();
+
 
     /// get side of dice (1-6)
     CubeMapSide *getSide(int i);
@@ -55,20 +58,21 @@ private:
 private:
     WorldMap *worldMap = nullptr;
     Vector<CubeMapSide *> sides;
-    int currentSideId = 1;
+    int currentSideId;
     Point playerPos;
     DiceData diceData;
+    Text* debugSideIndicator;
 
     friend class WorldMap;
 };
 
 class CubeMapSide {
 public:
-    CubeMapSide(Vector<CubeField *> side, int width, int height) : width(width), height(height) { this->side = side; }
-    CubeMapSide(Vector<CubeField *> side, Point size) : width(size.x), height(size.y) { this->side = side; }
+    CubeMapSide(Vector<CubeField *> side, int width, int height, int sideID) : width(width), height(height), sideID(sideID) { this->side = side; }
+    CubeMapSide(Vector<CubeField *> side, Point size, int sideID) : width(size.x), height(size.y), sideID(sideID) { this->side = side; }
 
     Vector<CubeField *> side;
-    int width, height;
+    int width, height, sideID;
 
     CubeField *getField(int x, int y) { return side[getIndex(x, y)]; }
 
