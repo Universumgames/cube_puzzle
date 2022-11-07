@@ -64,7 +64,7 @@ void Text::changeText(std::string text) {
     reloadTexture();
 }
 
-Text::Text(Game &game, SDL_Renderer *render, int maxWidth, std::string text, Font *font, Point position,
+Text::Text(CubeGame &game, SDL_Renderer *render, int maxWidth, std::string text, Font *font, Point position,
            int shadowOffset,
            Color color) : GameObject(game, render) {
     this->position = position;
@@ -75,7 +75,7 @@ Text::Text(Game &game, SDL_Renderer *render, int maxWidth, std::string text, Fon
     this->color = color;
 }
 
-Text::Text(Game &game, SDL_Renderer *render, int maxWidth, std::string text, const char *fontPath, int pointSize,
+Text::Text(CubeGame &game, SDL_Renderer *render, int maxWidth, std::string text, const char *fontPath, int pointSize,
            Point position, int shadowOffset, Color color) : GameObject(game, render) {
     this->position = position;
     this->shadowOffset = shadowOffset;

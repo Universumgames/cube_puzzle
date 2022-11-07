@@ -8,9 +8,10 @@
 #include "../CubeGame.hpp"
 #include "../data/LevelData.hpp"
 #include "../GameObjects/Text.hpp"
+#include "ComplexGameState.hpp"
 
 
-class LevelSelector final : public GameState
+class LevelSelector final : public ComplexGameState
 {
 public:
     LevelSelector(CubeGame &game, Renderer *render);
@@ -31,10 +32,6 @@ private:
 
     /// i: index of level (loading order)
     void playLevel(const LevelData& level);
-
-    CubeGame& getCubeGame(){
-        return dynamic_cast<CubeGame &>(game);
-    }
 private:
     Vector<LevelData> levelData;
     bool levelsLoaded = false;

@@ -10,11 +10,11 @@ class CubeField {
 public:
     CubeField() = default;
 
-    virtual void HandleEvent(Game &game, const u32 frame, const u32 totalMSec, const float deltaT, Event event) = 0;
+    virtual void HandleEvent(CubeGame &game, const u32 frame, const u32 totalMSec, const float deltaT, Event event) = 0;
 
-    virtual void Update(Game &game, const u32 frame, const u32 totalMSec, const float deltaT) = 0;
+    virtual void Update(CubeGame &game, const u32 frame, const u32 totalMSec, const float deltaT) = 0;
 
-    virtual void Render(Game &game, Renderer *render, Point size, Point location, const u32 frame, const u32 totalMSec,
+    virtual void Render(CubeGame &game, Renderer *render, Point size, Point location, const u32 frame, const u32 totalMSec,
                         const float deltaT) {
         SDL_SetRenderDrawColor(render, 200, 200, 0, 255);
 
@@ -37,15 +37,15 @@ public:
         return true;
     }
 
-    void HandleEvent(Game &game, const u32 frame, const u32 totalMSec, const float deltaT, Event event) override {
+    void HandleEvent(CubeGame &game, const u32 frame, const u32 totalMSec, const float deltaT, Event event) override {
 
     }
 
-    void Update(Game &game, const u32 frame, const u32 totalMSec, const float deltaT) override {
+    void Update(CubeGame &game, const u32 frame, const u32 totalMSec, const float deltaT) override {
 
     }
 
-    void Render(Game &game, Renderer *render, Point size, Point location, const u32 frame, const u32 totalMSec,
+    void Render(CubeGame &game, Renderer *render, Point size, Point location, const u32 frame, const u32 totalMSec,
                 const float deltaT) override {
         //CubeField::Render(game, render, size, location, BASIC_GO_DATA_PASSTHROUGH);
         //Rect src = {0,0,16,16};

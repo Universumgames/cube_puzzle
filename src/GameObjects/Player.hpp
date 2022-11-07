@@ -11,7 +11,7 @@ class CubeMap;
 
 class Player: public GameObject{
 public:
-    Player(Game &game, SDL_Renderer *render);
+    Player(CubeGame &game, SDL_Renderer *render);
 
     void setCubeMap(CubeMap* cubeMap);
 

@@ -10,10 +10,10 @@
 
 class Text : public GameObject {
 public:
-    Text(Game &game, SDL_Renderer *render, int maxWidth, std::string text, Font *font, Point position,
+    Text(CubeGame &game, SDL_Renderer *render, int maxWidth, std::string text, Font *font, Point position,
          int shadowOffset = 1, Color color = white);
 
-    Text(Game &game, SDL_Renderer *render, int maxWidth, std::string text, const char *fontPath, int pointSize,
+    Text(CubeGame &game, SDL_Renderer *render, int maxWidth, std::string text, const char *fontPath, int pointSize,
          Point position, int shadowOffset = 1, Color color = white);
 
     ~Text() override;

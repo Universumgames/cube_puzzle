@@ -6,7 +6,7 @@
 #include "../States/Level.hpp"
 #include "CubeMap.hpp"
 
-Player::Player(Game &game, SDL_Renderer *render) : GameObject(game, render) {}
+Player::Player(CubeGame &game, SDL_Renderer *render) : GameObject(game, render) {}
 
 void Player::HandleEvent(const u32 frame, const u32 totalMSec, const float deltaT, Event event) {
 

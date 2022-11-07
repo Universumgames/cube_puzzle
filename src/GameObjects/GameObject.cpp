@@ -5,7 +5,7 @@
 #include "GameObject.hpp"
 #include "../gamebase.hpp"
 
-GameObject::GameObject(Game &game, SDL_Renderer *render) : game(game),
+GameObject::GameObject(CubeGame &game, SDL_Renderer *render) : game(game),
                                                            render(render) {
 
 }

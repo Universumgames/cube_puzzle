@@ -8,15 +8,17 @@
 #include "../GameObjects/GameObject.hpp"
 #include "../data/LevelData.hpp"
 #include "../GameObjects/Text.hpp"
+#include "ComplexGameState.hpp"
 
 class Player;
 class CubeMap;
 class WorldMap;
+class CubeGame;
 
-class Level final : public GameState
+class Level final : public ComplexGameState
 {
 public:
-    Level(Game &game, Renderer *render);
+    Level(CubeGame &game, Renderer *render);
 
     void Events(const u32 frame, const u32 totalMSec, const float deltaT) override;
 

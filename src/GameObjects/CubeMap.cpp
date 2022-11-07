@@ -42,7 +42,7 @@ CubeMapSide *CubeMap::getSide(int i) {
     return sides[i - 1];
 }
 
-CubeMap::CubeMap(Game &game1, SDL_Renderer *render1, const Vector<CubeMapSide> &sides1, int startSide, Point playerPos)
+CubeMap::CubeMap(CubeGame &game1, SDL_Renderer *render1, const Vector<CubeMapSide> &sides1, int startSide, Point playerPos)
         : GameObject(game1, render1) {
     for (auto side: sides1) {
         this->sides.push_back(new CubeMapSide(side));
@@ -92,19 +92,20 @@ Point CubeMap::cubePositionToScreenPosition(Point cubePos) {
     return Point();
 }
 
-void CubeMapSide::HandleEvent(Game &game, const u32 frame, const u32 totalMSec, const float deltaT, Event event) {
+void CubeMapSide::HandleEvent(CubeGame &game, const u32 frame, const u32 totalMSec, const float deltaT, Event event) {
     for (auto *field: side) {
         field->HandleEvent(game, BASIC_GO_DATA_PASSTHROUGH, event);
     }
 }
 
-void CubeMapSide::Update(Game &game, const u32 frame, const u32 totalMSec, const float deltaT) {
+void CubeMapSide::Update(CubeGame &game, const u32 frame, const u32 totalMSec, const float deltaT) {
     for (auto *field: side) {
         field->Update(game, BASIC_GO_DATA_PASSTHROUGH);
     }
 }
 
-void CubeMapSide::Render(Game &game, Renderer *render, const u32 frame, const u32 totalMSec, const float deltaT) {
+void CubeMapSide::Render(CubeGame &game, Renderer *render, DiceData diceData, const u32 frame, const u32 totalMSec,
+                         const float deltaT) {
     int x = 0, y = 0;
     Point size = getFieldSize(game.getWindowSize());
     Point offset = getStartingOffset(game.getWindowSize(), size);

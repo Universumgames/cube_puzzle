@@ -37,7 +37,7 @@ void LevelSelector::Render(const u32 frame, const u32 totalMSec, const float del
     SDL_RenderPresent(render);
 }
 
-LevelSelector::LevelSelector(CubeGame &game, Renderer *render) : GameState(game, render) {
+LevelSelector::LevelSelector(CubeGame &game, Renderer *render) : ComplexGameState(game, render) {
 }
 
 void LevelSelector::loadList() {
@@ -47,10 +47,10 @@ void LevelSelector::loadList() {
 
     /// template level
     {
-        auto *tempLevel = new Level(game, render);
-        auto levelD = tempLevel->loadTemplateLevel(getCubeGame().allStates.size());
+        auto *tempLevel = new Level(cubeGame, render);
+        auto levelD = tempLevel->loadTemplateLevel(cubeGame.allStates.size());
         levelData.push_back(levelD);
-        getCubeGame().allStates.push_back(tempLevel);
+        cubeGame.allStates.push_back(tempLevel);
     }
 
 // create levels
@@ -67,10 +67,10 @@ void LevelSelector::drawList() {
 
 void LevelSelector::loadLevel(const std::string &path) {
     // add level to allstates of game
-    auto *levelX = new Level(game, render);
-    auto level = levelX->load(path, getCubeGame().allStates.size());
+    auto *levelX = new Level(cubeGame, render);
+    auto level = levelX->load(path, cubeGame.allStates.size());
     levelData.push_back(level);
-    getCubeGame().allStates.push_back(levelX);
+    cubeGame.allStates.push_back(levelX);
 }
 
 void LevelSelector::Init() {
@@ -79,7 +79,7 @@ void LevelSelector::Init() {
     loadList();
 
     levelsLoaded = true;
-    text = new Text(game, render, 500, "level selector", ROBOT_FONT_FILEPATH, 30, {0, 0}, 1, white);
+    text = new Text(cubeGame, render, 500, "level selector", ROBOT_FONT_FILEPATH, 30, {0, 0}, 1, white);
     text->Init();
 }
 

@@ -8,6 +8,7 @@
 #include "../GameObjects/WorldMap.hpp"
 #include "../data/EmptyData.hpp"
 #include "../recthelper.hpp"
+#include "../CubeGame.hpp"
 
 #define iterateGameObjects(method) for(auto gameobject:gameObjects){gameobject->method;}
 
@@ -45,7 +46,7 @@ void Level::Render(const u32 frame, const u32 totalMSec, const float deltaT) {
     SDL_RenderPresent(render);
 }
 
-Level::Level(Game &game, Renderer *render) : GameState(game, render) {
+Level::Level(CubeGame &game, Renderer *render) : ComplexGameState(game, render) {
     this->text = new Text(game, render, 500, "test level", ROBOT_FONT_FILEPATH, 30, {0, 0}, 1, white);
 }
 
@@ -65,19 +66,19 @@ void Level::UnInit() {
 }
 
 LevelData Level::load(const std::string &path, size_t id) {
-    worldMap = new WorldMap(game, render, 10, 10, {WorldField::DEFAULT}, {0, 0});
-    cubeMap = new CubeMap(game, render, {});
+    worldMap = new WorldMap(cubeGame, render, 10, 10, {WorldField::DEFAULT}, {0, 0});
+    cubeMap = new CubeMap(cubeGame, render, {});
     worldMap->setCubeMap(cubeMap);
     cubeMap->SetWorldMap(worldMap);
-    player = new Player(game, render);
+    player = new Player(cubeGame, render);
     return {.path = path, .id = id};
 }
 
 LevelData Level::loadTemplateLevel(size_t id) {
-    worldMap = new WorldMap(game, render, emptyWorldFieldSize.x, emptyWorldFieldSize.y, emptyWorldField, {0, 0});
-    cubeMap = new CubeMap(game, render, emptyCubeMapSides);
+    worldMap = new WorldMap(cubeGame, render, emptyWorldFieldSize.x, emptyWorldFieldSize.y, emptyWorldField, {0, 0});
+    cubeMap = new CubeMap(cubeGame, render, emptyCubeMapSides);
     worldMap->setCubeMap(cubeMap);
     cubeMap->SetWorldMap(worldMap);
-    player = new Player(game, render);
+    player = new Player(cubeGame, render);
     return {.path = "", .id = id};
 }

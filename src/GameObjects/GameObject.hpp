@@ -5,15 +5,15 @@
 #pragma once
 #include "../global.hpp"
 
-class Game;
+class CubeGame;
 
 class GameObject {
 protected:
-    Game& game;
+    CubeGame& game;
     SDL_Renderer* render;
 public:
-    GameObject(Game& game, SDL_Renderer* render);
-    virtual ~GameObject() = default;
+    GameObject(CubeGame& game, SDL_Renderer* render);
+    virtual ~GameObject(){};
 
     virtual void Init() {}
     virtual void UnInit() {}
