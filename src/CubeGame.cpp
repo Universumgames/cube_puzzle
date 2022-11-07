@@ -38,6 +38,10 @@ bool CubeGame::HandleEvent(const Event event)
             SetNextState(1);
             return true;
         }
+        else if(what_key.scancode == SDL_SCANCODE_F3){
+            debugView = !debugView;
+            return true;
+        }
         break;
     }
 
@@ -64,4 +68,8 @@ SpriteStorage *CubeGame::getSpriteStorage() {
 void CubeGame::loadSprites() {
     loadPNGTexture(spriteStorage.temp, render, "./asset/graphic/AllTestTileWater.png")
     loadFont(spriteStorage.basicFont, "./asset/font/RobotSlab-Bold.ttf", 18)
+}
+
+bool CubeGame::isDebug() {
+    return debugView;
 }

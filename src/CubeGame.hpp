@@ -13,10 +13,14 @@ public:
     bool HandleEvent(const Event event) override;
 
     SpriteStorage* getSpriteStorage() override;
+
+    bool isDebug();
 private:
     SpriteStorage spriteStorage;
 
     void loadSprites();
+
+    bool debugView = false;
 
 protected:
     friend class LevelSelector;
