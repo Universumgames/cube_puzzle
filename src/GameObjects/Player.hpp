@@ -26,4 +26,5 @@ public:
 private:
     Level* currentLevel;
     CubeMap* cubeMap;
+    Rect nextDraw;
 };

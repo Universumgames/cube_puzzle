@@ -36,7 +36,9 @@ public:
 public:
     bool movePlayer(PlayerMoveDirection dir);
 
+    Rect playerDrawPosition();
 
+    CubeMapSide* getCurrentSide();
 private:
     void moveCubeInWorld(DiceRollDirection rollDirection);
 

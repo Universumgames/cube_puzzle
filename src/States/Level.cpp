@@ -48,7 +48,7 @@ void Level::Render(const u32 frame, const u32 totalMSec, const float deltaT) {
 }
 
 Level::Level(CubeGame &game, Renderer *render) : ComplexGameState(game, render) {
-    this->text = new Text(game, render, 500, "test level", ROBOTO_FONT_FILEPATH, 30, {0, 0}, 1, white);
+    this->text = new Text(game, render, 500, "test level", cubeGame.getSpriteStorage()->basicFont, {0, 0}, 1, white);
 }
 
 void Level::Init() {
@@ -72,6 +72,7 @@ LevelData Level::load(const std::string &path, size_t id) {
     worldMap->setCubeMap(cubeMap);
     cubeMap->SetWorldMap(worldMap);
     player = new Player(cubeGame, render);
+    player->setCubeMap(cubeMap);
     return {.path = path, .id = id};
 }
 
@@ -81,5 +82,6 @@ LevelData Level::loadTemplateLevel(size_t id) {
     worldMap->setCubeMap(cubeMap);
     cubeMap->SetWorldMap(worldMap);
     player = new Player(cubeGame, render);
+    player->setCubeMap(cubeMap);
     return {.path = "", .id = id};
 }

@@ -53,7 +53,7 @@ CubeMap::CubeMap(CubeGame &game1, SDL_Renderer *render1, const Vector<CubeMapSid
     }
     this->currentSideId = startSide;
     this->playerPos = playerPos;
-    this->debugSideIndicator = new Text(game, render, 400, "", ROBOTO_FONT_FILEPATH, 30, {0, 40});
+    this->debugSideIndicator = new Text(game, render, 400, "", game1.getSpriteStorage()->basicFont, {0, 40});
 }
 
 bool CubeMap::movePlayer(PlayerMoveDirection dir) {
@@ -162,6 +162,17 @@ void CubeMap::checkCubeSideEdgeOverstepping() {
     } else if (playerPos.y >= side->height) {
 
     }
+}
+
+Rect CubeMap::playerDrawPosition() {
+    CubeMapSide *side = getCurrentSide();
+    auto size = side->getFieldSize(game.getWindowSize());
+    auto offset = side->getStartingOffset(game.getWindowSize(), size);
+    return {size.x * playerPos.x + offset.x, size.y * playerPos.y + offset.y, size.x, size.y};
+}
+
+CubeMapSide *CubeMap::getCurrentSide() {
+    return getSide(currentSideId);
 }
 
 Point CubeMapSide::cubePositionToScreenPosition(DiceData diceData, Point cubePos) const {

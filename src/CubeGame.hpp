@@ -20,7 +20,7 @@ private:
 
     void loadSprites();
 
-    bool debugView = false;
+    bool debugView = true;
 
 protected:
     friend class LevelSelector;

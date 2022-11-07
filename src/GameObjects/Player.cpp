@@ -9,16 +9,27 @@
 Player::Player(CubeGame &game, SDL_Renderer *render) : GameObject(game, render) {}
 
 void Player::HandleEvent(const u32 frame, const u32 totalMSec, const float deltaT, Event event) {
-
+    if (event.type != SDL_KEYDOWN) return;
+    const Keysym &what_key = event.key.keysym;
+    if (what_key.scancode == SDL_SCANCODE_UP) {
+        move(PlayerMoveDirection::UP);
+    }else if (what_key.scancode == SDL_SCANCODE_DOWN) {
+        move(PlayerMoveDirection::DOWN);
+    }else if (what_key.scancode == SDL_SCANCODE_RIGHT) {
+        move(PlayerMoveDirection::RIGHT);
+    }else if (what_key.scancode == SDL_SCANCODE_LEFT) {
+        move(PlayerMoveDirection::LEFT);
+    }
 }
 
 void Player::Update(const u32 frame, const u32 totalMSec, const float deltaT) {
-
+    if (cubeMap == nullptr) return;
+    nextDraw = cubeMap->playerDrawPosition();
 }
 
 void Player::Render(const u32 frame, const u32 totalMSec, const float deltaT) {
-    Point windowSize = game.getWindowSize();
-    drawSprite(game.getSpriteStorage()->temp, render, {0, 1}, {0, 0, min(windowSize.x, windowSize.y) / 5, min(windowSize.x, windowSize.y) / 5});
+    if (cubeMap == nullptr) return;
+    drawSprite(game.getSpriteStorage()->temp, render, {0, 1}, nextDraw);
 }
 
 void Player::setCubeMap(CubeMap *cubeMap) {
