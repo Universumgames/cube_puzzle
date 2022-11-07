@@ -9,7 +9,7 @@ inline void drawSprite(Texture *texture, Renderer *render, Point imageIndex, Rec
     SDL_RenderCopy(render, texture, &src, &dst);
 }
 
-#define ROBOT_FONT_FILEPATH "./asset/font/RobotoSlab-Bold.ttf"
+#define ROBOTO_FONT_FILEPATH "./asset/font/RobotoSlab-Bold.ttf"
 
 struct SpriteStorage {
     Texture *cubeMapSpriteSheet = nullptr;

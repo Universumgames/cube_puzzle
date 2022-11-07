@@ -47,7 +47,7 @@ void Level::Render(const u32 frame, const u32 totalMSec, const float deltaT) {
 }
 
 Level::Level(CubeGame &game, Renderer *render) : ComplexGameState(game, render) {
-    this->text = new Text(game, render, 500, "test level", ROBOT_FONT_FILEPATH, 30, {0, 0}, 1, white);
+    this->text = new Text(game, render, 500, "test level", ROBOTO_FONT_FILEPATH, 30, {0, 0}, 1, white);
 }
 
 void Level::Init() {
