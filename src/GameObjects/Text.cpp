@@ -5,6 +5,7 @@
 #include "Text.hpp"
 
 #include <utility>
+#include "../global.hpp"
 #include "../recthelper.hpp"
 
 void Text::HandleEvent(const u32 frame, const u32 totalMSec, const float deltaT, Event event) {
@@ -50,7 +51,7 @@ void Text::UnInit() {
 Text::~Text() {
     UnInit();
     if (toClean) {
-        delete font;
+        TTF_CloseFont(font);
     }
 }
 
