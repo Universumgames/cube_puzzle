@@ -20,6 +20,7 @@ void Text::Render(const u32 frame, const u32 totalMSec, const float deltaT) {
 }
 
 void Text::RenderUI(const u32 frame, const u32 totalMSec, const float deltaT) {
+    if(!enabled) return;
     GameObject::RenderUI(frame, totalMSec, deltaT);
 
     SDL_SetTextureColorMod(texture, 0, 0, 0);
@@ -85,7 +86,7 @@ Text::Text(Game &game, SDL_Renderer *render, int maxWidth, std::string text, con
 }
 
 void Text::reloadTexture() {
-
+    if(!enabled) return;
     if (texture != nullptr) SDL_DestroyTexture(texture);
 
     Surface *surf = TTF_RenderUTF8_Blended_Wrapped(font, text.c_str(), color, maxWidth);
@@ -130,4 +131,13 @@ void Text::calculateShadowOffset() {
 
 void Text::changeColor(Color color) {
     this->color = color;
+}
+
+bool Text::isEnabled() {
+    return enabled;
+}
+
+void Text::setEnabled(bool active) {
+    enabled = active;
+    if (active)reloadTexture();
 }

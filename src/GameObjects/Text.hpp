@@ -36,6 +36,10 @@ public:
 
     void changeColor(Color color);
 
+    bool isEnabled();
+
+    void setEnabled(bool active);
+
 private:
     void reloadTexture();
 
@@ -53,5 +57,6 @@ private:
     Rect dst;
     Color color;
     Array<Point, 8> shadowOffsets;
+    bool enabled = true;
 };
 
