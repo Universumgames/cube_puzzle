@@ -9,10 +9,15 @@ constexpr Point  operator"" _down  (unsigned long long n) { return Point{ 0, (in
 constexpr Point  operator"" _left  (unsigned long long n) { return Point{ -(int)n, 0 }; }
 constexpr Point  operator"" _right (unsigned long long n) { return Point{ (int)n, 0 }; }
 
+constexpr std::ostream & operator << (std::ostream &os, const Point &s) {
+    return (os << "{x: " << s.x << ", y: " << s.y << "}");
+}
+
 constexpr Point  operator+  (const Point lhs, const Point rhs) { return Point{ lhs.x + rhs.x, lhs.y + rhs.y }; }
 constexpr Point  operator-  (const Point lhs, const Point rhs) { return Point{ lhs.x - rhs.x, lhs.y - rhs.y }; }
 constexpr Point  operator/  (const Point lhs, const int rhs) { return Point{ lhs.x / rhs, lhs.y / rhs }; }
 constexpr Point  operator*  (const Point lhs, const int rhs) { return Point{ lhs.x * rhs, lhs.y * rhs }; }
+constexpr Point  operator%  (const Point lhs, const int rhs) { return Point{ lhs.x % rhs, lhs.y % rhs }; }
 constexpr Point& operator+= (Point& lhs, const Point rhs) { lhs = lhs + rhs; return lhs; }
 constexpr Point& operator-= (Point& lhs, const Point rhs) { lhs = lhs - rhs; return lhs; }
 constexpr Rect   operator+  (const Point lhs, const Rect rhs) { return Rect{ lhs.x + rhs.x, lhs.y + rhs.y, rhs.w, rhs.h }; }
