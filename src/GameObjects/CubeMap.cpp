@@ -18,6 +18,16 @@ void CubeMap::HandleEvent(const u32 frame, const u32 totalMSec, const float delt
 void CubeMap::Update(const u32 frame, const u32 totalMSec, const float deltaT) {
     debugSideIndicator->setEnabled(game.isDebug());
     debugSideIndicator->changeText("Current Side: " + std::to_string(currentSideId));
+
+    minimapText->changePosition({game.getWindowSize().x - 80, 0});
+    int n=0, w=0,c=0, e=0, s=0, b=0;
+    c = currentSideId;
+    diceData.get2DRepresentation(c, &n,&w,&e,&s,&b);
+    std::string text = "   " + std::to_string(n) + "   \n" +
+                       std::to_string(w) + " " + std::to_string(c) + " " + std::to_string(e) + "\n"+
+                       "   " + std::to_string(s) + "   \n" +
+                       "   " + std::to_string(b) + "   ";
+    minimapText->changeText(text);
 }
 
 void CubeMap::Render(const u32 frame, const u32 totalMSec, const float deltaT) {
@@ -31,7 +41,7 @@ void CubeMap::RenderUI(const u32 frame, const u32 totalMSec, const float deltaT)
 }
 
 void CubeMap::drawMinimap(const u32 frame, const u32 totalMSec, const float deltaT) {
-
+    minimapText->RenderUI(BASIC_GO_DATA_PASSTHROUGH);
 }
 
 void CubeMap::drawMap(const u32 frame, const u32 totalMSec, const float deltaT) {
@@ -54,6 +64,7 @@ CubeMap::CubeMap(CubeGame &game1, SDL_Renderer *render1, const Vector<CubeMapSid
     this->currentSideId = startSide;
     this->playerPos = playerPos;
     this->debugSideIndicator = new Text(game, render, 400, "", game1.getSpriteStorage()->basicFont, {0, 40});
+    this->minimapText = new Text(game, render, 400, "", game.getSpriteStorage()->basicFont, {0, 0});
 }
 
 bool CubeMap::movePlayer(PlayerMoveDirection dir) {
@@ -79,9 +90,9 @@ bool CubeMap::movePlayer(PlayerMoveDirection dir) {
 }
 
 void CubeMap::moveCubeInWorld(DiceRollDirection rollDirection) {
+    // TODO implement rolling
     switch (rollDirection) {
         case DiceRollDirection::NORTH:
-            diceData.rotate(rollDirection);
             worldMap->cubePos += 1_up;
             break;
         case DiceRollDirection::SOUTH:
@@ -94,6 +105,7 @@ void CubeMap::moveCubeInWorld(DiceRollDirection rollDirection) {
             worldMap->cubePos += 1_right;
             break;
     }
+    diceData.rotate(rollDirection);
 }
 
 CubeField *CubeMap::getField(int side, int x, int y) {

@@ -48,7 +48,7 @@ private:
 
     PlayerMoveDirection screenDirectionToDirectionOnCubeSide(PlayerMoveDirection direction);
 
-    void checkCubeSideEdgeOverstepping();
+    bool checkCubeSideEdgeOverstepping(Point& newPosition);
 
 
     /// get side of dice (1-6)
@@ -64,6 +64,7 @@ private:
     Point playerPos;
     DiceData diceData;
     Text* debugSideIndicator;
+    Text* minimapText;
 
     friend class WorldMap;
 };
@@ -77,6 +78,7 @@ public:
     int width, height, sideID;
 
     CubeField *getField(int x, int y) { return side[getIndex(x, y)]; }
+    CubeField *getField(Point pos) { return getField(pos.x, pos.y); }
 
     [[nodiscard]] int getIndex(int x, int y) const { return x * width + y; }
 
