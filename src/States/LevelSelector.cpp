@@ -79,7 +79,7 @@ void LevelSelector::Init() {
     loadList();
 
     levelsLoaded = true;
-    text = new Text(cubeGame, render, 500, "level selector", ROBOTO_FONT_FILEPATH, 30, {0, 0}, 1, white);
+    text = new Text(cubeGame, render, 500, "level selector", game.getSpriteStorage()->debugFont, {0, 0}, 1, white);
     text->Init();
 }
 

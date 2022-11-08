@@ -69,8 +69,6 @@ CubeMap::CubeMap(CubeGame &game1, SDL_Renderer *render1, const Vector<CubeMapSid
 
 bool CubeMap::movePlayer(PlayerMoveDirection dir) {
     PlayerMoveDirection normalizedDirection = screenDirectionToDirectionOnCubeSide(dir);
-    // TODO check if move was/is legit
-    // TODO make playermovement relative to screen
 
     Point moveDir = {};
     switch (normalizedDirection) {
@@ -114,7 +112,6 @@ bool CubeMap::movePlayer(PlayerMoveDirection dir) {
 }
 
 void CubeMap::moveCubeInWorld(DiceRollDirection rollDirection) {
-    // TODO implement rolling
     switch (rollDirection) {
         case DiceRollDirection::NORTH:
             worldMap->cubePos += 1_up;
