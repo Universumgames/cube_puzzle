@@ -49,7 +49,9 @@ public:
      * @param side
      * @return get rotation of side on global space (no result for top and bottom of dice)
      */
-    DiceFaceDirection getDiceSideOrientation(int side);
+    DiceFaceDirection getDiceSideRotation(int side);
+
+    int getSideWhenMovingInDirX(int side, DiceFaceDirection direction);
 
 private:
     int up, north, west;

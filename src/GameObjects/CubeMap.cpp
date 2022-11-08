@@ -109,7 +109,7 @@ void CubeMap::Init() {
 }
 
 PlayerMoveDirection CubeMap::screenDirectionToDirectionOnCubeSide(PlayerMoveDirection direction) {
-    DiceFaceDirection faceDirection = diceData.getDiceSideOrientation(currentSideId);
+    DiceFaceDirection faceDirection = diceData.getDiceSideRotation(currentSideId);
     switch (faceDirection) {
         case DiceFaceDirection::UP:
             return direction;
@@ -176,7 +176,7 @@ CubeMapSide *CubeMap::getCurrentSide() {
 }
 
 Point CubeMapSide::cubePositionToScreenPosition(DiceData diceData, Point cubePos) const {
-    DiceFaceDirection faceDirection = diceData.getDiceSideOrientation(sideID);
+    DiceFaceDirection faceDirection = diceData.getDiceSideRotation(sideID);
     Point res = {};
     switch (faceDirection) {
         case DiceFaceDirection::UP:
