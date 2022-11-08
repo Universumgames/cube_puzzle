@@ -22,6 +22,8 @@ private:
 
     bool debugView = true;
 
+    void setWindowIcon();
+
 protected:
     friend class LevelSelector;
 };

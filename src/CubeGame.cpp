@@ -7,6 +7,15 @@
 #include "States/Level.hpp"
 #include "States/LevelSelector.hpp"
 
+#define loadPNGTexture(variable, render, path) { \
+                                        Surface* temp = IMG_Load(path); \
+                                        variable =  SDL_CreateTextureFromSurface(render, temp); \
+                                        SDL_FreeSurface(temp);         \
+                                        }
+
+#define loadFont(variable, path, size) { \
+                                        variable = TTF_OpenFont(path, size);         \
+                                        }
 
 CubeGame::CubeGame() : Game("CubeGame")
 {
@@ -14,7 +23,8 @@ CubeGame::CubeGame() : Game("CubeGame")
     // Level selctor loads all levels and adds them procedually to the states
     allStates = {new LevelSelector(*this, render)};
     SetNextState(0);
-    SetPerfDrawMode(PerformanceDrawMode::Title);
+
+    setWindowIcon();
 }
 
 bool CubeGame::HandleEvent(const Event event)
@@ -55,16 +65,6 @@ SpriteStorage *CubeGame::getSpriteStorage() {
     return &spriteStorage;
 }
 
-#define loadPNGTexture(variable, render, path) { \
-                                        Surface* temp = IMG_Load(path); \
-                                        variable =  SDL_CreateTextureFromSurface(render, temp); \
-                                        SDL_FreeSurface(temp);         \
-                                        }
-
-#define loadFont(variable, path, size) { \
-                                        variable = TTF_OpenFont(path, size);         \
-                                        }
-
 void CubeGame::loadSprites() {
     loadPNGTexture(spriteStorage.temp, render, "./asset/graphic/AllTestTileWater.png")
     loadFont(spriteStorage.basicFont, ROBOTO_FONT_FILEPATH, 30)
@@ -73,4 +73,10 @@ void CubeGame::loadSprites() {
 
 bool CubeGame::isDebug() {
     return debugView;
+}
+
+void CubeGame::setWindowIcon() {
+    SetPerfDrawMode(PerformanceDrawMode::Title);
+    Surface* icon = IMG_Load("./asset/graphic/mac1024.png");
+    SDL_SetWindowIcon(window, icon);
 }
