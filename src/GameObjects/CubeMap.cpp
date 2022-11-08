@@ -20,11 +20,11 @@ void CubeMap::Update(const u32 frame, const u32 totalMSec, const float deltaT) {
     debugSideIndicator->changeText("Current Side: " + std::to_string(currentSideId));
 
     minimapText->changePosition({game.getWindowSize().x - 80, 0});
-    int n=0, w=0,c=0, e=0, s=0, b=0;
+    int n = 0, w = 0, c = 0, e = 0, s = 0, b = 0;
     c = currentSideId;
-    diceData.get2DRepresentation(c, &n,&w,&e,&s,&b);
+    diceData.get2DRepresentation(c, &n, &w, &e, &s, &b);
     std::string text = "   " + std::to_string(n) + "   \n" +
-                       std::to_string(w) + " " + std::to_string(c) + " " + std::to_string(e) + "\n"+
+                       std::to_string(w) + " " + std::to_string(c) + " " + std::to_string(e) + "\n" +
                        "   " + std::to_string(s) + "   \n" +
                        "   " + std::to_string(b) + "   ";
     minimapText->changeText(text);
@@ -70,23 +70,47 @@ CubeMap::CubeMap(CubeGame &game1, SDL_Renderer *render1, const Vector<CubeMapSid
 bool CubeMap::movePlayer(PlayerMoveDirection dir) {
     PlayerMoveDirection normalizedDirection = screenDirectionToDirectionOnCubeSide(dir);
     // TODO check if move was/is legit
+    // TODO make playermovement relative to screen
 
+    Point moveDir = {};
     switch (normalizedDirection) {
         case PlayerMoveDirection::UP:
-            playerPos += 1_up;
+            moveDir += 1_up;
             break;
         case PlayerMoveDirection::DOWN:
-            playerPos += 1_down;
+            moveDir += 1_down;
             break;
         case PlayerMoveDirection::LEFT:
-            playerPos += 1_left;
+            moveDir += 1_left;
             break;
         case PlayerMoveDirection::RIGHT:
-            playerPos += 1_right;
+            moveDir += 1_right;
             break;
     }
-    checkCubeSideEdgeOverstepping();
-    return false;
+    // move dir relative to screen not world
+    auto tmp = 0;
+    switch (diceData.getDiceSideRotation(currentSideId)) {
+        case DiceFaceDirection::UP:
+            break;
+        case DiceFaceDirection::DOWN:
+            moveDir = moveDir * -1;
+            break;
+        case DiceFaceDirection::LEFT:
+            tmp = moveDir.x;
+            moveDir.x = moveDir.y;
+            moveDir.y = tmp * -1;
+            break;
+        case DiceFaceDirection::RIGHT:
+            tmp = moveDir.x;
+            moveDir.x = moveDir.y * -1;
+            moveDir.y = tmp;
+            break;
+    }
+    Point newPlayerPos = playerPos + moveDir;
+    bool edge = checkCubeSideEdgeOverstepping(newPlayerPos);
+    if (!getCurrentSide()->getField(newPlayerPos)->isPlayerMovableTo()) return false;
+    playerPos = newPlayerPos;
+    return true;
 }
 
 void CubeMap::moveCubeInWorld(DiceRollDirection rollDirection) {
@@ -162,18 +186,34 @@ PlayerMoveDirection CubeMap::screenDirectionToDirectionOnCubeSide(PlayerMoveDire
     return PlayerMoveDirection::LEFT;
 }
 
-void CubeMap::checkCubeSideEdgeOverstepping() {
-    // check overstepping and rotate cube
+bool CubeMap::checkCubeSideEdgeOverstepping(Point &playerPos) {
+    // TODO implement edge overstepping
+    // done: change current Side
+    // done: rotate cube
+    // TODO move player to correct location
     auto *side = getSide(currentSideId);
     if (playerPos.x < 0) {
-
+        currentSideId = diceData.getSideWhenMovingInDirX(currentSideId, DiceFaceDirection::LEFT);
+        playerPos = {2, 2};
+        return true;
     } else if (playerPos.x >= side->width) {
-
+        currentSideId = diceData.getSideWhenMovingInDirX(currentSideId, DiceFaceDirection::RIGHT);
+        playerPos = {2, 2};
+        return true;
     } else if (playerPos.y < 0) {
-
+        auto oldFacing = diceData.getSideFacing(currentSideId);
+        currentSideId = diceData.getSideWhenMovingInDirX(currentSideId, DiceFaceDirection::UP);
+        moveCubeInWorld(diceSideToRollDir(oldFacing));
+        playerPos = {2, 2};
+        return true;
     } else if (playerPos.y >= side->height) {
-
+        auto oldFacing = diceData.getSideFacing(currentSideId);
+        currentSideId = diceData.getSideWhenMovingInDirX(currentSideId, DiceFaceDirection::DOWN);
+        moveCubeInWorld(diceSideToRollDir(oldFacing));
+        playerPos = {2, 2};
+        return true;
     }
+    return false;
 }
 
 Rect CubeMap::playerDrawPosition() {
