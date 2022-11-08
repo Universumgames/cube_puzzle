@@ -18,16 +18,6 @@ void CubeMap::HandleEvent(const u32 frame, const u32 totalMSec, const float delt
 void CubeMap::Update(const u32 frame, const u32 totalMSec, const float deltaT) {
     debugSideIndicator->setEnabled(game.isDebug());
     debugSideIndicator->changeText("Current Side: " + std::to_string(currentSideId));
-
-    minimapText->changePosition({game.getWindowSize().x - 80, 0});
-    int n = 0, w = 0, c = 0, e = 0, s = 0, b = 0;
-    c = currentSideId;
-    diceData.get2DRepresentation(c, &n, &w, &e, &s, &b);
-    std::string text = "   " + std::to_string(n) + "   \n" +
-                       std::to_string(w) + " " + std::to_string(c) + " " + std::to_string(e) + "\n" +
-                       "   " + std::to_string(s) + "   \n" +
-                       "   " + std::to_string(b) + "   ";
-    minimapText->changeText(text);
 }
 
 void CubeMap::Render(const u32 frame, const u32 totalMSec, const float deltaT) {
@@ -63,8 +53,9 @@ CubeMap::CubeMap(CubeGame &game1, SDL_Renderer *render1, const Vector<CubeMapSid
     }
     this->currentSideId = startSide;
     this->playerPos = playerPos;
-    this->debugSideIndicator = new Text(game, render, 400, "", game1.getSpriteStorage()->basicFont, {0, 40});
-    this->minimapText = new Text(game, render, 400, "", game.getSpriteStorage()->basicFont, {0, 0});
+    this->debugSideIndicator = new Text(game, render, 400, "", game1.getSpriteStorage()->debugFont, {10, 30});
+    this->minimapText = new Text(game, render, 400, "", game.getSpriteStorage()->debugFont, {10, 60});
+    updateMinimap();
 }
 
 bool CubeMap::movePlayer(PlayerMoveDirection dir) {
@@ -106,6 +97,9 @@ bool CubeMap::movePlayer(PlayerMoveDirection dir) {
     }
     Point newPlayerPos = playerPos + moveDir;
     bool edge = checkCubeSideEdgeOverstepping(newPlayerPos);
+    if(edge){
+        updateMinimap();
+    }
     if (!getCurrentSide()->getField(newPlayerPos)->isPlayerMovableTo()) return false;
     playerPos = newPlayerPos;
     return true;
@@ -222,6 +216,17 @@ Rect CubeMap::playerDrawPosition() {
 
 CubeMapSide *CubeMap::getCurrentSide() {
     return getSide(currentSideId);
+}
+
+void CubeMap::updateMinimap() {
+    int n = 0, w = 0, c = 0, e = 0, s = 0, b = 0;
+    c = currentSideId;
+    diceData.get2DRepresentation(c, &n, &w, &e, &s, &b);
+    std::string text = "number cube minimap: \n   " + std::to_string(n) + "   \n" +
+                       std::to_string(w) + " " + std::to_string(c) + " " + std::to_string(e) + "\n" +
+                       "   " + std::to_string(s) + "   \n" +
+                       "   " + std::to_string(b) + "   ";
+    minimapText->changeText(text);
 }
 
 Point CubeMapSide::cubePositionToScreenPosition(DiceData diceData, Point cubePos) const {

@@ -57,6 +57,8 @@ private:
     CubeField* getField(int side, int x, int y);
     CubeField* getField(int side, Point p);
 
+    void updateMinimap();
+
 private:
     WorldMap *worldMap = nullptr;
     Vector<CubeMapSide *> sides;

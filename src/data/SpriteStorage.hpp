@@ -10,7 +10,7 @@ inline void drawSprite(Texture *texture, Renderer *render, Point imageIndex, Rec
 }
 
 #define ROBOTO_FONT_FILEPATH "./asset/font/RobotoSlab-Bold.ttf"
-#define ROBOTO_FONT_LIGHT_FILEPATH "./asset/font/Roboto/Roboto-Light.ttf"
+#define ROBOTO_FONT_LIGHT_FILEPATH "./asset/font/Roboto/Roboto-Regular.ttf"
 
 struct SpriteStorage {
     Texture *cubeMapSpriteSheet = nullptr;
