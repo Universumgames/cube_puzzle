@@ -53,10 +53,32 @@ public:
 
     int getSideWhenMovingInDirX(int side, DiceFaceDirection direction);
 
+    void get2DRepresentation(int c, int* n, int*w, int*e, int*s, int* b);
+
 private:
     int up, north, west;
-
+public:
     static int getOpposite(int side);
 };
 
-
+inline DiceRollDirection diceSideToRollDir(DiceSide side){
+    switch(side){
+        case DiceSide::NORTH:
+            return DiceRollDirection::NORTH;
+            break;
+        case DiceSide::SOUTH:
+            return DiceRollDirection::SOUTH;
+            break;
+        case DiceSide::WEST:
+            return DiceRollDirection::WEST;
+            break;
+        case DiceSide::EAST:
+            return DiceRollDirection::EAST;
+            break;
+        case DiceSide::TOP:
+            break;
+        case DiceSide::BOTTOM:
+            break;
+    }
+    return DiceRollDirection::NORTH;
+}

@@ -155,6 +155,7 @@ DiceFaceDirection DiceData::getDiceSideRotation(int side) {
 }
 
 int DiceData::getSideWhenMovingInDirX(int side, DiceFaceDirection direction) {
+    // TODO Bug somewhere in here...
     auto currentFacing = getSideFacing(side);
     DiceSide nextDir = DiceSide::NORTH;
     switch(currentFacing){
@@ -167,10 +168,10 @@ int DiceData::getSideWhenMovingInDirX(int side, DiceFaceDirection direction) {
                     nextDir = DiceSide::BOTTOM;
                     break;
                 case DiceFaceDirection::LEFT:
-                    nextDir = DiceSide::EAST;
+                    nextDir = DiceSide::WEST;
                     break;
                 case DiceFaceDirection::RIGHT:
-                    nextDir = DiceSide::WEST;
+                    nextDir = DiceSide::EAST;
                     break;
             }
             break;
@@ -183,10 +184,10 @@ int DiceData::getSideWhenMovingInDirX(int side, DiceFaceDirection direction) {
                     nextDir = DiceSide::BOTTOM;
                     break;
                 case DiceFaceDirection::LEFT:
-                    nextDir = DiceSide::WEST;
+                    nextDir = DiceSide::EAST;
                     break;
                 case DiceFaceDirection::RIGHT:
-                    nextDir = DiceSide::EAST;
+                    nextDir = DiceSide::WEST;
                     break;
             }
             break;
@@ -199,10 +200,10 @@ int DiceData::getSideWhenMovingInDirX(int side, DiceFaceDirection direction) {
                     nextDir = DiceSide::BOTTOM;
                     break;
                 case DiceFaceDirection::LEFT:
-                    nextDir = DiceSide::NORTH;
+                    nextDir = DiceSide::SOUTH;
                     break;
                 case DiceFaceDirection::RIGHT:
-                    nextDir = DiceSide::SOUTH;
+                    nextDir = DiceSide::NORTH;
                     break;
             }
             break;
@@ -215,10 +216,10 @@ int DiceData::getSideWhenMovingInDirX(int side, DiceFaceDirection direction) {
                     nextDir = DiceSide::BOTTOM;
                     break;
                 case DiceFaceDirection::LEFT:
-                    nextDir = DiceSide::SOUTH;
+                    nextDir = DiceSide::NORTH;
                     break;
                 case DiceFaceDirection::RIGHT:
-                    nextDir = DiceSide::NORTH;
+                    nextDir = DiceSide::SOUTH;
                     break;
             }
             break;
@@ -228,4 +229,12 @@ int DiceData::getSideWhenMovingInDirX(int side, DiceFaceDirection direction) {
             break;
     }
     return getSide(nextDir);
+}
+
+void DiceData::get2DRepresentation(int c, int *n, int *w, int *e, int *s, int *b) {
+    *b = getOpposite(c);
+    *n = getSideWhenMovingInDirX(c, DiceFaceDirection::UP);
+    *s = getSideWhenMovingInDirX(c, DiceFaceDirection::DOWN);
+    *w = getSideWhenMovingInDirX(c, DiceFaceDirection::LEFT);
+    *e = getSideWhenMovingInDirX(c, DiceFaceDirection::RIGHT);
 }
