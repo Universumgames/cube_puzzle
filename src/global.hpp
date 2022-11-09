@@ -15,6 +15,8 @@
 #include <string>
 #include <vector>
 
+#define SDL_MAIN_HANDLED
+
 #if defined(_WIN32) || defined(Macintosh) || defined(__APPLE__) || defined(__APPLE_CC__)
 #include <SDL_stdinc.h>
 
@@ -24,12 +26,9 @@
 #include <SDL_video.h>
 
 #include <SDL_ttf.h>
+#include <SDL_image.h>
 
-    #if defined(_WIN32)
-        #include <SDL2/SDL_image.h>
-    #else
-        #include <SDL_image.h>
-    #endif
+
 #else
 #include <SDL2/SDL_stdinc.h>
 
