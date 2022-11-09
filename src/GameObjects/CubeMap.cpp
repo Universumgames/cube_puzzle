@@ -41,7 +41,7 @@ void CubeMap::drawMinimap(const u32 frame, const u32 totalMSec, const float delt
 }
 
 void CubeMap::drawMap(const u32 frame, const u32 totalMSec, const float deltaT) {
-    getSide(currentSideId)->Render(game, render, diceData, BASIC_GO_DATA_PASSTHROUGH);
+    getCurrentSide()->Render(game, render, diceData, BASIC_GO_DATA_PASSTHROUGH);
 }
 
 
@@ -82,12 +82,12 @@ bool CubeMap::movePlayer(PlayerMoveDirection dir) {
             break;
     }
     // move dir relative to screen not world
-    auto tmp = 0;
+   /* auto tmp = 0;
     switch (diceData.getDiceSideRotation(currentSideId)) {
         case DiceFaceDirection::UP:
             break;
         case DiceFaceDirection::DOWN:
-            moveDir = moveDir * -1;
+            moveDir = moveDir;
             break;
         case DiceFaceDirection::LEFT:
             tmp = moveDir.x;
@@ -99,7 +99,7 @@ bool CubeMap::movePlayer(PlayerMoveDirection dir) {
             moveDir.x = moveDir.y * -1;
             moveDir.y = tmp;
             break;
-    }
+    }*/
     Point newPlayerPos = playerPos + moveDir;
     bool edge = checkCubeSideEdgeOverstepping(newPlayerPos);
     if (edge) {
@@ -191,33 +191,39 @@ bool CubeMap::checkCubeSideEdgeOverstepping(Point &playerPos) {
     DiceFaceDirection oldSideOrientation = diceData.getDiceSideRotation(currentSideId);
     DiceSide oldSide = diceData.getSideFacing(currentSideId);
     if (playerPos.x < 0) {
-        currentSideId = diceData.getSideWhenMovingInDirX(currentSideId, DiceFaceDirection::LEFT);
         // TODO move cube missing
         switch (oldSideOrientation) {
             case DiceFaceDirection::UP:
+                currentSideId = diceData.getSideWhenMovingInDirX(currentSideId, DiceFaceDirection::LEFT);
                 break;
             case DiceFaceDirection::DOWN:
+                currentSideId = diceData.getSideWhenMovingInDirX(currentSideId, DiceFaceDirection::RIGHT);
                 break;
             case DiceFaceDirection::LEFT:
+                currentSideId = diceData.getSideWhenMovingInDirX(currentSideId, DiceFaceDirection::DOWN);
                 moveCubeInWorld(getOppositeDiceRollDirection(sideToRollDirection(oldSide)));
                 break;
             case DiceFaceDirection::RIGHT:
+                currentSideId = diceData.getSideWhenMovingInDirX(currentSideId, DiceFaceDirection::UP);
                 moveCubeInWorld(sideToRollDirection(oldSide));
                 break;
         }
         playerPos = {2, 2};
         return true;
     } else if (playerPos.x >= side->width) {
-        currentSideId = diceData.getSideWhenMovingInDirX(currentSideId, DiceFaceDirection::RIGHT);
         switch (oldSideOrientation) {
             case DiceFaceDirection::UP:
+                currentSideId = diceData.getSideWhenMovingInDirX(currentSideId, DiceFaceDirection::RIGHT);
                 break;
             case DiceFaceDirection::DOWN:
+                currentSideId = diceData.getSideWhenMovingInDirX(currentSideId, DiceFaceDirection::LEFT);
                 break;
             case DiceFaceDirection::LEFT:
+                currentSideId = diceData.getSideWhenMovingInDirX(currentSideId, DiceFaceDirection::UP);
                 moveCubeInWorld(sideToRollDirection(oldSide));
                 break;
             case DiceFaceDirection::RIGHT:
+                currentSideId = diceData.getSideWhenMovingInDirX(currentSideId, DiceFaceDirection::DOWN);
                 moveCubeInWorld(getOppositeDiceRollDirection(sideToRollDirection(oldSide)));
                 break;
         }
@@ -226,37 +232,43 @@ bool CubeMap::checkCubeSideEdgeOverstepping(Point &playerPos) {
     } else if (playerPos.y < 0) {
         auto oldFacing = diceData.getSideFacing(currentSideId);
         auto oldOrientation = diceData.getDiceSideRotation(currentSideId);
-        currentSideId = diceData.getSideWhenMovingInDirX(currentSideId, DiceFaceDirection::UP);
         // TODO move cube missing
         switch (oldSideOrientation) {
             case DiceFaceDirection::UP:
+                currentSideId = diceData.getSideWhenMovingInDirX(currentSideId, DiceFaceDirection::UP);
                 moveCubeInWorld(sideToRollDirection(oldSide));
                 break;
             case DiceFaceDirection::DOWN:
+                currentSideId = diceData.getSideWhenMovingInDirX(currentSideId, DiceFaceDirection::DOWN);
                 moveCubeInWorld(getOppositeDiceRollDirection(sideToRollDirection(oldSide)));
                 break;
             case DiceFaceDirection::LEFT:
+                currentSideId = diceData.getSideWhenMovingInDirX(currentSideId, DiceFaceDirection::LEFT);
                 break;
             case DiceFaceDirection::RIGHT:
+                currentSideId = diceData.getSideWhenMovingInDirX(currentSideId, DiceFaceDirection::RIGHT);
                 break;
         }
         playerPos = {2, 2};
         return true;
     } else if (playerPos.y >= side->height) {
         auto oldFacing = diceData.getSideFacing(currentSideId);
-        currentSideId = diceData.getSideWhenMovingInDirX(currentSideId, DiceFaceDirection::DOWN);
         // TODO move cube missing
         //moveCubeInWorld(diceSideToRollDir(oldFacing));
         switch (oldSideOrientation) {
             case DiceFaceDirection::UP:
+                currentSideId = diceData.getSideWhenMovingInDirX(currentSideId, DiceFaceDirection::DOWN);
                 moveCubeInWorld(getOppositeDiceRollDirection(sideToRollDirection(oldSide)));
                 break;
             case DiceFaceDirection::DOWN:
+                currentSideId = diceData.getSideWhenMovingInDirX(currentSideId, DiceFaceDirection::UP);
                 moveCubeInWorld(sideToRollDirection(oldSide));
                 break;
             case DiceFaceDirection::LEFT:
+                currentSideId = diceData.getSideWhenMovingInDirX(currentSideId, DiceFaceDirection::RIGHT);
                 break;
             case DiceFaceDirection::RIGHT:
+                currentSideId = diceData.getSideWhenMovingInDirX(currentSideId, DiceFaceDirection::LEFT);
                 break;
         }
         playerPos = {2, 2};

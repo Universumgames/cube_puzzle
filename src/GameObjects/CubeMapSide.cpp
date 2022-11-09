@@ -2,6 +2,7 @@
 // Created by Tom Arlt on 09.11.22.
 //
 #include "CubeMap.hpp"
+#include "../recthelper.hpp"
 
 Point CubeMapSide::cubePositionToScreenPosition(DiceData diceData, Point cubePos) const {
     DiceFaceDirection faceDirection = diceData.getDiceSideRotation(sideID);
@@ -29,7 +30,7 @@ void CubeMapSide::Update(CubeGame &game, const u32 frame, const u32 totalMSec, c
     for (auto *field: side) {
         field->Update(game, BASIC_GO_DATA_PASSTHROUGH);
     }
-    overlay->setEnabled(game.isDebug());
+    if(overlay != nullptr) overlay->setEnabled(game.isDebug());
 }
 
 void CubeMapSide::Render(CubeGame &game, Renderer *render, DiceData diceData, const u32 frame, const u32 totalMSec,
