@@ -1,6 +1,7 @@
 build
 .idea
 cmake-build-debug
+cmake-build-debug-visual-studio
 references
 bin
 .vscode
