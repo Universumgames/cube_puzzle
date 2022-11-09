@@ -24,6 +24,8 @@ CubeGame::CubeGame() : Game("CubeGame")
     allStates = {new LevelSelector(*this, render)};
     SetNextState(0);
 
+    SDL_SetRenderDrawBlendMode(render, SDL_BLENDMODE_BLEND);
+
     setWindowIcon();
 }
 
@@ -69,6 +71,12 @@ void CubeGame::loadSprites() {
     loadPNGTexture(spriteStorage.temp, render, "./asset/graphic/AllTestTileWater.png")
     loadFont(spriteStorage.basicFont, ROBOTO_FONT_FILEPATH, 30)
     loadFont(spriteStorage.debugFont, ROBOTO_FONT_LIGHT_FILEPATH, 18)
+
+    for(int i = 1; i <= 6; i++) {
+        Texture* tmp;
+        loadPNGTexture(tmp, render, ("./asset/graphic/Cube" + std::to_string(i) + ".png").c_str());
+        spriteStorage.sideSprites.push_back(tmp);
+    }
 }
 
 bool CubeGame::isDebug() {

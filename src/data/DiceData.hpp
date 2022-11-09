@@ -60,3 +60,20 @@ private:
 public:
     static int getOpposite(int side);
 };
+
+inline DiceRollDirection sideToRollDirection(DiceSide side){
+    switch(side){
+        case DiceSide::NORTH:
+            return DiceRollDirection::NORTH;
+        case DiceSide::SOUTH:
+            return DiceRollDirection::SOUTH;
+        case DiceSide::WEST:
+            return DiceRollDirection::WEST;
+        case DiceSide::EAST:
+            return DiceRollDirection::EAST;
+        case DiceSide::TOP:
+            return DiceRollDirection::NORTH;
+        case DiceSide::BOTTOM:
+            return DiceRollDirection::SOUTH;
+    }
+}

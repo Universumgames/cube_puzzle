@@ -181,21 +181,58 @@ bool CubeMap::checkCubeSideEdgeOverstepping(Point &playerPos) {
     // done: rotate cube
     // TODO move player to correct location
     auto *side = getSide(currentSideId);
+    DiceFaceDirection oldSideOrientation = diceData.getDiceSideRotation(currentSideId);
+    DiceSide oldSide = diceData.getSideFacing(currentSideId);
     if (playerPos.x < 0) {
-        DiceFaceDirection oldSideOrientation = diceData.getDiceSideRotation(currentSideId);
         currentSideId = diceData.getSideWhenMovingInDirX(currentSideId, DiceFaceDirection::LEFT);
-        DiceFaceDirection newSideOrientation = diceData.getDiceSideRotation(currentSideId);
+        // TODO move cube missing
+        switch(oldSideOrientation){
+            case DiceFaceDirection::UP:
+                break;
+            case DiceFaceDirection::DOWN:
+                break;
+            case DiceFaceDirection::LEFT:
+                moveCubeInWorld(getOppositeDiceRollDirection(sideToRollDirection(oldSide)));
+                break;
+            case DiceFaceDirection::RIGHT:
+                moveCubeInWorld(sideToRollDirection(oldSide));
+                break;
+        }
         playerPos = {2, 2};
         return true;
     } else if (playerPos.x >= side->width) {
         currentSideId = diceData.getSideWhenMovingInDirX(currentSideId, DiceFaceDirection::RIGHT);
+        switch(oldSideOrientation){
+            case DiceFaceDirection::UP:
+                break;
+            case DiceFaceDirection::DOWN:
+                break;
+            case DiceFaceDirection::LEFT:
+                moveCubeInWorld(sideToRollDirection(oldSide));
+                break;
+            case DiceFaceDirection::RIGHT:
+                moveCubeInWorld(getOppositeDiceRollDirection(sideToRollDirection(oldSide)));
+                break;
+        }
         playerPos = {2, 2};
         return true;
     } else if (playerPos.y < 0) {
         auto oldFacing = diceData.getSideFacing(currentSideId);
+        auto oldOrientation = diceData.getDiceSideRotation(currentSideId);
         currentSideId = diceData.getSideWhenMovingInDirX(currentSideId, DiceFaceDirection::UP);
         // TODO move cube missing
-        //moveCubeInWorld(diceSideToRollDir(oldFacing));
+        switch(oldSideOrientation){
+            case DiceFaceDirection::UP:
+                moveCubeInWorld(sideToRollDirection(oldSide));
+                break;
+            case DiceFaceDirection::DOWN:
+                moveCubeInWorld(getOppositeDiceRollDirection(sideToRollDirection(oldSide)));
+                break;
+            case DiceFaceDirection::LEFT:
+                break;
+            case DiceFaceDirection::RIGHT:
+                break;
+        }
         playerPos = {2, 2};
         return true;
     } else if (playerPos.y >= side->height) {
@@ -203,6 +240,18 @@ bool CubeMap::checkCubeSideEdgeOverstepping(Point &playerPos) {
         currentSideId = diceData.getSideWhenMovingInDirX(currentSideId, DiceFaceDirection::DOWN);
         // TODO move cube missing
         //moveCubeInWorld(diceSideToRollDir(oldFacing));
+        switch(oldSideOrientation){
+            case DiceFaceDirection::UP:
+                moveCubeInWorld(getOppositeDiceRollDirection(sideToRollDirection(oldSide)));
+                break;
+            case DiceFaceDirection::DOWN:
+                moveCubeInWorld(sideToRollDirection(oldSide));
+                break;
+            case DiceFaceDirection::LEFT:
+                break;
+            case DiceFaceDirection::RIGHT:
+                break;
+        }
         playerPos = {2, 2};
         return true;
     }
@@ -265,6 +314,8 @@ void CubeMapSide::Render(CubeGame &game, Renderer *render, DiceData diceData, co
     int x = 0, y = 0;
     Point size = getFieldSize(game.getWindowSize());
     Point offset = getStartingOffset(game.getWindowSize(), size);
+    Rect drawableRect = getDrawableRect(game.getWindowSize());
+    drawSide(game.getSpriteStorage()->sideSprites[sideID-1], render, drawableRect);
     for (auto *field: side) {
         field->Render(game, render, size, {size.x * x + offset.x, size.y * y + offset.y}, BASIC_GO_DATA_PASSTHROUGH);
         x++;
@@ -292,40 +343,42 @@ void CubeMapSide::renderGridOverlay(CubeGame &game, Renderer *render, DiceData d
     Point size = getFieldSize(game.getWindowSize());
     Point offset = getStartingOffset(game.getWindowSize(), size);
     Rect drawableRect = getDrawableRect(game.getWindowSize());
-    double lineWidth = max(max(size.x, size.y) / 40.0, 2.0);
-    for (int x = 1; x < width; x++) {
-        Rect dst = {(int) (offset.x + size.x * x - lineWidth / 2), offset.y, (int) lineWidth, drawableRect.h};
-        SDL_SetRenderDrawColor(render, 0, 0, 0, 1);
+    if(game.isDebug()) {
+        double lineWidth = max(max(size.x, size.y) / 40.0, 2.0);
+        for (int x = 1; x < width; x++) {
+            Rect dst = {(int) (offset.x + size.x * x - lineWidth / 2), offset.y, (int) lineWidth, drawableRect.h};
+            SDL_SetRenderDrawColor(render, 0, 0, 0, 100);
+            SDL_RenderFillRect(render, &dst);
+        }
+        for (int y = 1; y < height; y++) {
+            Rect dst = {offset.x, (int) (offset.y + size.y * y - lineWidth / 2), drawableRect.w, (int) lineWidth};
+            SDL_SetRenderDrawColor(render, 0, 0, 0, 100);
+            SDL_RenderFillRect(render, &dst);
+        }
+
+
+        auto sideOrientation = diceData.getDiceSideRotation(sideID);
+        Rect dst = {0, 0, 0, 0};
+        switch (sideOrientation) {
+            case DiceFaceDirection::UP:
+                dst = {(int) (offset.x + (drawableRect.w / 2.0) - 25), offset.y, 50, 50};
+                SDL_SetRenderDrawColor(render, 255, 0, 0, 255);
+                break;
+            case DiceFaceDirection::DOWN:
+                dst = {(int) (offset.x + (drawableRect.w / 2.0) - 25), offset.y + drawableRect.h - 50, 50, 50};
+                SDL_SetRenderDrawColor(render, 0, 255, 0, 255);
+                break;
+            case DiceFaceDirection::LEFT:
+                dst = {(int) offset.x, (int) (offset.y + (drawableRect.h / 2.0) - 25), 50, 50};
+                SDL_SetRenderDrawColor(render, 255, 255, 0, 255);
+                break;
+            case DiceFaceDirection::RIGHT:
+                dst = {offset.x + drawableRect.w - 25, (int) (offset.y + (drawableRect.h / 2.0) - 25), 50, 50};
+                SDL_SetRenderDrawColor(render, 0, 255, 255, 255);
+                break;
+        }
         SDL_RenderFillRect(render, &dst);
     }
-    for (int y = 1; y < height; y++) {
-        Rect dst = {offset.x, (int) (offset.y + size.y * y - lineWidth / 2), drawableRect.w, (int) lineWidth};
-        SDL_SetRenderDrawColor(render, 0, 0, 0, 1);
-        SDL_RenderFillRect(render, &dst);
-    }
-
-    auto sideOrientation = diceData.getDiceSideRotation(sideID);
-    Rect dst = {0, 0, 0, 0};
-    switch (sideOrientation) {
-        case DiceFaceDirection::UP:
-            dst = {(int) (offset.x + (drawableRect.w / 2.0) - 25), offset.y, 50, 50};
-            SDL_SetRenderDrawColor(render, 255, 0, 0, 255);
-            break;
-        case DiceFaceDirection::DOWN:
-            dst = {(int) (offset.x + (drawableRect.w / 2.0) - 25), offset.y + drawableRect.h - 50, 50, 50};
-            SDL_SetRenderDrawColor(render, 0, 255, 0, 255);
-            break;
-        case DiceFaceDirection::LEFT:
-            dst = {(int) offset.x, (int) (offset.y + (drawableRect.h / 2.0) - 25), 50, 50};
-            SDL_SetRenderDrawColor(render, 255, 255, 0, 255);
-            break;
-        case DiceFaceDirection::RIGHT:
-            dst = {offset.x + drawableRect.w - 25, (int) (offset.y + (drawableRect.h / 2.0) - 25), 50, 50};
-            SDL_SetRenderDrawColor(render, 0, 255, 255, 255);
-            break;
-    }
-    SDL_RenderFillRect(render, &dst);
-
 }
 
 Rect CubeMapSide::getDrawableRect(Point windowSize) {
