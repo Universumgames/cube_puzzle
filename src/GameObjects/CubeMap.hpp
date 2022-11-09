@@ -86,12 +86,15 @@ public:
 
     Point getFieldSize(Point windowSize);
     Point getStartingOffset(Point windowSize, Point fieldSize);
+    Rect getDrawableRect(Point windowSize);
 
     void HandleEvent(CubeGame& game, const u32 frame, const u32 totalMSec, const float deltaT, Event event);
 
     void Update(CubeGame& game, const u32 frame, const u32 totalMSec, const float deltaT);
 
     void Render(CubeGame& game, Renderer* render, DiceData diceData, const u32 frame, const u32 totalMSec, const float deltaT);
+
+    void renderGridOverlay(CubeGame& game, Renderer* render, DiceData diceData, const u32 frame, const u32 totalMSec, const float deltaT);
 
     [[nodiscard]] Point cubePositionToScreenPosition(DiceData diceData, Point cubePos) const;
 

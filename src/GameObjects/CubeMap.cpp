@@ -97,7 +97,7 @@ bool CubeMap::movePlayer(PlayerMoveDirection dir) {
     }
     Point newPlayerPos = playerPos + moveDir;
     bool edge = checkCubeSideEdgeOverstepping(newPlayerPos);
-    if(edge){
+    if (edge) {
         updateMinimap();
     }
     if (!getCurrentSide()->getField(newPlayerPos)->isPlayerMovableTo()) return false;
@@ -209,9 +209,10 @@ bool CubeMap::checkCubeSideEdgeOverstepping(Point &playerPos) {
 
 Rect CubeMap::playerDrawPosition() {
     CubeMapSide *side = getCurrentSide();
-    auto size = side->getFieldSize(game.getWindowSize());
-    auto offset = side->getStartingOffset(game.getWindowSize(), size);
-    return {size.x * playerPos.x + offset.x, size.y * playerPos.y + offset.y, size.x, size.y};
+    auto origSize = side->getFieldSize(game.getWindowSize());
+    auto size = origSize * 0.8;
+    auto gridOffset = side->getStartingOffset(game.getWindowSize(), origSize) + ((origSize - size) / 2);
+    return {origSize.x * playerPos.x + gridOffset.x, origSize.y * playerPos.y + gridOffset.y, size.x, size.y};
 }
 
 CubeMapSide *CubeMap::getCurrentSide() {
@@ -270,6 +271,7 @@ void CubeMapSide::Render(CubeGame &game, Renderer *render, DiceData diceData, co
             x = 0;
         }
     }
+    renderGridOverlay(game, render, diceData, BASIC_GO_DATA_PASSTHROUGH);
 }
 
 Point CubeMapSide::getFieldSize(Point windowSize) {
@@ -281,4 +283,28 @@ Point CubeMapSide::getStartingOffset(Point windowSize, Point fieldSize) {
     Point center = windowSize / 2;
     Point totalSize = {width * fieldSize.x, height * fieldSize.y};
     return center - (totalSize / 2);
+}
+
+void CubeMapSide::renderGridOverlay(CubeGame &game, Renderer *render, DiceData diceData, const u32 frame,
+                                    const u32 totalMSec, const float deltaT) {
+    Point size = getFieldSize(game.getWindowSize());
+    Point offset = getStartingOffset(game.getWindowSize(), size);
+    Rect drawableRect = getDrawableRect(game.getWindowSize());
+    double lineWidth = max(max(size.x, size.y)/40.0, 2.0);
+    for (int x = 1; x < width ; x++) {
+        Rect dst = {(int)(offset.x + size.x * x - lineWidth/2), offset.y, (int)lineWidth, drawableRect.h};
+        SDL_SetRenderDrawColor(render, 0,0,0,1);
+        SDL_RenderFillRect(render, &dst);
+    }
+    for (int y = 1; y < height; y++) {
+        Rect dst = {offset.x, (int)(offset.y + size.y * y - lineWidth/2), drawableRect.w, (int)lineWidth};
+        SDL_SetRenderDrawColor(render, 0,0,0,1);
+        SDL_RenderFillRect(render, &dst);
+    }
+}
+
+Rect CubeMapSide::getDrawableRect(Point windowSize) {
+    Point size = getFieldSize(windowSize);
+    Point offset = getStartingOffset(windowSize, size);
+    return {offset.x, offset.y, size.x*width, size.y*height};
 }
