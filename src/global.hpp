@@ -25,7 +25,11 @@
 
 #include <SDL_ttf.h>
 
-#include <SDL_image.h>
+    #if defined(_WIN32)
+        #include <SDL2/SDL_image.h>
+    #else
+        #include <SDL_image.h>
+    #endif
 #else
 #include <SDL2/SDL_stdinc.h>
 

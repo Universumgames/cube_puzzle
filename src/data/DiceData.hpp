@@ -26,7 +26,7 @@ class DiceData{
 public:
     /// default cube is 1up, 5north, 3west
     DiceData();
-    int rotate(DiceRollDirection direction, int side = 0);
+    int rotate(DiceRollDirection direction, int side = 1);
 
     /// get dice side facing direction
     [[nodiscard]] int getSide(DiceSide side) const;
@@ -60,25 +60,3 @@ private:
 public:
     static int getOpposite(int side);
 };
-
-inline DiceRollDirection diceSideToRollDir(DiceSide side){
-    switch(side){
-        case DiceSide::NORTH:
-            return DiceRollDirection::NORTH;
-            break;
-        case DiceSide::SOUTH:
-            return DiceRollDirection::SOUTH;
-            break;
-        case DiceSide::WEST:
-            return DiceRollDirection::WEST;
-            break;
-        case DiceSide::EAST:
-            return DiceRollDirection::EAST;
-            break;
-        case DiceSide::TOP:
-            break;
-        case DiceSide::BOTTOM:
-            break;
-    }
-    return DiceRollDirection::NORTH;
-}

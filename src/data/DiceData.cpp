@@ -106,19 +106,19 @@ int DiceData::getAnchorSideOfTopLeftCorner(int side) {
 
 DiceFaceDirection DiceData::getDiceSideRotation(int side) {
     int anchor = getAnchorSideOfTopLeftCorner(side);
-    if(side == north){
+    if(side == north){ // north
         if(anchor == up){
             return DiceFaceDirection::UP;
         }else if(anchor == west){
-            return DiceFaceDirection::LEFT;
+            return DiceFaceDirection::RIGHT;
         }else if(anchor == getOpposite(up)){
             return DiceFaceDirection::DOWN;
         }else if(anchor == getOpposite(west)){
-            return DiceFaceDirection::RIGHT;
+            return DiceFaceDirection::LEFT;
         }
     } else if (side == up){
         // undefined
-    }else if(side == west){
+    }else if(side == west){ // west
         if(anchor == north){
             return DiceFaceDirection::LEFT;
         }else if(anchor == up){
@@ -128,7 +128,7 @@ DiceFaceDirection DiceData::getDiceSideRotation(int side) {
         }else if(anchor == getOpposite(up)){
             return DiceFaceDirection::DOWN;
         }
-    }else if(side == getOpposite(north)){
+    }else if(side == getOpposite(north)){ // south
         if(anchor == west){
             return DiceFaceDirection::RIGHT;
         }else if(anchor == up){
@@ -140,7 +140,7 @@ DiceFaceDirection DiceData::getDiceSideRotation(int side) {
         }
     }else if(side == getOpposite(up)){
         // undefined
-    }else if(side == getOpposite(west)){
+    }else if(side == getOpposite(west)){ // east
         if(anchor == north){
             return DiceFaceDirection::RIGHT;
         }else if(anchor == up){
@@ -155,7 +155,6 @@ DiceFaceDirection DiceData::getDiceSideRotation(int side) {
 }
 
 int DiceData::getSideWhenMovingInDirX(int side, DiceFaceDirection direction) {
-    // TODO Bug somewhere in here...
     auto currentFacing = getSideFacing(side);
     DiceSide nextDir = DiceSide::NORTH;
     switch(currentFacing){

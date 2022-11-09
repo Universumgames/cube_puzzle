@@ -8,6 +8,7 @@
 #include "../data/WorldField.hpp"
 #include "../data/MoveDirections.hpp"
 #include "../data/DiceData.hpp"
+#include "Text.hpp"
 
 class CubeMap;
 
@@ -24,13 +25,14 @@ public:
 
     void Render(const u32 frame, const u32 totalMSec, const float deltaT) override;
 
-
+    void RenderUI(const u32 frame, const u32 totalMSec, const float deltaT) override;
 
 private:
     Vector<WorldField> field;
     int xWidth, yHeight;
     CubeMap *cubeMap;
     Point cubePos;
+    Text* mapCoordinates;
 
     int getFieldIndex(int x, int y) const;
 
