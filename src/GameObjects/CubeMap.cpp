@@ -18,6 +18,12 @@ void CubeMap::HandleEvent(const u32 frame, const u32 totalMSec, const float delt
 void CubeMap::Update(const u32 frame, const u32 totalMSec, const float deltaT) {
     debugSideIndicator->setEnabled(game.isDebug());
     debugSideIndicator->changeText("Current Side: " + std::to_string(currentSideId));
+    minimapText->setEnabled(game.isDebug());
+    debugDiceData->setEnabled(game.isDebug());
+    debugDiceData->changeText("DiceSides: n" + std::to_string(diceData.getSide(DiceSide::NORTH)) + " ,w" +
+                              std::to_string(diceData.getSide(DiceSide::WEST)) + " , u" +
+                              std::to_string(diceData.getSide(DiceSide::TOP)));
+    getCurrentSide()->Update(game, BASIC_GO_DATA_PASSTHROUGH);
 }
 
 void CubeMap::Render(const u32 frame, const u32 totalMSec, const float deltaT) {
@@ -26,8 +32,8 @@ void CubeMap::Render(const u32 frame, const u32 totalMSec, const float deltaT) {
 
 void CubeMap::RenderUI(const u32 frame, const u32 totalMSec, const float deltaT) {
     drawMinimap(BASIC_GO_DATA_PASSTHROUGH);
-    if (game.isDebug())
-        debugSideIndicator->RenderUI(BASIC_GO_DATA_PASSTHROUGH);
+    debugSideIndicator->RenderUI(BASIC_GO_DATA_PASSTHROUGH);
+    debugDiceData->RenderUI(BASIC_GO_DATA_PASSTHROUGH);
 }
 
 void CubeMap::drawMinimap(const u32 frame, const u32 totalMSec, const float deltaT) {
@@ -53,6 +59,7 @@ CubeMap::CubeMap(CubeGame &game1, SDL_Renderer *render1, const Vector<CubeMapSid
     this->playerPos = playerPos;
     this->debugSideIndicator = new Text(game, render, 400, "", game1.getSpriteStorage()->debugFont, {10, 30});
     this->minimapText = new Text(game, render, 400, "", game.getSpriteStorage()->debugFont, {10, 60});
+    this->debugDiceData = new Text(game, render, 400, "", game.getSpriteStorage()->debugFont, {10, 230});
     updateMinimap();
 }
 
@@ -186,7 +193,7 @@ bool CubeMap::checkCubeSideEdgeOverstepping(Point &playerPos) {
     if (playerPos.x < 0) {
         currentSideId = diceData.getSideWhenMovingInDirX(currentSideId, DiceFaceDirection::LEFT);
         // TODO move cube missing
-        switch(oldSideOrientation){
+        switch (oldSideOrientation) {
             case DiceFaceDirection::UP:
                 break;
             case DiceFaceDirection::DOWN:
@@ -202,7 +209,7 @@ bool CubeMap::checkCubeSideEdgeOverstepping(Point &playerPos) {
         return true;
     } else if (playerPos.x >= side->width) {
         currentSideId = diceData.getSideWhenMovingInDirX(currentSideId, DiceFaceDirection::RIGHT);
-        switch(oldSideOrientation){
+        switch (oldSideOrientation) {
             case DiceFaceDirection::UP:
                 break;
             case DiceFaceDirection::DOWN:
@@ -221,7 +228,7 @@ bool CubeMap::checkCubeSideEdgeOverstepping(Point &playerPos) {
         auto oldOrientation = diceData.getDiceSideRotation(currentSideId);
         currentSideId = diceData.getSideWhenMovingInDirX(currentSideId, DiceFaceDirection::UP);
         // TODO move cube missing
-        switch(oldSideOrientation){
+        switch (oldSideOrientation) {
             case DiceFaceDirection::UP:
                 moveCubeInWorld(sideToRollDirection(oldSide));
                 break;
@@ -240,7 +247,7 @@ bool CubeMap::checkCubeSideEdgeOverstepping(Point &playerPos) {
         currentSideId = diceData.getSideWhenMovingInDirX(currentSideId, DiceFaceDirection::DOWN);
         // TODO move cube missing
         //moveCubeInWorld(diceSideToRollDir(oldFacing));
-        switch(oldSideOrientation){
+        switch (oldSideOrientation) {
             case DiceFaceDirection::UP:
                 moveCubeInWorld(getOppositeDiceRollDirection(sideToRollDirection(oldSide)));
                 break;
@@ -263,7 +270,8 @@ Rect CubeMap::playerDrawPosition() {
     auto origSize = side->getFieldSize(game.getWindowSize());
     auto size = origSize * 0.8;
     auto gridOffset = side->getStartingOffset(game.getWindowSize(), origSize) + ((origSize - size) / 2);
-    return {origSize.x * playerPos.x + gridOffset.x, origSize.y * playerPos.y + gridOffset.y, size.x, size.y};
+    auto screenGridPos = getCurrentSide()->cubePositionToScreenPosition(diceData, playerPos);
+    return {origSize.x * screenGridPos.x + gridOffset.x, origSize.y * screenGridPos.y + gridOffset.y, size.x, size.y};
 }
 
 CubeMapSide *CubeMap::getCurrentSide() {
@@ -307,6 +315,7 @@ void CubeMapSide::Update(CubeGame &game, const u32 frame, const u32 totalMSec, c
     for (auto *field: side) {
         field->Update(game, BASIC_GO_DATA_PASSTHROUGH);
     }
+    overlay->setEnabled(game.isDebug());
 }
 
 void CubeMapSide::Render(CubeGame &game, Renderer *render, DiceData diceData, const u32 frame, const u32 totalMSec,
@@ -315,9 +324,16 @@ void CubeMapSide::Render(CubeGame &game, Renderer *render, DiceData diceData, co
     Point size = getFieldSize(game.getWindowSize());
     Point offset = getStartingOffset(game.getWindowSize(), size);
     Rect drawableRect = getDrawableRect(game.getWindowSize());
-    drawSide(game.getSpriteStorage()->sideSprites[sideID-1], render, drawableRect);
+    drawSide(game.getSpriteStorage()->sideSprites[sideID - 1], render, drawableRect);
+    if(overlay == nullptr){
+        overlay=new Text(game, render, 400, "", game.getSpriteStorage()->debugFont, {0,0});
+    }
     for (auto *field: side) {
-        field->Render(game, render, size, {size.x * x + offset.x, size.y * y + offset.y}, BASIC_GO_DATA_PASSTHROUGH);
+        Point pos = cubePositionToScreenPosition(diceData, {x,y});
+        field->Render(game, render, size, {size.x * pos.x + offset.x, size.y * pos.y + offset.y}, BASIC_GO_DATA_PASSTHROUGH);
+        overlay->changePosition({size.x * pos.x + offset.x, size.y * pos.y + offset.y});
+        overlay->changeText(std::to_string(x) + "," + std::to_string(y));
+        overlay->RenderUI(BASIC_GO_DATA_PASSTHROUGH);
         x++;
         if (x >= width) {
             y++;
@@ -343,7 +359,7 @@ void CubeMapSide::renderGridOverlay(CubeGame &game, Renderer *render, DiceData d
     Point size = getFieldSize(game.getWindowSize());
     Point offset = getStartingOffset(game.getWindowSize(), size);
     Rect drawableRect = getDrawableRect(game.getWindowSize());
-    if(game.isDebug()) {
+    if (game.isDebug()) {
         double lineWidth = max(max(size.x, size.y) / 40.0, 2.0);
         for (int x = 1; x < width; x++) {
             Rect dst = {(int) (offset.x + size.x * x - lineWidth / 2), offset.y, (int) lineWidth, drawableRect.h};

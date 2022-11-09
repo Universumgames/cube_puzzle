@@ -10,6 +10,7 @@ void WorldMap::HandleEvent(const u32 frame, const u32 totalMSec, const float del
 }
 
 void WorldMap::Update(const u32 frame, const u32 totalMSec, const float deltaT) {
+    mapCoordinates->setEnabled(game.isDebug());
     mapCoordinates->changeText("CubePos in world: x" + std::to_string(cubePos.x) + " y" + std::to_string(cubePos.y));
 }
 

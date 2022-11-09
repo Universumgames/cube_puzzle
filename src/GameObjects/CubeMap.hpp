@@ -67,6 +67,7 @@ private:
     DiceData diceData;
     Text* debugSideIndicator;
     Text* minimapText;
+    Text* debugDiceData;
 
     friend class WorldMap;
 };
@@ -78,6 +79,7 @@ public:
 
     Vector<CubeField *> side;
     int width, height, sideID;
+    Text* overlay = nullptr;
 
     CubeField *getField(int x, int y) { return side[getIndex(x, y)]; }
     CubeField *getField(Point pos) { return getField(pos.x, pos.y); }
