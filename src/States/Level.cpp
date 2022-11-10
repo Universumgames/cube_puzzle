@@ -1,7 +1,3 @@
-//
-// Created by Tom Arlt on 02.11.22.
-//
-
 #include "Level.hpp"
 #include "../GameObjects/Player.hpp"
 #include "../GameObjects/CubeMap.hpp"
@@ -32,7 +28,7 @@ void Level::Update(const u32 frame, const u32 totalMSec, const float deltaT) {
     if (frame % 50 == 0) {
         u32 deltaSec = totalMSec - lastMSec;
         u32 deltaFrame = frame - lastFrame;
-        text->changeText("test level " + std::to_string((double)deltaFrame / ((double)deltaSec / 1000)) + "fps");
+        text->changeText("test level " + std::to_string((double) deltaFrame / ((double) deltaSec / 1000)) + "fps");
         lastMSec = totalMSec;
         lastFrame = frame;
     }

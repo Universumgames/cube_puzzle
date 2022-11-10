@@ -18,6 +18,7 @@
 #define SDL_MAIN_HANDLED
 
 #if defined(_WIN32) || defined(Macintosh) || defined(__APPLE__) || defined(__APPLE_CC__)
+
 #include <SDL_stdinc.h>
 
 #include <SDL_error.h>
@@ -60,9 +61,9 @@ using Font = TTF_Font;
 using std::max;
 using std::min;
 
-template <class T, size_t Size>
+template<class T, size_t Size>
 using Array = std::array<T, Size>;
-template <class T>
+template<class T>
 using Vector = std::vector<T>;
 
 using Clock = std::chrono::high_resolution_clock;

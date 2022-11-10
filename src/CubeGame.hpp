@@ -6,17 +6,17 @@
 class LevelSelector;
 
 /// Cube Game handler
-class CubeGame final : public Game
-{
+class CubeGame final : public Game {
 public:
     CubeGame();
 
     bool HandleEvent(const Event event) override;
 
-    SpriteStorage* getSpriteStorage() override;
+    SpriteStorage *getSpriteStorage() override;
 
     /// should display debug info
     bool isDebug();
+
 private:
     SpriteStorage spriteStorage;
 

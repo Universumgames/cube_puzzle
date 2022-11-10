@@ -1,7 +1,3 @@
-//
-// Created by Tom Arlt on 02.11.22.
-//
-
 #include "Player.hpp"
 #include "../States/Level.hpp"
 #include "CubeMap.hpp"
@@ -13,11 +9,11 @@ void Player::HandleEvent(const u32 frame, const u32 totalMSec, const float delta
     const Keysym &what_key = event.key.keysym;
     if (what_key.scancode == SDL_SCANCODE_UP) {
         move(PlayerMoveDirection::UP);
-    }else if (what_key.scancode == SDL_SCANCODE_DOWN) {
+    } else if (what_key.scancode == SDL_SCANCODE_DOWN) {
         move(PlayerMoveDirection::DOWN);
-    }else if (what_key.scancode == SDL_SCANCODE_RIGHT) {
+    } else if (what_key.scancode == SDL_SCANCODE_RIGHT) {
         move(PlayerMoveDirection::RIGHT);
-    }else if (what_key.scancode == SDL_SCANCODE_LEFT) {
+    } else if (what_key.scancode == SDL_SCANCODE_LEFT) {
         move(PlayerMoveDirection::LEFT);
     }
 }

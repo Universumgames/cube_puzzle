@@ -1,6 +1,3 @@
-//
-// Created by Tom Arlt on 03.11.22.
-//
 #include "DiceData.hpp"
 
 DiceData::DiceData() {
@@ -106,48 +103,48 @@ int DiceData::getAnchorSideOfTopLeftCorner(int side) {
 
 DiceFaceDirection DiceData::getDiceSideRotation(int side) {
     int anchor = getAnchorSideOfTopLeftCorner(side);
-    if(side == north){ // north
-        if(anchor == up){
+    if (side == north) { // north
+        if (anchor == up) {
             return DiceFaceDirection::UP;
-        }else if(anchor == west){
+        } else if (anchor == west) {
             return DiceFaceDirection::RIGHT;
-        }else if(anchor == getOpposite(up)){
+        } else if (anchor == getOpposite(up)) {
             return DiceFaceDirection::DOWN;
-        }else if(anchor == getOpposite(west)){
+        } else if (anchor == getOpposite(west)) {
             return DiceFaceDirection::LEFT;
         }
-    } else if (side == up){
+    } else if (side == up) {
         // undefined
-    }else if(side == west){ // west
-        if(anchor == north){
+    } else if (side == west) { // west
+        if (anchor == north) {
             return DiceFaceDirection::LEFT;
-        }else if(anchor == up){
+        } else if (anchor == up) {
             return DiceFaceDirection::UP;
-        }else if(anchor == getOpposite(north)){
+        } else if (anchor == getOpposite(north)) {
             return DiceFaceDirection::RIGHT;
-        }else if(anchor == getOpposite(up)){
+        } else if (anchor == getOpposite(up)) {
             return DiceFaceDirection::DOWN;
         }
-    }else if(side == getOpposite(north)){ // south
-        if(anchor == west){
+    } else if (side == getOpposite(north)) { // south
+        if (anchor == west) {
             return DiceFaceDirection::RIGHT;
-        }else if(anchor == up){
+        } else if (anchor == up) {
             return DiceFaceDirection::UP;
-        }else if(anchor == getOpposite(west)){
+        } else if (anchor == getOpposite(west)) {
             return DiceFaceDirection::LEFT;
-        }else if(anchor == getOpposite(up)){
+        } else if (anchor == getOpposite(up)) {
             return DiceFaceDirection::DOWN;
         }
-    }else if(side == getOpposite(up)){
+    } else if (side == getOpposite(up)) {
         // undefined
-    }else if(side == getOpposite(west)){ // east
-        if(anchor == north){
+    } else if (side == getOpposite(west)) { // east
+        if (anchor == north) {
             return DiceFaceDirection::RIGHT;
-        }else if(anchor == up){
+        } else if (anchor == up) {
             return DiceFaceDirection::UP;
-        }else if(anchor == getOpposite(north)){
+        } else if (anchor == getOpposite(north)) {
             return DiceFaceDirection::LEFT;
-        }else if(anchor == getOpposite(up)){
+        } else if (anchor == getOpposite(up)) {
             return DiceFaceDirection::DOWN;
         }
     }
@@ -157,7 +154,7 @@ DiceFaceDirection DiceData::getDiceSideRotation(int side) {
 int DiceData::getSideWhenMovingInDirX(int side, DiceFaceDirection direction) {
     auto currentFacing = getSideFacing(side);
     DiceSide nextDir = DiceSide::NORTH;
-    switch(currentFacing){
+    switch (currentFacing) {
         case DiceSide::NORTH:
             switch (direction) {
                 case DiceFaceDirection::UP:

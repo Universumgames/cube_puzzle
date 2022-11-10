@@ -3,13 +3,13 @@
 #include "examplegame/examplegame.hpp"
 #include "data/DiceData.hpp"
 
-void tests(){
-    auto data = DiceData();
+void tests() {
+    /*auto data = DiceData();
     cout << data.toString() << std::endl;
     data.rotate(DiceRollDirection::NORTH);
     cout << data.toString() << std::endl;
     data.rotate(DiceRollDirection::WEST);
-    cout << data.toString() << std::endl;
+    cout << data.toString() << std::endl;*/
 }
 
 extern "C" int main(int argc, char *argv[])

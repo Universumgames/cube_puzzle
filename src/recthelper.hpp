@@ -12,10 +12,6 @@ constexpr Point operator "" _left(unsigned long long n) { return Point{-(int) n,
 
 constexpr Point operator "" _right(unsigned long long n) { return Point{(int) n, 0}; }
 
-/*constexpr std::ostream & operator << (std::ostream &os, const Point s) {
-    return (os << "{x: " << s.x << ", y: " << s.y << "}");
-}*/
-
 constexpr Point operator+(const Point lhs, const Point rhs) { return Point{lhs.x + rhs.x, lhs.y + rhs.y}; }
 
 constexpr Point operator-(const Point lhs, const Point rhs) { return Point{lhs.x - rhs.x, lhs.y - rhs.y}; }

@@ -1,6 +1,3 @@
-//
-// Created by Tom Arlt on 02.11.22.
-//
 #pragma once
 
 #include "GameObject.hpp"
@@ -18,13 +15,9 @@ public:
     virtual void Update(CubeGame &game, const u32 frame, const u32 totalMSec, const float deltaT) = 0;
 
     /// render only method
-    virtual void Render(CubeGame &game, Renderer *render, Point size, Point location, const u32 frame, const u32 totalMSec,
-                        const float deltaT) {
-        SDL_SetRenderDrawColor(render, 200, 200, 0, 255);
-
-        Rect dst = {location.x, location.y, size.x, size.y};
-        SDL_RenderFillRect(render, &dst);
-    };
+    virtual void
+    Render(CubeGame &game, Renderer *render, Point size, Point location, const u32 frame, const u32 totalMSec,
+           const float deltaT);
 
     /// return true if player can move to this tile, false otherwise
     virtual bool isPlayerMovableTo() = 0;

@@ -1,7 +1,3 @@
-//
-// Created by Tom Arlt on 02.11.22.
-//
-
 #pragma once
 
 #include "GameObject.hpp"
@@ -33,7 +29,7 @@ private:
     int xWidth, yHeight;
     CubeMap *cubeMap;
     Point cubePos;
-    Text* mapCoordinates;
+    Text *mapCoordinates;
 
     int getFieldIndex(int x, int y) const;
 

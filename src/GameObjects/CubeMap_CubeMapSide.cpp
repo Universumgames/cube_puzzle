@@ -1,6 +1,3 @@
-//
-// Created by Tom Arlt on 09.11.22.
-//
 #include "CubeMap.hpp"
 #include "../recthelper.hpp"
 
@@ -30,7 +27,7 @@ void CubeMapSide::Update(CubeGame &game, const u32 frame, const u32 totalMSec, c
     for (auto *field: side) {
         field->Update(game, BASIC_GO_DATA_PASSTHROUGH);
     }
-    if(overlay != nullptr) overlay->setEnabled(game.isDebug());
+    if (overlay != nullptr) overlay->setEnabled(game.isDebug());
 }
 
 void CubeMapSide::Render(CubeGame &game, Renderer *render, DiceData diceData, const u32 frame, const u32 totalMSec,
@@ -40,12 +37,13 @@ void CubeMapSide::Render(CubeGame &game, Renderer *render, DiceData diceData, co
     Point offset = getStartingOffset(game.getWindowSize(), size);
     Rect drawableRect = getDrawableRect(game.getWindowSize());
     drawSide(game.getSpriteStorage()->sideSprites[sideID - 1], render, drawableRect);
-    if(overlay == nullptr){
-        overlay=new Text(game, render, 400, "", game.getSpriteStorage()->debugFont, {0,0});
+    if (overlay == nullptr) {
+        overlay = new Text(game, render, 400, "", game.getSpriteStorage()->debugFont, {0, 0});
     }
     for (auto *field: side) {
-        Point pos = cubePositionToScreenPosition(diceData, {x,y});
-        field->Render(game, render, size, {size.x * pos.x + offset.x, size.y * pos.y + offset.y}, BASIC_GO_DATA_PASSTHROUGH);
+        Point pos = cubePositionToScreenPosition(diceData, {x, y});
+        field->Render(game, render, size, {size.x * pos.x + offset.x, size.y * pos.y + offset.y},
+                      BASIC_GO_DATA_PASSTHROUGH);
         overlay->changePosition({size.x * pos.x + offset.x, size.y * pos.y + offset.y});
         overlay->changeText(std::to_string(x) + "," + std::to_string(y));
         overlay->RenderUI(BASIC_GO_DATA_PASSTHROUGH);

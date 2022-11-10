@@ -1,6 +1,3 @@
-//
-// Created by Tom Arlt on 02.11.22.
-//
 
 #pragma once
 
@@ -11,13 +8,15 @@
 #include "ComplexGameState.hpp"
 
 class Player;
+
 class CubeMap;
+
 class WorldMap;
+
 class CubeGame;
 
 /// Level handler, create new object for every level
-class Level final : public ComplexGameState
-{
+class Level final : public ComplexGameState {
 public:
     Level(CubeGame &game, Renderer *render);
 
@@ -46,8 +45,8 @@ public:
 
 private:
     Vector<GameObject *> gameObjects;
-    Player* player;
-    CubeMap* cubeMap;
-    WorldMap* worldMap;
-    Text* text;
+    Player *player;
+    CubeMap *cubeMap;
+    WorldMap *worldMap;
+    Text *text;
 };

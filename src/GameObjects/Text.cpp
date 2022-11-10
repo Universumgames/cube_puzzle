@@ -1,27 +1,31 @@
-//
-// Created by Tom Arlt on 05.11.22.
-//
-
 #include "Text.hpp"
-
 #include <utility>
 #include "../global.hpp"
 #include "../recthelper.hpp"
 
-void Text::HandleEvent(const u32 frame, const u32 totalMSec, const float deltaT, Event event) {
-
+Text::Text(CubeGame &game, SDL_Renderer *render, int maxWidth, std::string text, Font *font, Point position,
+           int shadowOffset,
+           Color color) : GameObject(game, render) {
+    this->position = position;
+    this->shadowOffset = shadowOffset;
+    this->text = std::move(text);
+    this->font = font;
+    this->toClean = false;
+    this->color = color;
 }
 
-void Text::Update(const u32 frame, const u32 totalMSec, const float deltaT) {
-
-}
-
-void Text::Render(const u32 frame, const u32 totalMSec, const float deltaT) {
-
+Text::Text(CubeGame &game, SDL_Renderer *render, int maxWidth, std::string text, const char *fontPath, int pointSize,
+           Point position, int shadowOffset, Color color) : GameObject(game, render) {
+    this->position = position;
+    this->shadowOffset = shadowOffset;
+    this->text = std::move(text);
+    this->font = TTF_OpenFont(fontPath, pointSize);
+    this->toClean = true;
+    this->color = color;
 }
 
 void Text::RenderUI(const u32 frame, const u32 totalMSec, const float deltaT) {
-    if(!enabled) return;
+    if (!enabled) return;
     GameObject::RenderUI(frame, totalMSec, deltaT);
 
     SDL_SetTextureColorMod(texture, 0, 0, 0);
@@ -65,29 +69,8 @@ void Text::changeText(std::string text) {
     reloadTexture();
 }
 
-Text::Text(CubeGame &game, SDL_Renderer *render, int maxWidth, std::string text, Font *font, Point position,
-           int shadowOffset,
-           Color color) : GameObject(game, render) {
-    this->position = position;
-    this->shadowOffset = shadowOffset;
-    this->text = std::move(text);
-    this->font = font;
-    this->toClean = false;
-    this->color = color;
-}
-
-Text::Text(CubeGame &game, SDL_Renderer *render, int maxWidth, std::string text, const char *fontPath, int pointSize,
-           Point position, int shadowOffset, Color color) : GameObject(game, render) {
-    this->position = position;
-    this->shadowOffset = shadowOffset;
-    this->text = std::move(text);
-    this->font = TTF_OpenFont(fontPath, pointSize);
-    this->toClean = true;
-    this->color = color;
-}
-
 void Text::reloadTexture() {
-    if(!enabled) return;
+    if (!enabled) return;
     if (texture != nullptr) SDL_DestroyTexture(texture);
 
     Surface *surf = TTF_RenderUTF8_Blended_Wrapped(font, text.c_str(), color, maxWidth);

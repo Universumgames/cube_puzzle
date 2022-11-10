@@ -4,5 +4,6 @@
 #include "ComplexGameState.hpp"
 #include "../CubeGame.hpp"
 
-ComplexGameState::ComplexGameState(CubeGame &cubeGame, Renderer* render): GameState(cubeGame, render), cubeGame(cubeGame) {
+ComplexGameState::ComplexGameState(CubeGame &cubeGame, Renderer *render) : GameState(cubeGame, render),
+                                                                           cubeGame(cubeGame) {
 }

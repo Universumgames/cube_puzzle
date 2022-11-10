@@ -5,9 +5,10 @@
 class CubeGame;
 
 /// complex game state to store additional CubeGame
-class ComplexGameState: public GameState{
+class ComplexGameState : public GameState {
 public:
-    ComplexGameState(CubeGame& cubeGame, Renderer* render);
+    ComplexGameState(CubeGame &cubeGame, Renderer *render);
+
 protected:
-    CubeGame& cubeGame;
+    CubeGame &cubeGame;
 };

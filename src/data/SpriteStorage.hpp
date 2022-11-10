@@ -37,9 +37,9 @@ struct SpriteStorage {
     Texture *worldMapSpriteSheet = nullptr;
     Texture *playerSpriteSheet = nullptr;
     Texture *temp = nullptr;
-    Font* basicFont = nullptr;
-    Font* debugFont = nullptr;
+    Font *basicFont = nullptr;
+    Font *debugFont = nullptr;
 
     /// dice backgrounds, side x is stored in [x-1]
-    std::vector<Texture*> sideSprites;
+    std::vector<Texture *> sideSprites;
 };

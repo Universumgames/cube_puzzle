@@ -1,7 +1,3 @@
-//
-// Created by Tom Arlt on 05.11.22.
-//
-
 #pragma once
 
 #include "GameObject.hpp"
@@ -27,13 +23,13 @@ public:
     void UnInit() override;
 
     /// handle user input, empty
-    void HandleEvent(const u32 frame, const u32 totalMSec, const float deltaT, Event event) override;
+    void HandleEvent(const u32 frame, const u32 totalMSec, const float deltaT, Event event) override {}
 
     /// physics update, etc., emtpy
-    void Update(const u32 frame, const u32 totalMSec, const float deltaT) override;
+    void Update(const u32 frame, const u32 totalMSec, const float deltaT) override {}
 
     /// text is ui element, empty
-    void Render(const u32 frame, const u32 totalMSec, const float deltaT) override;
+    void Render(const u32 frame, const u32 totalMSec, const float deltaT) override {}
 
     /// render text
     void RenderUI(const u32 frame, const u32 totalMSec, const float deltaT) override;
