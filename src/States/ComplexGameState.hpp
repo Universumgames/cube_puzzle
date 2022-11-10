@@ -4,6 +4,7 @@
 
 class CubeGame;
 
+/// complex game state to store additional CubeGame
 class ComplexGameState: public GameState{
 public:
     ComplexGameState(CubeGame& cubeGame, Renderer* render);

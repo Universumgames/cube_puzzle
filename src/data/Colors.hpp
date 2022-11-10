@@ -1,7 +1,3 @@
-//
-// Created by Tom Arlt on 05.11.22.
-//
-
 #pragma once
 
 #include "../global.hpp"

@@ -17,6 +17,7 @@ class WorldMap final : public GameObject {
 public:
     WorldMap(CubeGame &game, SDL_Renderer *render, int xWidth, int yHeight, Vector<WorldField> map, Point cubePos);
 
+    /// set cube map pointer, has to be called before first run
     void setCubeMap(CubeMap *cubeMap) { this->cubeMap = cubeMap; }
 
     void HandleEvent(const u32 frame, const u32 totalMSec, const float deltaT, Event event) override;

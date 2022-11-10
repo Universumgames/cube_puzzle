@@ -1,4 +1,3 @@
-
 #pragma once
 #include "MoveDirections.hpp"
 #include <string>
@@ -14,18 +13,27 @@
  *           6
 */
 
+/// Dice Side directon when viewing from top
 enum class DiceSide{
     NORTH, SOUTH, WEST, EAST, TOP, BOTTOM
 };
 
+/// Direction when viewing straight on dice side
 enum class DiceFaceDirection{
     UP, DOWN, LEFT, RIGHT
 };
 
+/// Helper Class for Dice Logic
 class DiceData{
 public:
     /// default cube is 1up, 5north, 3west
     DiceData();
+    /**
+     * Roll cube in direction
+     * @param direction direction to roll to
+     * @param side
+     * @return new side facing in same direction
+     */
     int rotate(DiceRollDirection direction, int side = 1);
 
     /// get dice side facing direction
@@ -53,14 +61,17 @@ public:
 
     int getSideWhenMovingInDirX(int side, DiceFaceDirection direction);
 
+    /// get folded out representation of cube relative to center c
     void get2DRepresentation(int c, int* n, int*w, int*e, int*s, int* b);
 
 private:
     int up, north, west;
 public:
+    /// get opposite side, getOpposite(6) = 1
     static int getOpposite(int side);
 };
 
+/// map function to map DiceSide to DiceRollDirection (undefined behavior for DiceSide::TOP and DiceSide::BOTTOM)
 inline DiceRollDirection sideToRollDirection(DiceSide side){
     switch(side){
         case DiceSide::NORTH:

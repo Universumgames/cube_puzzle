@@ -6,14 +6,18 @@
 #include "GameObject.hpp"
 #include "../CubeGame.hpp"
 
+/// Field on CubeMap
 class CubeField {
 public:
     CubeField() = default;
 
+    /// Handle input events, probably unused
     virtual void HandleEvent(CubeGame &game, const u32 frame, const u32 totalMSec, const float deltaT, Event event) = 0;
 
+    /// physics, etc. update method
     virtual void Update(CubeGame &game, const u32 frame, const u32 totalMSec, const float deltaT) = 0;
 
+    /// render only method
     virtual void Render(CubeGame &game, Renderer *render, Point size, Point location, const u32 frame, const u32 totalMSec,
                         const float deltaT) {
         SDL_SetRenderDrawColor(render, 200, 200, 0, 255);
@@ -22,8 +26,10 @@ public:
         SDL_RenderFillRect(render, &dst);
     };
 
+    /// return true if player can move to this tile, false otherwise
     virtual bool isPlayerMovableTo() = 0;
 
+    /// return true if an other object can move to this tile, false otherwise
     virtual bool isObjectMovableTo() = 0;
 };
 

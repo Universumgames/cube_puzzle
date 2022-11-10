@@ -9,10 +9,12 @@
 class Level;
 class CubeMap;
 
+/// Helper class to handle player movement INPUT and rendering player, movement handled in CubeMap
 class Player: public GameObject{
 public:
     Player(CubeGame &game, SDL_Renderer *render);
 
+    /// set cube map pointer, has to be set before first run
     void setCubeMap(CubeMap* cubeMap);
 
     void HandleEvent(const u32 frame, const u32 totalMSec, const float deltaT, Event event) override;
@@ -21,10 +23,10 @@ public:
 
     void Render(const u32 frame, const u32 totalMSec, const float deltaT) override;
 
+    /// move player, relative to screen
     bool move(PlayerMoveDirection direction);
 
 private:
-    Level* currentLevel;
     CubeMap* cubeMap;
     Rect nextDraw;
 };

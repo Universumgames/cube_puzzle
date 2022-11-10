@@ -13,6 +13,7 @@ enum class DiceRollDirection{
     NORTH, SOUTH, WEST, EAST
 };
 
+/// map function to get opposite of roll direction (NORTH -> SOUTH)
 inline DiceRollDirection getOppositeDiceRollDirection(DiceRollDirection dir){
     switch(dir){
         case DiceRollDirection::NORTH:

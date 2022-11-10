@@ -10,7 +10,7 @@
 #include "../GameObjects/Text.hpp"
 #include "ComplexGameState.hpp"
 
-
+/// Level Selector GameState, initializes level selecting and loading data
 class LevelSelector final : public ComplexGameState
 {
 public:
@@ -26,8 +26,11 @@ public:
 
     void UnInit() override;
 private:
+    /// load level data list, for selection
     void loadList();
+    /// draw list for selection
     void drawList();
+    /// load specific level,
     void loadLevel(const std::string &path);
 
     /// i: index of level (loading order)

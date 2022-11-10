@@ -81,25 +81,6 @@ bool CubeMap::movePlayer(PlayerMoveDirection dir) {
             moveDir += 1_right;
             break;
     }
-    // move dir relative to screen not world
-   /* auto tmp = 0;
-    switch (diceData.getDiceSideRotation(currentSideId)) {
-        case DiceFaceDirection::UP:
-            break;
-        case DiceFaceDirection::DOWN:
-            moveDir = moveDir;
-            break;
-        case DiceFaceDirection::LEFT:
-            tmp = moveDir.x;
-            moveDir.x = moveDir.y;
-            moveDir.y = tmp * -1;
-            break;
-        case DiceFaceDirection::RIGHT:
-            tmp = moveDir.x;
-            moveDir.x = moveDir.y * -1;
-            moveDir.y = tmp;
-            break;
-    }*/
     Point newPlayerPos = playerPos + moveDir;
     bool edge = checkCubeSideEdgeOverstepping(newPlayerPos);
     if (edge) {

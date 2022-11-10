@@ -4,6 +4,8 @@
 #include "WorldField.hpp"
 #include "../GameObjects/CubeField.hpp"
 
+// Template file for storing example level data
+
 inline Point emptyWorldFieldSize = {5, 5};
 
 inline Vector<WorldField> emptyWorldField = {

@@ -15,6 +15,7 @@ class CubeMap;
 class WorldMap;
 class CubeGame;
 
+/// Level handler, create new object for every level
 class Level final : public ComplexGameState
 {
 public:
@@ -26,7 +27,12 @@ public:
 
     void Render(const u32 frame, const u32 totalMSec, const float deltaT) override;
 
-    /// load level from file into memory, called by LevelSelector
+    /**
+     *  load level from file into memory, called by LevelSelector
+     * @param path path to file to load from
+     * @param id the id the level should have (index in allstates vector)
+     * @return loaded leveldata
+     */
     LevelData load(const std::string &path, size_t id);
 
     /// init world when gamestate comes active
@@ -34,6 +40,8 @@ public:
 
     void UnInit() override;
 
+
+    /// alternative to load(...) function, if this level should be generated from template data
     LevelData loadTemplateLevel(size_t id);
 
 private:

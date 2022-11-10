@@ -16,11 +16,14 @@ class Player;
 
 class CubeMapSide;
 
+/// Logic class for handling player movement on cube and calling cubefiled methods
 class CubeMap final : public GameObject {
 public:
+    /// map initializer
     CubeMap(CubeGame &game, SDL_Renderer *render, const Vector<CubeMapSide>& sides, int startSide = 2,
             Point playerPos = {0, 0});
 
+    /// set world map pointer, has to be set befor run
     void SetWorldMap(WorldMap *worldMap) { this->worldMap = worldMap; }
 
     void HandleEvent(const u32 frame, const u32 totalMSec, const float deltaT, Event event) override;
