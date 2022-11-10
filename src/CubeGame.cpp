@@ -71,6 +71,7 @@ void CubeGame::loadSprites() {
     loadPNGTexture(spriteStorage.temp, render, "./asset/graphic/AllTestTileWater.png")
     loadFont(spriteStorage.basicFont, ROBOTO_FONT_FILEPATH, 30)
     loadFont(spriteStorage.debugFont, ROBOTO_FONT_LIGHT_FILEPATH, 18)
+    loadPNGTexture(spriteStorage.playerSpriteSheet, render, "./asset/graphic/charCat.png")
 
     for(int i = 1; i <= 6; i++) {
         Texture* tmp;

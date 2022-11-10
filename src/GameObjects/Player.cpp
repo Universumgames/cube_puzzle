@@ -29,7 +29,7 @@ void Player::Update(const u32 frame, const u32 totalMSec, const float deltaT) {
 
 void Player::Render(const u32 frame, const u32 totalMSec, const float deltaT) {
     if (cubeMap == nullptr) return;
-    drawSprite(game.getSpriteStorage()->temp, render, {0, 1}, nextDraw);
+    drawSprite(game.getSpriteStorage()->playerSpriteSheet, render, {0, 0}, nextDraw);
 }
 
 void Player::setCubeMap(CubeMap *cubeMap) {
