@@ -100,7 +100,7 @@ void Text::reloadTexture() {
 
     SDL_FreeSurface(surf);
 
-    dst = {position.x, position.y, blendedTextSize.h, blendedTextSize.w};
+    //dst = {position.x, position.y, blendedTextSize.h, blendedTextSize.w};
     calculateShadowOffset();
 }
 
@@ -115,19 +115,6 @@ void Text::calculateShadowOffset() {
             Point{+0 * shadowOffset, -2 * shadowOffset},
             Point{-2 * shadowOffset, +0 * shadowOffset},
     };
-
-    /**
-     * {
-        Point { -1, -1 },
-                Point { +1, -1 },
-                Point { -1, +1 },
-                Point { +1, +1 },
-                Point { +0, +2 },
-                Point { +2, +0 },
-                Point { +0, -2 },
-                Point { -2, +0 },
-    };
-     */
 }
 
 void Text::changeColor(Color color) {
@@ -142,4 +129,8 @@ void Text::setEnabled(bool active) {
     auto oldEn = enabled;
     enabled = active;
     if (active && oldEn != active) reloadTexture();
+}
+
+Point Text::getTextSize() {
+    return blendedTextSize;
 }

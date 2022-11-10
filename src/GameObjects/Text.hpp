@@ -40,6 +40,7 @@ public:
 
     void setEnabled(bool active);
 
+    Point getTextSize();
 private:
     void reloadTexture();
 
@@ -53,8 +54,7 @@ private:
     int shadowOffset;
     Texture *texture = nullptr;
     std::string text;
-    Rect blendedTextSize;
-    Rect dst;
+    Point blendedTextSize;
     Color color;
     Array<Point, 8> shadowOffsets;
     bool enabled = true;
