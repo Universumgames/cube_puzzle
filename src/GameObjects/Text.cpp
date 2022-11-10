@@ -12,6 +12,7 @@ Text::Text(CubeGame &game, SDL_Renderer *render, int maxWidth, std::string text,
     this->font = font;
     this->toClean = false;
     this->color = color;
+    this->maxWidth = maxWidth;
 }
 
 Text::Text(CubeGame &game, SDL_Renderer *render, int maxWidth, std::string text, const char *fontPath, int pointSize,
@@ -22,6 +23,7 @@ Text::Text(CubeGame &game, SDL_Renderer *render, int maxWidth, std::string text,
     this->font = TTF_OpenFont(fontPath, pointSize);
     this->toClean = true;
     this->color = color;
+    this->maxWidth = maxWidth;
 }
 
 void Text::RenderUI(const u32 frame, const u32 totalMSec, const float deltaT) {
