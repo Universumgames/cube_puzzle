@@ -36,7 +36,7 @@ void Level::Update(const u32 frame, const u32 totalMSec, const float deltaT) {
 
 void Level::Render(const u32 frame, const u32 totalMSec, const float deltaT) {
     SDL_RenderClear(render);
-    SDL_SetRenderDrawColor(render, 0, 255, 0, 255);
+    SDL_SetRenderDrawColor(render, 20, 20, 20, 255);
     SDL_RenderFillRect(render, EntireRect);
     iterateGameObjects(Render(BASIC_GO_DATA_PASSTHROUGH))
     iterateGameObjects(RenderUI(BASIC_GO_DATA_PASSTHROUGH))
