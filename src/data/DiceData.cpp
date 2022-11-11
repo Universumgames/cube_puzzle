@@ -228,9 +228,9 @@ int DiceData::getSideWhenMovingInDirX(int side, DiceSideRotation direction) {
 }
 
 void DiceData::get2DRepresentation(int c, int *n, int *w, int *e, int *s, int *b) {
-    *b = getOpposite(c);
-    *n = getSideWhenMovingInDirX(c, DiceSideRotation::UP);
-    *s = getSideWhenMovingInDirX(c, DiceSideRotation::DOWN);
-    *w = getSideWhenMovingInDirX(c, DiceSideRotation::LEFT);
-    *e = getSideWhenMovingInDirX(c, DiceSideRotation::RIGHT);
+    if (b != nullptr) *b = getOpposite(c);
+    if (n != nullptr) *n = getSideWhenMovingInDirX(c, DiceSideRotation::UP);
+    if (s != nullptr) *s = getSideWhenMovingInDirX(c, DiceSideRotation::DOWN);
+    if (w != nullptr) *w = getSideWhenMovingInDirX(c, DiceSideRotation::LEFT);
+    if (e != nullptr) *e = getSideWhenMovingInDirX(c, DiceSideRotation::RIGHT);
 }
