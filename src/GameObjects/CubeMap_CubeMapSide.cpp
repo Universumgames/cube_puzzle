@@ -36,7 +36,8 @@ void CubeMapSide::Render(CubeGame &game, Renderer *render, DiceData diceData, co
     Point size = getFieldSize(game.getWindowSize());
     Point offset = getStartingOffset(game.getWindowSize(), size);
     Rect drawableRect = getDrawableRect(game.getWindowSize());
-    drawSide(game.getSpriteStorage()->sideSprites[sideID - 1], render, drawableRect);
+    DiceFaceDirection rotation = diceData.getDiceSideRotation(sideID);
+    drawSide(game.getSpriteStorage()->sideSprites[sideID - 1], render, drawableRect, rotation);
     if (overlay == nullptr) {
         overlay = new Text(game, render, 400, "", game.getSpriteStorage()->debugFont, {0, 0});
     }
@@ -73,6 +74,7 @@ void CubeMapSide::renderGridOverlay(CubeGame &game, Renderer *render, DiceData d
     Point offset = getStartingOffset(game.getWindowSize(), size);
     Rect drawableRect = getDrawableRect(game.getWindowSize());
     if (game.isDebug()) {
+        // grid lines
         double lineWidth = max(max(size.x, size.y) / 40.0, 2.0);
         for (int x = 1; x < width; x++) {
             Rect dst = {(int) (offset.x + size.x * x - lineWidth / 2), offset.y, (int) lineWidth, drawableRect.h};
@@ -86,6 +88,7 @@ void CubeMapSide::renderGridOverlay(CubeGame &game, Renderer *render, DiceData d
         }
 
 
+        // colored rectangle
         auto sideOrientation = diceData.getDiceSideRotation(sideID);
         Rect dst = {0, 0, 0, 0};
         switch (sideOrientation) {

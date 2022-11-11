@@ -1,6 +1,7 @@
 #pragma once
 
 #include "../global.hpp"
+#include "DiceData.hpp"
 
 #define SPRITE_TILE_SIZE 16
 #define SIDE_SIZE 48
@@ -23,9 +24,25 @@ inline void drawSprite(Texture *texture, Renderer *render, Point imageIndex, Rec
  * @param render sdl renderer
  * @param dst destination rectangle to draw to on screen
  */
-inline void drawSide(Texture *texture, Renderer *render, Rect dst) {
+inline void drawSide(Texture *texture, Renderer *render, Rect dst, DiceFaceDirection rotation = DiceFaceDirection::UP) {
     //Rect src = {0,0, SIDE_SIZE, SIDE_SIZE};
-    SDL_RenderCopy(render, texture, nullptr, &dst);
+    double angle = 0;
+    switch (rotation) {
+        case DiceFaceDirection::UP:
+            angle = 0;
+            break;
+        case DiceFaceDirection::DOWN:
+            angle = 180;
+            break;
+        case DiceFaceDirection::LEFT:
+            angle = 270;
+            break;
+        case DiceFaceDirection::RIGHT:
+            angle = 90;
+            break;
+    }
+    Point center = {dst.w / 2, dst.h / 2};
+    SDL_RenderCopyEx(render, texture, nullptr, &dst, angle, &center, SDL_FLIP_NONE);
 }
 
 #define ROBOTO_FONT_FILEPATH "./asset/font/RobotoSlab-Bold.ttf"
