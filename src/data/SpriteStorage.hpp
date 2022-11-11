@@ -24,20 +24,20 @@ inline void drawSprite(Texture *texture, Renderer *render, Point imageIndex, Rec
  * @param render sdl renderer
  * @param dst destination rectangle to draw to on screen
  */
-inline void drawSide(Texture *texture, Renderer *render, Rect dst, DiceFaceDirection rotation = DiceFaceDirection::UP) {
+inline void drawSide(Texture *texture, Renderer *render, Rect dst, DiceSideRotation rotation = DiceSideRotation::UP) {
     //Rect src = {0,0, SIDE_SIZE, SIDE_SIZE};
     double angle = 0;
     switch (rotation) {
-        case DiceFaceDirection::UP:
+        case DiceSideRotation::UP:
             angle = 0;
             break;
-        case DiceFaceDirection::DOWN:
+        case DiceSideRotation::DOWN:
             angle = 180;
             break;
-        case DiceFaceDirection::LEFT:
+        case DiceSideRotation::LEFT:
             angle = 270;
             break;
-        case DiceFaceDirection::RIGHT:
+        case DiceSideRotation::RIGHT:
             angle = 90;
             break;
     }

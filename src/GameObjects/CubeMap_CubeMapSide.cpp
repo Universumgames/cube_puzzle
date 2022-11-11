@@ -2,16 +2,16 @@
 #include "../recthelper.hpp"
 
 Point CubeMapSide::cubePositionToScreenPosition(DiceData diceData, Point cubePos) const {
-    DiceFaceDirection faceDirection = diceData.getDiceSideRotation(sideID);
+    DiceSideRotation faceDirection = diceData.getDiceSideRotation(sideID);
     Point res = {};
     switch (faceDirection) {
-        case DiceFaceDirection::UP:
+        case DiceSideRotation::UP:
             return cubePos;
-        case DiceFaceDirection::DOWN:
+        case DiceSideRotation::DOWN:
             return {this->width - cubePos.x - 1, this->height - cubePos.y - 1};
-        case DiceFaceDirection::LEFT:
+        case DiceSideRotation::LEFT:
             return {cubePos.y, this->width - cubePos.x - 1};
-        case DiceFaceDirection::RIGHT:
+        case DiceSideRotation::RIGHT:
             return {this->height - cubePos.y - 1, cubePos.x};
     }
     return res;
@@ -36,7 +36,7 @@ void CubeMapSide::Render(CubeGame &game, Renderer *render, DiceData diceData, co
     Point size = getFieldSize(game.getWindowSize());
     Point offset = getStartingOffset(game.getWindowSize(), size);
     Rect drawableRect = getDrawableRect(game.getWindowSize());
-    DiceFaceDirection rotation = diceData.getDiceSideRotation(sideID);
+    DiceSideRotation rotation = diceData.getDiceSideRotation(sideID);
     drawSide(game.getSpriteStorage()->sideSprites[sideID - 1], render, drawableRect, rotation);
     if (overlay == nullptr) {
         overlay = new Text(game, render, 400, "", game.getSpriteStorage()->debugFont, {0, 0});
@@ -92,19 +92,19 @@ void CubeMapSide::renderGridOverlay(CubeGame &game, Renderer *render, DiceData d
         auto sideOrientation = diceData.getDiceSideRotation(sideID);
         Rect dst = {0, 0, 0, 0};
         switch (sideOrientation) {
-            case DiceFaceDirection::UP:
+            case DiceSideRotation::UP:
                 dst = {(int) (offset.x + (drawableRect.w / 2.0) - 25), offset.y, 50, 50};
                 SDL_SetRenderDrawColor(render, 255, 0, 0, 255);
                 break;
-            case DiceFaceDirection::DOWN:
+            case DiceSideRotation::DOWN:
                 dst = {(int) (offset.x + (drawableRect.w / 2.0) - 25), offset.y + drawableRect.h - 50, 50, 50};
                 SDL_SetRenderDrawColor(render, 0, 255, 0, 255);
                 break;
-            case DiceFaceDirection::LEFT:
+            case DiceSideRotation::LEFT:
                 dst = {(int) offset.x, (int) (offset.y + (drawableRect.h / 2.0) - 25), 50, 50};
                 SDL_SetRenderDrawColor(render, 255, 255, 0, 255);
                 break;
-            case DiceFaceDirection::RIGHT:
+            case DiceSideRotation::RIGHT:
                 dst = {offset.x + drawableRect.w - 25, (int) (offset.y + (drawableRect.h / 2.0) - 25), 50, 50};
                 SDL_SetRenderDrawColor(render, 0, 255, 255, 255);
                 break;

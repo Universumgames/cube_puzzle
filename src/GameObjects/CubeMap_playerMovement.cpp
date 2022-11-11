@@ -50,11 +50,11 @@ void CubeMap::moveCubeInWorld(DiceRollDirection rollDirection) {
 }
 
 PlayerMoveDirection CubeMap::screenDirectionToDirectionOnCubeSide(PlayerMoveDirection direction) {
-    DiceFaceDirection faceDirection = diceData.getDiceSideRotation(currentSideId);
+    DiceSideRotation faceDirection = diceData.getDiceSideRotation(currentSideId);
     switch (faceDirection) {
-        case DiceFaceDirection::UP:
+        case DiceSideRotation::UP:
             return direction;
-        case DiceFaceDirection::DOWN:
+        case DiceSideRotation::DOWN:
             switch (direction) {
                 case PlayerMoveDirection::UP:
                     return PlayerMoveDirection::DOWN;
@@ -65,7 +65,7 @@ PlayerMoveDirection CubeMap::screenDirectionToDirectionOnCubeSide(PlayerMoveDire
                 case PlayerMoveDirection::RIGHT:
                     return PlayerMoveDirection::LEFT;
             }
-        case DiceFaceDirection::LEFT:
+        case DiceSideRotation::LEFT:
             switch (direction) {
                 case PlayerMoveDirection::UP:
                     return PlayerMoveDirection::RIGHT;
@@ -76,7 +76,7 @@ PlayerMoveDirection CubeMap::screenDirectionToDirectionOnCubeSide(PlayerMoveDire
                 case PlayerMoveDirection::RIGHT:
                     return PlayerMoveDirection::DOWN;
             }
-        case DiceFaceDirection::RIGHT:
+        case DiceSideRotation::RIGHT:
             switch (direction) {
                 case PlayerMoveDirection::UP:
                     return PlayerMoveDirection::LEFT;
@@ -97,23 +97,23 @@ bool CubeMap::checkCubeSideEdgeOverstepping(Point &playerPos) {
     // done: rotate cube
     // TODO move player to correct location
     auto *side = getSide(currentSideId);
-    DiceFaceDirection oldSideOrientation = diceData.getDiceSideRotation(currentSideId);
+    DiceSideRotation oldSideOrientation = diceData.getDiceSideRotation(currentSideId);
     DiceSide oldSide = diceData.getSideFacing(currentSideId);
     if (playerPos.x < 0) {
         // TODO move cube missing
         switch (oldSideOrientation) {
-            case DiceFaceDirection::UP:
-                currentSideId = diceData.getSideWhenMovingInDirX(currentSideId, DiceFaceDirection::LEFT);
+            case DiceSideRotation::UP:
+                currentSideId = diceData.getSideWhenMovingInDirX(currentSideId, DiceSideRotation::LEFT);
                 break;
-            case DiceFaceDirection::DOWN:
-                currentSideId = diceData.getSideWhenMovingInDirX(currentSideId, DiceFaceDirection::RIGHT);
+            case DiceSideRotation::DOWN:
+                currentSideId = diceData.getSideWhenMovingInDirX(currentSideId, DiceSideRotation::RIGHT);
                 break;
-            case DiceFaceDirection::LEFT:
-                currentSideId = diceData.getSideWhenMovingInDirX(currentSideId, DiceFaceDirection::DOWN);
+            case DiceSideRotation::LEFT:
+                currentSideId = diceData.getSideWhenMovingInDirX(currentSideId, DiceSideRotation::DOWN);
                 moveCubeInWorld(getOppositeDiceRollDirection(sideToRollDirection(oldSide)));
                 break;
-            case DiceFaceDirection::RIGHT:
-                currentSideId = diceData.getSideWhenMovingInDirX(currentSideId, DiceFaceDirection::UP);
+            case DiceSideRotation::RIGHT:
+                currentSideId = diceData.getSideWhenMovingInDirX(currentSideId, DiceSideRotation::UP);
                 moveCubeInWorld(sideToRollDirection(oldSide));
                 break;
         }
@@ -121,18 +121,18 @@ bool CubeMap::checkCubeSideEdgeOverstepping(Point &playerPos) {
         return true;
     } else if (playerPos.x >= side->width) {
         switch (oldSideOrientation) {
-            case DiceFaceDirection::UP:
-                currentSideId = diceData.getSideWhenMovingInDirX(currentSideId, DiceFaceDirection::RIGHT);
+            case DiceSideRotation::UP:
+                currentSideId = diceData.getSideWhenMovingInDirX(currentSideId, DiceSideRotation::RIGHT);
                 break;
-            case DiceFaceDirection::DOWN:
-                currentSideId = diceData.getSideWhenMovingInDirX(currentSideId, DiceFaceDirection::LEFT);
+            case DiceSideRotation::DOWN:
+                currentSideId = diceData.getSideWhenMovingInDirX(currentSideId, DiceSideRotation::LEFT);
                 break;
-            case DiceFaceDirection::LEFT:
-                currentSideId = diceData.getSideWhenMovingInDirX(currentSideId, DiceFaceDirection::UP);
+            case DiceSideRotation::LEFT:
+                currentSideId = diceData.getSideWhenMovingInDirX(currentSideId, DiceSideRotation::UP);
                 moveCubeInWorld(sideToRollDirection(oldSide));
                 break;
-            case DiceFaceDirection::RIGHT:
-                currentSideId = diceData.getSideWhenMovingInDirX(currentSideId, DiceFaceDirection::DOWN);
+            case DiceSideRotation::RIGHT:
+                currentSideId = diceData.getSideWhenMovingInDirX(currentSideId, DiceSideRotation::DOWN);
                 moveCubeInWorld(getOppositeDiceRollDirection(sideToRollDirection(oldSide)));
                 break;
         }
@@ -143,19 +143,19 @@ bool CubeMap::checkCubeSideEdgeOverstepping(Point &playerPos) {
         auto oldOrientation = diceData.getDiceSideRotation(currentSideId);
         // TODO move cube missing
         switch (oldSideOrientation) {
-            case DiceFaceDirection::UP:
-                currentSideId = diceData.getSideWhenMovingInDirX(currentSideId, DiceFaceDirection::UP);
+            case DiceSideRotation::UP:
+                currentSideId = diceData.getSideWhenMovingInDirX(currentSideId, DiceSideRotation::UP);
                 moveCubeInWorld(sideToRollDirection(oldSide));
                 break;
-            case DiceFaceDirection::DOWN:
-                currentSideId = diceData.getSideWhenMovingInDirX(currentSideId, DiceFaceDirection::DOWN);
+            case DiceSideRotation::DOWN:
+                currentSideId = diceData.getSideWhenMovingInDirX(currentSideId, DiceSideRotation::DOWN);
                 moveCubeInWorld(getOppositeDiceRollDirection(sideToRollDirection(oldSide)));
                 break;
-            case DiceFaceDirection::LEFT:
-                currentSideId = diceData.getSideWhenMovingInDirX(currentSideId, DiceFaceDirection::LEFT);
+            case DiceSideRotation::LEFT:
+                currentSideId = diceData.getSideWhenMovingInDirX(currentSideId, DiceSideRotation::LEFT);
                 break;
-            case DiceFaceDirection::RIGHT:
-                currentSideId = diceData.getSideWhenMovingInDirX(currentSideId, DiceFaceDirection::RIGHT);
+            case DiceSideRotation::RIGHT:
+                currentSideId = diceData.getSideWhenMovingInDirX(currentSideId, DiceSideRotation::RIGHT);
                 break;
         }
         playerPos = {2, 2};
@@ -165,19 +165,19 @@ bool CubeMap::checkCubeSideEdgeOverstepping(Point &playerPos) {
         // TODO move cube missing
         //moveCubeInWorld(diceSideToRollDir(oldFacing));
         switch (oldSideOrientation) {
-            case DiceFaceDirection::UP:
-                currentSideId = diceData.getSideWhenMovingInDirX(currentSideId, DiceFaceDirection::DOWN);
+            case DiceSideRotation::UP:
+                currentSideId = diceData.getSideWhenMovingInDirX(currentSideId, DiceSideRotation::DOWN);
                 moveCubeInWorld(getOppositeDiceRollDirection(sideToRollDirection(oldSide)));
                 break;
-            case DiceFaceDirection::DOWN:
-                currentSideId = diceData.getSideWhenMovingInDirX(currentSideId, DiceFaceDirection::UP);
+            case DiceSideRotation::DOWN:
+                currentSideId = diceData.getSideWhenMovingInDirX(currentSideId, DiceSideRotation::UP);
                 moveCubeInWorld(sideToRollDirection(oldSide));
                 break;
-            case DiceFaceDirection::LEFT:
-                currentSideId = diceData.getSideWhenMovingInDirX(currentSideId, DiceFaceDirection::RIGHT);
+            case DiceSideRotation::LEFT:
+                currentSideId = diceData.getSideWhenMovingInDirX(currentSideId, DiceSideRotation::RIGHT);
                 break;
-            case DiceFaceDirection::RIGHT:
-                currentSideId = diceData.getSideWhenMovingInDirX(currentSideId, DiceFaceDirection::LEFT);
+            case DiceSideRotation::RIGHT:
+                currentSideId = diceData.getSideWhenMovingInDirX(currentSideId, DiceSideRotation::LEFT);
                 break;
         }
         playerPos = {2, 2};

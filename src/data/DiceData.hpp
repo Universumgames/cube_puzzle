@@ -20,7 +20,7 @@ enum class DiceSide {
 };
 
 /// Direction when viewing straight on dice side
-enum class DiceFaceDirection {
+enum class DiceSideRotation {
     UP, DOWN, LEFT, RIGHT
 };
 
@@ -59,9 +59,9 @@ public:
      * @param side
      * @return get rotation of side on global space (no result for top and bottom of dice)
      */
-    DiceFaceDirection getDiceSideRotation(int side);
+    DiceSideRotation getDiceSideRotation(int side);
 
-    int getSideWhenMovingInDirX(int side, DiceFaceDirection direction);
+    int getSideWhenMovingInDirX(int side, DiceSideRotation direction);
 
     /// get folded out representation of cube relative to center c
     void get2DRepresentation(int c, int *n, int *w, int *e, int *s, int *b);

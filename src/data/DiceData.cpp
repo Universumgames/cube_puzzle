@@ -101,120 +101,120 @@ int DiceData::getAnchorSideOfTopLeftCorner(int side) {
     }
 }
 
-DiceFaceDirection DiceData::getDiceSideRotation(int side) {
+DiceSideRotation DiceData::getDiceSideRotation(int side) {
     int anchor = getAnchorSideOfTopLeftCorner(side);
     if (side == north) { // north
         if (anchor == up) {
-            return DiceFaceDirection::UP;
+            return DiceSideRotation::UP;
         } else if (anchor == west) {
-            return DiceFaceDirection::RIGHT;
+            return DiceSideRotation::RIGHT;
         } else if (anchor == getOpposite(up)) {
-            return DiceFaceDirection::DOWN;
+            return DiceSideRotation::DOWN;
         } else if (anchor == getOpposite(west)) {
-            return DiceFaceDirection::LEFT;
+            return DiceSideRotation::LEFT;
         }
     } else if (side == up) {
         // undefined
     } else if (side == west) { // west
         if (anchor == north) {
-            return DiceFaceDirection::LEFT;
+            return DiceSideRotation::LEFT;
         } else if (anchor == up) {
-            return DiceFaceDirection::UP;
+            return DiceSideRotation::UP;
         } else if (anchor == getOpposite(north)) {
-            return DiceFaceDirection::RIGHT;
+            return DiceSideRotation::RIGHT;
         } else if (anchor == getOpposite(up)) {
-            return DiceFaceDirection::DOWN;
+            return DiceSideRotation::DOWN;
         }
     } else if (side == getOpposite(north)) { // south
         if (anchor == west) {
-            return DiceFaceDirection::RIGHT;
+            return DiceSideRotation::RIGHT;
         } else if (anchor == up) {
-            return DiceFaceDirection::UP;
+            return DiceSideRotation::UP;
         } else if (anchor == getOpposite(west)) {
-            return DiceFaceDirection::LEFT;
+            return DiceSideRotation::LEFT;
         } else if (anchor == getOpposite(up)) {
-            return DiceFaceDirection::DOWN;
+            return DiceSideRotation::DOWN;
         }
     } else if (side == getOpposite(up)) {
         // undefined
     } else if (side == getOpposite(west)) { // east
         if (anchor == north) {
-            return DiceFaceDirection::RIGHT;
+            return DiceSideRotation::RIGHT;
         } else if (anchor == up) {
-            return DiceFaceDirection::UP;
+            return DiceSideRotation::UP;
         } else if (anchor == getOpposite(north)) {
-            return DiceFaceDirection::LEFT;
+            return DiceSideRotation::LEFT;
         } else if (anchor == getOpposite(up)) {
-            return DiceFaceDirection::DOWN;
+            return DiceSideRotation::DOWN;
         }
     }
-    return DiceFaceDirection::LEFT;
+    return DiceSideRotation::LEFT;
 }
 
-int DiceData::getSideWhenMovingInDirX(int side, DiceFaceDirection direction) {
+int DiceData::getSideWhenMovingInDirX(int side, DiceSideRotation direction) {
     auto currentFacing = getSideFacing(side);
     DiceSide nextDir = DiceSide::NORTH;
     switch (currentFacing) {
         case DiceSide::NORTH:
             switch (direction) {
-                case DiceFaceDirection::UP:
+                case DiceSideRotation::UP:
                     nextDir = DiceSide::TOP;
                     break;
-                case DiceFaceDirection::DOWN:
+                case DiceSideRotation::DOWN:
                     nextDir = DiceSide::BOTTOM;
                     break;
-                case DiceFaceDirection::LEFT:
+                case DiceSideRotation::LEFT:
                     nextDir = DiceSide::EAST;
                     break;
-                case DiceFaceDirection::RIGHT:
+                case DiceSideRotation::RIGHT:
                     nextDir = DiceSide::WEST;
                     break;
             }
             break;
         case DiceSide::SOUTH:
             switch (direction) {
-                case DiceFaceDirection::UP:
+                case DiceSideRotation::UP:
                     nextDir = DiceSide::TOP;
                     break;
-                case DiceFaceDirection::DOWN:
+                case DiceSideRotation::DOWN:
                     nextDir = DiceSide::BOTTOM;
                     break;
-                case DiceFaceDirection::LEFT:
+                case DiceSideRotation::LEFT:
                     nextDir = DiceSide::WEST;
                     break;
-                case DiceFaceDirection::RIGHT:
+                case DiceSideRotation::RIGHT:
                     nextDir = DiceSide::EAST;
                     break;
             }
             break;
         case DiceSide::WEST:
             switch (direction) {
-                case DiceFaceDirection::UP:
+                case DiceSideRotation::UP:
                     nextDir = DiceSide::TOP;
                     break;
-                case DiceFaceDirection::DOWN:
+                case DiceSideRotation::DOWN:
                     nextDir = DiceSide::BOTTOM;
                     break;
-                case DiceFaceDirection::LEFT:
+                case DiceSideRotation::LEFT:
                     nextDir = DiceSide::NORTH;
                     break;
-                case DiceFaceDirection::RIGHT:
+                case DiceSideRotation::RIGHT:
                     nextDir = DiceSide::SOUTH;
                     break;
             }
             break;
         case DiceSide::EAST:
             switch (direction) {
-                case DiceFaceDirection::UP:
+                case DiceSideRotation::UP:
                     nextDir = DiceSide::TOP;
                     break;
-                case DiceFaceDirection::DOWN:
+                case DiceSideRotation::DOWN:
                     nextDir = DiceSide::BOTTOM;
                     break;
-                case DiceFaceDirection::LEFT:
+                case DiceSideRotation::LEFT:
                     nextDir = DiceSide::SOUTH;
                     break;
-                case DiceFaceDirection::RIGHT:
+                case DiceSideRotation::RIGHT:
                     nextDir = DiceSide::NORTH;
                     break;
             }
@@ -229,8 +229,8 @@ int DiceData::getSideWhenMovingInDirX(int side, DiceFaceDirection direction) {
 
 void DiceData::get2DRepresentation(int c, int *n, int *w, int *e, int *s, int *b) {
     *b = getOpposite(c);
-    *n = getSideWhenMovingInDirX(c, DiceFaceDirection::UP);
-    *s = getSideWhenMovingInDirX(c, DiceFaceDirection::DOWN);
-    *w = getSideWhenMovingInDirX(c, DiceFaceDirection::LEFT);
-    *e = getSideWhenMovingInDirX(c, DiceFaceDirection::RIGHT);
+    *n = getSideWhenMovingInDirX(c, DiceSideRotation::UP);
+    *s = getSideWhenMovingInDirX(c, DiceSideRotation::DOWN);
+    *w = getSideWhenMovingInDirX(c, DiceSideRotation::LEFT);
+    *e = getSideWhenMovingInDirX(c, DiceSideRotation::RIGHT);
 }
