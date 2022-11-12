@@ -45,6 +45,16 @@ inline void drawSide(Texture *texture, Renderer *render, Rect dst, DiceSideRotat
     SDL_RenderCopyEx(render, texture, nullptr, &dst, angle, &center, SDL_FLIP_NONE);
 }
 
+inline void drawColoredFilledRect(Renderer* render, Color color, Rect* dst){
+    SDL_SetRenderDrawColor(render, color.r, color.g, color.b, color.a);
+    SDL_RenderFillRect(render, dst);
+}
+
+inline void drawColoredFilledRect(Renderer* render, Color color, Rect dst){
+    SDL_SetRenderDrawColor(render, color.r, color.g, color.b, color.a);
+    SDL_RenderFillRect(render, &dst);
+}
+
 #define ROBOTO_FONT_FILEPATH "./asset/font/RobotoSlab-Bold.ttf"
 #define ROBOTO_FONT_LIGHT_FILEPATH "./asset/font/Roboto/Roboto-Regular.ttf"
 
