@@ -32,9 +32,19 @@ void CubeMap::RenderUI(const u32 frame, const u32 totalMSec, const float deltaT)
     debugDiceData->RenderUI(BASIC_GO_DATA_PASSTHROUGH);
 }
 
-void drawMinimapSide(std::vector<Texture *> diceSideTextures, Renderer *render, DiceData diceData, int side, Rect dst) {
-    drawSide(diceSideTextures[side - 1], render, dst,
-             diceData.getDiceSideRotation(side));
+void sAndNRotation(int w, int c, int e, int b, int n, int s, DiceSideRotation* nRot, DiceSideRotation* sRot){
+    if(nRot == nullptr || sRot == nullptr) return;
+    auto anchorN = DiceData::getAnchorSideOfTopLeftCorner(n);
+    auto anchorS = DiceData::getAnchorSideOfTopLeftCorner(s);
+    if(anchorN == w) *nRot = DiceSideRotation::LEFT;
+    else if(anchorN == c) *nRot = DiceSideRotation::DOWN;
+    else if(anchorN == e) *nRot = DiceSideRotation::RIGHT;
+    else if(anchorN == b) *nRot = DiceSideRotation::UP;
+
+    if(anchorS == w) *sRot = DiceSideRotation::LEFT;
+    else if(anchorS == c) *sRot = DiceSideRotation::UP;
+    else if(anchorS == e) *sRot = DiceSideRotation::RIGHT;
+    else if(anchorS == b) *sRot = DiceSideRotation::DOWN;
 }
 
 void CubeMap::drawMinimap(const u32 frame, const u32 totalMSec, const float deltaT) {
@@ -46,19 +56,24 @@ void CubeMap::drawMinimap(const u32 frame, const u32 totalMSec, const float delt
     diceData.get2DRepresentation(c, &n, &w, &e, &s, &b);
     Point offset = {game.getWindowSize().x - (sideSize * 3 + sideDistance), sideDistance};
 
-    drawMinimapSide(game.getSpriteStorage()->sideSprites, render, cloneData, n,
-                    {offset.x + sideSize, offset.y, sideSize, sideSize});
-    drawMinimapSide(game.getSpriteStorage()->sideSprites, render, cloneData, w,
-                    {offset.x, offset.y + sideSize, sideSize, sideSize});
-    drawMinimapSide(game.getSpriteStorage()->sideSprites, render, cloneData, c,
-                    {offset.x + sideSize, offset.y + sideSize, sideSize, sideSize});
-    drawMinimapSide(game.getSpriteStorage()->sideSprites, render, cloneData, e,
-                    {offset.x + sideSize * 2, offset.y + sideSize, sideSize, sideSize});
-    drawMinimapSide(game.getSpriteStorage()->sideSprites, render, cloneData, s,
-                    {offset.x + sideSize, offset.y + sideSize * 2, sideSize, sideSize});
-    drawMinimapSide(game.getSpriteStorage()->sideSprites, render, cloneData, b,
-                    {offset.x + sideSize, offset.y + sideSize * 3, sideSize, sideSize});
+    auto nRot = DiceSideRotation::UP;
+    auto sRot = DiceSideRotation::UP;
+    sAndNRotation(w,c,e,b, n,s, &nRot, &sRot);
+
+    drawSide(game.getSpriteStorage()->sideSprites[n - 1], render, {offset.x + sideSize, offset.y, sideSize, sideSize},
+             nRot);
+    drawSide(game.getSpriteStorage()->sideSprites[w - 1], render, {offset.x, offset.y + sideSize, sideSize, sideSize},
+             cloneData.getDiceSideRotation(w));
+    drawSide(game.getSpriteStorage()->sideSprites[c - 1], render,
+             {offset.x + sideSize, offset.y + sideSize, sideSize, sideSize}, cloneData.getDiceSideRotation(c));
+    drawSide(game.getSpriteStorage()->sideSprites[e - 1], render,
+             {offset.x + sideSize * 2, offset.y + sideSize, sideSize, sideSize}, cloneData.getDiceSideRotation(e));
+    drawSide(game.getSpriteStorage()->sideSprites[s - 1], render,
+             {offset.x + sideSize, offset.y + sideSize * 2, sideSize, sideSize}, sRot);
+    drawSide(game.getSpriteStorage()->sideSprites[b - 1], render,
+             {offset.x + sideSize, offset.y + sideSize * 3, sideSize, sideSize}, cloneData.getDiceSideRotation(b));
 }
+
 
 
 void CubeMap::drawMap(const u32 frame, const u32 totalMSec, const float deltaT) {

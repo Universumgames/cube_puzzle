@@ -14,7 +14,7 @@
  *           6
 */
 
-/// Dice Side directon when viewing from top
+/// Dice Side direction when viewing from top
 enum class DiceSide {
     NORTH, SOUTH, WEST, EAST, TOP, BOTTOM
 };
