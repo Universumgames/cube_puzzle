@@ -35,6 +35,8 @@ private:
 
     void drawMinimap();
 
+    void fixCubePosOutBounds();
+
     friend class CubeMap;
 };
 

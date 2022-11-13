@@ -46,6 +46,7 @@ void CubeMap::moveCubeInWorld(DiceRollDirection rollDirection) {
             worldMap->cubePos += 1_right;
             break;
     }
+    worldMap->fixCubePosOutBounds();
     diceData.rotate(rollDirection);
 }
 

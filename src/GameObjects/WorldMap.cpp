@@ -64,3 +64,8 @@ void WorldMap::drawMinimap() {
     SDL_SetRenderDrawColor(render, 255, 0, 0, 255);
     SDL_RenderFillRect(render, &dst);
 }
+
+void WorldMap::fixCubePosOutBounds() {
+    cubePos.x = (cubePos.x < 0) ? xWidth - cubePos.x - 2 : cubePos.x;
+    cubePos.y = (cubePos.y < 0) ? yHeight - cubePos.y - 2 : cubePos.y;
+}
