@@ -8,12 +8,12 @@
 
 inline Point emptyWorldFieldSize = {5, 5};
 
-inline Vector<WorldField> emptyWorldField = {
-        WorldField::DEFAULT, WorldField::DEFAULT, WorldField::DEFAULT, WorldField::DEFAULT, WorldField::DEFAULT,
-        WorldField::DEFAULT, WorldField::DEFAULT, WorldField::DEFAULT, WorldField::DEFAULT, WorldField::DEFAULT,
-        WorldField::DEFAULT, WorldField::DEFAULT, WorldField::DEFAULT, WorldField::DEFAULT, WorldField::DEFAULT,
-        WorldField::DEFAULT, WorldField::DEFAULT, WorldField::DEFAULT, WorldField::DEFAULT, WorldField::DEFAULT,
-        WorldField::DEFAULT, WorldField::DEFAULT, WorldField::DEFAULT, WorldField::DEFAULT, WorldField::DEFAULT,
+inline Vector<WorldField::WorldFieldEnum> emptyWorldField = {
+        WorldField::WorldFieldEnum::DEFAULT, WorldField::WorldFieldEnum::DEFAULT, WorldField::WorldFieldEnum::DEFAULT, WorldField::WorldFieldEnum::DEFAULT, WorldField::WorldFieldEnum::DEFAULT,
+        WorldField::WorldFieldEnum::DEFAULT, WorldField::WorldFieldEnum::DEFAULT, WorldField::WorldFieldEnum::DEFAULT, WorldField::WorldFieldEnum::DEFAULT, WorldField::WorldFieldEnum::DEFAULT,
+        WorldField::WorldFieldEnum::DEFAULT, WorldField::WorldFieldEnum::DEFAULT, WorldField::WorldFieldEnum::DEFAULT, WorldField::WorldFieldEnum::DEFAULT, WorldField::WorldFieldEnum::DEFAULT,
+        WorldField::WorldFieldEnum::DEFAULT, WorldField::WorldFieldEnum::DEFAULT, WorldField::WorldFieldEnum::DEFAULT, WorldField::WorldFieldEnum::DEFAULT, WorldField::WorldFieldEnum::DEFAULT,
+        WorldField::WorldFieldEnum::DEFAULT, WorldField::WorldFieldEnum::DEFAULT, WorldField::WorldFieldEnum::DEFAULT, WorldField::WorldFieldEnum::DEFAULT, WorldField::WorldFieldEnum::DEFAULT,
 };
 
 inline Point emptyCubeMapSidesSize = {5, 5};

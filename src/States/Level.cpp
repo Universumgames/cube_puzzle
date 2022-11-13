@@ -1,4 +1,6 @@
 #include "Level.hpp"
+
+#include <utility>
 #include "../GameObjects/Player.hpp"
 #include "../GameObjects/CubeMap.hpp"
 #include "../GameObjects/WorldMap.hpp"
@@ -62,14 +64,14 @@ void Level::UnInit() {
     iterateGameObjects(UnInit())
 }
 
-LevelData Level::load(const std::string &path, size_t id) {
-    worldMap = new WorldMap(cubeGame, render, 10, 10, {WorldField::DEFAULT}, {0, 0});
+LevelData Level::load(Map<int, Map<int, Vector<WorldField::WorldFieldEnum>>> levelDataMap, size_t id) {
+    worldMap = new WorldMap(cubeGame, render, 10, 10, {WorldField::WorldFieldEnum::DEFAULT}, {0, 0});
     cubeMap = new CubeMap(cubeGame, render, {});
     worldMap->setCubeMap(cubeMap);
     cubeMap->SetWorldMap(worldMap);
     player = new Player(cubeGame, render);
     player->setCubeMap(cubeMap);
-    return {.path = path, .id = id};
+    return {.levelDataMap = std::move(levelDataMap), .id = id};
 }
 
 LevelData Level::loadTemplateLevel(size_t id) {

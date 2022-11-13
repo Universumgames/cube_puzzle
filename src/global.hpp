@@ -14,6 +14,7 @@
 #include <iostream>
 #include <string>
 #include <vector>
+#include <map>
 
 #define SDL_MAIN_HANDLED
 
@@ -65,6 +66,8 @@ template<class T, size_t Size>
 using Array = std::array<T, Size>;
 template<class T>
 using Vector = std::vector<T>;
+template<class K, class V>
+using Map = std::map<K, V>;
 
 using Clock = std::chrono::high_resolution_clock;
 using TimePoint = Clock::time_point;

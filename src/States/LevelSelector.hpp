@@ -1,10 +1,13 @@
 #pragma once
 
+#include <filesystem>
+#include <fstream>
 #include "../gamebase.hpp"
 #include "../CubeGame.hpp"
 #include "../data/LevelData.hpp"
 #include "../GameObjects/Text.hpp"
 #include "ComplexGameState.hpp"
+#include "../global.hpp"
 
 /// Level Selector GameState, initializes level selecting and loading data
 class LevelSelector final : public ComplexGameState {
@@ -28,12 +31,19 @@ private:
     /// draw list for selection
     void drawList();
 
-    /// load specific level,
-    void loadLevel(const std::string &path);
+    /// load specific level
+    void loadLevel(Map<int, Map<int, Vector<WorldField::WorldFieldEnum>>> levelDataMap);
 
     /// play specific level
     void playLevel(const LevelData &level);
-
+    
+    /// remove every character from string that is not needed
+    static void removeUnwantedChars(std::string& str);
+    
+    static std::string getFileStringWithoutWhitespace(const std::filesystem::directory_entry& dirEntry);
+    
+    static Map<int, Map<int, Vector<WorldField::WorldFieldEnum>>> getlevelDataMap(std::string& fileString);
+    
 private:
     Vector<LevelData> levelData;
     bool levelsLoaded = false;

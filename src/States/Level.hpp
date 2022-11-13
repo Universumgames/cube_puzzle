@@ -32,7 +32,7 @@ public:
      * @param id the id the level should have (index in allstates vector)
      * @return loaded leveldata
      */
-    LevelData load(const std::string &path, size_t id);
+    LevelData load(Map<int, Map<int, Vector<WorldField::WorldFieldEnum>>> levelDataMap, size_t id);
 
     /// init world when gamestate comes active
     void Init() override;

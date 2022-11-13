@@ -23,7 +23,7 @@ set(SOURCE_FILES src/main.cpp src/global.hpp src/gamebase.hpp src/gamebase.cpp s
         src/data/LevelData.hpp src/data/MoveDirections.hpp src/data/DiceData.hpp src/data/DiceData.cpp
         src/data/EmptyData.hpp src/data/SpriteStorage.hpp src/GameObjects/Text.cpp src/GameObjects/Text.hpp
         src/data/Colors.hpp src/States/ComplexGameState.hpp src/States/ComplexGameState.cpp
-        src/GameObjects/CubeMap_CubeMapSide.cpp src/GameObjects/CubeMap_playerMovement.cpp)
+        src/GameObjects/CubeMap_CubeMapSide.cpp src/GameObjects/CubeMap_playerMovement.cpp src/data/WorldField.cpp)
 
 Message("")
 Message(STATUS "SOURCE entry point : " ${SOURCE_FILES})
@@ -33,14 +33,16 @@ Message("")
 
 # ------- Finds ---------- #
 IF (WIN32 OR MINGW)
-    set(SDL2_INCLUDE_DIR C:/libs/SDL2-2.24.0/include)
-    set(SDL2_LIB_DIR C:/libs/SDL2-2.24.0/lib/x64)
+    #set(SDL2_INCLUDE_DIR C:/libs/SDL2-2.24.2/include)
+    #set(SDL2_LIB_DIR C:/libs/SDL2-2.24.2/lib/x64)
+    set(SDL2_INCLUDE_DIR ./SDL2-2.24.2/include)
+    set(SDL2_LIB_DIR ./SDL2-2.24.2/lib)
 
-    set(SDL2_TTF_INCLUDE_DIR C:/libs/SDL2_ttf-2.20.1/include)
-    set(SDL2_TTF_LIB_DIR C:/libs/SDL2_ttf-2.20.1/lib/x64)
+    set(SDL2_TTF_INCLUDE_DIR ./SDL2_ttf-2.20.1/include)
+    set(SDL2_TTF_LIB_DIR ./SDL2_ttf-2.20.1/lib)
 
-    set(SDL2_IMAGE_INCLUDE_DIR C:/libs/SDL2_image-2.6.2/x86_64-w64-mingw32/include)
-    set(SDL2_IMAGE_LIB_DIR C:/libs/SDL2_image-2.6.2/x86_64-w64-mingw32/lib)
+    set(SDL2_IMAGE_INCLUDE_DIR ./SDL2_image-2.6.2/include)
+    set(SDL2_IMAGE_LIB_DIR ./SDL2_image-2.6.2/lib)
 
     include_directories(${SDL2_INCLUDE_DIR})
     link_directories(${SDL2_LIB_DIR})
@@ -53,7 +55,7 @@ IF (WIN32 OR MINGW)
 
     ADD_EXECUTABLE(${PROJECT_NAME} ${SOURCE_FILES})
 
-    target_link_libraries(${PROJECT_NAME} SDL2main SDL2 SDL2_ttf SDL2_image)
+    target_link_libraries(${PROJECT_NAME} SDL2 SDL2main  SDL2_ttf SDL2_image)
 
 else ()
     ADD_EXECUTABLE(${PROJECT_NAME} ${SOURCE_FILES})

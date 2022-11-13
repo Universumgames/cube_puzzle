@@ -3,15 +3,19 @@
 #include "Level.hpp"
 #include "../recthelper.hpp"
 
+#include <utility>
+
+#define FIRST_ROW 1
+
 void LevelSelector::Events(const u32 frame, const u32 totalMSec, const float deltaT) {
     SDL_PumpEvents();
-
+    
     Event event;
     while (SDL_PollEvent(&event)) {
         if (game.HandleEvent(event))
             continue;
         if (event.type == SDL_KEYDOWN) {
-            const Keysym &what_key = event.key.keysym;
+            const Keysym& what_key = event.key.keysym;
             if (what_key.scancode == SDL_SCANCODE_0) {
                 game.SetNextState(1);
             }
@@ -27,53 +31,51 @@ void LevelSelector::Render(const u32 frame, const u32 totalMSec, const float del
     SDL_RenderClear(render);
     SDL_SetRenderDrawColor(render, 200, 0, 255, 255);
     SDL_RenderFillRect(render, EntireRect);
-
+    
     text->RenderUI(frame, totalMSec, deltaT);
-
+    
     SDL_RenderPresent(render);
 }
 
-LevelSelector::LevelSelector(CubeGame &game, Renderer *render) : ComplexGameState(game, render) {
+LevelSelector::LevelSelector(CubeGame& game, Renderer *render) : ComplexGameState(game, render) {
 }
 
 void LevelSelector::loadList() {
-//fill levelpaths
-
-    Vector<std::string> paths;
-
-    /// template level
+    
+    /// first add template level
     {
         auto *tempLevel = new Level(cubeGame, render);
         auto levelD = tempLevel->loadTemplateLevel(cubeGame.allStates.size());
         levelData.push_back(levelD);
         cubeGame.allStates.push_back(tempLevel);
     }
-
-// create levels
-    for (const auto &path: paths) {
-        loadLevel(path);
+    
+    const std::filesystem::path levels {"asset/levels"};
+    
+    for (auto const& dirEntry: std::filesystem::directory_iterator {levels}) {
+        std::string fileString = getFileStringWithoutWhitespace(dirEntry);
+        auto levelDataMap = getlevelDataMap(fileString);
+        loadLevel(levelDataMap);
     }
-
-
 }
 
 void LevelSelector::drawList() {
-
 }
 
-void LevelSelector::loadLevel(const std::string &path) {
-    // add level to allstates of game
+void LevelSelector::loadLevel(Map<int, Map<int, Vector<WorldField::WorldFieldEnum>>> levelDataMap) {
+    // add level to allStates of game
     auto *levelX = new Level(cubeGame, render);
-    auto level = levelX->load(path, cubeGame.allStates.size());
-    levelData.push_back(level);
+    auto levelD = levelX->load(std::move(levelDataMap), cubeGame.allStates.size());
+    levelData.push_back(levelD);
     cubeGame.allStates.push_back(levelX);
 }
 
 void LevelSelector::Init() {
     GameState::Init();
-    if (levelsLoaded) return;
+    if (levelsLoaded)
+        return;
     loadList();
-
+    
     levelsLoaded = true;
     text = new Text(cubeGame, render, 500, "level selector", game.getSpriteStorage()->debugFont, {10, 10}, 1, white);
     text->Init();
@@ -83,6 +85,98 @@ void LevelSelector::UnInit() {
     GameState::UnInit();
 }
 
-void LevelSelector::playLevel(const LevelData &level) {
+void LevelSelector::playLevel(const LevelData& level) {
     game.SetNextState(level.id);
+}
+
+void LevelSelector::removeUnwantedChars(std::string& str) {
+    Vector<char> listOfUsableCharacters = WorldField::getListOfAllCharsLinkedToEnum();
+    listOfUsableCharacters.emplace_back(',');
+    listOfUsableCharacters.emplace_back('-');
+    listOfUsableCharacters.emplace_back(';');
+    for (int i = 0; i < str.length(); i++) {
+        if (std::find(listOfUsableCharacters.begin(), listOfUsableCharacters.end(), str[i]) ==
+            listOfUsableCharacters.end()) {
+            str.erase(str.begin() + i);
+            i--;
+        }
+    }
+}
+
+std::string LevelSelector::getFileStringWithoutWhitespace(const std::filesystem::directory_entry& dirEntry) {
+    std::string line, fileString;
+    std::ifstream levelFile;
+    levelFile.open(dirEntry);
+    if (levelFile.is_open()) {
+        while (std::getline(levelFile, line)) {
+            fileString.append(line);
+        }
+        levelFile.close();
+    }
+    removeUnwantedChars(fileString);
+    return fileString;
+}
+
+Map<int, Map<int, Vector<WorldField::WorldFieldEnum>>> LevelSelector::getlevelDataMap(std::string& fileString) {
+    Map<int, Map<int, Vector<WorldField::WorldFieldEnum>>> levelDataMap;
+    Map<int, Vector<WorldField::WorldFieldEnum>> cubeSide1, cubeSide2, cubeSide3, cubeSide4, cubeSide5, cubeSide6;
+    int cubeSide = 5;
+    int rowOfCubeSide = FIRST_ROW;
+    Vector<WorldField::WorldFieldEnum> row;
+    for (char& c: fileString) {
+        if (c == ';' || c == ',' || c == '-') {
+            switch (cubeSide) {
+                case 1:
+                    cubeSide1.insert_or_assign(rowOfCubeSide, row);
+                    break;
+                case 2:
+                    cubeSide2.insert_or_assign(rowOfCubeSide, row);
+                    break;
+                case 3:
+                    cubeSide3.insert_or_assign(rowOfCubeSide, row);
+                    break;
+                case 4:
+                    cubeSide4.insert_or_assign(rowOfCubeSide, row);
+                    break;
+                case 5:
+                    cubeSide5.insert_or_assign(rowOfCubeSide, row);
+                    break;
+                case 6:
+                    cubeSide6.insert_or_assign(rowOfCubeSide, row);
+                    break;
+            }
+            row.clear();
+            if (c == ';') {
+                rowOfCubeSide = FIRST_ROW;
+                if (cubeSide == 5) {
+                    cubeSide = 4;
+                } else if (cubeSide == 3) {
+                    cubeSide = 2;
+                } else {
+                    cubeSide = 6;
+                }
+            } else if (c == ',') {
+                if (cubeSide == 4) {
+                    cubeSide = 1;
+                } else if (cubeSide == 1) {
+                    cubeSide = 3;
+                }
+            } else if (c == '-') {
+                rowOfCubeSide++;
+                if (cubeSide == 3) {
+                    cubeSide = 4;
+                }
+            }
+        } else {
+            row.emplace_back(WorldField::convertCharToEnum(c));
+        }
+    }
+    levelDataMap.insert_or_assign(1, cubeSide1);
+    levelDataMap.insert_or_assign(2, cubeSide2);
+    levelDataMap.insert_or_assign(3, cubeSide3);
+    levelDataMap.insert_or_assign(4, cubeSide4);
+    levelDataMap.insert_or_assign(5, cubeSide5);
+    levelDataMap.insert_or_assign(6, cubeSide6);
+    
+    return levelDataMap;
 }

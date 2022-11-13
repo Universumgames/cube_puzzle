@@ -91,8 +91,9 @@ public:
 
         Event event;
         while (SDL_PollEvent(&event)) {
-            if (game.HandleEvent(event))
+            if (game.HandleEvent(event)) {
                 continue;
+            }
         }
     }
 

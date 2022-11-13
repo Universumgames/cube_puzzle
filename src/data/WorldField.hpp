@@ -1,8 +1,20 @@
 #pragma once
+#include "../global.hpp"
 
-/// World Field enum
-enum class WorldField : int {
-    DEFAULT,
-    LAVA,
-    ICE
+class WorldField {
+public:
+    /// World Field enum
+    enum class WorldFieldEnum : int {
+        DEFAULT,
+        LAVA,
+        ICE
+        //add new field types here
+    };
+    
+    static WorldFieldEnum convertCharToEnum(char c);
+    
+    static Vector<char> getListOfAllCharsLinkedToEnum();
+    
+    static char convertEnumToChar(WorldFieldEnum worldFieldEnum);
+    
 };
