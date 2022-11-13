@@ -33,5 +33,29 @@ private:
 
     int getFieldIndex(int x, int y) const;
 
+    void drawMinimap();
+
     friend class CubeMap;
 };
+
+inline void getWorldFieldTextureSource(WorldField field, SpriteStorage *spriteStorage, Texture **texture, Rect *src) {
+    switch (field) {
+        case WorldField::DEFAULT:
+            *texture = spriteStorage->temp;
+            *src = {0, 0, 16, 16};
+            break;
+        case WorldField::LAVA:
+            break;
+        case WorldField::ICE:
+            *texture = spriteStorage->temp;
+            *src = {16, 16, 16, 16};
+            break;
+    }
+}
+
+inline void drawWorldField(Renderer *render, SpriteStorage *spriteStorage, WorldField field, Rect dst) {
+    Rect src = {};
+    Texture *tex;
+    getWorldFieldTextureSource(field, spriteStorage, &tex, &src);
+    SDL_RenderCopy(render, tex, &src, &dst);
+}
