@@ -40,22 +40,22 @@ private:
     friend class CubeMap;
 };
 
-inline void getWorldFieldTextureSource(WorldField field, SpriteStorage *spriteStorage, Texture **texture, Rect *src) {
+inline void getWorldFieldTextureSource(WorldField::WorldFieldEnum field, SpriteStorage *spriteStorage, Texture **texture, Rect *src) {
     switch (field) {
-        case WorldField::DEFAULT:
+        case WorldField::WorldFieldEnum::DEFAULT:
             *texture = spriteStorage->temp;
             *src = {0, 0, 16, 16};
             break;
-        case WorldField::LAVA:
+        case WorldField::WorldFieldEnum::LAVA:
             break;
-        case WorldField::ICE:
+        case WorldField::WorldFieldEnum::ICE:
             *texture = spriteStorage->temp;
             *src = {16, 16, 16, 16};
             break;
     }
 }
 
-inline void drawWorldField(Renderer *render, SpriteStorage *spriteStorage, WorldField field, Rect dst) {
+inline void drawWorldField(Renderer *render, SpriteStorage *spriteStorage, WorldField::WorldFieldEnum field, Rect dst) {
     Rect src = {};
     Texture *tex;
     getWorldFieldTextureSource(field, spriteStorage, &tex, &src);

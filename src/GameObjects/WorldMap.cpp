@@ -52,7 +52,7 @@ void WorldMap::drawMinimap() {
     for (int x = startX; x <= cubePos.x + xyMapDelta; x++) {
         for (int y = startY; y <= cubePos.y + xyMapDelta; y++) {
             int fIndex = getFieldIndex(x, y);
-            WorldField wField = field[fIndex];
+            WorldField::WorldFieldEnum wField = field[fIndex];
             drawWorldField(render, game.getSpriteStorage(), wField,
                            {offset.x + wh * (x - startX),
                             offset.y + wh * (y - startY),
