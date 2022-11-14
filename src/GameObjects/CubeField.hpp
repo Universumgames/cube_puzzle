@@ -2,6 +2,7 @@
 
 #include "GameObject.hpp"
 #include "../CubeGame.hpp"
+#include "../stringhelper.hpp"
 
 /// Field on CubeMap
 class CubeField {
@@ -24,6 +25,20 @@ public:
 
     /// return true if an other object can move to this tile, false otherwise
     virtual bool isObjectMovableTo() = 0;
+
+    /// has tp be implemented in every sub class
+    static CubeField *decode(std::string data);
+
+    /// encoding works by creating it layer by layer
+    virtual std::string encode() = 0;
+
+    enum class TYPE : char {
+        EMPTY = 'e',
+        STATIC = 's',
+        GRAVITY = 'g',
+        INTERACTABLE = 'i',
+        ACTIVATABLE = 'a'
+    };
 };
 
 class EmptyField : public CubeField {
@@ -46,20 +61,35 @@ public:
 
     void Render(CubeGame &game, Renderer *render, Point size, Point location, const u32 frame, const u32 totalMSec,
                 const float deltaT) override {
-        //CubeField::Render(game, render, size, location, BASIC_GO_DATA_PASSTHROUGH);
-        //Rect src = {0,0,16,16};
-        //Rect dst = {location.x, location.y, size.x, size.y};
-        //drawSprite(game.getSpriteStorage()->temp, render, {0,0}, dst);
-        //SDL_RenderCopy(render, game.getSpriteStorage()->temp, &src, &dst);
+    }
+
+    static EmptyField *decode(std::string data) {
+        return new EmptyField();
+    }
+
+    std::string encode() override {
+        return charToString((char) CubeField::TYPE::EMPTY);
     }
 };
 
-class FallingStone : public CubeField {
+class GravityObject : public CubeField {
 public:
     bool isPlayerMovableTo() override { return false; }
 
     bool isObjectMovableTo() override { return false; }
 
+    std::string encode() override {
+        return charToString((char) CubeField::TYPE::GRAVITY);
+    }
+    // TODO implement logic
+};
+
+class FallingStone : public GravityObject {
+public:
+    std::string encode() override { return GravityObject::encode() + "f"; }
+    // TODO implement decode method
+    // TODO implement logic
+    // TODO adjust encode method
 };
 
 class Grass : public CubeField {
@@ -67,6 +97,9 @@ public:
     bool isPlayerMovableTo() override { return false; }
 
     bool isObjectMovableTo() override { return false; }
+    // TODO implement decode method
+    // TODO implement logic
+    // TODO adjust encode method
 };
 
 class Ice : public CubeField {
@@ -74,6 +107,9 @@ public:
     bool isPlayerMovableTo() override { return false; }
 
     bool isObjectMovableTo() override { return false; }
+    // TODO implement decode method
+    // TODO implement logic
+    // TODO adjust encode method
 };
 
 class Button : public CubeField {
@@ -81,6 +117,9 @@ public:
     bool isPlayerMovableTo() override { return true; }
 
     bool isObjectMovableTo() override { return true; }
+    // TODO implement decode method
+    // TODO implement logic
+    // TODO adjust encode method
 };
 
 class Activatable : public CubeField {
@@ -88,12 +127,23 @@ public:
     bool isPlayerMovableTo() override { return false; }
 
     bool isObjectMovableTo() override { return false; }
+
+    static Activatable *decode(std::string data);
+
+    std::string encode() override { return charToString((char) CubeField::TYPE::ACTIVATABLE); }
+    // TODO implement logic
 };
 
 class Piston : public Activatable {
-
+    std::string encode() override { return Activatable::encode() + "p"; }
+    // TODO implement decode method
+    // TODO implement logic
+    // TODO adjust encode method
 };
 
 class SlidingWall : public Activatable {
-
+    std::string encode() override { return Activatable::encode() + "s"; }
+    // TODO implement decode method
+    // TODO implement logic
+    // TODO adjust encode method
 };

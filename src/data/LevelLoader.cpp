@@ -72,7 +72,9 @@ LevelLoader::LoadedLevelData LevelLoader::loadLevel(std::filesystem::directory_e
             side.width = std::stoi(elements[0]);
             side.height = std::stoi(elements[1]);
             auto fields = split(elements[2], ARRAY_DELIMITTER);
-            // TODO add fields to cubemap
+            for(auto field: fields){
+                side.side.push_back(CubeField::decode(field));
+            }
             sides.push_back(side);
         } else if (lineIndex == 6) { // worldmap
             worldW = std::stoi(elements[0]);
