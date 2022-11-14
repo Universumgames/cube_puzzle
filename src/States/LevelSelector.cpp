@@ -55,8 +55,8 @@ void LevelSelector::loadList() {
 
     if(!std::filesystem::exists(levels)) return;
     for (auto const &dirEntry: std::filesystem::directory_iterator{levels}) {
-        std::string fileString = getFileStringWithoutWhitespace(dirEntry);
-        auto levelDataMap = getlevelDataMap(fileString);
+        std::string fileString = getFileContentWithoutWhitespace(dirEntry);
+        auto levelDataMap = getLevelDataMap(fileString);
         loadLevel(levelDataMap);
     }
 }
@@ -105,7 +105,7 @@ void LevelSelector::removeUnwantedChars(std::string &str) {
     }
 }
 
-std::string LevelSelector::getFileStringWithoutWhitespace(const std::filesystem::directory_entry &dirEntry) {
+std::string LevelSelector::getFileContentWithoutWhitespace(const std::filesystem::directory_entry &dirEntry) {
     std::string line, fileString;
     std::ifstream levelFile;
     levelFile.open(dirEntry);
@@ -119,7 +119,7 @@ std::string LevelSelector::getFileStringWithoutWhitespace(const std::filesystem:
     return fileString;
 }
 
-Map<int, Map<int, Vector<WorldField::WorldFieldEnum>>> LevelSelector::getlevelDataMap(std::string &fileString) {
+Map<int, Map<int, Vector<WorldField::WorldFieldEnum>>> LevelSelector::getLevelDataMap(std::string &fileString) {
     Map<int, Map<int, Vector<WorldField::WorldFieldEnum>>> levelDataMap;
     Map<int, Vector<WorldField::WorldFieldEnum>> cubeSide1, cubeSide2, cubeSide3, cubeSide4, cubeSide5, cubeSide6;
     int cubeSide = 5;

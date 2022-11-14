@@ -40,9 +40,9 @@ private:
     /// remove every character from string that is not needed
     static void removeUnwantedChars(std::string& str);
     
-    static std::string getFileStringWithoutWhitespace(const std::filesystem::directory_entry& dirEntry);
+    static std::string getFileContentWithoutWhitespace(const std::filesystem::directory_entry& dirEntry);
     
-    static Map<int, Map<int, Vector<WorldField::WorldFieldEnum>>> getlevelDataMap(std::string& fileString);
+    static Map<int, Map<int, Vector<WorldField::WorldFieldEnum>>> getLevelDataMap(std::string& fileString);
     
 private:
     Vector<LevelData> levelData;
