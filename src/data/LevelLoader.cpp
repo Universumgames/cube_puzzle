@@ -12,8 +12,8 @@
  * ...
  * <CubeMapSide6>#
  * <WorldMap>#
- * CubePos#
- * PlayerPos#
+ * <CubePos>#
+ * <PlayerPos>#
  * CubeSide
  *
  *
@@ -24,13 +24,13 @@
  * <WorldMap>:
  * width,height,enum array (chars) (column after column, splitted by ' ')
  *
- * CubePos:
+ * <CubePos>:
  * x,y
  *
- * PlayerPos:
+ * <PlayerPos>:
  * x,y
  *
- * CubeSide:
+ * <CubeSide>:
  * x
  *
  */
@@ -45,16 +45,16 @@ std::string getFileContent(std::filesystem::directory_entry path) {
     std::ifstream fileStream(path);
     if (fileStream.is_open()) {
         fileString.assign(std::istreambuf_iterator<char>(fileStream), std::istreambuf_iterator<char>());
-        /*while (std::getline(fileStream, line)) {
-            fileString.append(line);
-        }*/
+
         fileStream.close();
     }
     return fileString;
 }
 
 LevelLoader::LoadedLevelData LevelLoader::loadLevel(std::filesystem::directory_entry path) {
-    std::string fileContent = removeAll(getFileContent(path), STRING_TO_REMOVE);
+    std::string fileContent = getFileContent(path);
+    fileContent = removeAll(fileContent, STRING_TO_REMOVE);
+    fileContent = removeAll(fileContent, "\n");
     Vector<CubeMapSide> sides;
     int worldW = 0, worldH = 0;
     Vector<WorldField::WorldFieldEnum> worldField;
