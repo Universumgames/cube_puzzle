@@ -22,3 +22,7 @@ static std::string replaceAll(const std::string s, std::string toReplace, std::s
 static std::string removeAll(const std::string s, std::string toRemove){
     return std::regex_replace(s, std::regex(toRemove), "");
 }
+
+static std::string charToString(char c){
+    return std::string(1, c);
+}
