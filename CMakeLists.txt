@@ -23,7 +23,7 @@ set(SOURCE_FILES src/main.cpp src/global.hpp src/gamebase.hpp src/gamebase.cpp s
         src/data/LevelData.hpp src/data/MoveDirections.hpp src/data/DiceData.hpp src/data/DiceData.cpp
         src/data/EmptyData.hpp src/data/SpriteStorage.hpp src/GameObjects/Text.cpp src/GameObjects/Text.hpp
         src/data/Colors.hpp src/States/ComplexGameState.hpp src/States/ComplexGameState.cpp
-        src/GameObjects/CubeMap_CubeMapSide.cpp src/GameObjects/CubeMap_playerMovement.cpp src/data/WorldField.cpp)
+        src/GameObjects/CubeMap_CubeMapSide.cpp src/GameObjects/CubeMap_playerMovement.cpp src/data/WorldField.cpp src/data/paths.hpp)
 
 Message("")
 Message(STATUS "SOURCE entry point : " ${SOURCE_FILES})

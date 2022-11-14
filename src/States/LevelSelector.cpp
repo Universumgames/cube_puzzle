@@ -2,6 +2,7 @@
 #include "../CubeGame.hpp"
 #include "Level.hpp"
 #include "../recthelper.hpp"
+#include "../data/paths.hpp"
 
 #include <utility>
 
@@ -50,9 +51,9 @@ void LevelSelector::loadList() {
         cubeGame.allStates.push_back(tempLevel);
     }
     
-    const std::filesystem::path levels {"asset/levels"};
-    
     for (auto const& dirEntry: std::filesystem::directory_iterator {levels}) {
+
+    const std::filesystem::path levels{LEVELS_DIR};
         std::string fileString = getFileStringWithoutWhitespace(dirEntry);
         auto levelDataMap = getlevelDataMap(fileString);
         loadLevel(levelDataMap);
