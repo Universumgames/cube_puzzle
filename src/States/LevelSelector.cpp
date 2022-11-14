@@ -10,13 +10,13 @@
 
 void LevelSelector::Events(const u32 frame, const u32 totalMSec, const float deltaT) {
     SDL_PumpEvents();
-    
+
     Event event;
     while (SDL_PollEvent(&event)) {
         if (game.HandleEvent(event))
             continue;
         if (event.type == SDL_KEYDOWN) {
-            const Keysym& what_key = event.key.keysym;
+            const Keysym &what_key = event.key.keysym;
             if (what_key.scancode == SDL_SCANCODE_0) {
                 game.SetNextState(1);
             }
@@ -32,17 +32,17 @@ void LevelSelector::Render(const u32 frame, const u32 totalMSec, const float del
     SDL_RenderClear(render);
     SDL_SetRenderDrawColor(render, 200, 0, 255, 255);
     SDL_RenderFillRect(render, EntireRect);
-    
+
     text->RenderUI(frame, totalMSec, deltaT);
-    
+
     SDL_RenderPresent(render);
 }
 
-LevelSelector::LevelSelector(CubeGame& game, Renderer *render) : ComplexGameState(game, render) {
+LevelSelector::LevelSelector(CubeGame &game, Renderer *render) : ComplexGameState(game, render) {
 }
 
 void LevelSelector::loadList() {
-    
+
     /// first add template level
     {
         auto *tempLevel = new Level(cubeGame, render);
@@ -50,10 +50,11 @@ void LevelSelector::loadList() {
         levelData.push_back(levelD);
         cubeGame.allStates.push_back(tempLevel);
     }
-    
-    for (auto const& dirEntry: std::filesystem::directory_iterator {levels}) {
 
     const std::filesystem::path levels{LEVELS_DIR};
+
+    if(!std::filesystem::exists(levels)) return;
+    for (auto const &dirEntry: std::filesystem::directory_iterator{levels}) {
         std::string fileString = getFileStringWithoutWhitespace(dirEntry);
         auto levelDataMap = getlevelDataMap(fileString);
         loadLevel(levelDataMap);
@@ -76,7 +77,7 @@ void LevelSelector::Init() {
     if (levelsLoaded)
         return;
     loadList();
-    
+
     levelsLoaded = true;
     text = new Text(cubeGame, render, 500, "level selector", game.getSpriteStorage()->debugFont, {10, 10}, 1, white);
     text->Init();
@@ -86,11 +87,11 @@ void LevelSelector::UnInit() {
     GameState::UnInit();
 }
 
-void LevelSelector::playLevel(const LevelData& level) {
+void LevelSelector::playLevel(const LevelData &level) {
     game.SetNextState(level.id);
 }
 
-void LevelSelector::removeUnwantedChars(std::string& str) {
+void LevelSelector::removeUnwantedChars(std::string &str) {
     Vector<char> listOfUsableCharacters = WorldField::getListOfAllCharsLinkedToEnum();
     listOfUsableCharacters.emplace_back(',');
     listOfUsableCharacters.emplace_back('-');
@@ -104,7 +105,7 @@ void LevelSelector::removeUnwantedChars(std::string& str) {
     }
 }
 
-std::string LevelSelector::getFileStringWithoutWhitespace(const std::filesystem::directory_entry& dirEntry) {
+std::string LevelSelector::getFileStringWithoutWhitespace(const std::filesystem::directory_entry &dirEntry) {
     std::string line, fileString;
     std::ifstream levelFile;
     levelFile.open(dirEntry);
@@ -118,13 +119,13 @@ std::string LevelSelector::getFileStringWithoutWhitespace(const std::filesystem:
     return fileString;
 }
 
-Map<int, Map<int, Vector<WorldField::WorldFieldEnum>>> LevelSelector::getlevelDataMap(std::string& fileString) {
+Map<int, Map<int, Vector<WorldField::WorldFieldEnum>>> LevelSelector::getlevelDataMap(std::string &fileString) {
     Map<int, Map<int, Vector<WorldField::WorldFieldEnum>>> levelDataMap;
     Map<int, Vector<WorldField::WorldFieldEnum>> cubeSide1, cubeSide2, cubeSide3, cubeSide4, cubeSide5, cubeSide6;
     int cubeSide = 5;
     int rowOfCubeSide = FIRST_ROW;
     Vector<WorldField::WorldFieldEnum> row;
-    for (char& c: fileString) {
+    for (char &c: fileString) {
         if (c == ';' || c == ',' || c == '-') {
             switch (cubeSide) {
                 case 1:
@@ -178,6 +179,6 @@ Map<int, Map<int, Vector<WorldField::WorldFieldEnum>>> LevelSelector::getlevelDa
     levelDataMap.insert_or_assign(4, cubeSide4);
     levelDataMap.insert_or_assign(5, cubeSide5);
     levelDataMap.insert_or_assign(6, cubeSide6);
-    
+
     return levelDataMap;
 }
