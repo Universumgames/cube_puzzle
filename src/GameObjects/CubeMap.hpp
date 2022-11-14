@@ -16,7 +16,7 @@ class CubeMapSide;
 class CubeMap final : public GameObject {
 public:
     /// map initializer
-    CubeMap(CubeGame &game, SDL_Renderer *render, const Vector<CubeMapSide>& sides, int startSide = 2,
+    CubeMap(CubeGame &game, SDL_Renderer *render, const Vector<CubeMapSide> &sides, int startSide = 2,
             Point playerPos = {0, 0});
 
     /// set world map pointer, has to be set befor run
@@ -37,7 +37,8 @@ public:
 
     Rect playerDrawPosition();
 
-    CubeMapSide* getCurrentSide();
+    CubeMapSide *getCurrentSide();
+
 private:
     void moveCubeInWorld(DiceRollDirection rollDirection);
 
@@ -47,14 +48,15 @@ private:
 
     PlayerMoveDirection screenDirectionToDirectionOnCubeSide(PlayerMoveDirection direction);
 
-    bool checkCubeSideEdgeOverstepping(Point& newPosition);
+    bool checkCubeSideEdgeOverstepping(Point &newPosition);
 
 
     /// get side of dice (1-6)
     CubeMapSide *getSide(int i);
 
-    CubeField* getField(int side, int x, int y);
-    CubeField* getField(int side, Point p);
+    CubeField *getField(int side, int x, int y);
+
+    CubeField *getField(int side, Point p);
 
     void updateMinimap();
 
@@ -64,38 +66,48 @@ private:
     int currentSideId;
     Point playerPos;
     DiceData diceData;
-    Text* debugSideIndicator;
-    Text* minimapText;
-    Text* debugDiceData;
+    Text *debugSideIndicator;
+    Text *minimapText;
+    Text *debugDiceData;
 
     friend class WorldMap;
 };
 
 class CubeMapSide {
 public:
-    CubeMapSide(Vector<CubeField *> side, int width, int height, int sideID) : width(width), height(height), sideID(sideID) { this->side = side; }
-    CubeMapSide(Vector<CubeField *> side, Point size, int sideID) : width(size.x), height(size.y), sideID(sideID) { this->side = side; }
+    CubeMapSide() = default;
+
+    CubeMapSide(Vector<CubeField *> side, int width, int height, int sideID) : width(width), height(height),
+                                                                               sideID(sideID) { this->side = side; }
+
+    CubeMapSide(Vector<CubeField *> side, Point size, int sideID) : width(size.x), height(size.y),
+                                                                    sideID(sideID) { this->side = side; }
 
     Vector<CubeField *> side;
     int width, height, sideID;
-    Text* overlay = nullptr;
+    Text *overlay = nullptr;
 
     CubeField *getField(int x, int y) { return side[getIndex(x, y)]; }
+
     CubeField *getField(Point pos) { return getField(pos.x, pos.y); }
 
     [[nodiscard]] int getIndex(int x, int y) const { return x * width + y; }
 
     Point getFieldSize(Point windowSize);
+
     Point getStartingOffset(Point windowSize, Point fieldSize);
+
     Rect getDrawableRect(Point windowSize);
 
-    void HandleEvent(CubeGame& game, const u32 frame, const u32 totalMSec, const float deltaT, Event event);
+    void HandleEvent(CubeGame &game, const u32 frame, const u32 totalMSec, const float deltaT, Event event);
 
-    void Update(CubeGame& game, const u32 frame, const u32 totalMSec, const float deltaT);
+    void Update(CubeGame &game, const u32 frame, const u32 totalMSec, const float deltaT);
 
-    void Render(CubeGame& game, Renderer* render, DiceData diceData, const u32 frame, const u32 totalMSec, const float deltaT);
+    void Render(CubeGame &game, Renderer *render, DiceData diceData, const u32 frame, const u32 totalMSec,
+                const float deltaT);
 
-    void renderGridOverlay(CubeGame& game, Renderer* render, DiceData diceData, const u32 frame, const u32 totalMSec, const float deltaT);
+    void renderGridOverlay(CubeGame &game, Renderer *render, DiceData diceData, const u32 frame, const u32 totalMSec,
+                           const float deltaT);
 
     [[nodiscard]] Point cubePositionToScreenPosition(DiceData diceData, Point cubePos) const;
 
