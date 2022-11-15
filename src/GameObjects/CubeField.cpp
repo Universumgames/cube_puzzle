@@ -26,6 +26,7 @@ CubeField *CubeField::decode(std::string data) {
         case TYPE::GRAVITY:
             return GravityObject::decode(data);
         case TYPE::INTERACTABLE:
+            return Interactable::decode(data);
             break;
         case TYPE::ACTIVATABLE:
             return Activatable::decode(data);
@@ -41,6 +42,30 @@ Activatable *Activatable::decode(std::string data) {
             return Piston::decode(data);
         case 's':
             return SlidingWall::decode(data);
+        default:
+            return nullptr;
+    }
+    return nullptr;
+}
+
+Static *Static::decode(std::string data) {
+    char c = data[0];
+    data.pop_back();
+    switch(c){
+        case 'g':
+            return Grass::decode(data);
+        default:
+            return nullptr;
+    }
+    return nullptr;
+}
+
+Interactable *Interactable::decode(std::string data) {
+    char c = data[0];
+    data.pop_back();
+    switch(c){
+        case 'b':
+            return Button::decode(data);
         default:
             return nullptr;
     }

@@ -92,27 +92,53 @@ public:
     // TODO adjust encode method
 };
 
-class Grass : public CubeField {
+class Static: public CubeField{
 public:
     bool isPlayerMovableTo() override { return false; }
 
     bool isObjectMovableTo() override { return false; }
+
+    std::string encode() override {
+        return charToString((char) CubeField::TYPE::STATIC);
+    }
+
+    static Static *decode(std::string data);
+};
+
+class Grass : public Static {
+public:
+    std::string encode() override {
+        return Static::encode() + "g";
+    }
     // TODO implement decode method
     // TODO implement logic
     // TODO adjust encode method
 };
 
-class Ice : public CubeField {
+class Ice : public Static {
 public:
-    bool isPlayerMovableTo() override { return false; }
-
-    bool isObjectMovableTo() override { return false; }
+    std::string encode() override {
+        return Static::encode() + "i";
+    }
     // TODO implement decode method
     // TODO implement logic
     // TODO adjust encode method
 };
 
-class Button : public CubeField {
+class Interactable: public CubeField{
+public:
+    bool isPlayerMovableTo() override { return true; }
+
+    bool isObjectMovableTo() override { return true; }
+
+    std::string encode() override {
+        return charToString((char) CubeField::TYPE::INTERACTABLE);
+    }
+
+    static Interactable *decode(std::string data);
+};
+
+class Button : public Interactable {
 public:
     bool isPlayerMovableTo() override { return true; }
 
