@@ -42,14 +42,14 @@
 #define ARRAY_DELIMITTER ';'
 #define STRING_TO_REMOVE "\n"
 
-#define LINE_INDEX_NAME 0
-#define LINE_INDEX_ID 1
-#define LINE_INDEX_CUBESIDES_START 2
-#define LINE_INDEX_CUBESIDES_END 7
-#define LINE_INDEX_WORLDMAP 8
-#define LINE_INDEX_CUBEPOS 9
-#define LINE_INDEX_PLAYERPOS 10
-#define LINE_INDEX_CUBESIDE 11
+#define LINE_INDEX_NAME             0
+#define LINE_INDEX_ID               (LINE_INDEX_NAME + 1)
+#define LINE_INDEX_CUBESIDES_START  (LINE_INDEX_ID + 1)
+#define LINE_INDEX_CUBESIDES_END    (LINE_INDEX_CUBESIDES_START + 5)
+#define LINE_INDEX_WORLDMAP         (LINE_INDEX_CUBESIDES_END + 1)
+#define LINE_INDEX_CUBEPOS          (LINE_INDEX_WORLDMAP + 1)
+#define LINE_INDEX_PLAYERPOS        (LINE_INDEX_CUBEPOS + 1)
+#define LINE_INDEX_CUBESIDE         (LINE_INDEX_PLAYERPOS + 1)
 
 LevelLoader::LoadedLevelData LevelLoader::loadLevel(std::string path) {
     std::string fileContent = getFileContent(path);
