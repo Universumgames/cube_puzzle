@@ -61,6 +61,7 @@ IF (WIN32 OR MINGW)
 else ()
     ADD_EXECUTABLE(${PROJECT_NAME} ${SOURCE_FILES})
     set_property(TARGET ${PROJECT_NAME} PROPERTY CXX_STANDARD 23)
+    target_compile_features(${PROJECT_NAME} PUBLIC cxx_std_23)
 
     FIND_PACKAGE(SDL2 REQUIRED)
     Message("")
