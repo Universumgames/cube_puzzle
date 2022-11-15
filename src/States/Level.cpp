@@ -30,7 +30,7 @@ void Level::Update(const u32 frame, const u32 totalMSec, const float deltaT) {
     if (frame % 50 == 0) {
         u32 deltaSec = totalMSec - lastMSec;
         u32 deltaFrame = frame - lastFrame;
-        text->changeText("test level " + std::to_string((double) deltaFrame / ((double) deltaSec / 1000)) + "fps");
+        text->changeText(levelData.name + " " + std::to_string((double) deltaFrame / ((double) deltaSec / 1000)) + "fps");
         lastMSec = totalMSec;
         lastFrame = frame;
     }
@@ -81,7 +81,8 @@ LevelData Level::loadTemplateLevel(size_t id) {
     cubeMap->SetWorldMap(worldMap);
     player = new Player(cubeGame, render);
     player->setCubeMap(cubeMap);
-    return {.path = "", .id = id};
+    levelData = {.path = "", .id = id, .name = "template"};
+    return levelData;
 }
 
 LevelData Level::load(const LevelLoader::LoadedLevelData& data, size_t id) {
@@ -91,5 +92,6 @@ LevelData Level::load(const LevelLoader::LoadedLevelData& data, size_t id) {
     cubeMap->SetWorldMap(worldMap);
     player = new Player(cubeGame, render);
     player->setCubeMap(cubeMap);
-    return {.path=data.path, .id=id};
+    levelData = {.path=data.path, .id=id, .name = data.name};
+    return levelData;
 }

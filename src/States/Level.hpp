@@ -27,6 +27,8 @@ public:
 
     void Render(const u32 frame, const u32 totalMSec, const float deltaT) override;
 
+
+
     /**
      *  load level from file into memory, called by LevelSelector
      * @param path path to file to load from
@@ -52,4 +54,5 @@ private:
     CubeMap *cubeMap;
     WorldMap *worldMap;
     Text *text;
+    LevelData levelData;
 };
