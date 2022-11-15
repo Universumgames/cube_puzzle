@@ -107,18 +107,6 @@ void LevelSelector::removeUnwantedChars(std::string &str) {
     }
 }
 
-std::string LevelSelector::getFileContentWithoutWhitespace(const std::filesystem::directory_entry &dirEntry) {
-    std::string fileString;
-    std::ifstream fileStream(dirEntry);
-    if (fileStream.is_open()) {
-        fileString.assign(std::istreambuf_iterator<char>(fileStream), std::istreambuf_iterator<char>());
-
-        fileStream.close();
-    }
-    removeUnwantedChars(fileString);
-    return fileString;
-}
-
 Map<int, Map<int, Vector<WorldField::WorldFieldEnum>>> LevelSelector::getLevelDataMap(std::string &fileString) {
     Map<int, Map<int, Vector<WorldField::WorldFieldEnum>>> levelDataMap;
     Map<int, Vector<WorldField::WorldFieldEnum>> cubeSide1, cubeSide2, cubeSide3, cubeSide4, cubeSide5, cubeSide6;
