@@ -8,8 +8,7 @@ build:
     #   - apt update && apt -y install make autoconf
     script:
         - apt update
-        - apt upgrade -y
-        - apt install -y libsdl2-dev libsdl2-image-dev libsdl2-mixer-dev libsdl2-ttf-dev cmake build-essential make
+        - apt install -y libsdl2-dev libsdl2-image-dev libsdl2-mixer-dev libsdl2-ttf-dev cmake build-essential make gcc
         - mkdir resources
         - mkdir -p build
         - cd build
