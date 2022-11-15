@@ -3,10 +3,7 @@
 - [Cube Puzzle Game](#cube-puzzle-game)
   - [Description](#description)
   - [Konventionen](#konventionen)
-  - [Game Window](#game-window)
-  - [Board minimap](#board-minimap)
-  - [World Dice Minimap](#world-dice-minimap)
-  - [3D Perspektive für die Verständlichkeit](#3d-perspektive-für-die-verständlichkeit)
+  - [Image Set](#image-set)
 
 ## Description
 
@@ -27,4 +24,5 @@
 -   Methodennamen (+ Attribute/Variablen) beginnen mit einem Kleinbuchstaben
 
 ## Image Set
+
 ![](./readme_images/Screenshot%202022-11-02%20at%2015.27.30.png)
