@@ -19,8 +19,11 @@ void LevelSelector::Events(const u32 frame, const u32 totalMSec, const float del
             continue;
         if (event.type == SDL_KEYDOWN) {
             const Keysym &what_key = event.key.keysym;
-            if (what_key.scancode == SDL_SCANCODE_0) {
-                game.SetNextState(1);
+            if (what_key.scancode >= SDL_SCANCODE_0 && !cubeGame.allStates.empty()) game.SetNextState(1);
+            if (what_key.scancode >= SDL_SCANCODE_1 && what_key.scancode < SDL_SCANCODE_0) {
+                int id = what_key.scancode + 1 - SDL_SCANCODE_1;
+                if (id < cubeGame.allStates.size())
+                    game.SetNextState(id);
             }
         }
     }
@@ -55,8 +58,9 @@ void LevelSelector::loadList() {
 
     const std::filesystem::path levels{LEVELS_DIR};
 
-    if(!std::filesystem::exists(levels)) return;
+    if (!std::filesystem::exists(levels)) return;
     for (auto const &dirEntry: std::filesystem::directory_iterator{levels}) {
+        if (dirEntry.path().extension() != ".txt") continue;
         std::string fileString = getFileContent(dirEntry.path().string());
         removeUnwantedChars(fileString);
         auto levelDataMap = getLevelDataMap(fileString);
@@ -66,8 +70,8 @@ void LevelSelector::loadList() {
     // test alternative level loading
     for (auto const &dirEntry: std::filesystem::directory_iterator{levels}) {
         std::string path = dirEntry.path().string();
-        if(!dirEntry.is_regular_file()) continue;
-        if(dirEntry.path().extension() != ".level") continue;
+        if (!dirEntry.is_regular_file()) continue;
+        if (dirEntry.path().extension() != ".level") continue;
         auto data = LevelLoader::loadLevel(path);
         auto *levelX = new Level(cubeGame, render);
         auto levelD = levelX->load(data, cubeGame.allStates.size());
