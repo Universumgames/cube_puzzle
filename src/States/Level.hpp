@@ -6,6 +6,7 @@
 #include "../data/LevelData.hpp"
 #include "../GameObjects/Text.hpp"
 #include "ComplexGameState.hpp"
+#include "../data/LevelLoader.hpp"
 
 class Player;
 
@@ -33,6 +34,8 @@ public:
      * @return loaded leveldata
      */
     LevelData load(Map<int, Map<int, Vector<WorldField::WorldFieldEnum>>> levelDataMap, size_t id);
+
+    LevelData load(const LevelLoader::LoadedLevelData& data, size_t id);
 
     /// init world when gamestate comes active
     void Init() override;

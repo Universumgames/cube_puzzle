@@ -16,7 +16,7 @@ class CubeMapSide;
 class CubeMap final : public GameObject {
 public:
     /// map initializer
-    CubeMap(CubeGame &game, SDL_Renderer *render, const Vector<CubeMapSide> &sides, int startSide = 2,
+    CubeMap(CubeGame &game, SDL_Renderer *render, const Vector<CubeMapSide*> &sides, int startSide = 2,
             Point playerPos = {0, 0});
 
     /// set world map pointer, has to be set befor run

@@ -14,19 +14,19 @@ void WorldMap::Update(const u32 frame, const u32 totalMSec, const float deltaT) 
 void WorldMap::Render(const u32 frame, const u32 totalMSec, const float deltaT) {
 }
 
-WorldMap::WorldMap(CubeGame &game, SDL_Renderer *render, int xWidth, int yHeight, Vector<WorldField::WorldFieldEnum> map, Point cubePos)
+WorldMap::WorldMap(CubeGame &game, SDL_Renderer *render, Point size, Vector<WorldField::WorldFieldEnum> map,
+                   Point cubePos)
         : GameObject(game, render) {
     this->field = map;
-    this->xWidth = xWidth;
-    this->yHeight = yHeight;
+    this->size = size;
     this->cubePos = cubePos;
     this->mapCoordinates = new Text(game, render, 500, "", game.getSpriteStorage()->debugFont, {10, 200});
 }
 
 int WorldMap::getFieldIndex(int x, int y) const {
-    int effectX = (x < 0) ? xWidth - x - 2 : x;
-    int effectY = (y < 0) ? yHeight - y - 2 : y;
-    return effectX * xWidth + effectY;
+    int effectX = (x < 0) ? size.x - x - 2 : x;
+    int effectY = (y < 0) ? size.y - y - 2 : y;
+    return effectX * size.x + effectY;
 }
 
 void WorldMap::RenderUI(const u32 frame, const u32 totalMSec, const float deltaT) {
@@ -66,6 +66,6 @@ void WorldMap::drawMinimap() {
 }
 
 void WorldMap::fixCubePosOutBounds() {
-    cubePos.x = (cubePos.x < 0) ? xWidth - cubePos.x - 2 : cubePos.x;
-    cubePos.y = (cubePos.y < 0) ? yHeight - cubePos.y - 2 : cubePos.y;
+    cubePos.x = (cubePos.x < 0) ? size.x - cubePos.x - 2 : cubePos.x;
+    cubePos.y = (cubePos.y < 0) ? size.y - cubePos.y - 2 : cubePos.y;
 }

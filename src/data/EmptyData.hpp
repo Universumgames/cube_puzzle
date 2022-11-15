@@ -25,11 +25,11 @@ inline Vector<CubeField *> emptySide = {
         new EmptyField(), new EmptyField(), new EmptyField(), new EmptyField(), new EmptyField()
 };
 
-inline Vector<CubeMapSide> emptyCubeMapSides = {
-        CubeMapSide(emptySide, emptyCubeMapSidesSize, 1),
-        CubeMapSide(emptySide, emptyCubeMapSidesSize, 2),
-        CubeMapSide(emptySide, emptyCubeMapSidesSize, 3),
-        CubeMapSide(emptySide, emptyCubeMapSidesSize, 4),
-        CubeMapSide(emptySide, emptyCubeMapSidesSize, 5),
-        CubeMapSide(emptySide, emptyCubeMapSidesSize, 6)
+inline Vector<CubeMapSide*> emptyCubeMapSides = {
+        new CubeMapSide(emptySide, emptyCubeMapSidesSize, 1),
+        new CubeMapSide(emptySide, emptyCubeMapSidesSize, 2),
+        new CubeMapSide(emptySide, emptyCubeMapSidesSize, 3),
+        new CubeMapSide(emptySide, emptyCubeMapSidesSize, 4),
+        new CubeMapSide(emptySide, emptyCubeMapSidesSize, 5),
+        new CubeMapSide(emptySide, emptyCubeMapSidesSize, 6)
 };

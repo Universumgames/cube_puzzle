@@ -5,11 +5,14 @@
 class CubeMapSide;
 
 /// This is just an alternative proposal for loading levels
-class [[deprecated]] LevelLoader {
+class LevelLoader {
 public:
     struct LoadedLevelData {
-        Vector<CubeMapSide> sides;
-        int worldW = 0, worldH = 0;
+        std::string path;
+        std::string name;
+        int id;
+        Vector<CubeMapSide*> sides;
+        Point worldSize;
         Vector<WorldField::WorldFieldEnum> worldField;
         Point cubePos = {};
         Point playerPos = {};

@@ -95,12 +95,10 @@ CubeMapSide *CubeMap::getSide(int i) {
     return sides[i - 1];
 }
 
-CubeMap::CubeMap(CubeGame &game1, SDL_Renderer *render1, const Vector<CubeMapSide> &sides1, int startSide,
+CubeMap::CubeMap(CubeGame &game1, SDL_Renderer *render1, const Vector<CubeMapSide*> &sides1, int startSide,
                  Point playerPos)
         : GameObject(game1, render1) {
-    for (auto side: sides1) {
-        this->sides.push_back(new CubeMapSide(side));
-    }
+    this->sides.assign(sides1.begin(), sides1.end());
     this->currentSideId = startSide;
     this->playerPos = playerPos;
     this->debugSideIndicator = new Text(game, render, 400, "", game1.getSpriteStorage()->debugFont, {10, 30});
