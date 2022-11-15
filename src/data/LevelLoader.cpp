@@ -21,10 +21,10 @@
  *
  * Definitions:
  * <CubeMapSideX>:
- * width,height,enum array (chars) (column after column, splitted by ';')
+ * width,height,enum array (chars) (column after column, top to bottom, splitted by ';')
  *
  * <WorldMap>:
- * width,height,enum array (chars) (column after column, splitted by ';')
+ * width,height,enum array (chars) (column after column, top to bottom, splitted by ';')
  *
  * <CubePos>:
  * x,y

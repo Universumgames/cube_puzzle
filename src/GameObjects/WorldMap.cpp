@@ -24,8 +24,8 @@ WorldMap::WorldMap(CubeGame &game, SDL_Renderer *render, Point size, Vector<Worl
 }
 
 int WorldMap::getFieldIndex(int x, int y) const {
-    int effectX = (x < 0) ? size.x - x - 2 : x;
-    int effectY = (y < 0) ? size.y - y - 2 : y;
+    int effectX = (x < 0) ? size.x - x - 2 : x % size.x;
+    int effectY = (y < 0) ? size.y - y - 2 : y % size.y;
     return effectX * size.x + effectY;
 }
 
@@ -66,6 +66,6 @@ void WorldMap::drawMinimap() {
 }
 
 void WorldMap::fixCubePosOutBounds() {
-    cubePos.x = (cubePos.x < 0) ? size.x - cubePos.x - 2 : cubePos.x;
-    cubePos.y = (cubePos.y < 0) ? size.y - cubePos.y - 2 : cubePos.y;
+    cubePos.x = (cubePos.x < 0) ? size.x - cubePos.x - 2 : cubePos.x % size.x;
+    cubePos.y = (cubePos.y < 0) ? size.y - cubePos.y - 2 : cubePos.y % size.y;
 }
