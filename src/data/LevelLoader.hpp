@@ -1,6 +1,5 @@
 #pragma once
 
-#include <filesystem>
 #include "LevelData.hpp"
 
 class CubeMapSide;
@@ -17,6 +16,5 @@ public:
         int cubeSide = 0;
     };
 
-    [[deprecated]]
-    static LoadedLevelData loadLevel(std::filesystem::directory_entry path);
+    static LoadedLevelData loadLevel(std::string path);
 };

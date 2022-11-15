@@ -4,8 +4,8 @@
 #include "WorldField.hpp"
 #include "../GameObjects/CubeMap.hpp"
 #include <string>
-#include <fstream>
 #include "../stringhelper.hpp"
+#include "../filehelper.hpp"
 
 /* File Format:
  * <CubeMapSide1>#
@@ -40,18 +40,7 @@
 #define ARRAY_DELIMITTER ';'
 #define STRING_TO_REMOVE " "
 
-std::string getFileContent(std::filesystem::directory_entry path) {
-    std::string fileString;
-    std::ifstream fileStream(path);
-    if (fileStream.is_open()) {
-        fileString.assign(std::istreambuf_iterator<char>(fileStream), std::istreambuf_iterator<char>());
-
-        fileStream.close();
-    }
-    return fileString;
-}
-
-LevelLoader::LoadedLevelData LevelLoader::loadLevel(std::filesystem::directory_entry path) {
+LevelLoader::LoadedLevelData LevelLoader::loadLevel(std::string path) {
     std::string fileContent = getFileContent(path);
     fileContent = removeAll(fileContent, STRING_TO_REMOVE);
     fileContent = removeAll(fileContent, "\n");

@@ -6,6 +6,7 @@
 
 #include <utility>
 #include <filesystem>
+#include "../filehelper.hpp"
 
 #define FIRST_ROW 1
 
@@ -56,7 +57,7 @@ void LevelSelector::loadList() {
 
     if(!std::filesystem::exists(levels)) return;
     for (auto const &dirEntry: std::filesystem::directory_iterator{levels}) {
-        std::string fileString = getFileContentWithoutWhitespace(dirEntry);
+        std::string fileString = getFileContent(dirEntry.path().string());
         auto levelDataMap = getLevelDataMap(fileString);
         loadLevel(levelDataMap);
     }
