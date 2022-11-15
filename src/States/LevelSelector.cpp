@@ -58,8 +58,21 @@ void LevelSelector::loadList() {
     if(!std::filesystem::exists(levels)) return;
     for (auto const &dirEntry: std::filesystem::directory_iterator{levels}) {
         std::string fileString = getFileContent(dirEntry.path().string());
+        removeUnwantedChars(fileString);
         auto levelDataMap = getLevelDataMap(fileString);
         loadLevel(levelDataMap);
+    }
+
+    // test alternative level loading
+    for (auto const &dirEntry: std::filesystem::directory_iterator{levels}) {
+        std::string path = dirEntry.path().string();
+        if(!dirEntry.is_regular_file()) continue;
+        if(dirEntry.path().extension() != ".level") continue;
+        auto data = LevelLoader::loadLevel(path);
+        auto *levelX = new Level(cubeGame, render);
+        auto levelD = levelX->load(data, cubeGame.allStates.size());
+        levelData.push_back(levelD);
+        cubeGame.allStates.push_back(levelX);
     }
 }
 
