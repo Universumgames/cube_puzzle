@@ -107,14 +107,12 @@ void LevelSelector::removeUnwantedChars(std::string &str) {
 }
 
 std::string LevelSelector::getFileContentWithoutWhitespace(const std::filesystem::directory_entry &dirEntry) {
-    std::string line, fileString;
-    std::ifstream levelFile;
-    levelFile.open(dirEntry);
-    if (levelFile.is_open()) {
-        while (std::getline(levelFile, line)) {
-            fileString.append(line);
-        }
-        levelFile.close();
+    std::string fileString;
+    std::ifstream fileStream(dirEntry);
+    if (fileStream.is_open()) {
+        fileString.assign(std::istreambuf_iterator<char>(fileStream), std::istreambuf_iterator<char>());
+
+        fileStream.close();
     }
     removeUnwantedChars(fileString);
     return fileString;
