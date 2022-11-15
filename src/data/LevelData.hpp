@@ -13,5 +13,5 @@ struct LevelData {
     std::string path;
     /// id of level (index in allstates vector in Game)
     size_t id;
-    std::string name;
+    std::string name = "unknown";
 };

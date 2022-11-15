@@ -30,6 +30,7 @@ void LevelSelector::Events(const u32 frame, const u32 totalMSec, const float del
 }
 
 void LevelSelector::Update(const u32 frame, const u32 totalMSec, const float deltaT) {
+    drawList();
 }
 
 void LevelSelector::Render(const u32 frame, const u32 totalMSec, const float deltaT) {
@@ -81,6 +82,11 @@ void LevelSelector::loadList() {
 }
 
 void LevelSelector::drawList() {
+    std::string debugString = "level selector\n";
+    for(auto level : levelData){
+        debugString += std::to_string(level.id) + ": " + level.name + "\n";
+    }
+    text->changeText(debugString);
 }
 
 void LevelSelector::loadLevel(Map<int, Map<int, Vector<WorldField::WorldFieldEnum>>> levelDataMap) {
