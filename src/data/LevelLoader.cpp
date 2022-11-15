@@ -71,6 +71,7 @@ LevelLoader::LoadedLevelData LevelLoader::loadLevel(std::string path) {
             levelName.assign(line);
         } else if (lineIndex >= LINE_INDEX_CUBESIDES_START && lineIndex <= LINE_INDEX_CUBESIDES_END) { // CubeMapSides
             CubeMapSide *side = (CubeMapSide *) calloc(1, sizeof(CubeMapSide));
+            side->sideID = lineIndex - LINE_INDEX_CUBESIDES_START + 1;
             side->width = std::stoi(elements[0]);
             side->height = std::stoi(elements[1]);
             auto fields = split(elements[2], ARRAY_DELIMITTER);
