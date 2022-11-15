@@ -9,6 +9,7 @@
 
 /* File Format:
  * name#
+ * id#
  * <CubeMapSide1>#
  * ...
  * <CubeMapSide6>#
@@ -42,12 +43,13 @@
 #define STRING_TO_REMOVE "\n"
 
 #define LINE_INDEX_NAME 0
-#define LINE_INDEX_CUBESIDES_START 1
-#define LINE_INDEX_CUBESIDES_END 6
-#define LINE_INDEX_WORLDMAP 7
-#define LINE_INDEX_CUBEPOS 8
-#define LINE_INDEX_PLAYERPOS 9
-#define LINE_INDEX_CUBESIDE 10
+#define LINE_INDEX_ID 1
+#define LINE_INDEX_CUBESIDES_START 2
+#define LINE_INDEX_CUBESIDES_END 7
+#define LINE_INDEX_WORLDMAP 8
+#define LINE_INDEX_CUBEPOS 9
+#define LINE_INDEX_PLAYERPOS 10
+#define LINE_INDEX_CUBESIDE 11
 
 LevelLoader::LoadedLevelData LevelLoader::loadLevel(std::string path) {
     std::string fileContent = getFileContent(path);
@@ -60,7 +62,7 @@ LevelLoader::LoadedLevelData LevelLoader::loadLevel(std::string path) {
     Point playerPos = {};
     int cubeSide = 0;
     std::string levelName;
-    int id = std::stoi(std::filesystem::path(path).filename().string());
+    int id = 0;
 
     int lineIndex = 0;
 
@@ -69,6 +71,8 @@ LevelLoader::LoadedLevelData LevelLoader::loadLevel(std::string path) {
         auto elements = split(line, ELEMENT_DELIMITTER);
         if (lineIndex == LINE_INDEX_NAME) {
             levelName.assign(line);
+        } else if (lineIndex == LINE_INDEX_ID) {
+            id = std::stoi(line);
         } else if (lineIndex >= LINE_INDEX_CUBESIDES_START && lineIndex <= LINE_INDEX_CUBESIDES_END) { // CubeMapSides
             CubeMapSide *side = (CubeMapSide *) calloc(1, sizeof(CubeMapSide));
             side->sideID = lineIndex - LINE_INDEX_CUBESIDES_START + 1;
