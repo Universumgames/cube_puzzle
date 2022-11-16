@@ -2,6 +2,7 @@
 #include "WorldMap.hpp"
 #include "CubeField.hpp"
 #include "../recthelper.hpp"
+#include "../matrix.hpp"
 
 bool CubeMap::movePlayer(PlayerMoveDirection dir) {
     PlayerMoveDirection normalizedDirection = screenDirectionToDirectionOnCubeSide(dir);
@@ -99,9 +100,9 @@ bool CubeMap::checkCubeSideEdgeOverstepping(Point &playerPos) {
     // TODO move player to correct location
     auto *side = getSide(currentSideId);
     DiceSideRotation oldSideOrientation = diceData.getDiceSideRotation(currentSideId);
+    int oldSideId = currentSideId;
     DiceSide oldSide = diceData.getSideFacing(currentSideId);
-    if (playerPos.x < 0) {
-        // TODO move cube missing
+    if (playerPos.x < 0) { // move left out of side
         switch (oldSideOrientation) {
             case DiceSideRotation::UP:
                 currentSideId = diceData.getSideWhenMovingInDirX(currentSideId, DiceSideRotation::LEFT);
@@ -118,9 +119,7 @@ bool CubeMap::checkCubeSideEdgeOverstepping(Point &playerPos) {
                 moveCubeInWorld(sideToRollDirection(oldSide));
                 break;
         }
-        playerPos = {1,1};
-        return true;
-    } else if (playerPos.x >= side->width) {
+    } else if (playerPos.x >= side->width) { // move right out of side
         switch (oldSideOrientation) {
             case DiceSideRotation::UP:
                 currentSideId = diceData.getSideWhenMovingInDirX(currentSideId, DiceSideRotation::RIGHT);
@@ -137,12 +136,7 @@ bool CubeMap::checkCubeSideEdgeOverstepping(Point &playerPos) {
                 moveCubeInWorld(getOppositeDiceRollDirection(sideToRollDirection(oldSide)));
                 break;
         }
-        playerPos = {1,1};
-        return true;
-    } else if (playerPos.y < 0) {
-        auto oldFacing = diceData.getSideFacing(currentSideId);
-        auto oldOrientation = diceData.getDiceSideRotation(currentSideId);
-        // TODO move cube missing
+    } else if (playerPos.y < 0) { // move up out of side
         switch (oldSideOrientation) {
             case DiceSideRotation::UP:
                 currentSideId = diceData.getSideWhenMovingInDirX(currentSideId, DiceSideRotation::UP);
@@ -159,12 +153,7 @@ bool CubeMap::checkCubeSideEdgeOverstepping(Point &playerPos) {
                 currentSideId = diceData.getSideWhenMovingInDirX(currentSideId, DiceSideRotation::RIGHT);
                 break;
         }
-        playerPos = {1,1};
-        return true;
-    } else if (playerPos.y >= side->height) {
-        auto oldFacing = diceData.getSideFacing(currentSideId);
-        // TODO move cube missing
-        //moveCubeInWorld(diceSideToRollDir(oldFacing));
+    } else if (playerPos.y >= side->height) { // move down out of side
         switch (oldSideOrientation) {
             case DiceSideRotation::UP:
                 currentSideId = diceData.getSideWhenMovingInDirX(currentSideId, DiceSideRotation::DOWN);
@@ -181,8 +170,16 @@ bool CubeMap::checkCubeSideEdgeOverstepping(Point &playerPos) {
                 currentSideId = diceData.getSideWhenMovingInDirX(currentSideId, DiceSideRotation::LEFT);
                 break;
         }
-        playerPos = {1,1};
-        return true;
     }
-    return false;
+
+    // reposition player
+    if (oldSideId != currentSideId) { // 1 bis 6, jeweils bezüglich der Augenzahl auf der Würfelseite
+        int maxRow = getCurrentSide()->height - 1; // MAX_ROW_INDEX
+        int maxCol = getCurrentSide()->width - 1; // MAX_COLUMN_INDEX
+        playerPos = {1, 1};
+
+        // TODO Mina, hier kommt Code hin
+    }
+
+    return oldSideId != currentSideId;
 }
