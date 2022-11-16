@@ -19,7 +19,6 @@ void LevelSelector::Events(const u32 frame, const u32 totalMSec, const float del
             continue;
         if (event.type == SDL_KEYDOWN) {
             const Keysym &what_key = event.key.keysym;
-            if (what_key.scancode >= SDL_SCANCODE_0 && !cubeGame.allStates.empty()) game.SetNextState(1);
             if (what_key.scancode >= SDL_SCANCODE_1 && what_key.scancode < SDL_SCANCODE_0) {
                 int id = what_key.scancode + 1 - SDL_SCANCODE_1;
                 if (id < cubeGame.allStates.size())
@@ -87,7 +86,7 @@ void LevelSelector::loadList() {
 
 void LevelSelector::drawList() {
     std::string debugString = "level selector\n";
-    for(auto level : levelData){
+    for (auto level: levelData) {
         debugString += std::to_string(level.id) + ": " + level.name + "\n";
     }
     text->changeText(debugString);

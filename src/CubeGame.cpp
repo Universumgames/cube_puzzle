@@ -29,16 +29,11 @@ bool CubeGame::HandleEvent(const Event event) {
     switch (event.type) {
         case SDL_KEYDOWN: {
             const Keysym &what_key = event.key.keysym;
-
-            if (what_key.scancode == SDL_SCANCODE_1) {
-                // Both Game and GameState can change the State,
-                // but it will only be changed after the current frame
+            if (what_key.scancode == SDL_SCANCODE_0) {
                 SetNextState(0);
                 return true;
-            } else if (what_key.scancode == SDL_SCANCODE_2) {
-                SetNextState(1);
-                return true;
-            } else if (what_key.scancode == SDL_SCANCODE_F3) {
+            }
+            if (what_key.scancode == SDL_SCANCODE_F3) {
                 debugView = !debugView;
                 return true;
             }

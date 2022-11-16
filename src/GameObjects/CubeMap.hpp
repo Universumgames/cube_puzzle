@@ -64,7 +64,7 @@ private:
     WorldMap *worldMap = nullptr;
     Vector<CubeMapSide *> sides;
     int currentSideId;
-    Point playerPos;
+    Point playerPos{};
     DiceData diceData;
     Text *debugSideIndicator;
     Text *minimapText;

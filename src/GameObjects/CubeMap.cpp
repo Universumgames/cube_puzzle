@@ -53,7 +53,7 @@ void CubeMap::drawMinimap(const u32 frame, const u32 totalMSec, const float delt
     int relativeToWindow = max(game.getWindowSize().x, game.getWindowSize().y) / 20.0;
     int sideSize = max(relativeToWindow, 32);
     int sideDistance = 10;
-    DiceData cloneData = DiceData(diceData);
+    auto cloneData = DiceData(diceData);
     diceData.get2DRepresentation(c, &n, &w, &e, &s, &b);
     Point offset = {game.getWindowSize().x - (sideSize * 3 + sideDistance), sideDistance};
     Color borderColor = black;
@@ -71,6 +71,7 @@ void CubeMap::drawMinimap(const u32 frame, const u32 totalMSec, const float delt
     drawColoredFilledRect(render, borderColor,
                           {offset.x - borderWidth, offset.y + sideSize - borderWidth, sideSize * 3 + borderWidth * 2,
                            sideSize + borderWidth * 2});
+    // draw sides of minimap
     drawSide(game.getSpriteStorage()->sideSprites[n - 1], render, {offset.x + sideSize, offset.y, sideSize, sideSize},
              nRot);
     drawSide(game.getSpriteStorage()->sideSprites[w - 1], render, {offset.x, offset.y + sideSize, sideSize, sideSize},
