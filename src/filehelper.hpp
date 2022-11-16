@@ -2,7 +2,7 @@
 #include <string>
 #include <fstream>
 
-static std::string getFileContent(std::string path) {
+static std::string getFileContent(const std::string& path) {
     std::ifstream fileStream(path);
     std::stringstream sStream;
     if (fileStream.is_open()){
