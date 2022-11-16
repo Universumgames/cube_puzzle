@@ -118,3 +118,15 @@ Rect CubeMapSide::getDrawableRect(Point windowSize) {
     Point offset = getStartingOffset(windowSize, size);
     return {offset.x, offset.y, size.x * width, size.y * height};
 }
+
+Point CubeMapSide::screenPositionToCubePosition(DiceData diceData, Point screenPos) const {
+    Point p = {};
+    for(int x = 0; x < width; x++){
+        for(int y = 0; y < height; y++){
+            p = {x,y};
+            Point s = cubePositionToScreenPosition(diceData, p);
+            if( s.x == screenPos.x && s.y == screenPos.y) break;
+        }
+    }
+    return p;
+}

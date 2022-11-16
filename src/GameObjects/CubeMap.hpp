@@ -111,4 +111,6 @@ public:
 
     [[nodiscard]] Point cubePositionToScreenPosition(DiceData diceData, Point cubePos) const;
 
+    Point screenPositionToCubePosition(DiceData diceData, Point screenPos) const;
+
 };
