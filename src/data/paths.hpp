@@ -4,3 +4,5 @@
 
 #define ROBOTO_FONT_FILEPATH "./asset/font/RobotoSlab-Bold.ttf"
 #define ROBOTO_FONT_LIGHT_FILEPATH "./asset/font/Roboto/Roboto-Regular.ttf"
+
+#define MUSIC_BACKGROUND_PATH "asset/audio/background.wav"
