@@ -176,29 +176,37 @@ bool CubeMap::checkCubeSideEdgeOverstepping(Point &playerPos) {
     if (oldSideId != currentSideId) { // 1 bis 6, jeweils bezüglich der Augenzahl auf der Würfelseite
         int maxRow = getCurrentSide()->height - 1; // MAX_ROW_INDEX
         int maxCol = getCurrentSide()->width - 1; // MAX_COLUMN_INDEX
-        // von 6 nach 3 und anders herum passiert nichts an den Koordinaten, daher ist hierfür kein if notwendig.
+        Point oldPos = this->playerPos;
+
         if ((oldSideId == 1 && this->currentSideId == 2) || (oldSideId == 2 && this->currentSideId == 6)) {
             playerPos.y = 0;
+            playerPos.x = oldPos.x;
         } else if ((oldSideId == 2 && this->currentSideId == 1) || (oldSideId == 6 && this->currentSideId == 2)) {
             playerPos.y = maxRow;
+            playerPos.x = oldPos.x;
         } else if ((oldSideId == 3 && this->currentSideId == 5) || (oldSideId == 5 && this->currentSideId == 4)
-                || (oldSideId == 2 && this->currentSideId == 3) || (oldSideId == 4 && this->currentSideId == 2)) {
+                   || (oldSideId == 2 && this->currentSideId == 3) || (oldSideId == 4 && this->currentSideId == 2)) {
             playerPos.x = 0;
+            playerPos.y = oldPos.y;
         } else if ((oldSideId == 5 && this->currentSideId == 3) || (oldSideId == 4 && this->currentSideId == 5)
-                || (oldSideId == 3 && this->currentSideId == 2) || (oldSideId == 2 && this->currentSideId == 4)) {
+                   || (oldSideId == 3 && this->currentSideId == 2) || (oldSideId == 2 && this->currentSideId == 4)) {
             playerPos.x = maxCol;
+            playerPos.y = oldPos.y;
         } else if ((oldSideId == 5 && this->currentSideId == 1) || (oldSideId == 1 && this->currentSideId == 5)
-                || (oldSideId == 6 && this->currentSideId == 5) || (oldSideId == 5 && this->currentSideId == 6)
-                || (oldSideId == 4 && this->currentSideId == 1) || (oldSideId == 1 && this->currentSideId == 4)) {
-            playerPos.x = maxCol - playerPos.x;
+                   || (oldSideId == 6 && this->currentSideId == 5) || (oldSideId == 5 && this->currentSideId == 6)
+                   || (oldSideId == 4 && this->currentSideId == 1) || (oldSideId == 1 && this->currentSideId == 4)) {
+            playerPos.x = maxCol - oldPos.x;
+            playerPos.y = oldPos.y;
         } else if ((oldSideId == 4 && this->currentSideId == 6)) {
-            playerPos = {0, maxRow - playerPos.x};
+            playerPos = {0, maxRow - oldPos.x};
         } else if ((oldSideId == 6 && this->currentSideId == 4)) {
-            playerPos = {maxCol - playerPos.y, maxRow};
+            playerPos = {maxCol - oldPos.y, maxRow};
         } else if ((oldSideId == 1 && this->currentSideId == 3)) {
-            playerPos = {maxCol - playerPos.y, 0};
+            playerPos = {maxCol - oldPos.y, 0};
         } else if ((oldSideId == 3 && this->currentSideId == 1)) {
-            playerPos = {maxCol, maxRow - playerPos.x};
+            playerPos = {maxCol, maxRow - oldPos.x};
+        } else if ((oldSideId == 3 && this->currentSideId == 6) || (oldSideId == 6 && this->currentSideId == 3)){
+            playerPos = {oldPos.y, oldPos.x};
         }
     }
 
