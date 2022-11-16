@@ -36,10 +36,9 @@ private:
 
     /// play specific level
     void playLevel(const LevelData &level);
-    
-    /// remove every character from string that is not needed
-    static void removeUnwantedChars(std::string& str);
-    
+
+    void playLevel(int levelID);
+
     static Map<int, Map<int, Vector<WorldField::WorldFieldEnum>>> getLevelDataMap(std::string& fileString);
     
 private:

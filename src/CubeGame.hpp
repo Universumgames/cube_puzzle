@@ -20,6 +20,8 @@ public:
     /// should display debug info
     bool isDebug();
 
+    bool allStatesContains(int id);
+
 private:
     SpriteStorage spriteStorage;
 

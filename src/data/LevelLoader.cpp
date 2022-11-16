@@ -11,18 +11,18 @@
  * ...
  * <CubeMapSide6>
  * <WorldMap>
- * <CubePos>
+ * <CubePosOnWorldMap>
  * <PlayerPos>
  *
  *
  * Definitions:
  * <CubeMapSideX>:
- * width,height,enum array (chars) (column after column, top to bottom, splitted by ';')
+ * width,height,enum array (chars) (column after column, top to bottom)
  *
  * <WorldMap>:
- * width,height,enum array (chars) (column after column, top to bottom, splitted by ';')
+ * width,height,enum array (chars) (column after column, top to bottom)
  *
- * <CubePos>:
+ * <CubePosOnWorldMap>:
  * x,y
  *
  * <PlayerPos>:

@@ -21,8 +21,7 @@ void LevelSelector::Events(const u32 frame, const u32 totalMSec, const float del
             const Keysym &what_key = event.key.keysym;
             if (what_key.scancode >= SDL_SCANCODE_1 && what_key.scancode < SDL_SCANCODE_0) {
                 int id = what_key.scancode + 1 - SDL_SCANCODE_1;
-                if (id < cubeGame.allStates.size())
-                    game.SetNextState(id);
+                    playLevel(id);
             } else if (what_key.scancode >= SDL_SCANCODE_KP_1 && what_key.scancode < SDL_SCANCODE_KP_0) {
                 int id = what_key.scancode + 1 - SDL_SCANCODE_KP_1;
                 if (id < cubeGame.allStates.size())
@@ -65,21 +64,13 @@ void LevelSelector::loadList() {
     if (!std::filesystem::exists(levels)) {
         return;
     }
-    for (auto const &dirEntry: std::filesystem::directory_iterator{levels}) {
-        if (dirEntry.path().extension() != ".txt") {
-            continue;
-        }
-        std::string fileString = getFileContent(dirEntry.path().string());
-        removeUnwantedChars(fileString);
-        auto levelDataMap = getLevelDataMap(fileString);
-        loadLevel(levelDataMap);
-    }
 
-    // test alternative level loading
+    // level loading
     for (auto const &dirEntry: std::filesystem::directory_iterator{levels}) {
         std::string path = dirEntry.path().string();
-        if (!dirEntry.is_regular_file()) continue;
-        if (dirEntry.path().extension() != ".level") continue;
+        if (!dirEntry.is_regular_file() || dirEntry.path().extension() != ".level") {
+            continue;
+        }
         auto data = LevelLoader::loadLevel(path);
         auto *levelX = new Level(cubeGame, render);
         auto levelD = levelX->load(data, cubeGame.allStates.size());
@@ -123,17 +114,9 @@ void LevelSelector::playLevel(const LevelData &level) {
     game.SetNextState(level.id);
 }
 
-void LevelSelector::removeUnwantedChars(std::string &str) {
-    Vector<char> listOfUsableCharacters = WorldField::getListOfAllCharsLinkedToEnum();
-    listOfUsableCharacters.emplace_back(',');
-    listOfUsableCharacters.emplace_back('-');
-    listOfUsableCharacters.emplace_back(';');
-    for (int i = 0; i < str.length(); i++) {
-        if (std::find(listOfUsableCharacters.begin(), listOfUsableCharacters.end(), str[i]) ==
-            listOfUsableCharacters.end()) {
-            str.erase(str.begin() + i);
-            i--;
-        }
+void LevelSelector::playLevel(int levelId){
+    for(auto level: levelData){
+        if(levelId == level.id) game.SetNextState(level.allStatesIndex);
     }
 }
 
