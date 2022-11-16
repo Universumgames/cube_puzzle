@@ -22,4 +22,5 @@ inline DiceRollDirection getOppositeDiceRollDirection(DiceRollDirection dir) {
         case DiceRollDirection::EAST:
             return DiceRollDirection::WEST;
     }
+    return DiceRollDirection::NORTH;
 }

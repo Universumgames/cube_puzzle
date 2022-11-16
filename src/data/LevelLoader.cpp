@@ -1,10 +1,7 @@
 #include "LevelLoader.hpp"
-#include "../recthelper.hpp"
-#include "../global.hpp"
 #include "WorldField.hpp"
 #include "../GameObjects/CubeMap.hpp"
 #include <string>
-#include "../stringhelper.hpp"
 #include "../filehelper.hpp"
 
 /* File Format:
@@ -51,7 +48,7 @@
 #define LINE_INDEX_PLAYERPOS        (LINE_INDEX_CUBEPOS + 1)
 #define LINE_INDEX_CUBESIDE         (LINE_INDEX_PLAYERPOS + 1)
 
-LevelLoader::LoadedLevelData LevelLoader::loadLevel(std::string path) {
+LevelLoader::LoadedLevelData LevelLoader::loadLevel(const std::string& path) {
     std::string fileContent = getFileContent(path);
     fileContent = removeAll(fileContent, STRING_TO_REMOVE);
     fileContent = removeAll(fileContent, "\n");
@@ -74,12 +71,12 @@ LevelLoader::LoadedLevelData LevelLoader::loadLevel(std::string path) {
         } else if (lineIndex == LINE_INDEX_ID) {
             id = std::stoi(line);
         } else if (lineIndex >= LINE_INDEX_CUBESIDES_START && lineIndex <= LINE_INDEX_CUBESIDES_END) { // CubeMapSides
-            CubeMapSide *side = (CubeMapSide *) calloc(1, sizeof(CubeMapSide));
+            auto *side = (CubeMapSide *) calloc(1, sizeof(CubeMapSide));
             side->sideID = lineIndex - LINE_INDEX_CUBESIDES_START + 1;
             side->width = std::stoi(elements[0]);
             side->height = std::stoi(elements[1]);
             auto fields = split(elements[2], ARRAY_DELIMITTER);
-            for (auto field: fields) {
+            for (const auto& field: fields) {
                 side->side.push_back(CubeField::decode(field));
             }
             sides.push_back(side);

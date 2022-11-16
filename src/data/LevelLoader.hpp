@@ -19,5 +19,5 @@ public:
         int cubeSide = 0;
     };
 
-    static LoadedLevelData loadLevel(std::string path);
+    static LoadedLevelData loadLevel(const std::string& path);
 };

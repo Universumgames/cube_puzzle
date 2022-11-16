@@ -89,4 +89,5 @@ inline DiceRollDirection sideToRollDirection(DiceSide side) {
         case DiceSide::BOTTOM:
             return DiceRollDirection::SOUTH;
     }
+    return DiceRollDirection::NORTH;
 }
