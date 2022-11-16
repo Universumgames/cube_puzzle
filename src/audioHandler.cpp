@@ -1,4 +1,4 @@
-#include "audioPlayer.hpp"
+#include "audioHandler.hpp"
 
 AudioPlayer::AudioPlayer() {
 	Mix_OpenAudio(44100, MIX_DEFAULT_FORMAT, 2, 2048);
