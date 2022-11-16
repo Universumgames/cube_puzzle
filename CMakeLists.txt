@@ -34,8 +34,6 @@ Message("")
 
 # ------- Finds ---------- #
 IF (WIN32 OR MINGW)
-    #set(SDL2_INCLUDE_DIR C:/libs/SDL2-2.24.2/include)
-    #set(SDL2_LIB_DIR C:/libs/SDL2-2.24.2/lib/x64)
     set(SDL2_INCLUDE_DIR ./SDL2-2.24.2/include)
     set(SDL2_LIB_DIR ./SDL2-2.24.2/lib)
 
@@ -45,6 +43,9 @@ IF (WIN32 OR MINGW)
     set(SDL2_IMAGE_INCLUDE_DIR ./SDL2_image-2.6.2/include)
     set(SDL2_IMAGE_LIB_DIR ./SDL2_image-2.6.2/lib)
 
+    set(SDL2_MIXER_INCLUDE_DIR ./SDL2_mixer-2.6.2/include)
+    set(SDL2_MIXER_LIB_DIR ./SDL2_mixer-2.6.2/lib)
+
     include_directories(${SDL2_INCLUDE_DIR})
     link_directories(${SDL2_LIB_DIR})
 
@@ -53,6 +54,9 @@ IF (WIN32 OR MINGW)
 
     include_directories(${SDL2_IMAGE_INCLUDE_DIR})
     link_directories(${SDL2_IMAGE_LIB_DIR})
+
+    include_directories(${SDL2_MIXER_INCLUDE_DIR})
+    link_directories(${SDL2_MIXER_LIB_DIR})
 
     ADD_EXECUTABLE(${PROJECT_NAME} ${SOURCE_FILES})
 

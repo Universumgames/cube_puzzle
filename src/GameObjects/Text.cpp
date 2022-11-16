@@ -110,9 +110,9 @@ bool Text::isEnabled() {
 }
 
 void Text::setEnabled(bool active) {
-    auto oldEn = enabled;
-    enabled = active;
-    if (active && oldEn != active) reloadTexture();
+    auto oldEnabledState = enabled;
+    this->enabled = active;
+    if (this->enabled && oldEnabledState != active) reloadTexture();
 }
 
 Point Text::getTextSize() {
