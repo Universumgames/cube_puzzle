@@ -15,7 +15,7 @@ void LevelSelector::Events(const u32 frame, const u32 totalMSec, const float del
 
     Event event;
     while (SDL_PollEvent(&event)) {
-        if (game.HandleEvent(event))
+        if (game.HandleEvent(event)) // es wurde sich bereits um das Event gekümmert, deswegen nächstes Event laden
             continue;
         if (event.type == SDL_KEYDOWN) {
             const Keysym &what_key = event.key.keysym;
@@ -59,9 +59,13 @@ void LevelSelector::loadList() {
 
     const std::filesystem::path levels{LEVELS_DIR};
 
-    if (!std::filesystem::exists(levels)) return;
+    if (!std::filesystem::exists(levels)) {
+        return;
+    }
     for (auto const &dirEntry: std::filesystem::directory_iterator{levels}) {
-        if (dirEntry.path().extension() != ".txt") continue;
+        if (dirEntry.path().extension() != ".txt") {
+            continue;
+        }
         std::string fileString = getFileContent(dirEntry.path().string());
         removeUnwantedChars(fileString);
         auto levelDataMap = getLevelDataMap(fileString);

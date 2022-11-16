@@ -1,6 +1,5 @@
 #include "global.hpp"
 #include "CubeGame.hpp"
-#include "examplegame/examplegame.hpp"
 #include "data/DiceData.hpp"
 
 void tests() {

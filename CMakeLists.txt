@@ -58,6 +58,8 @@ IF (WIN32 OR MINGW)
 
     target_link_libraries(${PROJECT_NAME} SDL2 SDL2main SDL2_ttf SDL2_image)
 
+    file(COPY asset DESTINATION ${CMAKE_RUNTIME_OUTPUT_DIRECTORY})
+
 else ()
     ADD_EXECUTABLE(${PROJECT_NAME} ${SOURCE_FILES})
 
