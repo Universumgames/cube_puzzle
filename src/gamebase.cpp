@@ -70,8 +70,6 @@ bool Game::HandleEvent(const Event event) {
         case SDL_QUIT:
             isRunning = false;
             return true;
-            break;
-
         case SDL_KEYDOWN: {
             auto &key_event = event.key;
             Keysym what_key = key_event.keysym;
@@ -138,9 +136,9 @@ void Game::ActivateNextState() {
             cerr << "Activated out of range or nullptr state with the index: " << nextStateIdx << endl;
             exit(11);
         } else {
-            if (currentState != nullptr)
+            if (currentState != nullptr) {
                 currentState->UnInit();
-
+            }
             currentStateIdx = nextStateIdx;
             currentState = allStates[currentStateIdx];
             currentState->Init();

@@ -72,19 +72,18 @@ void Text::changeText(std::string text) {
 }
 
 void Text::reloadTexture() {
-    if (!enabled) return;
-    if (texture != nullptr) SDL_DestroyTexture(texture);
-
-    Surface *surf = TTF_RenderUTF8_Blended_Wrapped(font, text.c_str(), color, maxWidth);
-
-    texture = SDL_CreateTextureFromSurface(render, surf);
-
-    u32 fmt;
+    if (!enabled) {
+        return;
+    }
+    if (texture != nullptr) {
+        SDL_DestroyTexture(texture);
+    }
+    Surface *surface = TTF_RenderUTF8_Blended_Wrapped(font, text.c_str(), color, maxWidth);
+    texture = SDL_CreateTextureFromSurface(render, surface);
+    u32 format;
     int access;
-    SDL_QueryTexture(texture, &fmt, &access, &blendedTextSize.x, &blendedTextSize.y);
-
-    SDL_FreeSurface(surf);
-
+    SDL_QueryTexture(texture, &format, &access, &blendedTextSize.x, &blendedTextSize.y);
+    SDL_FreeSurface(surface);
     //dst = {position.x, position.y, blendedTextSize.h, blendedTextSize.w};
     calculateShadowOffset();
 }
