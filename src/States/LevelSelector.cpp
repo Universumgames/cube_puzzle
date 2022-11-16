@@ -23,6 +23,10 @@ void LevelSelector::Events(const u32 frame, const u32 totalMSec, const float del
                 int id = what_key.scancode + 1 - SDL_SCANCODE_1;
                 if (id < cubeGame.allStates.size())
                     game.SetNextState(id);
+            } else if (what_key.scancode >= SDL_SCANCODE_KP_1 && what_key.scancode < SDL_SCANCODE_KP_0) {
+                int id = what_key.scancode + 1 - SDL_SCANCODE_KP_1;
+                if (id < cubeGame.allStates.size())
+                    game.SetNextState(id);
             }
         }
     }
@@ -85,7 +89,7 @@ void LevelSelector::loadList() {
 }
 
 void LevelSelector::drawList() {
-    std::string debugString = "level selector\n";
+    std::string debugString = "Bitte wähle ein Level aus der Liste\n";
     for (auto level: levelData) {
         debugString += std::to_string(level.id) + ": " + level.name + "\n";
     }
