@@ -22,6 +22,7 @@ CubeGame::CubeGame() : Game("CubeGame") {
     SDL_SetRenderDrawBlendMode(render, SDL_BLENDMODE_BLEND);
 
     setWindowIcon();
+    audio.playBackground();
 }
 
 bool CubeGame::HandleEvent(const Event event) {

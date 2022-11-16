@@ -2,6 +2,7 @@
 
 #include "gamebase.hpp"
 #include "data/SpriteStorage.hpp"
+#include "audioHandler.hpp"
 
 class LevelSelector;
 
@@ -9,6 +10,8 @@ class LevelSelector;
 class CubeGame final : public Game {
 public:
     CubeGame();
+
+    AudioPlayer  audio;
 
     bool HandleEvent(const Event event) override;
 
