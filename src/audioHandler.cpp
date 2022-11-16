@@ -2,7 +2,7 @@
 
 AudioPlayer::AudioPlayer() {
 	Mix_OpenAudio(44100, MIX_DEFAULT_FORMAT, 2, 2048);
-	background = Mix_LoadMUS("src/audio/background.wav");
+	background = Mix_LoadMUS("asset/audio/background.wav");
 
 
 }
