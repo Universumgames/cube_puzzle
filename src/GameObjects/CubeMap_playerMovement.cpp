@@ -176,9 +176,30 @@ bool CubeMap::checkCubeSideEdgeOverstepping(Point &playerPos) {
     if (oldSideId != currentSideId) { // 1 bis 6, jeweils bezüglich der Augenzahl auf der Würfelseite
         int maxRow = getCurrentSide()->height - 1; // MAX_ROW_INDEX
         int maxCol = getCurrentSide()->width - 1; // MAX_COLUMN_INDEX
-        playerPos = {1, 1};
-
-        // TODO Mina, hier kommt Code hin
+        // von 6 nach 3 und anders herum passiert nichts an den Koordinaten, daher ist hierfür kein if notwendig.
+        if ((oldSideId == 1 && this->currentSideId == 2) || (oldSideId == 2 && this->currentSideId == 6)) {
+            playerPos.y = 0;
+        } else if ((oldSideId == 2 && this->currentSideId == 1) || (oldSideId == 6 && this->currentSideId == 2)) {
+            playerPos.y = maxRow;
+        } else if ((oldSideId == 3 && this->currentSideId == 5) || (oldSideId == 5 && this->currentSideId == 4)
+                || (oldSideId == 2 && this->currentSideId == 3) || (oldSideId == 4 && this->currentSideId == 2)) {
+            playerPos.x = 0;
+        } else if ((oldSideId == 5 && this->currentSideId == 3) || (oldSideId == 4 && this->currentSideId == 5)
+                || (oldSideId == 3 && this->currentSideId == 2) || (oldSideId == 2 && this->currentSideId == 4)) {
+            playerPos.x = maxCol;
+        } else if ((oldSideId == 5 && this->currentSideId == 1) || (oldSideId == 1 && this->currentSideId == 5)
+                || (oldSideId == 6 && this->currentSideId == 5) || (oldSideId == 5 && this->currentSideId == 6)
+                || (oldSideId == 4 && this->currentSideId == 1) || (oldSideId == 1 && this->currentSideId == 4)) {
+            playerPos.x = maxCol - playerPos.x;
+        } else if ((oldSideId == 4 && this->currentSideId == 6)) {
+            playerPos = {0, maxRow - playerPos.x};
+        } else if ((oldSideId == 6 && this->currentSideId == 4)) {
+            playerPos = {maxCol - playerPos.y, maxRow};
+        } else if ((oldSideId == 1 && this->currentSideId == 3)) {
+            playerPos = {maxCol - playerPos.y, 0};
+        } else if ((oldSideId == 3 && this->currentSideId == 1)) {
+            playerPos = {maxCol, maxRow - playerPos.x};
+        }
     }
 
     return oldSideId != currentSideId;
