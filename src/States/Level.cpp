@@ -71,7 +71,7 @@ LevelData Level::loadTemplateLevel(size_t id) {
     cubeMap->SetWorldMap(worldMap);
     player = new Player(cubeGame, render);
     player->setCubeMap(cubeMap);
-    levelData = {.path = "", .id = 0, .allStatesIndex = id, .name = "template level"};
+    levelData = {.path = "", .id = 1, .allStatesIndex = id, .name = "template level"};
     return levelData;
 }
 
