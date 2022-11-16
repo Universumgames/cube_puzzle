@@ -64,16 +64,6 @@ void Level::UnInit() {
     iterateGameObjects(UnInit())
 }
 
-LevelData Level::load(Map<int, Map<int, Vector<WorldField::WorldFieldEnum>>> levelDataMap, size_t id) {
-    worldMap = new WorldMap(cubeGame, render, {10, 10}, {WorldField::WorldFieldEnum::DEFAULT}, {0, 0});
-    cubeMap = new CubeMap(cubeGame, render, {});
-    worldMap->setCubeMap(cubeMap);
-    cubeMap->SetWorldMap(worldMap);
-    player = new Player(cubeGame, render);
-    player->setCubeMap(cubeMap);
-    return {.levelDataMap = std::move(levelDataMap), .id = id};
-}
-
 LevelData Level::loadTemplateLevel(size_t id) {
     worldMap = new WorldMap(cubeGame, render, emptyWorldFieldSize, emptyWorldField, {0, 0});
     cubeMap = new CubeMap(cubeGame, render, emptyCubeMapSides);
@@ -81,17 +71,17 @@ LevelData Level::loadTemplateLevel(size_t id) {
     cubeMap->SetWorldMap(worldMap);
     player = new Player(cubeGame, render);
     player->setCubeMap(cubeMap);
-    levelData = {.path = "", .id = id, .name = "template level"};
+    levelData = {.path = "", .id = 0, .allStatesIndex = id, .name = "template level"};
     return levelData;
 }
 
-LevelData Level::load(const LevelLoader::LoadedLevelData& data, size_t id) {
+LevelData Level::load(const LevelLoader::LoadedLevelData& data, size_t arrayIndex) {
     worldMap = new WorldMap(cubeGame, render, data.worldSize, data.worldField, data.cubePos);
     cubeMap = new CubeMap(cubeGame, render, data.sides, data.cubeSide, data.playerPos);
     worldMap->setCubeMap(cubeMap);
     cubeMap->SetWorldMap(worldMap);
     player = new Player(cubeGame, render);
     player->setCubeMap(cubeMap);
-    levelData = {.path=data.path, .id=id, .name = data.name};
+    levelData = {.path=data.path, .id=data.id, .allStatesIndex = arrayIndex, .name = data.name};
     return levelData;
 }

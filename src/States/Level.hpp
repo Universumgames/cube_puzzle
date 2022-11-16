@@ -32,12 +32,11 @@ public:
     /**
      *  load level from file into memory, called by LevelSelector
      * @param path path to file to load from
-     * @param id the id the level should have (index in allstates vector)
+     * @param arrayIndex the arrayIndex the level should have (index in allstates vector)
      * @return loaded leveldata
      */
-    LevelData load(Map<int, Map<int, Vector<WorldField::WorldFieldEnum>>> levelDataMap, size_t id);
 
-    LevelData load(const LevelLoader::LoadedLevelData& data, size_t id);
+    LevelData load(const LevelLoader::LoadedLevelData& data, size_t arrayIndex);
 
     /// init world when gamestate comes active
     void Init() override;

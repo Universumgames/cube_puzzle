@@ -11,7 +11,9 @@ struct LevelData {
     Map<int, Map<int, Vector<WorldField::WorldFieldEnum>>> levelDataMap;
     /// path of file to retrieve leveldata
     std::string path;
-    /// id of level (index in allstates vector in Game)
-    size_t id;
+    /// id of level
+    int id;
+    ///  (index in allstates vector in Game)
+    size_t allStatesIndex;
     std::string name = "unknown";
 };

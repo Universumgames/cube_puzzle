@@ -31,9 +31,6 @@ private:
     /// draw list for selection
     void drawList();
 
-    /// load specific level
-    void loadLevel(Map<int, Map<int, Vector<WorldField::WorldFieldEnum>>> levelDataMap);
-
     /// play specific level
     void playLevel(const LevelData &level);
 

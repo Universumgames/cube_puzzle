@@ -24,8 +24,7 @@ void LevelSelector::Events(const u32 frame, const u32 totalMSec, const float del
                     playLevel(id);
             } else if (what_key.scancode >= SDL_SCANCODE_KP_1 && what_key.scancode < SDL_SCANCODE_KP_0) {
                 int id = what_key.scancode + 1 - SDL_SCANCODE_KP_1;
-                if (id < cubeGame.allStates.size())
-                    game.SetNextState(id);
+                    playLevel(id);
             }
         }
     }
@@ -87,14 +86,6 @@ void LevelSelector::drawList() {
     text->changeText(debugString);
 }
 
-void LevelSelector::loadLevel(Map<int, Map<int, Vector<WorldField::WorldFieldEnum>>> levelDataMap) {
-    // add level to allStates of game
-    auto *levelX = new Level(cubeGame, render);
-    auto levelD = levelX->load(std::move(levelDataMap), cubeGame.allStates.size());
-    levelData.push_back(levelD);
-    cubeGame.allStates.push_back(levelX);
-}
-
 void LevelSelector::Init() {
     GameState::Init();
     if (levelsLoaded)
@@ -111,7 +102,7 @@ void LevelSelector::UnInit() {
 }
 
 void LevelSelector::playLevel(const LevelData &level) {
-    game.SetNextState(level.id);
+    game.SetNextState(level.allStatesIndex);
 }
 
 void LevelSelector::playLevel(int levelId){
