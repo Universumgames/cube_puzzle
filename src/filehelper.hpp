@@ -4,10 +4,10 @@
 
 static std::string getFileContent(std::string path) {
     std::ifstream fileStream(path);
-    std::string content;
+    std::stringstream sStream;
     if (fileStream.is_open()){
-        fileStream >> content;
+        sStream << fileStream.rdbuf();
         fileStream.close();
     }
-    return content;
+    return sStream.str();
 }
