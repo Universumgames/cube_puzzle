@@ -118,7 +118,7 @@ bool CubeMap::checkCubeSideEdgeOverstepping(Point &playerPos) {
                 moveCubeInWorld(sideToRollDirection(oldSide));
                 break;
         }
-        playerPos = {2, 2};
+        playerPos = {1,1};
         return true;
     } else if (playerPos.x >= side->width) {
         switch (oldSideOrientation) {
@@ -137,7 +137,7 @@ bool CubeMap::checkCubeSideEdgeOverstepping(Point &playerPos) {
                 moveCubeInWorld(getOppositeDiceRollDirection(sideToRollDirection(oldSide)));
                 break;
         }
-        playerPos = {2, 2};
+        playerPos = {1,1};
         return true;
     } else if (playerPos.y < 0) {
         auto oldFacing = diceData.getSideFacing(currentSideId);
@@ -159,7 +159,7 @@ bool CubeMap::checkCubeSideEdgeOverstepping(Point &playerPos) {
                 currentSideId = diceData.getSideWhenMovingInDirX(currentSideId, DiceSideRotation::RIGHT);
                 break;
         }
-        playerPos = {2, 2};
+        playerPos = {1,1};
         return true;
     } else if (playerPos.y >= side->height) {
         auto oldFacing = diceData.getSideFacing(currentSideId);
@@ -181,7 +181,7 @@ bool CubeMap::checkCubeSideEdgeOverstepping(Point &playerPos) {
                 currentSideId = diceData.getSideWhenMovingInDirX(currentSideId, DiceSideRotation::LEFT);
                 break;
         }
-        playerPos = {2, 2};
+        playerPos = {1,1};
         return true;
     }
     return false;
