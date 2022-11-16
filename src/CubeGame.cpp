@@ -22,7 +22,7 @@ CubeGame::CubeGame() : Game("CubeGame") {
     SDL_SetRenderDrawBlendMode(render, SDL_BLENDMODE_BLEND);
 
     setWindowIcon();
-    audio.playBackground();
+    //audio.playBackground();
 }
 
 bool CubeGame::HandleEvent(const Event event) {
@@ -37,6 +37,10 @@ bool CubeGame::HandleEvent(const Event event) {
             if (what_key.scancode == SDL_SCANCODE_F3) {
                 debugView = !debugView;
                 return true;
+            }
+            if (what_key.scancode == SDL_SCANCODE_M) {
+                if (audio.playing) audio.pauseMusic();
+                else audio.playBackground();
             }
             break;
         }
