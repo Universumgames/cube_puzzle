@@ -21,7 +21,7 @@ enum class DiceSide {
 
 /// Direction when viewing straight on dice side
 enum class DiceSideRotation {
-    UP, DOWN, LEFT, RIGHT
+    UP = 0, DOWN = 180, LEFT = 270, RIGHT = 90
 };
 
 /// Helper Class for Dice Logic

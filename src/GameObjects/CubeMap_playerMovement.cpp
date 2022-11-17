@@ -7,7 +7,6 @@
 
 bool CubeMap::movePlayer(PlayerMoveDirection dir) {
     PlayerMoveDirection normalizedDirection = screenDirectionToDirectionOnCubeSide(dir);
-    lastNormalizedMove = normalizedDirection;
 
     Point moveDir = {};
     switch (normalizedDirection) {
@@ -25,7 +24,7 @@ bool CubeMap::movePlayer(PlayerMoveDirection dir) {
             break;
     }
     Point newPlayerPos = playerPos + moveDir;
-    checkCubeSideEdgeOverstepping(newPlayerPos);
+    checkCubeSideEdgeOverstepping(newPlayerPos, dir);
     if (!getCurrentSide()->getField(newPlayerPos)->isPlayerMovableTo()) return false;
     playerPos = newPlayerPos;
     return true;
@@ -95,7 +94,7 @@ PlayerMoveDirection CubeMap::screenDirectionToDirectionOnCubeSide(PlayerMoveDire
 #define checkSideMovementFromTo(from, to) (oldSideId == from && this->currentSideId == to)
 #define checkEitherMoveDirectionFromTo(a, b) (checkSideMovementFromTo(a,b) || checkSideMovementFromTo(b,a))
 
-bool CubeMap::checkCubeSideEdgeOverstepping(Point &playerPos) {
+bool CubeMap::checkCubeSideEdgeOverstepping(Point &playerPos, PlayerMoveDirection moveDirection) {
     // done: implement edge overstepping
     // done: change current Side
     // done: rotate cube
@@ -176,6 +175,7 @@ bool CubeMap::checkCubeSideEdgeOverstepping(Point &playerPos) {
 
     // reposition player
     if (oldSideId != currentSideId) { // 1 bis 6, jeweils bezüglich der Augenzahl auf der Würfelseite
+        lastNormalizedMove = moveDirection;
         int maxRow = getCurrentSide()->height - 1; // MAX_ROW_INDEX
         int maxCol = getCurrentSide()->width - 1; // MAX_COLUMN_INDEX
         Point oldPos = this->playerPos;

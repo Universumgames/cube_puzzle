@@ -31,7 +31,7 @@ private:
     struct RenderData{
         int side;
         Rect dst;
-        DiceSideRotation rot;
+        double angle;
     };
 
 private:

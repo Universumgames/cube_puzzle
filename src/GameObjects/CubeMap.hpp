@@ -48,7 +48,7 @@ private:
 
     PlayerMoveDirection screenDirectionToDirectionOnCubeSide(PlayerMoveDirection direction);
 
-    bool checkCubeSideEdgeOverstepping(Point &newPosition);
+    bool checkCubeSideEdgeOverstepping(Point &newPosition, PlayerMoveDirection moveDirection);
 
 
     /// get side of dice (1-6)

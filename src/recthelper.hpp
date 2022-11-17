@@ -67,3 +67,4 @@ constexpr Rect &operator-=(Rect &lhs, const Rect rhs) {
     lhs = lhs - rhs;
     return lhs;
 }
+

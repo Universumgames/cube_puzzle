@@ -24,26 +24,23 @@ inline void drawSprite(Texture *texture, Renderer *render, Point imageIndex, Rec
  * @param texture texture to draw
  * @param render sdl renderer
  * @param dst destination rectangle to draw to on screen
+ * @param angle angle of rotation
+ */
+inline void drawSide(Texture *texture, Renderer *render, Rect dst, double angle = 0.0) {
+    Point center = {dst.w / 2, dst.h / 2};
+    SDL_RenderCopyEx(render, texture, nullptr, &dst, angle, &center, SDL_FLIP_NONE);
+}
+
+/**
+ * draw full texture
+ * @param texture texture to draw
+ * @param render sdl renderer
+ * @param dst destination rectangle to draw to on screen
  */
 inline void drawSide(Texture *texture, Renderer *render, Rect dst, DiceSideRotation rotation = DiceSideRotation::UP) {
     //Rect src = {0,0, SIDE_SIZE, SIDE_SIZE};
-    double angle = 0;
-    switch (rotation) {
-        case DiceSideRotation::UP:
-            angle = 0;
-            break;
-        case DiceSideRotation::DOWN:
-            angle = 180;
-            break;
-        case DiceSideRotation::LEFT:
-            angle = 270;
-            break;
-        case DiceSideRotation::RIGHT:
-            angle = 90;
-            break;
-    }
-    Point center = {dst.w / 2, dst.h / 2};
-    SDL_RenderCopyEx(render, texture, nullptr, &dst, angle, &center, SDL_FLIP_NONE);
+    double angle = (double) rotation;
+    drawSide(texture, render, dst, angle);
 }
 
 inline void drawColoredFilledRect(Renderer* render, Color color, Rect* dst){

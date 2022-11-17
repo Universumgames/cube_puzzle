@@ -5,11 +5,12 @@
 #include "CubeMapMiniMap.hpp"
 
 void CubeMap::HandleEvent(const u32 frame, const u32 totalMSec, const float deltaT, Event event) {
-    if (event.type != SDL_KEYDOWN) return;
+    //if (event.type != SDL_KEYDOWN) return;
     const Keysym &what_key = event.key.keysym;
     if (what_key.scancode == SDL_SCANCODE_UP) {
 
     }
+    miniMap->HandleEvent(BASIC_GO_DATA_PASSTHROUGH, event);
 }
 
 void CubeMap::Update(const u32 frame, const u32 totalMSec, const float deltaT) {
