@@ -7,6 +7,7 @@
 
 bool CubeMap::movePlayer(PlayerMoveDirection dir) {
     PlayerMoveDirection normalizedDirection = screenDirectionToDirectionOnCubeSide(dir);
+    lastNormalizedMove = normalizedDirection;
 
     Point moveDir = {};
     switch (normalizedDirection) {
@@ -24,10 +25,7 @@ bool CubeMap::movePlayer(PlayerMoveDirection dir) {
             break;
     }
     Point newPlayerPos = playerPos + moveDir;
-    bool edge = checkCubeSideEdgeOverstepping(newPlayerPos);
-    if (edge) {
-        miniMap->updateMinimap();
-    }
+    checkCubeSideEdgeOverstepping(newPlayerPos);
     if (!getCurrentSide()->getField(newPlayerPos)->isPlayerMovableTo()) return false;
     playerPos = newPlayerPos;
     return true;

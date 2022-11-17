@@ -69,6 +69,8 @@ private:
     Text *minimapText;
     Text *debugDiceData;
 
+    PlayerMoveDirection lastNormalizedMove;
+
     friend class WorldMap;
     friend class CubeMapMiniMap;
 };

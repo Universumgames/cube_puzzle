@@ -19,10 +19,30 @@ public:
 
     void drawMinimap(const u32 frame, const u32 totalMSec, const float deltaT);
 
-    void updateMinimap();
+    void updateMinimap(const u32 frame, const u32 totalMSec, const float deltaT);
 
+    void updateDebugText();
+
+private:
+    enum class AnimationState{
+        FINISHED = 1, TRANSITIONING
+    };
+
+    struct RenderData{
+        int side;
+        Rect dst;
+        DiceSideRotation rot;
+    };
 
 private:
     CubeMap* cubeMap;
     DiceData& diceData;
+    DiceData oldDiceData;
+    int oldSide = 2;
+    AnimationState animationState = AnimationState::FINISHED;
+    double animationProgress = (double) AnimationState::FINISHED;
+    Vector<RenderData> sidesDst;
+    Rect bgXDst, bgYDst;
+
+
 };

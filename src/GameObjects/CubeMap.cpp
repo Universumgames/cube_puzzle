@@ -55,7 +55,6 @@ CubeMap::CubeMap(CubeGame &game1, SDL_Renderer *render1, const Vector<CubeMapSid
     this->minimapText = new Text(game, render, 400, "", game.getSpriteStorage()->debugFont, {10, 60});
     this->debugDiceData = new Text(game, render, 400, "", game.getSpriteStorage()->debugFont, {10, 230});
     this->miniMap = new CubeMapMiniMap(game, render, this);
-    miniMap->updateMinimap();
 }
 
 CubeField *CubeMap::getField(int side, int x, int y) {

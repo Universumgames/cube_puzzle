@@ -66,6 +66,9 @@ public:
     /// get folded out representation of cube relative to center c
     void get2DRepresentation(int c, int *n, int *w, int *e, int *s, int *b);
 
+    friend bool operator ==(const DiceData& lhs, const DiceData& rhs);
+    friend bool operator !=(const DiceData& lhs, const DiceData& rhs);
+
 private:
     int up, north, west;
 public:

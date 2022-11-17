@@ -234,3 +234,11 @@ void DiceData::get2DRepresentation(int c, int *n, int *w, int *e, int *s, int *b
     if (w != nullptr) *w = getSideWhenMovingInDirX(c, DiceSideRotation::LEFT);
     if (e != nullptr) *e = getSideWhenMovingInDirX(c, DiceSideRotation::RIGHT);
 }
+
+bool operator==(const DiceData &lhs, const DiceData &rhs) {
+    return lhs.up == rhs.up && lhs.north == rhs.north && lhs.west == rhs.west;
+}
+
+bool operator!=(const DiceData &lhs, const DiceData &rhs) {
+    return !(lhs == rhs);
+}
