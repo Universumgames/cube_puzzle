@@ -3,6 +3,7 @@
 #include "CubeField.hpp"
 #include "../recthelper.hpp"
 #include "../matrix.hpp"
+#include "CubeMapMiniMap.hpp"
 
 bool CubeMap::movePlayer(PlayerMoveDirection dir) {
     PlayerMoveDirection normalizedDirection = screenDirectionToDirectionOnCubeSide(dir);
@@ -25,7 +26,7 @@ bool CubeMap::movePlayer(PlayerMoveDirection dir) {
     Point newPlayerPos = playerPos + moveDir;
     bool edge = checkCubeSideEdgeOverstepping(newPlayerPos);
     if (edge) {
-        updateMinimap();
+        miniMap->updateMinimap();
     }
     if (!getCurrentSide()->getField(newPlayerPos)->isPlayerMovableTo()) return false;
     playerPos = newPlayerPos;

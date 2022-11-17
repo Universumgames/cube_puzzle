@@ -12,6 +12,8 @@ class Player;
 
 class CubeMapSide;
 
+class CubeMapMiniMap;
+
 /// Logic class for handling player movement on cube and calling cubefiled methods
 class CubeMap final : public GameObject {
 public:
@@ -42,8 +44,6 @@ public:
 private:
     void moveCubeInWorld(DiceRollDirection rollDirection);
 
-    void drawMinimap(const u32 frame, const u32 totalMSec, const float deltaT);
-
     void drawMap(const u32 frame, const u32 totalMSec, const float deltaT);
 
     PlayerMoveDirection screenDirectionToDirectionOnCubeSide(PlayerMoveDirection direction);
@@ -58,10 +58,9 @@ private:
 
     CubeField *getField(int side, Point p);
 
-    void updateMinimap();
-
 private:
     WorldMap *worldMap = nullptr;
+    CubeMapMiniMap *miniMap;
     Vector<CubeMapSide *> sides;
     int currentSideId;
     Point playerPos{};
@@ -71,6 +70,7 @@ private:
     Text *debugDiceData;
 
     friend class WorldMap;
+    friend class CubeMapMiniMap;
 };
 
 class CubeMapSide {

@@ -25,7 +25,7 @@ set(SOURCE_FILES src/main.cpp src/global.hpp src/gamebase.hpp src/gamebase.cpp s
         src/data/Colors.hpp src/States/ComplexGameState.hpp src/States/ComplexGameState.cpp
         src/GameObjects/CubeMap_CubeMapSide.cpp src/GameObjects/CubeMap_playerMovement.cpp src/data/WorldField.cpp
         src/data/paths.hpp src/stringhelper.hpp src/data/LevelLoader.cpp src/data/LevelLoader.hpp src/filehelper.hpp
-        src/AudioHandler.hpp src/AudioHandler.cpp src/matrix.hpp)
+        src/AudioHandler.hpp src/AudioHandler.cpp src/matrix.hpp src/GameObjects/CubeMapMiniMap.cpp src/GameObjects/CubeMapMiniMap.hpp)
 
 Message("")
 Message(STATUS "SOURCE entry point : " ${SOURCE_FILES})
