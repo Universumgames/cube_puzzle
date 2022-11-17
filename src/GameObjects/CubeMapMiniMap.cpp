@@ -3,6 +3,22 @@
 #include "CubeMap.hpp"
 #include "../recthelper.hpp"
 
+using FPoint = SDL_FPoint;
+using Vertex = SDL_Vertex;
+
+constexpr FPoint operator+(const FPoint lhs, const FPoint rhs) { return FPoint{lhs.x + rhs.x, lhs.y + rhs.y}; }
+
+constexpr FPoint operator-(const FPoint lhs, const FPoint rhs) { return FPoint{lhs.x - rhs.x, lhs.y - rhs.y}; }
+
+constexpr FPoint operator/(const FPoint lhs, const int rhs) { return FPoint{lhs.x / rhs, lhs.y / rhs}; }
+
+constexpr FPoint operator*(const FPoint lhs, const int rhs) { return FPoint{lhs.x * rhs, lhs.y * rhs}; }
+
+constexpr FPoint operator*(const FPoint lhs, const double rhs) {
+    return FPoint{(float) (lhs.x * rhs), (float) (lhs.y * rhs)};
+}
+
+
 void CubeMapMiniMap::HandleEvent(const u32 frame, const u32 totalMSec, const float deltaT, Event event) {
     if (event.type == SDL_WINDOWEVENT && event.window.event == SDL_WINDOWEVENT_RESIZED) {
         //updateMinimap(BASIC_GO_DATA_PASSTHROUGH);
@@ -68,15 +84,17 @@ void CubeMapMiniMap::RenderUI(const u32 frame, const u32 totalMSec, const float 
     //SDL_Vertex *vertices = (SDL_Vertex *) calloc(4, sizeof(SDL_Vertex));
     //int* indices = (int*) calloc(6, sizeof(int));
     SDL_Vertex vertices[4] = {{.position = {0, 0}, .color = white, .tex_coord = {0, 0}},
-                              {.position={100, 0}, .color = white, .tex_coord = {1,0}},
+                              {.position={100, 0}, .color = white, .tex_coord = {1, 0}},
                               {.position = {0, 100}, .color = white, .tex_coord = {0, 1}},
-                              {.position= {100, 100}, .color = white, .tex_coord = {1,1}}};
-    const std::vector< SDL_Vertex > verts = { { SDL_FPoint{ 400, 150 }, SDL_Color{ 255, 0, 0, 255 }, SDL_FPoint{ 0 }, },
-                                { SDL_FPoint{ 200, 450 }, SDL_Color{ 0, 0, 255, 255 }, SDL_FPoint{ 0 }, },
-                                { SDL_FPoint{ 600, 450 }, SDL_Color{ 0, 255, 0, 255 }, SDL_FPoint{ 0 }, }};
-    int indices[6] = {0, 2,3, 0, 1, 3};
-    int err = SDL_RenderGeometry(render, game.getSpriteStorage()->sideSprites[0], vertices, 4, indices, 6);
-    SDL_RenderGeometry( render, nullptr, verts.data(), verts.size(), nullptr, 0 );
+                              {.position= {100, 100}, .color = white, .tex_coord = {1, 1}}};
+    const std::vector<SDL_Vertex> verts = {{SDL_FPoint{400, 150}, SDL_Color{255, 0, 0, 255}, SDL_FPoint{0},},
+                                           {SDL_FPoint{200, 450}, SDL_Color{0, 0, 255, 255}, SDL_FPoint{0},},
+                                           {SDL_FPoint{600, 450}, SDL_Color{0, 255, 0, 255}, SDL_FPoint{0},}};
+    int indices[6] = {0, 2, 3, 0, 1, 3};
+    SDL_RenderGeometry(render, game.getSpriteStorage()->sideSprites[0], vertices, 4, indices, 6);
+    SDL_RenderGeometry(render, nullptr, verts.data(), verts.size(), nullptr, 0);
+
+    draw3DMinimap();
 }
 
 double LerpDegrees(double start, double end, double amount) {
@@ -209,5 +227,117 @@ void CubeMapMiniMap::updateDebugText() {
                        "   " + std::to_string(s) + "   \n" +
                        "   " + std::to_string(b) + "   ";
     cubeMap->minimapText->changeText(text);
+}
+
+FPoint pointToFPoint(Point p) {
+    return {(float) p.x, (float) p.y};
+}
+
+Vector<Vertex> toVertex(Vector<Point> points, int tl, int tr, int bl, int br, DiceSideRotation rotation) {
+    Vector<FPoint> texCoords;
+    switch(rotation){
+        case DiceSideRotation::UP:
+            texCoords = {
+                    {0,0},
+                    {1,0},
+                    {1,1},
+                    {0,0},
+                    {0,1},
+                    {1,1}
+            };
+            break;
+        case DiceSideRotation::DOWN:
+            texCoords = {
+                    {1,1},
+                    {0,1},
+                    {0,0},
+                    {1,1},
+                    {1,0},
+                    {0,0}
+            };
+            break;
+        case DiceSideRotation::LEFT:
+            texCoords = {
+                    {0,1},
+                    {0,0},
+                    {1,0},
+                    {0,1},
+                    {1,1},
+                    {1,0}
+            };
+            break;
+        case DiceSideRotation::RIGHT:
+            texCoords = {
+                    {1,0},
+                    {1,1},
+                    {0,1},
+                    {1,0},
+                    {0,0},
+                    {0,1}
+            };
+            break;
+    }
+    return {
+            // top right triangle
+            {.position = pointToFPoint(points[tl]), .color = white, .tex_coord = texCoords[0]},
+            {.position = pointToFPoint(points[tr]), .color = white, .tex_coord = texCoords[1]},
+            {.position = pointToFPoint(points[br]), .color = white, .tex_coord = texCoords[2]},
+            // bottom left triangle
+            {.position = pointToFPoint(points[tl]), .color = white, .tex_coord = texCoords[3]},
+            {.position = pointToFPoint(points[bl]), .color = white, .tex_coord = texCoords[4]},
+            {.position = pointToFPoint(points[br]), .color = white, .tex_coord = texCoords[5]},
+    };
+}
+
+int sideIndexToSide(DiceData diceData, int side, int index){
+    int c = side, n = 0, w = 0, e = 0, s = 0, b = 0;
+    diceData.get2DRepresentation(c, &n, &w, &e, &s, &b);
+
+    auto nRot = DiceSideRotation::UP;
+    auto sRot = DiceSideRotation::UP;
+    sAndNRotation(w, c, e, b, n, s, &nRot, &sRot);
+    switch(index){
+        case 0:
+            return c;
+        case 1:
+            return e;
+        case 2:
+            return n;
+        default:
+            return 0;
+    }
+    return 0;
+}
+
+void CubeMapMiniMap::draw3DMinimap() {
+    // starting point top left
+    Point startPoint = {80, 10};
+    int size = 50;
+    Point dir = {-1, 1};
+    Point scaledDir = dir * 10;
+    Point dirX = {size, 0};
+    Point dirY = {0, size};
+
+    SDL_RenderSetScale(render, 10, 10);
+
+    for (int z = 0; z < 2; z++) {
+        for (int x = 0; x < 2; x++) {
+            for (int y = 0; y < 2; y++) {
+                Point p = startPoint + scaledDir * z - dirX * x + dirY * y;
+                points.push_back(p);
+            }
+        }
+    }
+
+    for (int sideIndex = 0; sideIndex < 3; sideIndex++) {
+        int startIndex = sideIndex * 4;
+        int actualSide = sideIndexToSide(diceData, cubeMap->currentSideId, sideIndex);
+        DiceSideRotation rotation = diceData.getDiceSideRotation(actualSide);
+        Vector<Vertex> vertices = toVertex(points, indices[startIndex], indices[startIndex + 1],
+                                           indices[startIndex + 2], indices[startIndex + 3], rotation);
+        SDL_RenderGeometry(render, game.getSpriteStorage()->sideSprites[actualSide - 1], vertices.data(), vertices.size(),
+                           nullptr, 0);
+    }
+    SDL_RenderSetScale(render, 1, 1);
 }
 

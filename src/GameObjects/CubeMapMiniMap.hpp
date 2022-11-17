@@ -23,6 +23,8 @@ public:
 
     void updateDebugText();
 
+    void draw3DMinimap();
+
 private:
     enum class AnimationState{
         FINISHED = 1, TRANSITIONING
@@ -43,6 +45,6 @@ private:
     double animationProgress = (double) AnimationState::FINISHED;
     Vector<RenderData> sidesDst;
     Rect bgXDst, bgYDst;
-
-
+    Vector<Point> points;
+    const Vector<int> indices = {6, 4, 7, 5, 4, 0, 5, 1, 2, 0, 6, 4};
 };
