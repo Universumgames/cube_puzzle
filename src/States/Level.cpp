@@ -30,7 +30,8 @@ void Level::Update(const u32 frame, const u32 totalMSec, const float deltaT) {
     if (frame % 50 == 0) {
         u32 deltaSec = totalMSec - lastMSec;
         u32 deltaFrame = frame - lastFrame;
-        text->changeText(levelData.name + " " + std::to_string((double) deltaFrame / ((double) deltaSec / 1000)) + "fps");
+        double fps = (double) deltaFrame / ((double) deltaSec / 1000);
+        text->changeText(levelData.name + " " + std::to_string(round(fps * 100)/100).substr(0,5) + "fps");
         lastMSec = totalMSec;
         lastFrame = frame;
     }

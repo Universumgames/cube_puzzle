@@ -304,6 +304,7 @@ void CubeMapMiniMap::draw3DMinimap(Rect drawableRect) {
     FPoint dirX = {size, 0};
     FPoint dirY = {0, size};
 
+    points = {};
     for (int z = 0; z < 2; z++) {
         for (int x = 0; x < 2; x++) {
             for (int y = 0; y < 2; y++) {
@@ -323,5 +324,14 @@ void CubeMapMiniMap::draw3DMinimap(Rect drawableRect) {
                            vertices.size(),
                            nullptr, 0);
     }
+
+    SDL_SetRenderDrawColor(render, 0,0,0,255);
+    FPoint p1 = startPoint;
+    FPoint p2 = startPoint + scaledDir;
+    FPoint p3 = p2 - FPoint{size, 0};
+    FPoint p4 = p2 + FPoint{0, size};
+    SDL_RenderDrawLine(render, p2.x,p2.y, p1.x, p1.y);
+    SDL_RenderDrawLine(render, p2.x,p2.y, p3.x, p3.y);
+    SDL_RenderDrawLine(render, p2.x,p2.y, p4.x, p4.y);
 }
 
