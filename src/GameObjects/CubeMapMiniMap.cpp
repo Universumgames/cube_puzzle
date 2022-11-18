@@ -2,6 +2,7 @@
 #include "../data/Colors.hpp"
 #include "CubeMap.hpp"
 #include "../recthelper.hpp"
+#include "../data/bezier.hpp"
 
 using FPoint = SDL_FPoint;
 using Vertex = SDL_Vertex;
@@ -296,15 +297,15 @@ int sideIndexToSide(DiceData diceData, int side, int index) {
 
 void CubeMapMiniMap::draw3DMinimap(Rect drawableRect) {
     FPoint dir = {-1.5, 1};
-    float scale = abs(drawableRect.w / dir.x / 3); // dir.x * scale = drawableRect.x
+    float scale = abs((float)drawableRect.w / dir.x / 3.0f); // dir.x * scale = drawableRect.x
     FPoint scaledDir = dir * scale;
     // starting point top left
     FPoint startPoint = {(float) (drawableRect.x + drawableRect.w), (float) (drawableRect.y)};
-    float size = drawableRect.h - ((startPoint + scaledDir).y - drawableRect.y);
+    float size = (float)drawableRect.h - ((startPoint + scaledDir).y - (float)drawableRect.y);
     FPoint dirX = {size, 0};
     FPoint dirY = {0, size};
 
-    points = {};
+    points.clear();
     for (int z = 0; z < 2; z++) {
         for (int x = 0; x < 2; x++) {
             for (int y = 0; y < 2; y++) {
@@ -333,5 +334,15 @@ void CubeMapMiniMap::draw3DMinimap(Rect drawableRect) {
     SDL_RenderDrawLine(render, p2.x,p2.y, p1.x, p1.y);
     SDL_RenderDrawLine(render, p2.x,p2.y, p3.x, p3.y);
     SDL_RenderDrawLine(render, p2.x,p2.y, p4.x, p4.y);
+
+
+    // test bezier
+    Point a = {0,game.getWindowSize().y}, b = {game.getWindowSize().x/2,0}, c = game.getWindowSize();
+    SDL_SetRenderDrawColor(render, 255, 0, 0, 255);
+    for(double i = 0; i < 1; i += 0.001){
+        Point bezierP = bezierPoint(a,b,c,i);
+        Rect dst = {bezierP.x, bezierP.y, 2,2};
+        SDL_RenderFillRect(render, &dst);
+    }
 }
 
