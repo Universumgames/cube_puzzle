@@ -37,7 +37,11 @@ void CubeMapSide::Render(CubeGame &game, Renderer *render, DiceData diceData, co
     Point offset = getStartingOffset(game.getWindowSize(), size);
     Rect drawableRect = getDrawableRect(game.getWindowSize());
     DiceSideRotation rotation = diceData.getDiceSideRotation(sideID);
+    int dimm = sin(frame / 120.0) * 20;
+    SDL_SetTextureColorMod(game.getSpriteStorage()->sideSprites[sideID - 1], 230 + dimm,230 + dimm,230 + dimm);
     drawSide(game.getSpriteStorage()->sideSprites[sideID - 1], render, drawableRect, rotation);
+    SDL_SetTextureColorMod(game.getSpriteStorage()->sideSprites[sideID - 1], 255,255,255);
+
     if (overlay == nullptr) {
         overlay = new Text(game, render, 400, "", game.getSpriteStorage()->debugFont, {0, 0});
     }

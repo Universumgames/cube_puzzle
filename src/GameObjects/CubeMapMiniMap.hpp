@@ -23,7 +23,7 @@ public:
 
     void updateDebugText();
 
-    void draw3DMinimap(Rect drawableRect);
+    void draw3DMinimap(const u32 frame, const u32 totalMSec, const float deltaT, Rect drawableRect);
 
 private:
     enum class AnimationState{
