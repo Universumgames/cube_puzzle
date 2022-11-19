@@ -279,9 +279,6 @@ int sideIndexToSide(DiceData diceData, int side, int index) {
     int c = side, n = 0, w = 0, e = 0, s = 0, b = 0;
     diceData.get2DRepresentation(c, &n, &w, &e, &s, &b);
 
-    auto nRot = DiceSideRotation::UP;
-    auto sRot = DiceSideRotation::UP;
-    sAndNRotation(w, c, e, b, n, s, &nRot, &sRot);
     switch (index) {
         case 0:
             return c;
@@ -315,12 +312,22 @@ void CubeMapMiniMap::draw3DMinimap(const u32 frame, const u32 totalMSec, const f
         }
     }
 
+    auto nRot = DiceSideRotation::UP;
+    auto sRot = DiceSideRotation::UP;
+    {
+        int c = cubeMap->currentSideId, n = 0, w = 0, e = 0, s = 0, b = 0;
+        diceData.get2DRepresentation(c, &n, &w, &e, &s, &b);
+        sAndNRotation(w, c, e, b, n, s, &nRot, &sRot);
+    }
+
     for (int sideIndex = 0; sideIndex < 3; sideIndex++) {
         int startIndex = sideIndex * 4;
         int actualSide = sideIndexToSide(diceData, cubeMap->currentSideId, sideIndex);
         DiceSideRotation rotation = diceData.getDiceSideRotation(actualSide);
+        if(sideIndex == 2) rotation = nRot;
         Vector<Vertex> vertices = toVertex(points, indices[startIndex], indices[startIndex + 1],
                                            indices[startIndex + 2], indices[startIndex + 3], rotation);
+
         SDL_RenderGeometry(render, game.getSpriteStorage()->sideSprites[actualSide - 1], vertices.data(),
                            vertices.size(),
                            nullptr, 0);
