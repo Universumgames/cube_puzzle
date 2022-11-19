@@ -33,7 +33,7 @@ void CubeMapSide::Update(CubeGame &game, const u32 frame, const u32 totalMSec, c
 void CubeMapSide::Render(CubeGame &game, Renderer *render, DiceData diceData, const u32 frame, const u32 totalMSec,
                          const float deltaT, Rect drawableRect) {
     int x = 0, y = 0;
-    Point size = getFieldSize(game.getWindowSize());
+    Point size = getFieldSize(drawableRect);
     Point offset = {drawableRect.x, drawableRect.y};
     DiceSideRotation rotation = diceData.getDiceSideRotation(sideID);
     int dimm = sin(frame / 120.0) * 20;
@@ -60,15 +60,15 @@ void CubeMapSide::Render(CubeGame &game, Renderer *render, DiceData diceData, co
     renderGridOverlay(game, render, diceData, BASIC_GO_DATA_PASSTHROUGH, drawableRect);
 }
 
-Point CubeMapSide::getFieldSize(Point windowSize) {
-    int w = min(windowSize.x, windowSize.y) / width;
+Point CubeMapSide::getFieldSize(Rect drawableRect) {
+    int w = min(drawableRect.w, drawableRect.h) / max(width, height);
     return {w, w};
 }
 
 
 void CubeMapSide::renderGridOverlay(CubeGame &game, Renderer *render, DiceData diceData, const u32 frame,
                                     const u32 totalMSec, const float deltaT, Rect drawableRect) {
-    Point size = getFieldSize(game.getWindowSize());
+    Point size = getFieldSize(drawableRect);
     Point offset = {drawableRect.x, drawableRect.y};
     if (game.isDebug()) {
         // grid lines

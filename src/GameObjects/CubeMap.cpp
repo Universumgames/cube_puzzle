@@ -38,7 +38,7 @@ void CubeMap::RenderUI(const u32 frame, const u32 totalMSec, const float deltaT)
 
 
 void CubeMap::drawMap(const u32 frame, const u32 totalMSec, const float deltaT) {
-    Rect drawableRect = getDrawableRect(game.getWindowSize());
+    Rect drawableRect = getDrawableRect();
     getCurrentSide()->Render(game, render, diceData, BASIC_GO_DATA_PASSTHROUGH, drawableRect);
 }
 
@@ -47,7 +47,7 @@ CubeMapSide *CubeMap::getSide(int i) {
     return sides[i - 1];
 }
 
-CubeMap::CubeMap(CubeGame &game1, SDL_Renderer *render1, const Vector<CubeMapSide*> &sides1, int startSide,
+CubeMap::CubeMap(CubeGame &game1, SDL_Renderer *render1, const Vector<CubeMapSide *> &sides1, int startSide,
                  Point playerPos)
         : GameObject(game1, render1) {
     this->sides.assign(sides1.begin(), sides1.end());
@@ -71,19 +71,20 @@ void CubeMap::Init() {
     GameObject::Init();
 }
 
-Rect CubeMap::getDrawableRect(Point windowSize) {
+Rect CubeMap::getDrawableRect() {
+    Point windowSize = game.getWindowSize();
     Point center = windowSize / 2;
     int s = min(windowSize.x, windowSize.y);
     Point totalSize = {s, s};
     Point offset = center - (totalSize / 2);
-    return {offset.x, offset.y, s,s};
+    return {offset.x, offset.y, s, s};
 }
 
 Rect CubeMap::playerDrawPosition() {
     CubeMapSide *side = getCurrentSide();
-    auto origSize = side->getFieldSize(game.getWindowSize());
+    auto origSize = side->getFieldSize(getDrawableRect());
     auto size = origSize * 0.8;
-    auto gridOffset = getDrawableRect(game.getWindowSize()) + ((origSize - size)/2);
+    auto gridOffset = getDrawableRect() + ((origSize - size) / 2);
     auto screenGridPos = getCurrentSide()->cubePositionToScreenPosition(diceData, playerPos);
     return {origSize.x * screenGridPos.x + gridOffset.x, origSize.y * screenGridPos.y + gridOffset.y, size.x, size.y};
 }

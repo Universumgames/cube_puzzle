@@ -58,7 +58,7 @@ private:
 
     CubeField *getField(int side, Point p);
 
-    Rect getDrawableRect(Point windowSize);
+    Rect getDrawableRect();
 
 
 private:
@@ -98,7 +98,7 @@ public:
 
     [[nodiscard]] int getIndex(int x, int y) const { return x * width + y; }
 
-    Point getFieldSize(Point windowSize);
+    Point getFieldSize(Rect drawableRect);
 
 
 
