@@ -3,22 +3,7 @@
 #include "CubeMap.hpp"
 #include "../recthelper.hpp"
 #include "../data/bezier.hpp"
-
-using FPoint = SDL_FPoint;
-using Vertex = SDL_Vertex;
-
-constexpr FPoint operator+(const FPoint lhs, const FPoint rhs) { return FPoint{lhs.x + rhs.x, lhs.y + rhs.y}; }
-
-constexpr FPoint operator-(const FPoint lhs, const FPoint rhs) { return FPoint{lhs.x - rhs.x, lhs.y - rhs.y}; }
-
-constexpr FPoint operator/(const FPoint lhs, const int rhs) { return FPoint{lhs.x / rhs, lhs.y / rhs}; }
-
-constexpr FPoint operator*(const FPoint lhs, const int rhs) { return FPoint{lhs.x * rhs, lhs.y * rhs}; }
-
-constexpr FPoint operator*(const FPoint lhs, const double rhs) {
-    return FPoint{(float) (lhs.x * rhs), (float) (lhs.y * rhs)};
-}
-
+#include "../mathhelper.hpp"
 
 void CubeMapMiniMap::HandleEvent(const u32 frame, const u32 totalMSec, const float deltaT, Event event) {
     if (event.type == SDL_WINDOWEVENT && event.window.event == SDL_WINDOWEVENT_RESIZED) {
@@ -34,35 +19,22 @@ void CubeMapMiniMap::Update(const u32 frame, const u32 totalMSec, const float de
         }
         updateDebugText();
     }
-    updateMinimap(BASIC_GO_DATA_PASSTHROUGH);
+    //updateMinimap(BASIC_GO_DATA_PASSTHROUGH);
 }
 
 void CubeMapMiniMap::Render(const u32 frame, const u32 totalMSec, const float deltaT) {
-    drawMinimap(BASIC_GO_DATA_PASSTHROUGH);
+    //drawMinimap(BASIC_GO_DATA_PASSTHROUGH);
 }
 
 CubeMapMiniMap::CubeMapMiniMap(CubeGame &game, SDL_Renderer *render, CubeMap *cubeMap) : GameObject(game, render),
                                                                                          diceData(cubeMap->diceData) {
     this->cubeMap = cubeMap;
     this->oldSide = cubeMap->currentSideId;
-    updateMinimap(0, 0, 0);
+    //updateMinimap(0, 0, 0);
     updateDebugText();
 }
 
-void sAndNRotation(int w, int c, int e, int b, int n, int s, DiceSideRotation *nRot, DiceSideRotation *sRot) {
-    if (nRot == nullptr || sRot == nullptr) return;
-    auto anchorN = DiceData::getAnchorSideOfTopLeftCorner(n);
-    auto anchorS = DiceData::getAnchorSideOfTopLeftCorner(s);
-    if (anchorN == w) *nRot = DiceSideRotation::LEFT;
-    else if (anchorN == c) *nRot = DiceSideRotation::DOWN;
-    else if (anchorN == e) *nRot = DiceSideRotation::RIGHT;
-    else if (anchorN == b) *nRot = DiceSideRotation::UP;
 
-    if (anchorS == w) *sRot = DiceSideRotation::LEFT;
-    else if (anchorS == c) *sRot = DiceSideRotation::UP;
-    else if (anchorS == e) *sRot = DiceSideRotation::RIGHT;
-    else if (anchorS == b) *sRot = DiceSideRotation::DOWN;
-}
 
 void CubeMapMiniMap::drawMinimap(const u32 frame, const u32 totalMSec, const float deltaT) {
     cubeMap->minimapText->RenderUI(BASIC_GO_DATA_PASSTHROUGH);
@@ -83,32 +55,11 @@ void CubeMapMiniMap::RenderUI(const u32 frame, const u32 totalMSec, const float 
     drawMinimap(BASIC_GO_DATA_PASSTHROUGH);
 
     Point wSize = game.getWindowSize();
-    int size = max(wSize.x, wSize.y) / 15;
-    draw3DMinimap(BASIC_GO_DATA_PASSTHROUGH, {wSize.x - size - 10, 300, size, size});
+    int size = max(wSize.x, wSize.y) / 13;
+    draw3DMinimap(BASIC_GO_DATA_PASSTHROUGH, {wSize.x - size - 10, 10, size, size});
 }
 
-double LerpDegrees(double start, double end, double amount) {
-    double difference = abs(end - start);
-    if (difference > 180) {
-        if (end > start) {
-            start += 360;
-        } else {
-            end += 360;
-        }
-    }
-
-    // Interpolate it.
-    double value = (start + ((end - start) * amount));
-
-    // Wrap it..
-    int rangeZero = 360;
-
-    if (value >= 0 && value <= 360)
-        return value;
-
-    return ((int) value % rangeZero);
-}
-
+/*
 void CubeMapMiniMap::updateMinimap(const u32 frame, const u32 totalMSec, const float deltaT) {
     PlayerMoveDirection lastMoveDir = cubeMap->lastNormalizedMove;
     int c = oldSide, n = 0, w = 0, e = 0, s = 0, b = 0;
@@ -129,18 +80,11 @@ void CubeMapMiniMap::updateMinimap(const u32 frame, const u32 totalMSec, const f
     bgXDst = {offset.x - borderWidth, offset.y + sideSize - borderWidth, sideSize * 3 + borderWidth * 2,
               sideSize + borderWidth * 2};
 
-    /*
-     * struct RenderData{
-        int side;
-        Rect dst;
-        DiceSideRotation rot;
-    };
-     */
     int transitionOffset = sideSize * animationProgress;
     Point rotatedTransitionOffset = {};
     Point xAxisOffset = {}, yAxisOffset = {};
     RenderData add = {};
-    switch (lastMoveDir) {
+    switch (lastMoveDir) { // add "pushing side"
         case PlayerMoveDirection::UP: // move y axis down
             rotatedTransitionOffset = {0, transitionOffset};
             yAxisOffset = rotatedTransitionOffset;
@@ -174,10 +118,9 @@ void CubeMapMiniMap::updateMinimap(const u32 frame, const u32 totalMSec, const f
     double wLerpAngle = LerpDegrees((double) cloneData.getDiceSideRotation(w),
                                     (double) diceData.getDiceSideRotation(w),
                                     animationProgress);
-    double eLerpAngle = LerpDegrees(
-            (double) cloneData.getDiceSideRotation(e),
-            (double) diceData.getDiceSideRotation(e),
-            animationProgress);
+    double eLerpAngle = LerpDegrees((double) cloneData.getDiceSideRotation(e),
+                                    (double) diceData.getDiceSideRotation(e),
+                                    animationProgress);
     sidesDst = {
             {.side = n, .dst = {offset.x + sideSize + yAxisOffset.x, offset.y + yAxisOffset.y, sideSize,
                                 sideSize}, .angle = (double) nRot},
@@ -206,7 +149,7 @@ void CubeMapMiniMap::updateMinimap(const u32 frame, const u32 totalMSec, const f
         oldDiceData = DiceData(diceData);
         oldSide = cubeMap->currentSideId;
     }
-}
+}*/
 
 void CubeMapMiniMap::updateDebugText() {
     int n = 0, w = 0, c = 0, e = 0, s = 0, b = 0;
@@ -294,11 +237,11 @@ int sideIndexToSide(DiceData diceData, int side, int index) {
 
 void CubeMapMiniMap::draw3DMinimap(const u32 frame, const u32 totalMSec, const float deltaT, Rect drawableRect) {
     FPoint dir = {-1.5, 1};
-    float scale = abs((float)drawableRect.w / dir.x / 3.0f); // dir.x * scale = drawableRect.x
+    float scale = abs((float) drawableRect.w / dir.x / 3.0f); // dir.x * scale = drawableRect.x
     FPoint scaledDir = dir * scale;
     // starting point top left
     FPoint startPoint = {(float) (drawableRect.x + drawableRect.w), (float) (drawableRect.y)};
-    float size = (float)drawableRect.h - ((startPoint + scaledDir).y - (float)drawableRect.y);
+    float size = (float) drawableRect.h - ((startPoint + scaledDir).y - (float) drawableRect.y);
     FPoint dirX = {size, 0};
     FPoint dirY = {0, size};
 
@@ -324,7 +267,7 @@ void CubeMapMiniMap::draw3DMinimap(const u32 frame, const u32 totalMSec, const f
         int startIndex = sideIndex * 4;
         int actualSide = sideIndexToSide(diceData, cubeMap->currentSideId, sideIndex);
         DiceSideRotation rotation = diceData.getDiceSideRotation(actualSide);
-        if(sideIndex == 2) rotation = nRot;
+        if (sideIndex == 2) rotation = nRot;
         Vector<Vertex> vertices = toVertex(points, indices[startIndex], indices[startIndex + 1],
                                            indices[startIndex + 2], indices[startIndex + 3], rotation);
 
@@ -333,23 +276,23 @@ void CubeMapMiniMap::draw3DMinimap(const u32 frame, const u32 totalMSec, const f
                            nullptr, 0);
     }
 
-    SDL_SetRenderDrawColor(render, 0,0,0,255);
-    FPoint p1 = startPoint;
-    FPoint p2 = startPoint + scaledDir;
-    FPoint p3 = p2 - FPoint{size, 0};
-    FPoint p4 = p2 + FPoint{0, size};
-    SDL_RenderDrawLine(render, p2.x,p2.y, p1.x, p1.y);
-    SDL_RenderDrawLine(render, p2.x,p2.y, p3.x, p3.y);
-    SDL_RenderDrawLine(render, p2.x,p2.y, p4.x, p4.y);
-
+    // draw cross overlay over cube
+    SDL_SetRenderDrawColor(render, 0, 0, 0, 255);
+    FPoint p1 = points[0]; //startPoint;
+    FPoint p2 = points[4]; //startPoint + scaledDir;
+    FPoint p3 = points[5]; //p2 - FPoint{size, 0};
+    FPoint p4 = points[6]; //p2 + FPoint{0, size};
+    SDL_RenderDrawLine(render, p2.x, p2.y, p1.x, p1.y);
+    SDL_RenderDrawLine(render, p2.x, p2.y, p3.x, p3.y);
+    SDL_RenderDrawLine(render, p2.x, p2.y, p4.x, p4.y);
 
     // test bezier
-    Point a = {0,game.getWindowSize().y}, b = {game.getWindowSize().x/2,0}, c = game.getWindowSize();
-    b.y = (int)((0.5 + sin(frame / 20.0)) * 100.0);
-    for(double i = 0; i < 1; i += 0.001){
-        Point bezierP = bezierPoint(a,b,c,i);
-        Rect dst = {bezierP.x, bezierP.y, 2,2};
-        SDL_SetRenderDrawColor(render, 255*i, 255 * i, 0, 255);
+    Point a = {0, game.getWindowSize().y}, b = {game.getWindowSize().x / 2, 0}, c = game.getWindowSize();
+    b.y = (int) ((0.5 + sin(frame / 20.0)) * 100.0);
+    for (double i = 0; i < 1; i += 0.001) {
+        Point bezierP = bezierPoint(a, b, c, i);
+        Rect dst = {bezierP.x, bezierP.y, 2, 2};
+        SDL_SetRenderDrawColor(render, 255 * i, 255 * i, 255 - 255 * i, 255);
         SDL_RenderFillRect(render, &dst);
     }
 }

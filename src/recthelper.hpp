@@ -68,3 +68,14 @@ constexpr Rect &operator-=(Rect &lhs, const Rect rhs) {
     return lhs;
 }
 
+constexpr FPoint operator+(const FPoint lhs, const FPoint rhs) { return FPoint{lhs.x + rhs.x, lhs.y + rhs.y}; }
+
+constexpr FPoint operator-(const FPoint lhs, const FPoint rhs) { return FPoint{lhs.x - rhs.x, lhs.y - rhs.y}; }
+
+constexpr FPoint operator/(const FPoint lhs, const int rhs) { return FPoint{lhs.x / rhs, lhs.y / rhs}; }
+
+constexpr FPoint operator*(const FPoint lhs, const int rhs) { return FPoint{lhs.x * rhs, lhs.y * rhs}; }
+
+constexpr FPoint operator*(const FPoint lhs, const double rhs) {
+    return FPoint{(float) (lhs.x * rhs), (float) (lhs.y * rhs)};
+}

@@ -31,11 +31,10 @@ void CubeMapSide::Update(CubeGame &game, const u32 frame, const u32 totalMSec, c
 }
 
 void CubeMapSide::Render(CubeGame &game, Renderer *render, DiceData diceData, const u32 frame, const u32 totalMSec,
-                         const float deltaT) {
+                         const float deltaT, Rect drawableRect) {
     int x = 0, y = 0;
     Point size = getFieldSize(game.getWindowSize());
-    Point offset = getStartingOffset(game.getWindowSize(), size);
-    Rect drawableRect = getDrawableRect(game.getWindowSize());
+    Point offset = {drawableRect.x, drawableRect.y};
     DiceSideRotation rotation = diceData.getDiceSideRotation(sideID);
     int dimm = sin(frame / 120.0) * 20;
     SDL_SetTextureColorMod(game.getSpriteStorage()->sideSprites[sideID - 1], 230 + dimm,230 + dimm,230 + dimm);
@@ -58,7 +57,7 @@ void CubeMapSide::Render(CubeGame &game, Renderer *render, DiceData diceData, co
             x = 0;
         }
     }
-    renderGridOverlay(game, render, diceData, BASIC_GO_DATA_PASSTHROUGH);
+    renderGridOverlay(game, render, diceData, BASIC_GO_DATA_PASSTHROUGH, drawableRect);
 }
 
 Point CubeMapSide::getFieldSize(Point windowSize) {
@@ -66,17 +65,11 @@ Point CubeMapSide::getFieldSize(Point windowSize) {
     return {w, w};
 }
 
-Point CubeMapSide::getStartingOffset(Point windowSize, Point fieldSize) {
-    Point center = windowSize / 2;
-    Point totalSize = {width * fieldSize.x, height * fieldSize.y};
-    return center - (totalSize / 2);
-}
 
 void CubeMapSide::renderGridOverlay(CubeGame &game, Renderer *render, DiceData diceData, const u32 frame,
-                                    const u32 totalMSec, const float deltaT) {
+                                    const u32 totalMSec, const float deltaT, Rect drawableRect) {
     Point size = getFieldSize(game.getWindowSize());
-    Point offset = getStartingOffset(game.getWindowSize(), size);
-    Rect drawableRect = getDrawableRect(game.getWindowSize());
+    Point offset = {drawableRect.x, drawableRect.y};
     if (game.isDebug()) {
         // grid lines
         double lineWidth = max(max(size.x, size.y) / 40.0, 2.0);
@@ -117,12 +110,6 @@ void CubeMapSide::renderGridOverlay(CubeGame &game, Renderer *render, DiceData d
     }
 }
 
-Rect CubeMapSide::getDrawableRect(Point windowSize) {
-    Point size = getFieldSize(windowSize);
-    Point offset = getStartingOffset(windowSize, size);
-    return {offset.x, offset.y, size.x * width, size.y * height};
-}
-
 Point CubeMapSide::screenPositionToCubePosition(DiceData diceData, Point screenPos) const {
     Point p = {};
     for(int x = 0; x < width; x++){
@@ -133,4 +120,8 @@ Point CubeMapSide::screenPositionToCubePosition(DiceData diceData, Point screenP
         }
     }
     return p;
+}
+
+CubeMapSide *CubeMap::getCurrentSide() {
+    return getSide(currentSideId);
 }

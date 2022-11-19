@@ -25,6 +25,17 @@ public:
     bool move(PlayerMoveDirection direction);
 
 private:
+    /// stored int value is row in player sprite
+    enum class AnimationState{
+        IDLE = 0,
+        LEFT = 0,
+        RIGHT = 0
+    };
+
+    int getAnimationIndex(const u32 totalMSec);
+
+private:
     CubeMap *cubeMap;
     Rect nextDraw;
+    AnimationState currentState;
 };

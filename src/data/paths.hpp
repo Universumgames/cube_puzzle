@@ -10,6 +10,6 @@
 #define ICON_PATH "./asset/graphic/mac1024_2.png"
 // "./asset/graphic/mac1024.png"
 
-#define PLAYER_SPRITE_SHEET_PATH "./asset/graphic/charCat.png"
+#define PLAYER_SPRITE_SHEET_PATH "./asset/graphic/idle.png"
 
 #define CUBE_SIDE_BACKGROUND_PATH(side) ("./asset/graphic/Cube" + std::to_string(side) + ".png").c_str()

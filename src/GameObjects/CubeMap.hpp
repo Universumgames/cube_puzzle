@@ -58,6 +58,9 @@ private:
 
     CubeField *getField(int side, Point p);
 
+    Rect getDrawableRect(Point windowSize);
+
+
 private:
     WorldMap *worldMap = nullptr;
     CubeMapMiniMap *miniMap;
@@ -97,19 +100,17 @@ public:
 
     Point getFieldSize(Point windowSize);
 
-    Point getStartingOffset(Point windowSize, Point fieldSize);
 
-    Rect getDrawableRect(Point windowSize);
 
     void HandleEvent(CubeGame &game, const u32 frame, const u32 totalMSec, const float deltaT, Event event);
 
     void Update(CubeGame &game, const u32 frame, const u32 totalMSec, const float deltaT);
 
     void Render(CubeGame &game, Renderer *render, DiceData diceData, const u32 frame, const u32 totalMSec,
-                const float deltaT);
+                const float deltaT, Rect drawableRect);
 
     void renderGridOverlay(CubeGame &game, Renderer *render, DiceData diceData, const u32 frame, const u32 totalMSec,
-                           const float deltaT);
+                           const float deltaT, Rect drawableRect);
 
     [[nodiscard]] Point cubePositionToScreenPosition(DiceData diceData, Point cubePos) const;
 

@@ -94,3 +94,18 @@ inline DiceRollDirection sideToRollDirection(DiceSide side) {
     }
     return DiceRollDirection::NORTH;
 }
+
+inline void sAndNRotation(int w, int c, int e, int b, int n, int s, DiceSideRotation *nRot, DiceSideRotation *sRot) {
+    if (nRot == nullptr || sRot == nullptr) return;
+    auto anchorN = DiceData::getAnchorSideOfTopLeftCorner(n);
+    auto anchorS = DiceData::getAnchorSideOfTopLeftCorner(s);
+    if (anchorN == w) *nRot = DiceSideRotation::LEFT;
+    else if (anchorN == c) *nRot = DiceSideRotation::DOWN;
+    else if (anchorN == e) *nRot = DiceSideRotation::RIGHT;
+    else if (anchorN == b) *nRot = DiceSideRotation::UP;
+
+    if (anchorS == w) *sRot = DiceSideRotation::LEFT;
+    else if (anchorS == c) *sRot = DiceSideRotation::UP;
+    else if (anchorS == e) *sRot = DiceSideRotation::RIGHT;
+    else if (anchorS == b) *sRot = DiceSideRotation::DOWN;
+}

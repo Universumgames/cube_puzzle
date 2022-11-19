@@ -60,6 +60,8 @@ using Texture = SDL_Texture;
 using Renderer = SDL_Renderer;
 using Window = SDL_Window;
 using Font = TTF_Font;
+using FPoint = SDL_FPoint;
+using Vertex = SDL_Vertex;
 
 using std::max;
 using std::min;
