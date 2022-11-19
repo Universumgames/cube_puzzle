@@ -54,4 +54,6 @@ private:
     WorldMap *worldMap;
     Text *text;
     LevelData levelData;
+    Texture * prepareTex;
+    Point oldSize;
 };

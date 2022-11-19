@@ -38,12 +38,23 @@ void Level::Update(const u32 frame, const u32 totalMSec, const float deltaT) {
 }
 
 void Level::Render(const u32 frame, const u32 totalMSec, const float deltaT) {
+    if(oldSize != game.getWindowSize()) {
+        SDL_DestroyTexture(prepareTex);
+        oldSize = game.getWindowSize();
+        prepareTex = SDL_CreateTexture(render, SDL_PIXELFORMAT_RGBA8888,
+                          SDL_TEXTUREACCESS_TARGET, game.getWindowSize().x, game.getWindowSize().y);
+    }
+    SDL_SetRenderTarget(render, prepareTex);
     SDL_RenderClear(render);
     SDL_SetRenderDrawColor(render, 20, 20, 20, 255);
     SDL_RenderFillRect(render, EntireRect);
     iterateGameObjects(Render(BASIC_GO_DATA_PASSTHROUGH))
     iterateGameObjects(RenderUI(BASIC_GO_DATA_PASSTHROUGH))
+    SDL_SetRenderTarget(render, NULL);
+    SDL_RenderClear(render);
+    SDL_RenderCopyEx(render, prepareTex, NULL, NULL, 0, NULL, SDL_FLIP_NONE);
     SDL_RenderPresent(render);
+
 }
 
 Level::Level(CubeGame &game, Renderer *render) : ComplexGameState(game, render) {
@@ -58,6 +69,9 @@ void Level::Init() {
     gameObjects.push_back(text);
     iterateGameObjects(Init())
     game.SetPerfDrawMode(Game::PerformanceDrawMode::Title);
+    prepareTex =  SDL_CreateTexture(render, SDL_PIXELFORMAT_RGBA8888,
+                     SDL_TEXTUREACCESS_TARGET, game.getWindowSize().x, game.getWindowSize().y);
+    oldSize = game.getWindowSize();
 }
 
 void Level::UnInit() {

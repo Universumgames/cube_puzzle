@@ -34,6 +34,10 @@ constexpr Point &operator-=(Point &lhs, const Point rhs) {
     return lhs;
 }
 
+constexpr bool operator==(const Point &lhs, const Point rhs) {
+    return lhs.x == rhs.x && lhs.y == rhs.y;
+}
+
 constexpr Rect operator+(const Point lhs, const Rect rhs) { return Rect{lhs.x + rhs.x, lhs.y + rhs.y, rhs.w, rhs.h}; }
 
 constexpr Rect operator+(const Rect lhs, const Point rhs) { return Rect{lhs.x + rhs.x, lhs.y + rhs.y, lhs.w, lhs.h}; }
