@@ -298,7 +298,7 @@ void CubeMapMiniMap::draw3DMinimap(const u32 frame, const u32 totalMSec, const f
     Rect dst = drawableRect;
     int angle = 0;
     SDL_RendererFlip flip = SDL_FLIP_NONE;
-    int alpha = - pow(animationProgress * 26 - 10, 2) + 250;
+    int alpha = - pow(animationProgress * 19 - 3, 2) + 250;
 
     if (animationState == AnimationState::TRANSITIONING) {
         switch (cubeMap->lastNormalizedMove) {
@@ -325,13 +325,12 @@ void CubeMapMiniMap::draw3DMinimap(const u32 frame, const u32 totalMSec, const f
                 dst.y += drawableRect.h / 6;
                 break;
         }
-        SDL_SetTextureAlphaMod(game.getSpriteStorage()->arrowSemiCircle, alpha);
+        SDL_SetTextureAlphaMod(game.getSpriteStorage()->arrowSemiCircle, fixBetween(alpha, 0, 255));
         SDL_RenderCopyEx(render, game.getSpriteStorage()->arrowSemiCircle, nullptr, &dst, angle, nullptr, flip);
-
     }
 
     if (animationState == AnimationState::TRANSITIONING) {
-        animationProgress += deltaT*4;
+        animationProgress += deltaT*2;
     }
 
 

@@ -22,3 +22,7 @@ static double LerpDegrees(double start, double end, double amount) {
 
     return ((int) value % rangeZero);
 }
+
+static int fixBetween(int a, int lowerBorder, int highBorder){
+    return min(max(a, lowerBorder), highBorder);
+}
