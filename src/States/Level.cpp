@@ -57,7 +57,7 @@ void Level::Init() {
     gameObjects.push_back(player);
     gameObjects.push_back(text);
     iterateGameObjects(Init())
-    game.SetPerfDrawMode(Game::PerformanceDrawMode::None);
+    game.SetPerfDrawMode(Game::PerformanceDrawMode::Title);
 }
 
 void Level::UnInit() {
