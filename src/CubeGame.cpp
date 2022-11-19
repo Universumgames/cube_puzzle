@@ -59,11 +59,11 @@ void CubeGame::loadSprites() {
     loadPNGTexture(spriteStorage.temp, render, "./asset/graphic/AllTestTileWater.png")
     loadFont(spriteStorage.basicFont, ROBOTO_FONT_FILEPATH, 30)
     loadFont(spriteStorage.debugFont, ROBOTO_FONT_LIGHT_FILEPATH, 18)
-    loadPNGTexture(spriteStorage.playerSpriteSheet, render, "./asset/graphic/charCat.png")
+    loadPNGTexture(spriteStorage.playerSpriteSheet, render, PLAYER_SPRITE_SHEET_PATH)
 
     for (int i = 1; i <= 6; i++) {
         Texture *tmp;
-        loadPNGTexture(tmp, render, ("./asset/graphic/Cube" + std::to_string(i) + ".png").c_str());
+        loadPNGTexture(tmp, render, CUBE_SIDE_BACKGROUND_PATH(i));
         spriteStorage.sideSprites.push_back(tmp);
     }
 }
@@ -74,6 +74,6 @@ bool CubeGame::isDebug() {
 
 void CubeGame::setWindowIcon() {
     SetPerfDrawMode(PerformanceDrawMode::Title);
-    Surface *icon = IMG_Load("./asset/graphic/mac1024.png");
+    Surface *icon = IMG_Load(ICON_PATH);
     SDL_SetWindowIcon(window, icon);
 }
