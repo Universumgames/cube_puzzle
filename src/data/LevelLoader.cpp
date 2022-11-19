@@ -58,7 +58,7 @@ LevelLoader::LoadedLevelData LevelLoader::loadLevel(const std::string& path) {
         } else if (objectIndex == LINE_INDEX_ID) {
             stream >> id;
         } else if (objectIndex >= LINE_INDEX_CUBESIDES_START && objectIndex <= LINE_INDEX_CUBESIDES_END) { // CubeMapSides
-            auto *side = (CubeMapSide *) calloc(1, sizeof(CubeMapSide));
+            auto *side = new CubeMapSide();
             side->sideID = objectIndex - LINE_INDEX_CUBESIDES_START + 1;
             stream >> side->width;
             stream >> side->height;
