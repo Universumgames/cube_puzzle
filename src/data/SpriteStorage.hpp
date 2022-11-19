@@ -14,9 +14,10 @@
  * @param imageIndex texture divided into SPRITE_TILE_SIZE x SPRITE_TILE_SIZE tiles, the index of x,y coordinate
  * @param dst destination rectangle to draw to on screen
  */
-inline void drawSprite(Texture *texture, Renderer *render, Point imageIndex, Rect dst) {
+inline void drawSprite(Texture *texture, Renderer *render, Point imageIndex, Rect dst, double angle = 0,
+                       const SDL_RendererFlip flip = SDL_FLIP_NONE) {
     Rect src = {imageIndex.x * SPRITE_TILE_SIZE, imageIndex.y * SPRITE_TILE_SIZE, SPRITE_TILE_SIZE, SPRITE_TILE_SIZE};
-    SDL_RenderCopy(render, texture, &src, &dst);
+    SDL_RenderCopyEx(render, texture, &src, &dst, angle, nullptr, flip);
 }
 
 /**
@@ -27,8 +28,7 @@ inline void drawSprite(Texture *texture, Renderer *render, Point imageIndex, Rec
  * @param angle angle of rotation
  */
 inline void drawSide(Texture *texture, Renderer *render, Rect dst, double angle = 0.0) {
-    Point center = {dst.w / 2, dst.h / 2};
-    SDL_RenderCopyEx(render, texture, nullptr, &dst, angle, &center, SDL_FLIP_NONE);
+    SDL_RenderCopyEx(render, texture, nullptr, &dst, angle, nullptr, SDL_FLIP_NONE);
 }
 
 /**
@@ -43,12 +43,12 @@ inline void drawSide(Texture *texture, Renderer *render, Rect dst, DiceSideRotat
     drawSide(texture, render, dst, angle);
 }
 
-inline void drawColoredFilledRect(Renderer* render, Color color, Rect* dst){
+inline void drawColoredFilledRect(Renderer *render, Color color, Rect *dst) {
     SDL_SetRenderDrawColor(render, color.r, color.g, color.b, color.a);
     SDL_RenderFillRect(render, dst);
 }
 
-inline void drawColoredFilledRect(Renderer* render, Color color, Rect dst){
+inline void drawColoredFilledRect(Renderer *render, Color color, Rect dst) {
     SDL_SetRenderDrawColor(render, color.r, color.g, color.b, color.a);
     SDL_RenderFillRect(render, &dst);
 }
@@ -58,6 +58,8 @@ struct SpriteStorage {
     Texture *cubeMapSpriteSheet = nullptr;
     Texture *worldMapSpriteSheet = nullptr;
     Texture *playerSpriteSheet = nullptr;
+    Texture *arrowSemiCircle = nullptr;
+    Texture *arrowStraight = nullptr;
     Texture *temp = nullptr;
     Font *basicFont = nullptr;
     Font *debugFont = nullptr;

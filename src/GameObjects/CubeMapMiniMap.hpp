@@ -19,7 +19,7 @@ public:
 
     void drawMinimap(const u32 frame, const u32 totalMSec, const float deltaT);
 
-    void updateMinimap(const u32 frame, const u32 totalMSec, const float deltaT);
+    //void updateMinimap(const u32 frame, const u32 totalMSec, const float deltaT);
 
     void updateDebugText();
 

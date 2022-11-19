@@ -60,6 +60,8 @@ void CubeGame::loadSprites() {
     loadFont(spriteStorage.basicFont, ROBOTO_FONT_FILEPATH, 30)
     loadFont(spriteStorage.debugFont, ROBOTO_FONT_LIGHT_FILEPATH, 18)
     loadPNGTexture(spriteStorage.playerSpriteSheet, render, PLAYER_SPRITE_SHEET_PATH)
+    loadPNGTexture(spriteStorage.arrowSemiCircle, render, ARROW_SEMICIRCLE_PATH)
+    loadPNGTexture(spriteStorage.arrowStraight, render, ARROW_STRAIGHT_PATH)
 
     for (int i = 1; i <= 6; i++) {
         Texture *tmp;

@@ -35,7 +35,6 @@ CubeMapMiniMap::CubeMapMiniMap(CubeGame &game, SDL_Renderer *render, CubeMap *cu
 }
 
 
-
 void CubeMapMiniMap::drawMinimap(const u32 frame, const u32 totalMSec, const float deltaT) {
     cubeMap->minimapText->RenderUI(BASIC_GO_DATA_PASSTHROUGH);
 
@@ -294,6 +293,53 @@ void CubeMapMiniMap::draw3DMinimap(const u32 frame, const u32 totalMSec, const f
         Rect dst = {bezierP.x, bezierP.y, 2, 2};
         SDL_SetRenderDrawColor(render, 255 * i, 255 * i, 255 - 255 * i, 255);
         SDL_RenderFillRect(render, &dst);
+    }
+
+    Rect dst = drawableRect;
+    int angle = 0;
+    SDL_RendererFlip flip = SDL_FLIP_NONE;
+    int alpha = - pow(animationProgress * 26 - 10, 2) + 250;
+
+    if (animationState == AnimationState::TRANSITIONING) {
+        switch (cubeMap->lastNormalizedMove) {
+            case PlayerMoveDirection::UP:
+                angle = 230;
+                flip = SDL_FLIP_VERTICAL;
+                dst.y += drawableRect.h / 2;
+                dst.x -= drawableRect.w / 5;
+                break;
+            case PlayerMoveDirection::DOWN:
+                angle = 100;
+                flip = SDL_FLIP_NONE;
+                dst.y -= drawableRect.h / 4;
+                dst.x -= drawableRect.w / 5;
+                break;
+            case PlayerMoveDirection::LEFT:
+                flip = SDL_FLIP_HORIZONTAL;
+                dst.x += drawableRect.w / 5;
+                dst.y += drawableRect.h / 4;
+                break;
+            case PlayerMoveDirection::RIGHT:
+                angle = 30;
+                dst.x -= drawableRect.w / 2;
+                dst.y += drawableRect.h / 6;
+                break;
+        }
+        SDL_SetTextureAlphaMod(game.getSpriteStorage()->arrowSemiCircle, alpha);
+        SDL_RenderCopyEx(render, game.getSpriteStorage()->arrowSemiCircle, nullptr, &dst, angle, nullptr, flip);
+
+    }
+
+    if (animationState == AnimationState::TRANSITIONING) {
+        animationProgress += deltaT*4;
+    }
+
+
+    if (animationProgress >= (double) AnimationState::FINISHED) {
+        animationProgress = 0;
+        animationState = AnimationState::FINISHED;
+        oldDiceData = DiceData(diceData);
+        oldSide = cubeMap->currentSideId;
     }
 }
 
