@@ -1,3 +1,3 @@
 mkdir "xcode"
 cd xcode || exit
-cmake -G Xcode
+cmake .. -G Xcode

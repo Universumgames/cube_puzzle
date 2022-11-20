@@ -14,6 +14,7 @@ project(cube_puzzle)
 set(CMAKE_CXX_STANDARD 23)
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin)
 set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} "${CMAKE_SOURCE_DIR}/CMAKE")
+set(CMAKE_XCODE_SCHEME_WORKING_DIRECTORY ./)
 #[[set(SOURCE_FILES src/main.cpp src/global.hpp src/gamebase.hpp src/gamebase.cpp src/recthelper.hpp src/CubeGame.cpp
         src/CubeGame.hpp src/States/LevelSelector.cpp src/States/LevelSelector.hpp src/States/Level.cpp
         src/States/Level.hpp src/GameObjects/GameObject.cpp src/GameObjects/GameObject.hpp
