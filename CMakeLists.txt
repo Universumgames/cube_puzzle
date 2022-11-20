@@ -27,6 +27,7 @@ set(SOURCE_FILES src/main.cpp src/global.hpp src/gamebase.hpp src/gamebase.cpp s
         src/data/paths.hpp src/stringhelper.hpp src/data/LevelLoader.cpp src/data/LevelLoader.hpp src/filehelper.hpp
         src/AudioHandler.hpp src/AudioHandler.cpp src/matrix.hpp src/GameObjects/CubeMapMiniMap.cpp src/GameObjects/CubeMapMiniMap.hpp src/data/bezier.hpp src/mathhelper.hpp src/data/spriteDefs.hpp)
 
+source_group(TREE "${CMAKE_CURRENT_LIST_DIR}" FILES ${SOURCE_FILES})
 Message("")
 Message(STATUS "SOURCE entry point : " ${SOURCE_FILES})
 Message("")
