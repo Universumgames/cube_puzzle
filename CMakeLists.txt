@@ -110,7 +110,6 @@ else ()
 
     Message("")
 
-    file(COPY resources DESTINATION ${CMAKE_RUNTIME_OUTPUT_DIRECTORY})
     file(COPY asset DESTINATION ${CMAKE_RUNTIME_OUTPUT_DIRECTORY})
 
     # ------- End Finds ------ #
