@@ -36,9 +36,7 @@ CubeField* CubeField::decode(std::string data) {
 Activatable* Activatable::decode(std::string data) {
     char c = data [0];
     data.pop_back();
-    switch(c){
-        case 'p':
-            return Piston::decode(data);
+    switch(c) {
         case 's':
             return SlidingWall::decode(data);
         default:
@@ -47,10 +45,28 @@ Activatable* Activatable::decode(std::string data) {
     return nullptr;
 }
 
+/// return-value tells you if the activation took place or not.
+bool Activatable::activate() {
+    if (!this->isOpen) {
+        this->isOpen = true;
+        return true;
+    }
+    return false;
+}
+
+/// return-value tells you if the deactivation took place or not.
+bool Activatable::deactivate() {
+    if (this->isDeactivatable && this->isOpen) {
+        this->isOpen = false;
+        return true;
+    }
+    return false;
+}
+
 Static* Static::decode(std::string data) {
     char c = data[0];
     data.pop_back();
-    switch(c){
+    switch(c) {
         case 'g':
             return Grass::decode(data);
         default:
@@ -62,9 +78,11 @@ Static* Static::decode(std::string data) {
 Interactable* Interactable::decode(std::string data) {
     char c = data[0];
     data.pop_back();
-    switch(c){
+    switch(c) {
         case 'b':
             return Button::decode(data);
+        case 'p':
+            return Piston::decode(data);
         default:
             return nullptr;
     }

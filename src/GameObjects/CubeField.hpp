@@ -157,14 +157,6 @@ public:
 
 class Interactable: public CubeField {
 public:
-    bool canPlayerEnter() override {
-        return true;
-    }
-
-    bool canObjectEnter() override {
-        return true;
-    }
-    
     /// Handle input events
     void HandleEvent(CubeGame &game, const u32 frame, const u32 totalMSec, const float deltaT, Event event) override {
     
@@ -196,14 +188,41 @@ public:
     // TODO adjust encode method
 };
 
-class Activatable : public CubeField {
+class Piston : public Interactable {
 public:
     bool canPlayerEnter() override {
         return false;
     }
-
+    
     bool canObjectEnter() override {
         return false;
+    }
+    
+    std::string encode() override {
+        return Interactable::encode() + "p";
+    }
+    
+    // TODO implement decode method
+    // TODO implement logic
+    // TODO adjust encode method
+};
+
+class Activatable : public CubeField {
+protected:
+    bool isOpen;
+    bool isDeactivatable;
+    
+public:
+    explicit Activatable(bool isDeactivatable) : isDeactivatable(isDeactivatable), isOpen(false) {}
+    
+    Activatable(bool isDeactivatable, bool isOpen) : isDeactivatable(isDeactivatable), isOpen(isOpen) {}
+    
+    bool canPlayerEnter() override {
+        return this->isOpen;
+    }
+
+    bool canObjectEnter() override {
+        return this->isOpen;
     }
     
     /// Handle input events
@@ -222,18 +241,11 @@ public:
         return charToString((char) CubeField::TYPE::ACTIVATABLE);
     }
     
-    // TODO implement logic
-};
-
-class Piston : public Activatable {
-public:
-    std::string encode() override {
-        return Activatable::encode() + "p";
-    }
+    bool activate();
     
-    // TODO implement decode method
+    bool deactivate();
+    
     // TODO implement logic
-    // TODO adjust encode method
 };
 
 class SlidingWall : public Activatable {
