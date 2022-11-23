@@ -23,10 +23,11 @@ bool CubeMap::movePlayer(PlayerMoveDirection dir) {
             moveDir += 1_right;
             break;
     }
-    Point newPlayerPos = playerPos + moveDir;
+    Point newPlayerPos = this->playerPos + moveDir;
     checkCubeSideEdgeOverstepping(newPlayerPos, dir);
-    if (!getCurrentSide()->getField(newPlayerPos)->isPlayerMovableTo()) return false;
-    playerPos = newPlayerPos;
+    if (!getCurrentSide()->getField(newPlayerPos)->isPlayerMovableTo())
+        return false;
+    this->playerPos = newPlayerPos;
     return true;
 }
 

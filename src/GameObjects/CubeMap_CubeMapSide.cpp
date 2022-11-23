@@ -123,5 +123,5 @@ Point CubeMapSide::screenPositionToCubePosition(DiceData diceData, Point screenP
 }
 
 CubeMapSide *CubeMap::getCurrentSide() {
-    return getSide(currentSideId);
+    return getSide(this->currentSideId);
 }
