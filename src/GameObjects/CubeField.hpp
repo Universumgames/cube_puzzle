@@ -178,7 +178,7 @@ public:
     static Interactable *decode(std::string data);
 };
 
-class Button : public Interactable {
+class PressurePlate : public Interactable {
 public:
     bool canPlayerEnter() override {
         return true;

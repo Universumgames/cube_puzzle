@@ -89,7 +89,7 @@ Interactable *Interactable::decode(std::string data) {
     data.pop_back();
     switch (c) {
         case 'b':
-            return Button::decode(data);
+            return PressurePlate::decode(data);
         case 'p':
             return Piston::decode(data);
         default:
