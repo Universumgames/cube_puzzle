@@ -127,11 +127,11 @@ DiceSideRotation DiceData::getDiceSideRotation(int side) {
         }
     } else if (side == getOpposite(north)) { // south
         if (anchor == west) {
-            return DiceSideRotation::RIGHT;
+            return DiceSideRotation::LEFT;
         } else if (anchor == up) {
             return DiceSideRotation::UP;
         } else if (anchor == getOpposite(west)) {
-            return DiceSideRotation::LEFT;
+            return DiceSideRotation::RIGHT;
         } else if (anchor == getOpposite(up)) {
             return DiceSideRotation::DOWN;
         }
