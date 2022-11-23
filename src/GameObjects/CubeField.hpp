@@ -92,7 +92,7 @@ public:
     // TODO adjust encode method
 };
 
-class Static: public CubeField{
+class Static: public CubeField {
 public:
     bool isPlayerMovableTo() override { return false; }
 
@@ -125,7 +125,7 @@ public:
     // TODO adjust encode method
 };
 
-class Interactable: public CubeField{
+class Interactable: public CubeField {
 public:
     bool isPlayerMovableTo() override { return true; }
 

@@ -48,8 +48,9 @@ private:
 
     PlayerMoveDirection screenDirectionToDirectionOnCubeSide(PlayerMoveDirection direction);
 
-    bool checkCubeSideEdgeOverstepping(Point &newPosition, PlayerMoveDirection moveDirection);
-
+    bool rotateCubeIfNecessary(Point &newPlayerPos, PlayerMoveDirection moveDirection);
+    
+    [[nodiscard]] bool checkCubeSideTransition(int sideAId, int sideBId, int oldSideId) const;
 
     /// get side of dice (1-6)
     CubeMapSide *getSide(int i);

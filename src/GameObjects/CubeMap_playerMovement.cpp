@@ -24,7 +24,7 @@ bool CubeMap::movePlayer(PlayerMoveDirection dir) {
             break;
     }
     Point newPlayerPos = this->playerPos + moveDir;
-    checkCubeSideEdgeOverstepping(newPlayerPos, dir);
+    rotateCubeIfNecessary(newPlayerPos, dir);
     if (!getCurrentSide()->getField(newPlayerPos)->isPlayerMovableTo())
         return false;
     this->playerPos = newPlayerPos;
@@ -34,16 +34,16 @@ bool CubeMap::movePlayer(PlayerMoveDirection dir) {
 void CubeMap::moveCubeInWorld(DiceRollDirection rollDirection) {
     switch (rollDirection) {
         case DiceRollDirection::NORTH:
-            worldMap->cubePos += 1_up;
+            this->worldMap->cubePos += 1_up;
             break;
         case DiceRollDirection::SOUTH:
-            worldMap->cubePos += 1_down;
+            this->worldMap->cubePos += 1_down;
             break;
         case DiceRollDirection::WEST:
-            worldMap->cubePos += 1_left;
+            this->worldMap->cubePos += 1_left;
             break;
         case DiceRollDirection::EAST:
-            worldMap->cubePos += 1_right;
+            this->worldMap->cubePos += 1_right;
             break;
     }
     worldMap->fixCubePosOutBounds();
@@ -92,109 +92,130 @@ PlayerMoveDirection CubeMap::screenDirectionToDirectionOnCubeSide(PlayerMoveDire
     return PlayerMoveDirection::LEFT;
 }
 
-#define checkEitherMoveDirectionFromTo(a, b) ((oldSideId == a && this->currentSideId == b) || (oldSideId == b && this->currentSideId == a))
-
-bool CubeMap::checkCubeSideEdgeOverstepping(Point &playerPos, PlayerMoveDirection moveDirection) {
-    // done: implement edge overstepping
-    // done: change current Side
-    // done: rotate cube
-    // done: move player to correct location
-    auto *side = getSide(currentSideId);
-    DiceSideRotation oldSideOrientation = diceData.getDiceSideRotation(currentSideId);
-    int oldSideId = currentSideId;
-    DiceSide oldSide = diceData.getSideFacing(currentSideId);
-    if (playerPos.x < 0) { // move left out of side
+/// if player overstepped an edge: sets the new side, rotates the cube, and sets the new player position
+bool CubeMap::rotateCubeIfNecessary(Point &newPlayerPos, PlayerMoveDirection moveDirection) {
+    auto *side = getSide(this->currentSideId);
+    DiceSideRotation oldSideOrientation = diceData.getDiceSideRotation(this->currentSideId);
+    int oldSideId = this->currentSideId;
+    DiceSide oldSide = this->diceData.getSideFacing(this->currentSideId);
+    Point oldPlayerPos = this->playerPos;
+    bool rollDice = false;
+    DiceRollDirection diceRollDirection;
+    if (newPlayerPos.x < 0) { // move left out of side
         switch (oldSideOrientation) {
             case DiceSideRotation::UP:
-                currentSideId = diceData.getSideWhenMovingInDirX(currentSideId, DiceSideRotation::LEFT);
+                this->currentSideId = this->diceData.getSideWhenMovingInDirX(this->currentSideId, DiceSideRotation::LEFT);
                 break;
             case DiceSideRotation::DOWN:
-                currentSideId = diceData.getSideWhenMovingInDirX(currentSideId, DiceSideRotation::RIGHT);
+                this->currentSideId = this->diceData.getSideWhenMovingInDirX(this->currentSideId, DiceSideRotation::RIGHT);
                 break;
             case DiceSideRotation::LEFT:
-                currentSideId = diceData.getSideWhenMovingInDirX(currentSideId, DiceSideRotation::DOWN);
-                moveCubeInWorld(getOppositeDiceRollDirection(sideToRollDirection(oldSide)));
+                this->currentSideId = this->diceData.getSideWhenMovingInDirX(this->currentSideId, DiceSideRotation::DOWN);
+                rollDice = true;
+                diceRollDirection = getOppositeDiceRollDirection(sideToRollDirection(oldSide));
                 break;
             case DiceSideRotation::RIGHT:
-                currentSideId = diceData.getSideWhenMovingInDirX(currentSideId, DiceSideRotation::UP);
-                moveCubeInWorld(sideToRollDirection(oldSide));
+                this->currentSideId = this->diceData.getSideWhenMovingInDirX(this->currentSideId, DiceSideRotation::UP);
+                rollDice = true;
+                diceRollDirection = sideToRollDirection(oldSide);
                 break;
         }
-    } else if (playerPos.x >= side->width) { // move right out of side
+    } else if (newPlayerPos.x >= side->width) { // move right out of side
         switch (oldSideOrientation) {
             case DiceSideRotation::UP:
-                currentSideId = diceData.getSideWhenMovingInDirX(currentSideId, DiceSideRotation::RIGHT);
+                this->currentSideId = this->diceData.getSideWhenMovingInDirX(this->currentSideId, DiceSideRotation::RIGHT);
                 break;
             case DiceSideRotation::DOWN:
-                currentSideId = diceData.getSideWhenMovingInDirX(currentSideId, DiceSideRotation::LEFT);
+                this->currentSideId = this->diceData.getSideWhenMovingInDirX(this->currentSideId, DiceSideRotation::LEFT);
                 break;
             case DiceSideRotation::LEFT:
-                currentSideId = diceData.getSideWhenMovingInDirX(currentSideId, DiceSideRotation::UP);
-                moveCubeInWorld(sideToRollDirection(oldSide));
+                this->currentSideId = this->diceData.getSideWhenMovingInDirX(this->currentSideId, DiceSideRotation::UP);
+                rollDice = true;
+                diceRollDirection = sideToRollDirection(oldSide);
                 break;
             case DiceSideRotation::RIGHT:
-                currentSideId = diceData.getSideWhenMovingInDirX(currentSideId, DiceSideRotation::DOWN);
-                moveCubeInWorld(getOppositeDiceRollDirection(sideToRollDirection(oldSide)));
+                this->currentSideId = this->diceData.getSideWhenMovingInDirX(this->currentSideId, DiceSideRotation::DOWN);
+                rollDice = true;
+                diceRollDirection = getOppositeDiceRollDirection(sideToRollDirection(oldSide));
                 break;
         }
-    } else if (playerPos.y < 0) { // move up out of side
+    } else if (newPlayerPos.y < 0) { // move up out of side
         switch (oldSideOrientation) {
             case DiceSideRotation::UP:
-                currentSideId = diceData.getSideWhenMovingInDirX(currentSideId, DiceSideRotation::UP);
-                moveCubeInWorld(sideToRollDirection(oldSide));
+                this->currentSideId = this->diceData.getSideWhenMovingInDirX(this->currentSideId, DiceSideRotation::UP);
+                rollDice = true;
+                diceRollDirection = sideToRollDirection(oldSide);
                 break;
             case DiceSideRotation::DOWN:
-                currentSideId = diceData.getSideWhenMovingInDirX(currentSideId, DiceSideRotation::DOWN);
-                moveCubeInWorld(getOppositeDiceRollDirection(sideToRollDirection(oldSide)));
+                this->currentSideId = this->diceData.getSideWhenMovingInDirX(this->currentSideId, DiceSideRotation::DOWN);
+                rollDice = true;
+                diceRollDirection = getOppositeDiceRollDirection(sideToRollDirection(oldSide));
                 break;
             case DiceSideRotation::LEFT:
-                currentSideId = diceData.getSideWhenMovingInDirX(currentSideId, DiceSideRotation::LEFT);
+                this->currentSideId = this->diceData.getSideWhenMovingInDirX(this->currentSideId, DiceSideRotation::LEFT);
                 break;
             case DiceSideRotation::RIGHT:
-                currentSideId = diceData.getSideWhenMovingInDirX(currentSideId, DiceSideRotation::RIGHT);
+                this->currentSideId = this->diceData.getSideWhenMovingInDirX(this->currentSideId, DiceSideRotation::RIGHT);
                 break;
         }
-    } else if (playerPos.y >= side->height) { // move down out of side
+    } else if (newPlayerPos.y >= side->height) { // move down out of side
         switch (oldSideOrientation) {
             case DiceSideRotation::UP:
-                currentSideId = diceData.getSideWhenMovingInDirX(currentSideId, DiceSideRotation::DOWN);
-                moveCubeInWorld(getOppositeDiceRollDirection(sideToRollDirection(oldSide)));
+                this->currentSideId = this->diceData.getSideWhenMovingInDirX(this->currentSideId, DiceSideRotation::DOWN);
+                rollDice = true;
+                diceRollDirection = getOppositeDiceRollDirection(sideToRollDirection(oldSide));
                 break;
             case DiceSideRotation::DOWN:
-                currentSideId = diceData.getSideWhenMovingInDirX(currentSideId, DiceSideRotation::UP);
-                moveCubeInWorld(sideToRollDirection(oldSide));
+                this->currentSideId = this->diceData.getSideWhenMovingInDirX(this->currentSideId, DiceSideRotation::UP);
+                rollDice = true;
+                diceRollDirection = sideToRollDirection(oldSide);
                 break;
             case DiceSideRotation::LEFT:
-                currentSideId = diceData.getSideWhenMovingInDirX(currentSideId, DiceSideRotation::RIGHT);
+                this->currentSideId = this->diceData.getSideWhenMovingInDirX(this->currentSideId, DiceSideRotation::RIGHT);
                 break;
             case DiceSideRotation::RIGHT:
-                currentSideId = diceData.getSideWhenMovingInDirX(currentSideId, DiceSideRotation::LEFT);
+                this->currentSideId = this->diceData.getSideWhenMovingInDirX(this->currentSideId, DiceSideRotation::LEFT);
                 break;
         }
     }
 
-    // reposition player
-    if (oldSideId != currentSideId) { // 1 bis 6, jeweils bezüglich der Augenzahl auf der Würfelseite
-        lastNormalizedMove = moveDirection;
-        int maxRow = getCurrentSide()->height - 1; // MAX_ROW_INDEX
-        int maxCol = getCurrentSide()->width - 1; // MAX_COLUMN_INDEX
-        Point oldPos = this->playerPos;
+    // reposition player if cube side transition took place
+    if (oldSideId != this->currentSideId) {
+        this->lastNormalizedMove = moveDirection;
+        int maxRow = getCurrentSide()->height - 1;
+        int maxCol = getCurrentSide()->width - 1;
         
-        if (checkEitherMoveDirectionFromTo(1, 2) || checkEitherMoveDirectionFromTo(2, 6)) {
-            playerPos.x = oldPos.x;
-            playerPos.y = maxRow - oldPos.y;
-        } else if (checkEitherMoveDirectionFromTo(1, 5) || checkEitherMoveDirectionFromTo(2, 3) || checkEitherMoveDirectionFromTo(2, 4)
-                || checkEitherMoveDirectionFromTo(3, 5) || checkEitherMoveDirectionFromTo(4, 5) || checkEitherMoveDirectionFromTo(5, 6)) {
-            playerPos.x = maxCol - oldPos.x;
-            playerPos.y = oldPos.y;
-        } else if (checkEitherMoveDirectionFromTo(1, 4) || checkEitherMoveDirectionFromTo(3, 6)) {
-            playerPos.x = oldPos.y;
-            playerPos.y = oldPos.x;
-        } else if (checkEitherMoveDirectionFromTo(1, 3) || checkEitherMoveDirectionFromTo(4, 6)) {
-            playerPos.x = maxCol - oldPos.y;
-            playerPos.y = maxRow - oldPos.x;
+        if (checkCubeSideTransition(1, 2, oldSideId) || checkCubeSideTransition(2, 6, oldSideId)) {
+            newPlayerPos.x = oldPlayerPos.x;
+            newPlayerPos.y = maxRow - oldPlayerPos.y;
+        } else if (checkCubeSideTransition(1, 4, oldSideId) || checkCubeSideTransition(3, 6, oldSideId)) {
+            newPlayerPos.x = oldPlayerPos.y;
+            newPlayerPos.y = oldPlayerPos.x;
+        } else if (checkCubeSideTransition(1, 3, oldSideId) || checkCubeSideTransition(4, 6, oldSideId)) {
+            newPlayerPos.x = maxCol - oldPlayerPos.y;
+            newPlayerPos.y = maxRow - oldPlayerPos.x;
+        } else {
+            newPlayerPos.x = maxCol - oldPlayerPos.x;
+            newPlayerPos.y = oldPlayerPos.y;
         }
     }
+    
+    // check if side transition is allowed
+    if (getCurrentSide()->getField(newPlayerPos)->isPlayerMovableTo()) {
+        if (rollDice) {
+            moveCubeInWorld(diceRollDirection);
+        }
+    } else if (oldSideId != this->currentSideId) { // if not, rollback
+        // TODO play a sound that makes it clear that yes, the input was acknowledged, but no, you cannot move to the other cube side because there's an obstacle.
+        this->currentSideId = oldSideId;
+        newPlayerPos.x = oldPlayerPos.x;
+        newPlayerPos.y = oldPlayerPos.y;
+    }
+    
+    return oldSideId != this->currentSideId;
+}
 
-    return oldSideId != currentSideId;
+/// checks if the player transitioned from side A to side B or the other way around
+bool CubeMap::checkCubeSideTransition(int sideAId, int sideBId, int oldSideId) const {
+    return ((sideAId == oldSideId && sideBId == this->currentSideId) || (sideBId == oldSideId && sideAId == this->currentSideId));
 }
