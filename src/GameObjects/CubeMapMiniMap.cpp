@@ -286,14 +286,14 @@ void CubeMapMiniMap::draw3DMinimap(const u32 frame, const u32 totalMSec, const f
     SDL_RenderDrawLine(render, p2.x, p2.y, p4.x, p4.y);
 
     // test bezier
-    Point a = {0, game.getWindowSize().y}, b = {game.getWindowSize().x / 2, 0}, c = game.getWindowSize();
+    /*Point a = {0, game.getWindowSize().y}, b = {game.getWindowSize().x / 2, 0}, c = game.getWindowSize();
     b.y = (int) ((0.5 + sin(frame / 20.0)) * 100.0);
     for (double i = 0; i < 1; i += 0.001) {
         Point bezierP = bezierPoint(a, b, c, i);
         Rect dst = {bezierP.x, bezierP.y, 2, 2};
         SDL_SetRenderDrawColor(render, 255 * i, 255 * i, 255 - 255 * i, 255);
         SDL_RenderFillRect(render, &dst);
-    }
+    }*/
 
     Rect dst = drawableRect;
     int angle = 0;
