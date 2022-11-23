@@ -1,0 +1,31 @@
+WorldMap:
+	Default:	Entweder:
+					Alle CubeFields haben wieder ihren Ausgangszustand
+				Oder:
+					Der vorher vorherrschende Zustand bleibt erhalten. Also wenn das letzte "Effekt"-Feld ein Lava-Feld war, bleibt Eis geschmolzen usw.
+	Lava: 		Eisblöcke tauen auf
+				soll das Wasser entlang der Gravitation am Würfel runterlaufen und dann möglicherweise andere Felder auch zu Eisfeldern machen, die dann glatt werden, wenn sie frieren?
+	Ice: 		Eisblöcke gefrieren wieder
+				(Felder, auf die vorher Wasser gelaufen sein könnte, könnten rutschigen Boden bekommen?)
+	
+	
+CubeMap:
+	Empty:
+		Keine besonderen Eigenschaften. Player kann sich auf das Feld bewegen.
+	Static:
+		Player kann sich nicht auf das Feld bewegen.
+	Gravity Objects:
+		Stone:	Kann Player rein laufen und somit den Stein verschieben?
+				Soll Player den Stein ziehen können?
+				Steine fallen immer so weit bis sie auf ein Hindernis treffen, richtig?
+				Soll ein fallender Stein den Player töten, wie bei Boulder Dash? Oder soll der Player den Fall des Steines einfach stoppen, ein Feld über dem Spieler?
+				Falls wir mit gefrorenen Felder arbeiten, die keine Eisblöcke sind:
+					Soll ein Stein über potenziell gefrorenen Boden schlittern können, also seitwärts? Evtl. auch erst nach einem Anschubsen/Treten durch den Spieler.
+	Interactable:
+		Player kann damit interagieren
+			indem er sich draufstellt?
+			indem er daneben steht (4er Nachbarschaft) und einen Button drückt?
+			oder soll beides gehen, je nach dem ob es ein Schalter oder sonst was ist?
+			soll es aktiviert werden, wenn ein Stein drauf fällt (Schalter)?
+	Activatable:
+		Eine Tür, die durch ein Interactable geöffnet wird.
