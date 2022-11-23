@@ -5,10 +5,12 @@
 
 class CubeGame;
 
+/// an object that can move around on the CubeField if certain criteria are met
 class GameObject {
 protected:
     CubeGame &game;
     SDL_Renderer *render;
+    bool canActivateActivatable;
 public:
     /// basic constructor
     GameObject(CubeGame &game, SDL_Renderer *render) : game(game), render(render) {}

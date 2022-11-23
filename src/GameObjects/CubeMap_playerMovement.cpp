@@ -25,7 +25,7 @@ bool CubeMap::movePlayer(PlayerMoveDirection dir) {
     }
     Point newPlayerPos = this->playerPos + moveDir;
     rotateCubeIfNecessary(newPlayerPos, dir);
-    if (!getCurrentSide()->getField(newPlayerPos)->isPlayerMovableTo())
+    if (!getCurrentSide()->getField(newPlayerPos)->canPlayerEnter())
         return false;
     this->playerPos = newPlayerPos;
     return true;
@@ -201,7 +201,7 @@ bool CubeMap::rotateCubeIfNecessary(Point &newPlayerPos, PlayerMoveDirection mov
     }
     
     // check if side transition is allowed
-    if (getCurrentSide()->getField(newPlayerPos)->isPlayerMovableTo()) {
+    if (getCurrentSide()->getField(newPlayerPos)->canPlayerEnter()) {
         if (rollDice) {
             moveCubeInWorld(diceRollDirection);
         }

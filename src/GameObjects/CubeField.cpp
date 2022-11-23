@@ -1,8 +1,7 @@
 #include "CubeField.hpp"
 #include "GameObject.hpp"
 
-void
-CubeField::Render(CubeGame &game, Renderer *render, Point size, Point location, const u32 frame, const u32 totalMSec,
+void CubeField::Render(CubeGame &game, Renderer *render, Point size, Point location, const u32 frame, const u32 totalMSec,
                   const float deltaT) {
     SDL_SetRenderDrawColor(render, 200, 200, 0, 255);
 
@@ -14,7 +13,7 @@ CubeField::TYPE getType(char firstChar){
     return (CubeField::TYPE) firstChar;
 }
 
-CubeField *CubeField::decode(std::string data) {
+CubeField* CubeField::decode(std::string data) {
     TYPE type = getType(data[0]);
     data.pop_back();
     // TODO implement switch cases
@@ -34,7 +33,7 @@ CubeField *CubeField::decode(std::string data) {
     return nullptr;
 }
 
-Activatable *Activatable::decode(std::string data) {
+Activatable* Activatable::decode(std::string data) {
     char c = data [0];
     data.pop_back();
     switch(c){
@@ -48,7 +47,7 @@ Activatable *Activatable::decode(std::string data) {
     return nullptr;
 }
 
-Static *Static::decode(std::string data) {
+Static* Static::decode(std::string data) {
     char c = data[0];
     data.pop_back();
     switch(c){
@@ -60,7 +59,7 @@ Static *Static::decode(std::string data) {
     return nullptr;
 }
 
-Interactable *Interactable::decode(std::string data) {
+Interactable* Interactable::decode(std::string data) {
     char c = data[0];
     data.pop_back();
     switch(c){
