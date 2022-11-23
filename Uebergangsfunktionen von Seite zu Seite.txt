@@ -18,12 +18,12 @@
 
 5 & 1
 6 & 5
-4 & 1
 Übergangs-Funktion für beide Richtungen: new.x = MAX_COLUMN_INDEX - old.x
                                          new.y = old.y
 
 
 6 & 3
+4 & 1
 Übergangs-Funktion für beide Richtungen: new.x = old.y
                                          new.y = old.x
 
