@@ -1,3 +1,4 @@
 2022/11/23
     Neue Zeichnung zu Cube Transition erstellt und analysiert
     Cube Transition Logik zusammengefasst und gefixt
+    Player darf ab sofort nur noch von einer Cube Side auf eine andere Cube Side gehen, wenn das neue Feld, auf dem er landen würde, auch betretbar ist
