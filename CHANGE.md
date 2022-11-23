@@ -1,4 +1,7 @@
-# 2022/11/23
+# Für Vorlesung 2022/11/30
+- update [`src/States/Level.cpp`](src/States/Level.cpp) rendering Method to use frame-buffers (render ui und game into separate texures und render buffered frames then to the window)
+
+# Für Vorlesung 2022/11/23
 - Neue Zeichnung zu Cube Transition erstellt ([`readme_images/Cube Transitions.jpg`](readme_images/Cube%20Transitions.jpg)) und analysiert
 - Cube Transition Logik zusammengefasst ([`Uebergangsfunktionen von Seite zu Seite.txt`](Uebergangsfunktionen von Seite zu Seite.txt)) und im Code gefixt ([`src/GameObjects/CubeMap_playerMovement.cpp`](src/GameObjects/CubeMap_playerMovement.cpp))
 - Player darf ab sofort nur noch von einer Cube Side auf eine andere Cube Side gehen, wenn das neue Feld, auf dem er landen würde, auch betretbar ist ([`src/GameObjects/CubeMap_playerMovement.cpp`](src/GameObjects/CubeMap_playerMovement.cpp))

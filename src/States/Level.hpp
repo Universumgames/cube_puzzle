@@ -48,6 +48,14 @@ public:
     LevelData loadTemplateLevel(size_t id);
 
 private:
+    void updateTextures();
+
+    /// internal function to render game into game frame buffer
+    void internalGameRender(const u32 frame, const u32 totalMSec, const float deltaT);
+    /// internal funciton to render ui into ui frame buffer
+    void internalUIRender(const u32 frame, const u32 totalMSec, const float deltaT);
+
+private:
     Vector<GameObject *> gameObjects;
     Player *player;
     CubeMap *cubeMap;
@@ -56,4 +64,7 @@ private:
     LevelData levelData;
     Texture * prepareTex;
     Point oldSize;
+
+    Texture * gameTexture;
+    Texture* uiTexture;
 };

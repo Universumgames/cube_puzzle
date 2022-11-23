@@ -38,18 +38,19 @@ void Level::Update(const u32 frame, const u32 totalMSec, const float deltaT) {
 }
 
 void Level::Render(const u32 frame, const u32 totalMSec, const float deltaT) {
-    if(oldSize != game.getWindowSize()) {
-        SDL_DestroyTexture(prepareTex);
-        oldSize = game.getWindowSize();
-        prepareTex = SDL_CreateTexture(render, SDL_PIXELFORMAT_RGBA8888,
-                          SDL_TEXTUREACCESS_TARGET, game.getWindowSize().x, game.getWindowSize().y);
-    }
+    // render to textures first
+    updateTextures();
+    internalGameRender(BASIC_GO_DATA_PASSTHROUGH);
+    internalUIRender(BASIC_GO_DATA_PASSTHROUGH);
+
+    // render separate textures into framebuffer
     SDL_SetRenderTarget(render, prepareTex);
-    SDL_RenderClear(render);
     SDL_SetRenderDrawColor(render, 20, 20, 20, 255);
-    SDL_RenderFillRect(render, EntireRect);
-    iterateGameObjects(Render(BASIC_GO_DATA_PASSTHROUGH))
-    iterateGameObjects(RenderUI(BASIC_GO_DATA_PASSTHROUGH))
+    SDL_RenderClear(render);
+    SDL_RenderCopyEx(render, gameTexture, NULL, NULL, 0, NULL, SDL_FLIP_NONE);
+    SDL_RenderCopyEx(render, uiTexture, NULL, NULL, 0, NULL, SDL_FLIP_NONE);
+
+    // render buffered frame
     SDL_SetRenderTarget(render, NULL);
     SDL_RenderClear(render);
     SDL_RenderCopyEx(render, prepareTex, NULL, NULL, 0, NULL, SDL_FLIP_NONE);
@@ -69,9 +70,8 @@ void Level::Init() {
     gameObjects.push_back(text);
     iterateGameObjects(Init())
     game.SetPerfDrawMode(Game::PerformanceDrawMode::Title);
-    prepareTex =  SDL_CreateTexture(render, SDL_PIXELFORMAT_RGBA8888,
-                     SDL_TEXTUREACCESS_TARGET, game.getWindowSize().x, game.getWindowSize().y);
-    oldSize = game.getWindowSize();
+    oldSize = {};
+    updateTextures();
 }
 
 void Level::UnInit() {
@@ -99,4 +99,35 @@ LevelData Level::load(const LevelLoader::LoadedLevelData& data, size_t arrayInde
     player->setCubeMap(cubeMap);
     levelData = {.path=data.path, .id=data.id, .allStatesIndex = arrayIndex, .name = data.name};
     return levelData;
+}
+
+void Level::updateTextures() {
+    if(oldSize != game.getWindowSize()) {
+        SDL_DestroyTexture(prepareTex);
+        oldSize = game.getWindowSize();
+        prepareTex = SDL_CreateTexture(render, SDL_PIXELFORMAT_RGBA8888,
+                                       SDL_TEXTUREACCESS_TARGET, game.getWindowSize().x, game.getWindowSize().y);
+        gameTexture = SDL_CreateTexture(render, SDL_PIXELFORMAT_ARGB8888,
+                                       SDL_TEXTUREACCESS_TARGET, game.getWindowSize().x, game.getWindowSize().y);
+        uiTexture = SDL_CreateTexture(render, SDL_PIXELFORMAT_ARGB8888,
+                                       SDL_TEXTUREACCESS_TARGET, game.getWindowSize().x, game.getWindowSize().y);
+    }
+}
+
+void Level::internalUIRender(const u32 frame, const u32 totalMSec, const float deltaT) {
+    if(uiTexture == NULL) return;
+    SDL_SetRenderTarget(render, uiTexture);
+    SDL_SetTextureBlendMode(uiTexture, SDL_BLENDMODE_BLEND);
+    SDL_SetRenderDrawColor(render, 0,0,0,0);
+    SDL_RenderClear(render);
+    iterateGameObjects(RenderUI(BASIC_GO_DATA_PASSTHROUGH))
+}
+
+void Level::internalGameRender(const u32 frame, const u32 totalMSec, const float deltaT) {
+    if(gameTexture == NULL) return;
+    SDL_SetRenderTarget(render, gameTexture);
+    SDL_SetTextureBlendMode(gameTexture, SDL_BLENDMODE_BLEND);
+    SDL_SetRenderDrawColor(render, 0,0,0,0);
+    SDL_RenderClear(render);
+    iterateGameObjects(Render(BASIC_GO_DATA_PASSTHROUGH))
 }
