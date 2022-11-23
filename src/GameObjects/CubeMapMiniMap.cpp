@@ -236,7 +236,7 @@ int sideIndexToSide(DiceData diceData, int side, int index) {
 
 void CubeMapMiniMap::draw3DMinimap(const u32 frame, const u32 totalMSec, const float deltaT, Rect drawableRect) {
     FPoint dir = {-1.5, 1};
-    float scale = abs((float) drawableRect.w / dir.x / 3.0f); // dir.x * scale = drawableRect.x
+    float scale = abs((float) drawableRect.w / dir.x / 3.0f); // dir.x * scale = drawableRect.w
     FPoint scaledDir = dir * scale;
     // starting point top left
     FPoint startPoint = {(float) (drawableRect.x + drawableRect.w), (float) (drawableRect.y)};
@@ -340,5 +340,7 @@ void CubeMapMiniMap::draw3DMinimap(const u32 frame, const u32 totalMSec, const f
         oldDiceData = DiceData(diceData);
         oldSide = cubeMap->currentSideId;
     }
+
+    drawSpriteBorder(drawableRect);
 }
 

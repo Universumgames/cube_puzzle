@@ -1,23 +1,26 @@
 #include "CubeField.hpp"
 #include "GameObject.hpp"
+#include "../data/Colors.hpp"
 
-void CubeField::Render(CubeGame &game, Renderer *render, Point size, Point location, const u32 frame, const u32 totalMSec,
+void
+CubeField::Render(CubeGame &game, Renderer *render, Point size, Point location, const u32 frame, const u32 totalMSec,
                   const float deltaT) {
     SDL_SetRenderDrawColor(render, 200, 200, 0, 255);
 
     Rect dst = {location.x, location.y, size.x, size.y};
     SDL_RenderFillRect(render, &dst);
+    drawSpriteBorder(game, render, dst);
 }
 
-CubeField::TYPE getType(char firstChar){
+CubeField::TYPE getType(char firstChar) {
     return (CubeField::TYPE) firstChar;
 }
 
-CubeField* CubeField::decode(std::string data) {
+CubeField *CubeField::decode(std::string data) {
     TYPE type = getType(data[0]);
     data.pop_back();
     // TODO implement switch cases
-    switch(type){
+    switch (type) {
         case TYPE::EMPTY:
             return EmptyField::decode(data);
         case TYPE::STATIC:
@@ -33,10 +36,16 @@ CubeField* CubeField::decode(std::string data) {
     return nullptr;
 }
 
-Activatable* Activatable::decode(std::string data) {
-    char c = data [0];
+void CubeField::drawSpriteBorder(CubeGame &game, Renderer *render, Rect dst) {
+    if (!game.isDebug()) return;
+    SDL_SetRenderDrawColor(render, spriteBorderColor.r, spriteBorderColor.g, spriteBorderColor.b, spriteBorderColor.a);
+    SDL_RenderDrawRect(render, &dst);
+}
+
+Activatable *Activatable::decode(std::string data) {
+    char c = data[0];
     data.pop_back();
-    switch(c) {
+    switch (c) {
         case 's':
             return SlidingWall::decode(data);
         default:
@@ -63,10 +72,10 @@ bool Activatable::deactivate() {
     return false;
 }
 
-Static* Static::decode(std::string data) {
+Static *Static::decode(std::string data) {
     char c = data[0];
     data.pop_back();
-    switch(c) {
+    switch (c) {
         case 'g':
             return Grass::decode(data);
         default:
@@ -75,10 +84,10 @@ Static* Static::decode(std::string data) {
     return nullptr;
 }
 
-Interactable* Interactable::decode(std::string data) {
+Interactable *Interactable::decode(std::string data) {
     char c = data[0];
     data.pop_back();
-    switch(c) {
+    switch (c) {
         case 'b':
             return Button::decode(data);
         case 'p':

@@ -8,7 +8,7 @@
 class CubeField {
 protected:
     Vector<GameObject *> objects;
-    
+
 public:
     CubeField() = default;
 
@@ -19,7 +19,8 @@ public:
     virtual void Update(CubeGame &game, const u32 frame, const u32 totalMSec, const float deltaT) = 0;
 
     /// render only method
-    virtual void Render(CubeGame &game, Renderer *render, Point size, Point location, const u32 frame, const u32 totalMSec,
+    virtual void
+    Render(CubeGame &game, Renderer *render, Point size, Point location, const u32 frame, const u32 totalMSec,
            const float deltaT);
 
     /// return true if player can move to this tile, false otherwise
@@ -33,6 +34,8 @@ public:
 
     /// encoding works by creating it layer by layer
     virtual std::string encode() = 0;
+
+    void drawSpriteBorder(CubeGame &game, Renderer *render, Rect dst);
 
     enum class TYPE : char {
         EMPTY = 'e',
@@ -63,9 +66,10 @@ public:
 
     void Render(CubeGame &game, Renderer *render, Point size, Point location, const u32 frame, const u32 totalMSec,
                 const float deltaT) override {
+        drawSpriteBorder(game, render, {location.x, location.y, size.x, size.y});
     }
 
-    static EmptyField* decode(std::string data) {
+    static EmptyField *decode(std::string data) {
         return new EmptyField();
     }
 
@@ -83,15 +87,15 @@ public:
     bool canObjectEnter() override {
         return false;
     }
-    
+
     /// Handle input events
     void HandleEvent(CubeGame &game, const u32 frame, const u32 totalMSec, const float deltaT, Event event) override {
-    
+
     }
-    
+
     /// physics, etc. update method
     void Update(CubeGame &game, const u32 frame, const u32 totalMSec, const float deltaT) override {
-    
+
     }
 
     std::string encode() override {
@@ -108,7 +112,7 @@ public:
     // TODO adjust encode method
 };
 
-class Static: public CubeField {
+class Static : public CubeField {
 public:
     bool canPlayerEnter() override {
         return false;
@@ -117,22 +121,22 @@ public:
     bool canObjectEnter() override {
         return false;
     }
-    
+
     /// Handle input events
     void HandleEvent(CubeGame &game, const u32 frame, const u32 totalMSec, const float deltaT, Event event) override {
-    
+
     }
-    
+
     /// physics, etc. update method
     void Update(CubeGame &game, const u32 frame, const u32 totalMSec, const float deltaT) override {
-    
+
     }
-    
+
     std::string encode() override {
         return charToString((char) CubeField::TYPE::STATIC);
     }
 
-    static Static* decode(std::string data);
+    static Static *decode(std::string data);
 };
 
 class Grass : public Static {
@@ -155,18 +159,18 @@ public:
     // TODO adjust encode method
 };
 
-class Interactable: public CubeField {
+class Interactable : public CubeField {
 public:
     /// Handle input events
     void HandleEvent(CubeGame &game, const u32 frame, const u32 totalMSec, const float deltaT, Event event) override {
-    
+
     }
-    
+
     /// physics, etc. update method
     void Update(CubeGame &game, const u32 frame, const u32 totalMSec, const float deltaT) override {
-    
+
     }
-    
+
     std::string encode() override {
         return charToString((char) CubeField::TYPE::INTERACTABLE);
     }
@@ -193,15 +197,15 @@ public:
     bool canPlayerEnter() override {
         return false;
     }
-    
+
     bool canObjectEnter() override {
         return false;
     }
-    
+
     std::string encode() override {
         return Interactable::encode() + "p";
     }
-    
+
     // TODO implement decode method
     // TODO implement logic
     // TODO adjust encode method
@@ -211,12 +215,12 @@ class Activatable : public CubeField {
 protected:
     bool isOpen;
     bool isDeactivatable;
-    
+
 public:
     explicit Activatable(bool isDeactivatable) : isDeactivatable(isDeactivatable), isOpen(false) {}
-    
+
     Activatable(bool isDeactivatable, bool isOpen) : isDeactivatable(isDeactivatable), isOpen(isOpen) {}
-    
+
     bool canPlayerEnter() override {
         return this->isOpen;
     }
@@ -224,27 +228,27 @@ public:
     bool canObjectEnter() override {
         return this->isOpen;
     }
-    
+
     /// Handle input events
     void HandleEvent(CubeGame &game, const u32 frame, const u32 totalMSec, const float deltaT, Event event) override {
-    
-    }
-    
-    /// physics, etc. update method
-    void Update(CubeGame &game, const u32 frame, const u32 totalMSec, const float deltaT) override {
-    
+
     }
 
-    static Activatable* decode(std::string data);
+    /// physics, etc. update method
+    void Update(CubeGame &game, const u32 frame, const u32 totalMSec, const float deltaT) override {
+
+    }
+
+    static Activatable *decode(std::string data);
 
     std::string encode() override {
         return charToString((char) CubeField::TYPE::ACTIVATABLE);
     }
-    
+
     bool activate();
-    
+
     bool deactivate();
-    
+
     // TODO implement logic
 };
 
@@ -253,7 +257,7 @@ public:
     std::string encode() override {
         return Activatable::encode() + "s";
     }
-    
+
     // TODO implement decode method
     // TODO implement logic
     // TODO adjust encode method

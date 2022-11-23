@@ -41,6 +41,7 @@ void Text::RenderUI(const u32 frame, const u32 totalMSec, const float deltaT) {
         SDL_SetTextureColorMod(texture, color.r, color.g, color.b);
         const Rect dst_rect = {p.x, p.y, blendedTextSize.x, blendedTextSize.y};
         SDL_RenderCopy(render, texture, EntireRect, &dst_rect);
+        drawSpriteBorder(dst_rect);
     }
 }
 
