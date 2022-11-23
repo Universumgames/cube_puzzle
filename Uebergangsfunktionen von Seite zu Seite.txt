@@ -1,25 +1,17 @@
 1 & 2
 2 & 6
-Übergangs-Funktion von links nach rechts: new.x = old.x
-                                          new.y = 0
-Übergangs-Funktion von rechts nach links: new.x = old.x
-                                          new.y = MAX_ROW_INDEX
+Übergangs-Funktion für beide Richtungen:  new.x = old.x
+                                          new.y = MAX_ROW_INDEX - old.y
 
 
 3 & 5
 5 & 4
-2 & 3
 4 & 2
-Übergangs-Funktion von links nach rechts: new.x = 0
-                                          new.y = old.y
-Übergangs-Funktion von rechts nach links: new.x = MAX_COLUMN_INDEX
-                                          new.y = old.y
-
-
+2 & 3
 5 & 1
 6 & 5
-Übergangs-Funktion für beide Richtungen: new.x = MAX_COLUMN_INDEX - old.x
-                                         new.y = old.y
+Übergangs-Funktion für beide Richtungen:  new.x = MAX_COLUMN_INDEX - old.x
+                                          new.y = old.y
 
 
 6 & 3
@@ -29,14 +21,6 @@
 
 
 4 & 6
-Übergangs-Funktion von links nach rechts: new.x = 0
-                                          new.y = MAX_ROW_INDEX - old.x
-Übergangs-Funktion von rechts nach links: new.x = MAX_COLUMN_INDEX - old.y
-                                          new.y = MAX_ROW_INDEX
-
-
 1 & 3
-Übergangs-Funktion von links nach rechts: new.x = MAX_COLUMN_INDEX - old.y
-                                          new.y = 0
-Übergangs-Funktion von rechts nach links: new.x = MAX_COLUMN_INDEX
+Übergangs-Funktion für beide Richtungen:  new.x = MAX_COLUMN_INDEX - old.y
                                           new.y = MAX_ROW_INDEX - old.x

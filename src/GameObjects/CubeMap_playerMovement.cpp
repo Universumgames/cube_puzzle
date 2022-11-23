@@ -91,14 +91,13 @@ PlayerMoveDirection CubeMap::screenDirectionToDirectionOnCubeSide(PlayerMoveDire
     return PlayerMoveDirection::LEFT;
 }
 
-#define checkSideMovementFromTo(from, to) (oldSideId == from && this->currentSideId == to)
-#define checkEitherMoveDirectionFromTo(a, b) (checkSideMovementFromTo(a,b) || checkSideMovementFromTo(b,a))
+#define checkEitherMoveDirectionFromTo(a, b) ((oldSideId == a && this->currentSideId == b) || (oldSideId == b && this->currentSideId == a))
 
 bool CubeMap::checkCubeSideEdgeOverstepping(Point &playerPos, PlayerMoveDirection moveDirection) {
     // done: implement edge overstepping
     // done: change current Side
     // done: rotate cube
-    // TODO move player to correct location
+    // done: move player to correct location
     auto *side = getSide(currentSideId);
     DiceSideRotation oldSideOrientation = diceData.getDiceSideRotation(currentSideId);
     int oldSideId = currentSideId;
@@ -179,33 +178,20 @@ bool CubeMap::checkCubeSideEdgeOverstepping(Point &playerPos, PlayerMoveDirectio
         int maxRow = getCurrentSide()->height - 1; // MAX_ROW_INDEX
         int maxCol = getCurrentSide()->width - 1; // MAX_COLUMN_INDEX
         Point oldPos = this->playerPos;
-
-        if (checkSideMovementFromTo(1, 2) || checkSideMovementFromTo(2, 6)) {
-            playerPos.y = 0;
+        
+        if (checkEitherMoveDirectionFromTo(1, 2) || checkEitherMoveDirectionFromTo(2, 6)) {
             playerPos.x = oldPos.x;
-        } else if (checkSideMovementFromTo(2, 1) || checkSideMovementFromTo(6, 2)) {
-            playerPos.y = maxRow;
-            playerPos.x = oldPos.x;
-        } else if (checkSideMovementFromTo(3, 5) || checkSideMovementFromTo(5, 4) || checkSideMovementFromTo(2, 3) || checkSideMovementFromTo(4, 2)) {
-            playerPos.x = 0;
-            playerPos.y = oldPos.y;
-        } else if (checkSideMovementFromTo(5, 3) || checkSideMovementFromTo(4, 5) || checkSideMovementFromTo(3, 2) || checkSideMovementFromTo(2, 4)) {
-            playerPos.x = maxCol;
-            playerPos.y = oldPos.y;
-        } else if (checkEitherMoveDirectionFromTo(1, 5) || checkEitherMoveDirectionFromTo(5, 6) ||
-                   checkEitherMoveDirectionFromTo(1, 4)) {
+            playerPos.y = maxRow - oldPos.y;
+        } else if (checkEitherMoveDirectionFromTo(1, 5) || checkEitherMoveDirectionFromTo(2, 3) || checkEitherMoveDirectionFromTo(2, 4)
+                || checkEitherMoveDirectionFromTo(3, 5) || checkEitherMoveDirectionFromTo(4, 5) || checkEitherMoveDirectionFromTo(5, 6)) {
             playerPos.x = maxCol - oldPos.x;
             playerPos.y = oldPos.y;
-        } else if (checkSideMovementFromTo(4, 6)) {
-            playerPos = {0, maxRow - oldPos.x};
-        } else if (checkSideMovementFromTo(6, 4)) {
-            playerPos = {maxCol - oldPos.y, maxRow};
-        } else if (checkSideMovementFromTo(1, 3)) {
-            playerPos = {maxCol - oldPos.y, 0};
-        } else if (checkSideMovementFromTo(3, 1)) {
-            playerPos = {maxCol, maxRow - oldPos.x};
-        } else if (checkEitherMoveDirectionFromTo(3, 6)) {
-            playerPos = {oldPos.y, oldPos.x};
+        } else if (checkEitherMoveDirectionFromTo(1, 4) || checkEitherMoveDirectionFromTo(3, 6)) {
+            playerPos.x = oldPos.y;
+            playerPos.y = oldPos.x;
+        } else if (checkEitherMoveDirectionFromTo(1, 3) || checkEitherMoveDirectionFromTo(4, 6)) {
+            playerPos.x = maxCol - oldPos.y;
+            playerPos.y = maxRow - oldPos.x;
         }
     }
 
