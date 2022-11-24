@@ -6,6 +6,7 @@
 #include "CubeMapMiniMap.hpp"
 
 bool CubeMap::movePlayer(PlayerMoveDirection dir) {
+    if(sideTransitionAnimating) return false;
     PlayerMoveDirection normalizedDirection = screenDirectionToDirectionOnCubeSide(dir);
 
     Point moveDir = {};
@@ -26,7 +27,7 @@ bool CubeMap::movePlayer(PlayerMoveDirection dir) {
     Point newPlayerPos = this->playerPos + moveDir;
     bool moved = rotateCubeIfNecessary(newPlayerPos, dir);
     if (moved)
-        initSideTransitionAnimation = true;
+        sideTransitionAnimating = true;
 
     if (!getCurrentSide()->getField(newPlayerPos)->canPlayerEnter())
         return false;

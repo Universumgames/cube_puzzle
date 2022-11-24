@@ -18,7 +18,8 @@ class CubeMapMiniMap;
 class CubeMap final : public GameObject {
 public:
     /// map initializer
-    CubeMap(CubeGame &game, ComplexGameState* gameState, SDL_Renderer *render, const Vector<CubeMapSide*> &sides, int startSide = 2,
+    CubeMap(CubeGame &game, ComplexGameState *gameState, SDL_Renderer *render, const Vector<CubeMapSide *> &sides,
+            int startSide = 2,
             Point playerPos = {0, 0});
 
     /// set world map pointer, has to be set befor run
@@ -41,6 +42,8 @@ public:
 
     CubeMapSide *getCurrentSide();
 
+    bool isAnimating() { return sideTransitionAnimating; }
+
 private:
     void moveCubeInWorld(DiceRollDirection rollDirection);
 
@@ -49,7 +52,7 @@ private:
     PlayerMoveDirection screenDirectionToDirectionOnCubeSide(PlayerMoveDirection direction);
 
     bool rotateCubeIfNecessary(Point &newPlayerPos, PlayerMoveDirection moveDirection);
-    
+
     [[nodiscard]] bool checkCubeSideTransition(int sideAId, int sideBId, int oldSideId) const;
 
     /// get side of dice (1-6)
@@ -74,15 +77,16 @@ private:
     Text *minimapText;
     Text *debugDiceData;
 
-    Texture* oldSideFrame;
+    Texture *renderTarget;
+    Texture *oldSideFrame = nullptr;
     Point oldSideFrameSize;
     double sideTransitionState = 0;
     bool sideTransitionAnimating = false;
-    bool initSideTransitionAnimation = false;
 
     PlayerMoveDirection lastNormalizedMove;
 
     friend class WorldMap;
+
     friend class CubeMapMiniMap;
 };
 
@@ -109,12 +113,12 @@ public:
     Point getFieldSize(Rect drawableRect);
 
 
-
     void HandleEvent(CubeGame &game, const u32 frame, const u32 totalMSec, const float deltaT, Event event);
 
     void Update(CubeGame &game, const u32 frame, const u32 totalMSec, const float deltaT);
 
-    void Render(CubeGame &game, ComplexGameState* gameState, Renderer *render, DiceData diceData, const u32 frame, const u32 totalMSec,
+    void Render(CubeGame &game, ComplexGameState *gameState, Renderer *render, DiceData diceData, const u32 frame,
+                const u32 totalMSec,
                 const float deltaT, Rect drawableRect);
 
     void renderGridOverlay(CubeGame &game, Renderer *render, DiceData diceData, const u32 frame, const u32 totalMSec,

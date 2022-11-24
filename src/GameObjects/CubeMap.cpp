@@ -28,13 +28,13 @@ void CubeMap::Update(const u32 frame, const u32 totalMSec, const float deltaT) {
 }
 
 void CubeMap::Render(const u32 frame, const u32 totalMSec, const float deltaT) {
-    if(initSideTransitionAnimation){
+    renderTarget = SDL_GetRenderTarget(render);
+
+    drawMap(BASIC_GO_DATA_PASSTHROUGH);
+    if (!sideTransitionAnimating) {
         saveCurrentFrame();
         sideTransitionState = 0;
-        sideTransitionAnimating = true;
-        initSideTransitionAnimation = false;
     }
-    drawMap(BASIC_GO_DATA_PASSTHROUGH);
 }
 
 void CubeMap::RenderUI(const u32 frame, const u32 totalMSec, const float deltaT) {
@@ -103,14 +103,17 @@ Rect CubeMap::playerDrawPosition() {
 
 void CubeMap::saveCurrentFrame() {
     Texture *currTarget = SDL_GetRenderTarget(render);
-    if(oldSideFrameSize != game.getCurrentRenderTargetSize() || oldSideFrame == NULL){
-        if(oldSideFrame != NULL) SDL_DestroyTexture(oldSideFrame);
+    if (oldSideFrameSize != game.getCurrentRenderTargetSize() || oldSideFrame == NULL) {
+        if (oldSideFrame != NULL) SDL_DestroyTexture(oldSideFrame);
         Point targetSize = game.getCurrentRenderTargetSize();
-        oldSideFrame = SDL_CreateTexture(render, SDL_PIXELFORMAT_RGBA8888,
+        oldSideFrame = SDL_CreateTexture(render, SDL_PIXELFORMAT_ARGB8888,
                                          SDL_TEXTUREACCESS_TARGET, targetSize.x, targetSize.y);
-        SDL_SetTextureBlendMode(oldSideFrame, SDL_BLENDMODE_BLEND);
+        oldSideFrameSize = game.getCurrentRenderTargetSize();
     }
     SDL_SetRenderTarget(render, oldSideFrame);
+    SDL_SetRenderDrawColor(render, 0, 0, 0, 0);
+    SDL_RenderClear(render);
+    SDL_SetTextureBlendMode(oldSideFrame, SDL_BLENDMODE_BLEND);
     SDL_RenderCopy(render, currTarget, NULL, NULL);
     SDL_SetRenderTarget(render, currTarget);
 }

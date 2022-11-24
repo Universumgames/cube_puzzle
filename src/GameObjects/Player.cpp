@@ -3,7 +3,8 @@
 #include "CubeMap.hpp"
 #include "../data/spriteDefs.hpp"
 
-Player::Player(CubeGame &game, ComplexGameState* gameState, SDL_Renderer *render) : GameObject(game, gameState, render) {}
+Player::Player(CubeGame &game, ComplexGameState *gameState, SDL_Renderer *render) : GameObject(game, gameState,
+                                                                                               render) {}
 
 void Player::HandleEvent(const u32 frame, const u32 totalMSec, const float deltaT, Event event) {
     if (event.type != SDL_KEYDOWN) return;
@@ -30,6 +31,7 @@ void Player::Update(const u32 frame, const u32 totalMSec, const float deltaT) {
 
 void Player::Render(const u32 frame, const u32 totalMSec, const float deltaT) {
     if (cubeMap == nullptr) return;
+    if (cubeMap->isAnimating()) return;
     Rect r = nextDraw;
     r.y += (int) (sin(frame / 20.0) * 2);
     drawSprite(game.getSpriteStorage()->playerSpriteSheet, render, {getAnimationIndex(totalMSec), (int) currentState},
