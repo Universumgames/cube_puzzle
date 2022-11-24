@@ -1,6 +1,7 @@
 # Für Vorlesung 2022/11/30
 - update [`src/States/Level.cpp`](src/States/Level.cpp) rendering Method to use frame-buffers (render ui und game into separate texures und render buffered frames then to the window)
 - add Reference to "current" ComplexGameState to every GameObject
+- fix minimap animation, when moving from side to side fast enough, the arrow changes, but the fade would not reset, this is fixed now
 
 # Für Vorlesung 2022/11/23
 - Neue Zeichnung zu Cube Transition erstellt ([`readme_images/Cube Transitions.jpg`](readme_images/Cube%20Transitions.jpg)) und analysiert

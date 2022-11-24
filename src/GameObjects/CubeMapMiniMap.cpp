@@ -13,9 +13,10 @@ void CubeMapMiniMap::HandleEvent(const u32 frame, const u32 totalMSec, const flo
 
 void CubeMapMiniMap::Update(const u32 frame, const u32 totalMSec, const float deltaT) {
     if (oldDiceData != diceData || oldSide != cubeMap->currentSideId) {
-        if (animationState == AnimationState::FINISHED) {
+        if (animationState == AnimationState::FINISHED || cubeMap->currentSideId != currentAnimationSideId) {
             animationState = AnimationState::TRANSITIONING;
             animationProgress = 0;
+            currentAnimationSideId = cubeMap->currentSideId;
         }
         updateDebugText();
     }
@@ -30,6 +31,7 @@ CubeMapMiniMap::CubeMapMiniMap(CubeGame &game, ComplexGameState* gameState, SDL_
                                                                                          diceData(cubeMap->diceData) {
     this->cubeMap = cubeMap;
     this->oldSide = cubeMap->currentSideId;
+    this->currentAnimationSideId = cubeMap->currentSideId;
     //updateMinimap(0, 0, 0);
     updateDebugText();
 }

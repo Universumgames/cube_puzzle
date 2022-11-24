@@ -40,6 +40,7 @@ private:
     CubeMap* cubeMap;
     DiceData& diceData;
     DiceData oldDiceData;
+    int currentAnimationSideId;
     int oldSide = 2;
     AnimationState animationState = AnimationState::FINISHED;
     double animationProgress = (double) AnimationState::FINISHED;
