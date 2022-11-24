@@ -28,6 +28,12 @@ void CubeMap::Update(const u32 frame, const u32 totalMSec, const float deltaT) {
 }
 
 void CubeMap::Render(const u32 frame, const u32 totalMSec, const float deltaT) {
+    if(initSideTransitionAnimation){
+        saveCurrentFrame();
+        sideTransitionState = 0;
+        sideTransitionAnimating = true;
+        initSideTransitionAnimation = false;
+    }
     drawMap(BASIC_GO_DATA_PASSTHROUGH);
 }
 
@@ -40,7 +46,15 @@ void CubeMap::RenderUI(const u32 frame, const u32 totalMSec, const float deltaT)
 
 void CubeMap::drawMap(const u32 frame, const u32 totalMSec, const float deltaT) {
     Rect drawableRect = getDrawableRect();
-    getCurrentSide()->Render(game, gameState, render, diceData, BASIC_GO_DATA_PASSTHROUGH, drawableRect);
+    if (sideTransitionAnimating) {
+        SDL_RenderCopy(render, oldSideFrame, NULL, NULL);
+        sideTransitionState += deltaT * 10;
+        if (sideTransitionState >= 1) {
+            sideTransitionState = 0;
+            sideTransitionAnimating = false;
+        }
+    } else
+        getCurrentSide()->Render(game, gameState, render, diceData, BASIC_GO_DATA_PASSTHROUGH, drawableRect);
 }
 
 
@@ -48,13 +62,15 @@ CubeMapSide *CubeMap::getSide(int i) {
     return sides[i - 1];
 }
 
-CubeMap::CubeMap(CubeGame &game1, ComplexGameState* gameState, SDL_Renderer *render1, const Vector<CubeMapSide *> &sides, int startSide,
+CubeMap::CubeMap(CubeGame &game1, ComplexGameState *gameState, SDL_Renderer *render1,
+                 const Vector<CubeMapSide *> &sides, int startSide,
                  Point playerPos)
         : GameObject(game1, gameState, render1) {
     this->sides.assign(sides.begin(), sides.end());
     this->currentSideId = startSide;
     this->playerPos = playerPos;
-    this->debugSideIndicator = new Text(game, gameState, render, 400, "", game1.getSpriteStorage()->debugFont, {10, 30});
+    this->debugSideIndicator = new Text(game, gameState, render, 400, "", game1.getSpriteStorage()->debugFont,
+                                        {10, 30});
     this->minimapText = new Text(game, gameState, render, 400, "", game.getSpriteStorage()->debugFont, {10, 60});
     this->debugDiceData = new Text(game, gameState, render, 400, "", game.getSpriteStorage()->debugFont, {10, 230});
     this->miniMap = new CubeMapMiniMap(game, gameState, render, this);
@@ -73,12 +89,7 @@ void CubeMap::Init() {
 }
 
 Rect CubeMap::getDrawableRect() {
-    Point windowSize = game.getWindowSize();
-    Point center = windowSize / 2;
-    int s = min(windowSize.x, windowSize.y);
-    Point totalSize = {s, s};
-    Point offset = center - (totalSize / 2);
-    return {offset.x, offset.y, s, s};
+    return gameState->getDrawableGameRect();
 }
 
 Rect CubeMap::playerDrawPosition() {
@@ -88,4 +99,18 @@ Rect CubeMap::playerDrawPosition() {
     auto gridOffset = getDrawableRect() + ((origSize - size) / 2);
     auto screenGridPos = getCurrentSide()->cubePositionToScreenPosition(diceData, playerPos);
     return {origSize.x * screenGridPos.x + gridOffset.x, origSize.y * screenGridPos.y + gridOffset.y, size.x, size.y};
+}
+
+void CubeMap::saveCurrentFrame() {
+    Texture *currTarget = SDL_GetRenderTarget(render);
+    if(oldSideFrameSize != game.getCurrentRenderTargetSize() || oldSideFrame == NULL){
+        if(oldSideFrame != NULL) SDL_DestroyTexture(oldSideFrame);
+        Point targetSize = game.getCurrentRenderTargetSize();
+        oldSideFrame = SDL_CreateTexture(render, SDL_PIXELFORMAT_RGBA8888,
+                                         SDL_TEXTUREACCESS_TARGET, targetSize.x, targetSize.y);
+        SDL_SetTextureBlendMode(oldSideFrame, SDL_BLENDMODE_BLEND);
+    }
+    SDL_SetRenderTarget(render, oldSideFrame);
+    SDL_RenderCopy(render, currTarget, NULL, NULL);
+    SDL_SetRenderTarget(render, currTarget);
 }

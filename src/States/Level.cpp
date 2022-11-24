@@ -31,7 +31,7 @@ void Level::Update(const u32 frame, const u32 totalMSec, const float deltaT) {
         u32 deltaSec = totalMSec - lastMSec;
         u32 deltaFrame = frame - lastFrame;
         double fps = (double) deltaFrame / ((double) deltaSec / 1000);
-        text->changeText(levelData.name + " " + std::to_string(round(fps * 100)/100).substr(0,5) + "fps");
+        text->changeText(levelData.name + " " + std::to_string(round(fps * 100) / 100).substr(0, 5) + "fps");
         lastMSec = totalMSec;
         lastFrame = frame;
     }
@@ -47,7 +47,11 @@ void Level::Render(const u32 frame, const u32 totalMSec, const float deltaT) {
     SDL_SetRenderTarget(render, prepareTex);
     SDL_SetRenderDrawColor(render, 20, 20, 20, 255);
     SDL_RenderClear(render);
-    SDL_RenderCopyEx(render, gameTexture, NULL, NULL, 0, NULL, SDL_FLIP_NONE);
+    Rect gameTextureDstRect = getGameRenderDst();
+    SDL_RenderCopyEx(render, gameTexture, NULL, &gameTextureDstRect, 0, NULL, SDL_FLIP_NONE);
+    /*Rect gameTextureDstRect2 = getGameRenderDst();
+    gameTextureDstRect2.x += gameTextureDstRect.w;
+    SDL_RenderCopyEx(render, gameTexture, NULL, &gameTextureDstRect2, 0, NULL, SDL_FLIP_NONE);*/
     SDL_RenderCopyEx(render, uiTexture, NULL, NULL, 0, NULL, SDL_FLIP_NONE);
 
     // render buffered frame
@@ -59,7 +63,8 @@ void Level::Render(const u32 frame, const u32 totalMSec, const float deltaT) {
 }
 
 Level::Level(CubeGame &game, Renderer *render) : ComplexGameState(game, render) {
-    this->text = new Text(game, this, render, 500, "test level", cubeGame.getSpriteStorage()->debugFont, {10, 10}, 1, white);
+    this->text = new Text(game, this, render, 500, "test level", cubeGame.getSpriteStorage()->debugFont, {10, 10}, 1,
+                          white);
 }
 
 void Level::Init() {
@@ -90,7 +95,7 @@ LevelData Level::loadTemplateLevel(size_t id) {
     return levelData;
 }
 
-LevelData Level::load(const LevelLoader::LoadedLevelData& data, size_t arrayIndex) {
+LevelData Level::load(const LevelLoader::LoadedLevelData &data, size_t arrayIndex) {
     worldMap = new WorldMap(cubeGame, this, render, data.worldSize, data.worldField, data.cubePos);
     cubeMap = new CubeMap(cubeGame, this, render, data.sides, data.cubeSide, data.playerPos);
     worldMap->setCubeMap(cubeMap);
@@ -102,32 +107,81 @@ LevelData Level::load(const LevelLoader::LoadedLevelData& data, size_t arrayInde
 }
 
 void Level::updateTextures() {
-    if(oldSize != game.getWindowSize()) {
+    if (oldSize != game.getWindowSize()) {
         SDL_DestroyTexture(prepareTex);
         oldSize = game.getWindowSize();
         prepareTex = SDL_CreateTexture(render, SDL_PIXELFORMAT_RGBA8888,
                                        SDL_TEXTUREACCESS_TARGET, game.getWindowSize().x, game.getWindowSize().y);
+        Rect gameRect = getGameRenderDst();
         gameTexture = SDL_CreateTexture(render, SDL_PIXELFORMAT_ARGB8888,
-                                       SDL_TEXTUREACCESS_TARGET, game.getWindowSize().x, game.getWindowSize().y);
+                                        SDL_TEXTUREACCESS_TARGET, gameRect.w, gameRect.h);
         uiTexture = SDL_CreateTexture(render, SDL_PIXELFORMAT_ARGB8888,
-                                       SDL_TEXTUREACCESS_TARGET, game.getWindowSize().x, game.getWindowSize().y);
+                                      SDL_TEXTUREACCESS_TARGET, game.getWindowSize().x, game.getWindowSize().y);
     }
 }
 
 void Level::internalUIRender(const u32 frame, const u32 totalMSec, const float deltaT) {
-    if(uiTexture == NULL) return;
+    if (uiTexture == NULL) return;
     SDL_SetRenderTarget(render, uiTexture);
     SDL_SetTextureBlendMode(uiTexture, SDL_BLENDMODE_BLEND);
-    SDL_SetRenderDrawColor(render, 0,0,0,0);
+    SDL_SetRenderDrawColor(render, 0, 0, 0, 0);
     SDL_RenderClear(render);
     iterateGameObjects(RenderUI(BASIC_GO_DATA_PASSTHROUGH))
 }
 
 void Level::internalGameRender(const u32 frame, const u32 totalMSec, const float deltaT) {
-    if(gameTexture == NULL) return;
+    if (gameTexture == NULL) return;
     SDL_SetRenderTarget(render, gameTexture);
     SDL_SetTextureBlendMode(gameTexture, SDL_BLENDMODE_BLEND);
-    SDL_SetRenderDrawColor(render, 0,0,0,0);
+    SDL_SetRenderDrawColor(render, 0, 0, 0, 0);
     SDL_RenderClear(render);
     iterateGameObjects(Render(BASIC_GO_DATA_PASSTHROUGH))
+}
+
+#define GAMERECT_USE_FULL_WINDOW true
+
+Rect Level::getDrawableGameRect() {
+#if GAMERECT_USE_FULL_WINDOW
+    Point targetSize = cubeGame.getWindowSize();
+    Point center = targetSize / 2;
+    int s = min(targetSize.x, targetSize.y);
+    Point totalSize = {s, s};
+    Point offset = center - (totalSize / 2);
+    return {offset.x, offset.y, totalSize.x, totalSize.y};
+#else
+    Point targetSize = cubeGame.getCurrentRenderTargetSize();
+    int s = min(targetSize.x, targetSize.y);
+    return {0,0, s, s};
+#endif
+}
+
+Rect Level::getDrawableUIRect() {
+    Point targetSize = cubeGame.getWindowSize();
+    Point center = targetSize / 2;
+    Point totalSize = {targetSize.x, targetSize.y};
+    Point offset = center - (totalSize / 2);
+    return {offset.x, offset.y, totalSize.x, totalSize.y};
+}
+
+Rect Level::getGameRenderDst() {
+#if GAMERECT_USE_FULL_WINDOW
+    Point p = game.getWindowSize();
+    return {0, 0, p.x, p.y};
+#else
+    Point targetSize = cubeGame.getWindowSize();
+    Point center = targetSize / 2;
+    Rect src = getDrawableGameRect();
+    Point totalSize = {src.w, src.h};
+    Point offset = center - (totalSize / 2);
+    return {offset.x, offset.y, totalSize.x, totalSize.y};
+#endif
+}
+
+Rect Level::getUIRenderDst() {
+    Point targetSize = cubeGame.getWindowSize();
+    int s = min(targetSize.x, targetSize.y);
+    Point center = targetSize / 2;
+    Point totalSize = {s, s};
+    Point offset = center - (totalSize / 2);
+    return {offset.x, offset.y, s, s};
 }

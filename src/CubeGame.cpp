@@ -79,3 +79,9 @@ void CubeGame::setWindowIcon() {
     Surface *icon = IMG_Load(ICON_PATH);
     SDL_SetWindowIcon(window, icon);
 }
+
+Point CubeGame::getCurrentRenderTargetSize() {
+    int w = 0, h = 0;
+    SDL_GetRendererOutputSize(render, &w, &h);
+    return {w, h};
+}

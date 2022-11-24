@@ -28,6 +28,9 @@ public:
     void Render(const u32 frame, const u32 totalMSec, const float deltaT) override;
 
 
+    Rect getDrawableGameRect() override;
+
+    Rect getDrawableUIRect() override;
 
     /**
      *  load level from file into memory, called by LevelSelector
@@ -47,6 +50,8 @@ public:
     /// alternative to load(...) function, if this level should be generated from template data
     LevelData loadTemplateLevel(size_t id);
 
+
+
 private:
     void updateTextures();
 
@@ -54,6 +59,11 @@ private:
     void internalGameRender(const u32 frame, const u32 totalMSec, const float deltaT);
     /// internal funciton to render ui into ui frame buffer
     void internalUIRender(const u32 frame, const u32 totalMSec, const float deltaT);
+
+protected:
+    Rect getGameRenderDst() override;
+
+    Rect getUIRenderDst() override;
 
 private:
     Vector<GameObject *> gameObjects;

@@ -174,3 +174,20 @@ Map<int, Map<int, Vector<WorldField::WorldFieldEnum>>> LevelSelector::getLevelDa
 
     return levelDataMap;
 }
+
+Rect LevelSelector::getDrawableGameRect() {
+    Point wSize = game.getWindowSize();
+    return {0,0, wSize.x, wSize.y};
+}
+
+Rect LevelSelector::getDrawableUIRect() {
+    return getDrawableGameRect();
+}
+
+Rect LevelSelector::getGameRenderDst() {
+    return getDrawableGameRect();
+}
+
+Rect LevelSelector::getUIRenderDst() {
+    return getDrawableUIRect();
+}

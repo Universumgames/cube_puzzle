@@ -20,7 +20,7 @@ public:
     /// should display debug info
     bool isDebug();
 
-    bool allStatesContains(int id);
+    Point getCurrentRenderTargetSize();
 
 private:
     SpriteStorage spriteStorage;

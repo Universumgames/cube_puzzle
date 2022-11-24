@@ -24,7 +24,18 @@ public:
 
     void UnInit() override;
 
+    Rect getDrawableGameRect() override;
+
+    Rect getDrawableUIRect() override;
+
 private:
+protected:
+    Rect getGameRenderDst() override;
+
+    Rect getUIRenderDst() override;
+
+private:
+
     /// load level data list, for selection
     void loadList();
 
@@ -37,6 +48,8 @@ private:
     void playLevel(int levelID);
 
     static Map<int, Map<int, Vector<WorldField::WorldFieldEnum>>> getLevelDataMap(std::string& fileString);
+
+
     
 private:
     Vector<LevelData> levelData;

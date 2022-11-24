@@ -24,7 +24,10 @@ bool CubeMap::movePlayer(PlayerMoveDirection dir) {
             break;
     }
     Point newPlayerPos = this->playerPos + moveDir;
-    rotateCubeIfNecessary(newPlayerPos, dir);
+    bool moved = rotateCubeIfNecessary(newPlayerPos, dir);
+    if (moved)
+        initSideTransitionAnimation = true;
+
     if (!getCurrentSide()->getField(newPlayerPos)->canPlayerEnter())
         return false;
     this->playerPos = newPlayerPos;
@@ -104,13 +107,16 @@ bool CubeMap::rotateCubeIfNecessary(Point &newPlayerPos, PlayerMoveDirection mov
     if (newPlayerPos.x < 0) { // move left out of side
         switch (oldSideOrientation) {
             case DiceSideRotation::UP:
-                this->currentSideId = this->diceData.getSideWhenMovingInDirX(this->currentSideId, DiceSideRotation::LEFT);
+                this->currentSideId = this->diceData.getSideWhenMovingInDirX(this->currentSideId,
+                                                                             DiceSideRotation::LEFT);
                 break;
             case DiceSideRotation::DOWN:
-                this->currentSideId = this->diceData.getSideWhenMovingInDirX(this->currentSideId, DiceSideRotation::RIGHT);
+                this->currentSideId = this->diceData.getSideWhenMovingInDirX(this->currentSideId,
+                                                                             DiceSideRotation::RIGHT);
                 break;
             case DiceSideRotation::LEFT:
-                this->currentSideId = this->diceData.getSideWhenMovingInDirX(this->currentSideId, DiceSideRotation::DOWN);
+                this->currentSideId = this->diceData.getSideWhenMovingInDirX(this->currentSideId,
+                                                                             DiceSideRotation::DOWN);
                 rollDice = true;
                 diceRollDirection = getOppositeDiceRollDirection(sideToRollDirection(oldSide));
                 break;
@@ -123,10 +129,12 @@ bool CubeMap::rotateCubeIfNecessary(Point &newPlayerPos, PlayerMoveDirection mov
     } else if (newPlayerPos.x >= side->width) { // move right out of side
         switch (oldSideOrientation) {
             case DiceSideRotation::UP:
-                this->currentSideId = this->diceData.getSideWhenMovingInDirX(this->currentSideId, DiceSideRotation::RIGHT);
+                this->currentSideId = this->diceData.getSideWhenMovingInDirX(this->currentSideId,
+                                                                             DiceSideRotation::RIGHT);
                 break;
             case DiceSideRotation::DOWN:
-                this->currentSideId = this->diceData.getSideWhenMovingInDirX(this->currentSideId, DiceSideRotation::LEFT);
+                this->currentSideId = this->diceData.getSideWhenMovingInDirX(this->currentSideId,
+                                                                             DiceSideRotation::LEFT);
                 break;
             case DiceSideRotation::LEFT:
                 this->currentSideId = this->diceData.getSideWhenMovingInDirX(this->currentSideId, DiceSideRotation::UP);
@@ -134,7 +142,8 @@ bool CubeMap::rotateCubeIfNecessary(Point &newPlayerPos, PlayerMoveDirection mov
                 diceRollDirection = sideToRollDirection(oldSide);
                 break;
             case DiceSideRotation::RIGHT:
-                this->currentSideId = this->diceData.getSideWhenMovingInDirX(this->currentSideId, DiceSideRotation::DOWN);
+                this->currentSideId = this->diceData.getSideWhenMovingInDirX(this->currentSideId,
+                                                                             DiceSideRotation::DOWN);
                 rollDice = true;
                 diceRollDirection = getOppositeDiceRollDirection(sideToRollDirection(oldSide));
                 break;
@@ -147,21 +156,25 @@ bool CubeMap::rotateCubeIfNecessary(Point &newPlayerPos, PlayerMoveDirection mov
                 diceRollDirection = sideToRollDirection(oldSide);
                 break;
             case DiceSideRotation::DOWN:
-                this->currentSideId = this->diceData.getSideWhenMovingInDirX(this->currentSideId, DiceSideRotation::DOWN);
+                this->currentSideId = this->diceData.getSideWhenMovingInDirX(this->currentSideId,
+                                                                             DiceSideRotation::DOWN);
                 rollDice = true;
                 diceRollDirection = getOppositeDiceRollDirection(sideToRollDirection(oldSide));
                 break;
             case DiceSideRotation::LEFT:
-                this->currentSideId = this->diceData.getSideWhenMovingInDirX(this->currentSideId, DiceSideRotation::LEFT);
+                this->currentSideId = this->diceData.getSideWhenMovingInDirX(this->currentSideId,
+                                                                             DiceSideRotation::LEFT);
                 break;
             case DiceSideRotation::RIGHT:
-                this->currentSideId = this->diceData.getSideWhenMovingInDirX(this->currentSideId, DiceSideRotation::RIGHT);
+                this->currentSideId = this->diceData.getSideWhenMovingInDirX(this->currentSideId,
+                                                                             DiceSideRotation::RIGHT);
                 break;
         }
     } else if (newPlayerPos.y >= side->height) { // move down out of side
         switch (oldSideOrientation) {
             case DiceSideRotation::UP:
-                this->currentSideId = this->diceData.getSideWhenMovingInDirX(this->currentSideId, DiceSideRotation::DOWN);
+                this->currentSideId = this->diceData.getSideWhenMovingInDirX(this->currentSideId,
+                                                                             DiceSideRotation::DOWN);
                 rollDice = true;
                 diceRollDirection = getOppositeDiceRollDirection(sideToRollDirection(oldSide));
                 break;
@@ -171,10 +184,12 @@ bool CubeMap::rotateCubeIfNecessary(Point &newPlayerPos, PlayerMoveDirection mov
                 diceRollDirection = sideToRollDirection(oldSide);
                 break;
             case DiceSideRotation::LEFT:
-                this->currentSideId = this->diceData.getSideWhenMovingInDirX(this->currentSideId, DiceSideRotation::RIGHT);
+                this->currentSideId = this->diceData.getSideWhenMovingInDirX(this->currentSideId,
+                                                                             DiceSideRotation::RIGHT);
                 break;
             case DiceSideRotation::RIGHT:
-                this->currentSideId = this->diceData.getSideWhenMovingInDirX(this->currentSideId, DiceSideRotation::LEFT);
+                this->currentSideId = this->diceData.getSideWhenMovingInDirX(this->currentSideId,
+                                                                             DiceSideRotation::LEFT);
                 break;
         }
     }
@@ -184,7 +199,7 @@ bool CubeMap::rotateCubeIfNecessary(Point &newPlayerPos, PlayerMoveDirection mov
         this->lastNormalizedMove = moveDirection;
         int maxRow = getCurrentSide()->height - 1;
         int maxCol = getCurrentSide()->width - 1;
-        
+
         if (checkCubeSideTransition(1, 2, oldSideId) || checkCubeSideTransition(2, 6, oldSideId)) {
             newPlayerPos.x = oldPlayerPos.x;
             newPlayerPos.y = maxRow - oldPlayerPos.y;
@@ -199,7 +214,7 @@ bool CubeMap::rotateCubeIfNecessary(Point &newPlayerPos, PlayerMoveDirection mov
             newPlayerPos.y = oldPlayerPos.y;
         }
     }
-    
+
     // check if side transition is allowed
     if (getCurrentSide()->getField(newPlayerPos)->canPlayerEnter()) {
         if (rollDice) {
@@ -211,11 +226,12 @@ bool CubeMap::rotateCubeIfNecessary(Point &newPlayerPos, PlayerMoveDirection mov
         newPlayerPos.x = oldPlayerPos.x;
         newPlayerPos.y = oldPlayerPos.y;
     }
-    
+
     return oldSideId != this->currentSideId;
 }
 
 /// checks if the player transitioned from side A to side B or the other way around
 bool CubeMap::checkCubeSideTransition(int sideAId, int sideBId, int oldSideId) const {
-    return ((sideAId == oldSideId && sideBId == this->currentSideId) || (sideBId == oldSideId && sideAId == this->currentSideId));
+    return ((sideAId == oldSideId && sideBId == this->currentSideId) ||
+            (sideBId == oldSideId && sideAId == this->currentSideId));
 }

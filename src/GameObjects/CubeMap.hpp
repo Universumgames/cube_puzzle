@@ -61,6 +61,7 @@ private:
 
     Rect getDrawableRect();
 
+    void saveCurrentFrame();
 
 private:
     WorldMap *worldMap = nullptr;
@@ -72,6 +73,12 @@ private:
     Text *debugSideIndicator;
     Text *minimapText;
     Text *debugDiceData;
+
+    Texture* oldSideFrame;
+    Point oldSideFrameSize;
+    double sideTransitionState = 0;
+    bool sideTransitionAnimating = false;
+    bool initSideTransitionAnimation = false;
 
     PlayerMoveDirection lastNormalizedMove;
 
