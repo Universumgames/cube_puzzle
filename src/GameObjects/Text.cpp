@@ -3,9 +3,9 @@
 #include "../global.hpp"
 #include "../recthelper.hpp"
 
-Text::Text(CubeGame &game, SDL_Renderer *render, int maxWidth, std::string text, Font *font, Point position,
+Text::Text(CubeGame &game, ComplexGameState* gameState, SDL_Renderer *render, int maxWidth, std::string text, Font *font, Point position,
            int shadowOffset,
-           Color color) : GameObject(game, render) {
+           Color color) : GameObject(game, gameState, render) {
     this->position = position;
     this->shadowOffset = shadowOffset;
     this->text = std::move(text);
@@ -15,8 +15,8 @@ Text::Text(CubeGame &game, SDL_Renderer *render, int maxWidth, std::string text,
     this->maxWidth = maxWidth;
 }
 
-Text::Text(CubeGame &game, SDL_Renderer *render, int maxWidth, std::string text, const char *fontPath, int pointSize,
-           Point position, int shadowOffset, Color color) : GameObject(game, render) {
+Text::Text(CubeGame &game, ComplexGameState* gameState, SDL_Renderer *render, int maxWidth, std::string text, const char *fontPath, int pointSize,
+           Point position, int shadowOffset, Color color) : GameObject(game, gameState, render) {
     this->position = position;
     this->shadowOffset = shadowOffset;
     this->text = std::move(text);

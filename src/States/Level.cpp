@@ -59,7 +59,7 @@ void Level::Render(const u32 frame, const u32 totalMSec, const float deltaT) {
 }
 
 Level::Level(CubeGame &game, Renderer *render) : ComplexGameState(game, render) {
-    this->text = new Text(game, render, 500, "test level", cubeGame.getSpriteStorage()->debugFont, {10, 10}, 1, white);
+    this->text = new Text(game, this, render, 500, "test level", cubeGame.getSpriteStorage()->debugFont, {10, 10}, 1, white);
 }
 
 void Level::Init() {
@@ -80,22 +80,22 @@ void Level::UnInit() {
 }
 
 LevelData Level::loadTemplateLevel(size_t id) {
-    worldMap = new WorldMap(cubeGame, render, emptyWorldFieldSize, emptyWorldField, {0, 0});
-    cubeMap = new CubeMap(cubeGame, render, emptyCubeMapSides);
+    worldMap = new WorldMap(cubeGame, this, render, emptyWorldFieldSize, emptyWorldField, {0, 0});
+    cubeMap = new CubeMap(cubeGame, this, render, emptyCubeMapSides);
     worldMap->setCubeMap(cubeMap);
     cubeMap->SetWorldMap(worldMap);
-    player = new Player(cubeGame, render);
+    player = new Player(cubeGame, this, render);
     player->setCubeMap(cubeMap);
     levelData = {.path = "", .id = 1, .allStatesIndex = id, .name = "template level"};
     return levelData;
 }
 
 LevelData Level::load(const LevelLoader::LoadedLevelData& data, size_t arrayIndex) {
-    worldMap = new WorldMap(cubeGame, render, data.worldSize, data.worldField, data.cubePos);
-    cubeMap = new CubeMap(cubeGame, render, data.sides, data.cubeSide, data.playerPos);
+    worldMap = new WorldMap(cubeGame, this, render, data.worldSize, data.worldField, data.cubePos);
+    cubeMap = new CubeMap(cubeGame, this, render, data.sides, data.cubeSide, data.playerPos);
     worldMap->setCubeMap(cubeMap);
     cubeMap->SetWorldMap(worldMap);
-    player = new Player(cubeGame, render);
+    player = new Player(cubeGame, this, render);
     player->setCubeMap(cubeMap);
     levelData = {.path=data.path, .id=data.id, .allStatesIndex = arrayIndex, .name = data.name};
     return levelData;

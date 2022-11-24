@@ -3,7 +3,7 @@
 #include "CubeMap.hpp"
 #include "../data/spriteDefs.hpp"
 
-Player::Player(CubeGame &game, SDL_Renderer *render) : GameObject(game, render) {}
+Player::Player(CubeGame &game, ComplexGameState* gameState, SDL_Renderer *render) : GameObject(game, gameState, render) {}
 
 void Player::HandleEvent(const u32 frame, const u32 totalMSec, const float deltaT, Event event) {
     if (event.type != SDL_KEYDOWN) return;

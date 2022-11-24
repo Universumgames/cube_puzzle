@@ -4,16 +4,18 @@
 #include "../gamebase.hpp"
 
 class CubeGame;
+class ComplexGameState;
 
 /// an object that can move around on the CubeField if certain criteria are met
 class GameObject {
 protected:
     CubeGame &game;
     SDL_Renderer *render;
+    ComplexGameState* gameState;
     bool canActivateActivatable;
 public:
     /// basic constructor
-    GameObject(CubeGame &game, SDL_Renderer *render) : game(game), render(render) {}
+    GameObject(CubeGame &game, ComplexGameState* gameState, SDL_Renderer *render) : game(game), render(render), gameState(gameState) {}
 
     virtual ~GameObject() {};
 

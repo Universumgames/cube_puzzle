@@ -7,7 +7,7 @@ class CubeMap;
 
 class CubeMapMiniMap: public GameObject {
 public:
-    CubeMapMiniMap(CubeGame &game, SDL_Renderer *render, CubeMap* cubeMap);
+    CubeMapMiniMap(CubeGame &game, ComplexGameState* gameState, SDL_Renderer *render, CubeMap* cubeMap);
 
     void HandleEvent(const u32 frame, const u32 totalMSec, const float deltaT, Event event) override;
 

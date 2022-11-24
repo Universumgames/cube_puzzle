@@ -11,7 +11,7 @@ class CubeMap;
 /// World map is viewed top down
 class WorldMap final : public GameObject {
 public:
-    WorldMap(CubeGame &game, SDL_Renderer *render, Point size, Vector<WorldField::WorldFieldEnum> map, Point cubePos);
+    WorldMap(CubeGame &game, ComplexGameState* gameState, SDL_Renderer *render, Point size, Vector<WorldField::WorldFieldEnum> map, Point cubePos);
 
     /// set cube map pointer, has to be called before first run
     void setCubeMap(CubeMap *cubeMap) { this->cubeMap = cubeMap; }

@@ -10,7 +10,7 @@ class CubeMap;
 /// Helper class to handle player movement INPUT and rendering player, movement handled in CubeMap
 class Player : public GameObject {
 public:
-    Player(CubeGame &game, SDL_Renderer *render);
+    Player(CubeGame &game, ComplexGameState* gameState, SDL_Renderer *render);
 
     /// set cube map pointer, has to be set before first run
     void setCubeMap(CubeMap *cubeMap);

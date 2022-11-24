@@ -3,6 +3,7 @@
 #include "CubeField.hpp"
 #include "../recthelper.hpp"
 #include "CubeMapMiniMap.hpp"
+#include "../States/Level.hpp"
 
 void CubeMap::HandleEvent(const u32 frame, const u32 totalMSec, const float deltaT, Event event) {
     //if (event.type != SDL_KEYDOWN) return;
@@ -39,7 +40,7 @@ void CubeMap::RenderUI(const u32 frame, const u32 totalMSec, const float deltaT)
 
 void CubeMap::drawMap(const u32 frame, const u32 totalMSec, const float deltaT) {
     Rect drawableRect = getDrawableRect();
-    getCurrentSide()->Render(game, render, diceData, BASIC_GO_DATA_PASSTHROUGH, drawableRect);
+    getCurrentSide()->Render(game, gameState, render, diceData, BASIC_GO_DATA_PASSTHROUGH, drawableRect);
 }
 
 
@@ -47,16 +48,16 @@ CubeMapSide *CubeMap::getSide(int i) {
     return sides[i - 1];
 }
 
-CubeMap::CubeMap(CubeGame &game1, SDL_Renderer *render1, const Vector<CubeMapSide *> &sides, int startSide,
+CubeMap::CubeMap(CubeGame &game1, ComplexGameState* gameState, SDL_Renderer *render1, const Vector<CubeMapSide *> &sides, int startSide,
                  Point playerPos)
-        : GameObject(game1, render1) {
+        : GameObject(game1, gameState, render1) {
     this->sides.assign(sides.begin(), sides.end());
     this->currentSideId = startSide;
     this->playerPos = playerPos;
-    this->debugSideIndicator = new Text(game, render, 400, "", game1.getSpriteStorage()->debugFont, {10, 30});
-    this->minimapText = new Text(game, render, 400, "", game.getSpriteStorage()->debugFont, {10, 60});
-    this->debugDiceData = new Text(game, render, 400, "", game.getSpriteStorage()->debugFont, {10, 230});
-    this->miniMap = new CubeMapMiniMap(game, render, this);
+    this->debugSideIndicator = new Text(game, gameState, render, 400, "", game1.getSpriteStorage()->debugFont, {10, 30});
+    this->minimapText = new Text(game, gameState, render, 400, "", game.getSpriteStorage()->debugFont, {10, 60});
+    this->debugDiceData = new Text(game, gameState, render, 400, "", game.getSpriteStorage()->debugFont, {10, 230});
+    this->miniMap = new CubeMapMiniMap(game, gameState, render, this);
 }
 
 CubeField *CubeMap::getField(int side, int x, int y) {

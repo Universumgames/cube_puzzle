@@ -18,7 +18,7 @@ class CubeMapMiniMap;
 class CubeMap final : public GameObject {
 public:
     /// map initializer
-    CubeMap(CubeGame &game, SDL_Renderer *render, const Vector<CubeMapSide*> &sides, int startSide = 2,
+    CubeMap(CubeGame &game, ComplexGameState* gameState, SDL_Renderer *render, const Vector<CubeMapSide*> &sides, int startSide = 2,
             Point playerPos = {0, 0});
 
     /// set world map pointer, has to be set befor run
@@ -107,7 +107,7 @@ public:
 
     void Update(CubeGame &game, const u32 frame, const u32 totalMSec, const float deltaT);
 
-    void Render(CubeGame &game, Renderer *render, DiceData diceData, const u32 frame, const u32 totalMSec,
+    void Render(CubeGame &game, ComplexGameState* gameState, Renderer *render, DiceData diceData, const u32 frame, const u32 totalMSec,
                 const float deltaT, Rect drawableRect);
 
     void renderGridOverlay(CubeGame &game, Renderer *render, DiceData diceData, const u32 frame, const u32 totalMSec,

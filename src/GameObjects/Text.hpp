@@ -7,11 +7,11 @@
 /// Helper class for rendering Text
 class Text : public GameObject {
 public:
-    Text(CubeGame &game, SDL_Renderer *render, int maxWidth, std::string text, Font *font, Point position,
+    Text(CubeGame &game, ComplexGameState* gameState, SDL_Renderer *render, int maxWidth, std::string text, Font *font, Point position,
          int shadowOffset = 1, Color color = white);
 
     /// load font from file
-    Text(CubeGame &game, SDL_Renderer *render, int maxWidth, std::string text, const char *fontPath, int pointSize,
+    Text(CubeGame &game, ComplexGameState* gameState, SDL_Renderer *render, int maxWidth, std::string text, const char *fontPath, int pointSize,
          Point position, int shadowOffset = 1, Color color = white);
 
     ~Text() override;

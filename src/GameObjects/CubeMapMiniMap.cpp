@@ -26,7 +26,7 @@ void CubeMapMiniMap::Render(const u32 frame, const u32 totalMSec, const float de
     //drawMinimap(BASIC_GO_DATA_PASSTHROUGH);
 }
 
-CubeMapMiniMap::CubeMapMiniMap(CubeGame &game, SDL_Renderer *render, CubeMap *cubeMap) : GameObject(game, render),
+CubeMapMiniMap::CubeMapMiniMap(CubeGame &game, ComplexGameState* gameState, SDL_Renderer *render, CubeMap *cubeMap) : GameObject(game, gameState, render),
                                                                                          diceData(cubeMap->diceData) {
     this->cubeMap = cubeMap;
     this->oldSide = cubeMap->currentSideId;

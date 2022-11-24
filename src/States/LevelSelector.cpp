@@ -93,7 +93,7 @@ void LevelSelector::Init() {
     loadList();
 
     levelsLoaded = true;
-    text = new Text(cubeGame, render, 500, "level selector", game.getSpriteStorage()->debugFont, {10, 10}, 1, white);
+    text = new Text(cubeGame, this, render, 500, "level selector", game.getSpriteStorage()->debugFont, {10, 10}, 1, white);
     text->Init();
 }
 

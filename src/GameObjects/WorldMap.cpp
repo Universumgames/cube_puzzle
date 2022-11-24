@@ -14,13 +14,13 @@ void WorldMap::Update(const u32 frame, const u32 totalMSec, const float deltaT) 
 void WorldMap::Render(const u32 frame, const u32 totalMSec, const float deltaT) {
 }
 
-WorldMap::WorldMap(CubeGame &game, SDL_Renderer *render, Point size, Vector<WorldField::WorldFieldEnum> map,
+WorldMap::WorldMap(CubeGame &game, ComplexGameState* gameState, SDL_Renderer *render, Point size, Vector<WorldField::WorldFieldEnum> map,
                    Point cubePos)
-        : GameObject(game, render) {
+        : GameObject(game, gameState, render) {
     this->field = map;
     this->size = size;
     this->cubePos = cubePos;
-    this->mapCoordinates = new Text(game, render, 500, "", game.getSpriteStorage()->debugFont, {10, 200});
+    this->mapCoordinates = new Text(game, gameState, render, 500, "", game.getSpriteStorage()->debugFont, {10, 200});
 }
 
 int WorldMap::getFieldIndex(int x, int y) const {

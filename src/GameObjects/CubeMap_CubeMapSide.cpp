@@ -30,7 +30,7 @@ void CubeMapSide::Update(CubeGame &game, const u32 frame, const u32 totalMSec, c
     if (overlay != nullptr) overlay->setEnabled(game.isDebug());
 }
 
-void CubeMapSide::Render(CubeGame &game, Renderer *render, DiceData diceData, const u32 frame, const u32 totalMSec,
+void CubeMapSide::Render(CubeGame &game, ComplexGameState* gameState, Renderer *render, DiceData diceData, const u32 frame, const u32 totalMSec,
                          const float deltaT, Rect drawableRect) {
     int x = 0, y = 0;
     Point size = getFieldSize(drawableRect);
@@ -42,7 +42,7 @@ void CubeMapSide::Render(CubeGame &game, Renderer *render, DiceData diceData, co
     SDL_SetTextureColorMod(game.getSpriteStorage()->sideSprites[sideID - 1], 255,255,255);
 
     if (overlay == nullptr) {
-        overlay = new Text(game, render, 400, "", game.getSpriteStorage()->debugFont, {0, 0});
+        overlay = new Text(game, gameState, render, 400, "", game.getSpriteStorage()->debugFont, {0, 0});
     }
     for (auto *field: side) {
         Point pos = cubePositionToScreenPosition(diceData, {x, y});
