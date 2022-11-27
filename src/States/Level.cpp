@@ -108,7 +108,15 @@ LevelData Level::load(const LevelLoader::LoadedLevelData &data, size_t arrayInde
 
 void Level::updateTextures() {
     if (oldSize != game.getWindowSize()) {
-        if(prepareTex != NULL) SDL_DestroyTexture(prepareTex);
+        if (prepareTex != nullptr) {
+            SDL_DestroyTexture(prepareTex);
+        }
+        if(gameTexture != nullptr){
+            SDL_DestroyTexture(gameTexture);
+        }
+        if(uiTexture != nullptr){
+            SDL_DestroyTexture(uiTexture);
+        }
         oldSize = game.getWindowSize();
         prepareTex = SDL_CreateTexture(render, SDL_PIXELFORMAT_RGBA8888,
                                        SDL_TEXTUREACCESS_TARGET, game.getWindowSize().x, game.getWindowSize().y);

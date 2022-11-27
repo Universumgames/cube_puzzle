@@ -67,14 +67,14 @@ protected:
 
 private:
     Vector<GameObject *> gameObjects;
-    Player *player;
-    CubeMap *cubeMap;
-    WorldMap *worldMap;
-    Text *text;
+    Player *player = nullptr;
+    CubeMap *cubeMap = nullptr;
+    WorldMap *worldMap = nullptr;
+    Text *text = nullptr;
     LevelData levelData;
-    Texture * prepareTex;
+    Texture * prepareTex = nullptr;
     Point oldSize;
 
-    Texture * gameTexture;
-    Texture* uiTexture;
+    Texture * gameTexture = nullptr;
+    Texture* uiTexture = nullptr;
 };
