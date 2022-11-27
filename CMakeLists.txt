@@ -65,14 +65,14 @@ IF (WIN32 OR MINGW)
     include_directories(${SDL2_MIXER_INCLUDE_DIR})
     link_directories(${SDL2_MIXER_LIB_DIR})
 
-    ADD_EXECUTABLE(${PROJECT_NAME} ${SOURCE_FILES} src/GameObjects/CubeObject.hpp src/GameObjects/CubeObject.cpp)
+    ADD_EXECUTABLE(${PROJECT_NAME} ${SOURCE_FILES})
 
     target_link_libraries(${PROJECT_NAME} SDL2 SDL2main SDL2_ttf SDL2_image SDL2_mixer)
 
     file(COPY asset DESTINATION ${CMAKE_RUNTIME_OUTPUT_DIRECTORY})
 
 else ()
-    ADD_EXECUTABLE(${PROJECT_NAME} ${SOURCE_FILES} src/GameObjects/CubeObject.hpp src/GameObjects/CubeObject.cpp)
+    ADD_EXECUTABLE(${PROJECT_NAME} ${SOURCE_FILES})
 
     FIND_PACKAGE(SDL2 REQUIRED)
     Message("")
