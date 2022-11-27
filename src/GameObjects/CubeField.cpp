@@ -2,8 +2,7 @@
 #include "GameObject.hpp"
 #include "../data/Colors.hpp"
 
-void
-CubeField::Render(CubeGame &game, Renderer *render, Point size, Point location, const u32 frame, const u32 totalMSec,
+void CubeField::Render(CubeGame &game, Renderer *render, Point size, Point location, const u32 frame, const u32 totalMSec,
                   const float deltaT) {
     SDL_SetRenderDrawColor(render, 200, 200, 0, 255);
 
@@ -24,14 +23,13 @@ CubeField *CubeField::decode(std::string data) {
         case TYPE::EMPTY:
             return EmptyField::decode(data);
         case TYPE::STATIC:
-            break;
-        case TYPE::GRAVITY:
-            return GravityObject::decode(data);
+            return Static::decode(data);
+        //case TYPE::GRAVITY:
+        //    return GravityObject::decode(data);
         case TYPE::INTERACTABLE:
             return Interactable::decode(data);
-            break;
-        case TYPE::ACTIVATABLE:
-            return Activatable::decode(data);
+        //case TYPE::ACTIVATABLE:
+        //    return Activatable::decode(data);
     }
     return nullptr;
 }
@@ -42,7 +40,45 @@ void CubeField::drawSpriteBorder(CubeGame &game, Renderer *render, Rect dst) {
     SDL_RenderDrawRect(render, &dst);
 }
 
-Activatable *Activatable::decode(std::string data) {
+Static *Static::decode(std::string data) {
+    char c = data[0];
+    data.pop_back();
+    switch (c) {
+        case 'g':
+            return Grass::decode(data);
+        default:
+            return nullptr;
+    }
+    return nullptr;
+}
+
+Grass *Grass::decode(std::string data) {
+    return new Grass();
+}
+
+Interactable *Interactable::decode(std::string data) {
+    char c = data[0];
+    data.pop_back();
+    switch (c) {
+        case 'b':
+            return PressurePlate::decode(data);
+        //case 'p':
+        //    return Piston::decode(data);
+        default:
+            return nullptr;
+    }
+    return nullptr;
+}
+
+PressurePlate *PressurePlate::decode(std::string data) {
+    return new PressurePlate();
+}
+
+
+
+// -------------------------- unused code (for now) --------------------------
+
+/*Activatable *Activatable::decode(std::string data) {
     char c = data[0];
     data.pop_back();
     switch (c) {
@@ -70,30 +106,4 @@ bool Activatable::deactivate() {
         return true;
     }
     return false;
-}
-
-Static *Static::decode(std::string data) {
-    char c = data[0];
-    data.pop_back();
-    switch (c) {
-        case 'g':
-            return Grass::decode(data);
-        default:
-            return nullptr;
-    }
-    return nullptr;
-}
-
-Interactable *Interactable::decode(std::string data) {
-    char c = data[0];
-    data.pop_back();
-    switch (c) {
-        case 'b':
-            return PressurePlate::decode(data);
-        case 'p':
-            return Piston::decode(data);
-        default:
-            return nullptr;
-    }
-    return nullptr;
-}
+}*/

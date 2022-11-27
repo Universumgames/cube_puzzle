@@ -1,33 +1,35 @@
 #pragma once
 
-#include "GameObject.hpp"
+
 #include "../CubeGame.hpp"
 #include "../stringhelper.hpp"
+#include "CubeObject.hpp"
 
 /// Field on CubeMap
 class CubeField {
 protected:
     Vector<GameObject *> objects;
+    Vector<CubeObject *> cubeObjects;
 
 public:
     CubeField() = default;
 
     /// Handle input events, probably unused
-    virtual void HandleEvent(CubeGame &game, const u32 frame, const u32 totalMSec, const float deltaT, Event event) = 0;
+    virtual void HandleEvent(CubeGame &game, u32 frame, u32 totalMSec, float deltaT, Event event) = 0;
 
     /// physics, etc. update method
-    virtual void Update(CubeGame &game, const u32 frame, const u32 totalMSec, const float deltaT) = 0;
+    virtual void Update(CubeGame &game, u32 frame, u32 totalMSec, float deltaT) = 0;
 
     /// render only method
     virtual void
-    Render(CubeGame &game, Renderer *render, Point size, Point location, const u32 frame, const u32 totalMSec,
-           const float deltaT);
+    Render(CubeGame &game, Renderer *render, Point size, Point location, u32 frame, u32 totalMSec,
+           float deltaT);
 
     /// return true if player can move to this tile, false otherwise
     virtual bool canPlayerEnter() = 0;
 
     /// return true if an other object can move to this tile, false otherwise
-    virtual bool canObjectEnter() = 0;
+    virtual bool canObjectEnter(CubeObject* cubeObject) = 0;
 
     /// has to be implemented in every sub class
     static CubeField *decode(std::string data);
@@ -52,7 +54,7 @@ public:
         return true;
     }
 
-    bool canObjectEnter() override {
+    bool canObjectEnter(CubeObject* cubeObject) override {
         return true;
     }
 
@@ -78,47 +80,13 @@ public:
     }
 };
 
-class GravityObject : public CubeField {
+class Static : public CubeField { // walls, unmovable obstacles
 public:
     bool canPlayerEnter() override {
         return false;
     }
 
-    bool canObjectEnter() override {
-        return false;
-    }
-
-    /// Handle input events
-    void HandleEvent(CubeGame &game, const u32 frame, const u32 totalMSec, const float deltaT, Event event) override {
-
-    }
-
-    /// physics, etc. update method
-    void Update(CubeGame &game, const u32 frame, const u32 totalMSec, const float deltaT) override {
-
-    }
-
-    std::string encode() override {
-        return charToString((char) CubeField::TYPE::GRAVITY);
-    }
-    // TODO implement logic
-};
-
-class FallingStone : public GravityObject {
-public:
-    std::string encode() override { return GravityObject::encode() + "f"; }
-    // TODO implement decode method
-    // TODO implement logic
-    // TODO adjust encode method
-};
-
-class Static : public CubeField {
-public:
-    bool canPlayerEnter() override {
-        return false;
-    }
-
-    bool canObjectEnter() override {
+    bool canObjectEnter(CubeObject* cubeObject) override {
         return false;
     }
 
@@ -144,16 +112,9 @@ public:
     std::string encode() override {
         return Static::encode() + "g";
     }
-    // TODO implement decode method
-    // TODO implement logic
-    // TODO adjust encode method
-};
-
-class Ice : public Static {
-public:
-    std::string encode() override {
-        return Static::encode() + "i";
-    }
+    
+    static Grass *decode(std::string data);
+    
     // TODO implement decode method
     // TODO implement logic
     // TODO adjust encode method
@@ -184,15 +145,68 @@ public:
         return true;
     }
 
-    bool canObjectEnter() override {
-        return true;
+    bool canObjectEnter(CubeObject* cubeObject) override {
+        return cubeObject->canEnterPressurePlate();
     }
+    
+    static PressurePlate *decode(std::string data);
     // TODO implement decode method
     // TODO implement logic
     // TODO adjust encode method
 };
 
-class Piston : public Interactable {
+
+
+
+
+
+// -------------------------- unused code (for now) --------------------------
+
+/*class Ice : public Static {
+public:
+    std::string encode() override {
+        return Static::encode() + "i";
+    }
+    // TODO implement decode method
+    // TODO implement logic
+    // TODO adjust encode method
+};*/
+
+/*class GravityObject : public CubeField {
+public:
+    bool canPlayerEnter() override {
+        return false;
+    }
+
+    bool canObjectEnter() override {
+        return false;
+    }
+
+    /// Handle input events
+    void HandleEvent(CubeGame &game, const u32 frame, const u32 totalMSec, const float deltaT, Event event) override {
+
+    }
+
+    /// physics, etc. update method
+    void Update(CubeGame &game, const u32 frame, const u32 totalMSec, const float deltaT) override {
+
+    }
+
+    std::string encode() override {
+        return charToString((char) CubeField::TYPE::GRAVITY);
+    }
+    // TODO implement logic
+};*/
+
+/*class FallingStone : public GravityObject {
+public:
+    std::string encode() override { return GravityObject::encode() + "f"; }
+    // TODO implement decode method
+    // TODO implement logic
+    // TODO adjust encode method
+};*/
+
+/*class Piston : public Interactable {
 public:
     bool canPlayerEnter() override {
         return false;
@@ -209,9 +223,9 @@ public:
     // TODO implement decode method
     // TODO implement logic
     // TODO adjust encode method
-};
+};*/
 
-class Activatable : public CubeField {
+/*class Activatable : public CubeField {
 protected:
     bool isOpen;
     bool isDeactivatable;
@@ -261,4 +275,4 @@ public:
     // TODO implement decode method
     // TODO implement logic
     // TODO adjust encode method
-};
+};*/

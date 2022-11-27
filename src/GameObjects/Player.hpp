@@ -15,11 +15,11 @@ public:
     /// set cube map pointer, has to be set before first run
     void setCubeMap(CubeMap *cubeMap);
 
-    void HandleEvent(const u32 frame, const u32 totalMSec, const float deltaT, Event event) override;
+    void HandleEvent(u32 frame, u32 totalMSec, float deltaT, Event event) override;
 
-    void Update(const u32 frame, const u32 totalMSec, const float deltaT) override;
+    void Update(u32 frame, u32 totalMSec, float deltaT) override;
 
-    void Render(const u32 frame, const u32 totalMSec, const float deltaT) override;
+    void Render(u32 frame, u32 totalMSec, float deltaT) override;
 
     /// move player, relative to screen
     bool move(PlayerMoveDirection direction);
@@ -32,7 +32,7 @@ private:
         RIGHT = 0
     };
 
-    int getAnimationIndex(const u32 totalMSec);
+    int getAnimationIndex(u32 totalMSec);
 
 private:
     CubeMap *cubeMap;
