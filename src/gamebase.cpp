@@ -42,12 +42,12 @@ Game::Game(const char *windowTitle, const Point windowSize, const bool vSync) {
         exit(5);
     }
 
-    allStates.reserve(10);
-    std::fill(allStates.begin(), allStates.end(), nullptr);
+    this->allStates.reserve(10);
+    std::fill(this->allStates.begin(), this->allStates.end(), nullptr);
 }
 
 Game::~Game() {
-    for (GameState *state: allStates)
+    for (GameState *state: this->allStates)
         delete state;
 
     if (render != nullptr)

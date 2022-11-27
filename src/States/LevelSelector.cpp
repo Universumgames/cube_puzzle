@@ -80,7 +80,7 @@ void LevelSelector::loadList() {
 
 void LevelSelector::drawList() {
     std::string debugString = "Bitte wähle ein Level aus der Liste\n";
-    for (auto level: levelData) {
+    for (const auto& level: levelData) {
         debugString += std::to_string(level.id) + ": " + level.name + "\n";
     }
     text->changeText(debugString);
