@@ -25,16 +25,17 @@ void CubeMap::Update(const u32 frame, const u32 totalMSec, const float deltaT) {
     getCurrentSide()->Update(game, BASIC_GO_DATA_PASSTHROUGH);
 
     miniMap->Update(BASIC_GO_DATA_PASSTHROUGH);
+    if (!sideTransitionAnimating) {
+        saveCurrentFrame();
+        sideTransitionState = 0;
+    }
 }
 
 void CubeMap::Render(const u32 frame, const u32 totalMSec, const float deltaT) {
     renderTarget = SDL_GetRenderTarget(render);
 
     drawMap(BASIC_GO_DATA_PASSTHROUGH);
-    if (!sideTransitionAnimating) {
-        saveCurrentFrame();
-        sideTransitionState = 0;
-    }
+
 }
 
 void CubeMap::RenderUI(const u32 frame, const u32 totalMSec, const float deltaT) {
@@ -42,17 +43,40 @@ void CubeMap::RenderUI(const u32 frame, const u32 totalMSec, const float deltaT)
     debugDiceData->RenderUI(BASIC_GO_DATA_PASSTHROUGH);
     miniMap->RenderUI(BASIC_GO_DATA_PASSTHROUGH);
 }
-
+void updateAnimationSidePosition(Rect& oldSide, Rect& newSide, double transitionState, PlayerMoveDirection moveDir){
+    switch(moveDir) {
+        case PlayerMoveDirection::UP:
+            newSide.y -= newSide.h * (1-transitionState);
+            oldSide.y += newSide.h * transitionState;
+            break;
+        case PlayerMoveDirection::DOWN:
+            newSide.y += newSide.h * (1-transitionState);
+            oldSide.y -= newSide.h * transitionState;
+            break;
+        case PlayerMoveDirection::LEFT:
+            newSide.x -= newSide.w * (1-transitionState);
+            oldSide.x += newSide.w * transitionState;
+            break;
+        case PlayerMoveDirection::RIGHT:
+            newSide.x += newSide.w * (1-transitionState);
+            oldSide.x -= newSide.w * transitionState;
+            break;
+    }
+}
 
 void CubeMap::drawMap(const u32 frame, const u32 totalMSec, const float deltaT) {
     Rect drawableRect = getDrawableRect();
     if (sideTransitionAnimating) {
-        SDL_RenderCopy(render, oldSideFrame, NULL, NULL);
+        Rect oldSide = {0,0, game.getWindowSize().x, game.getWindowSize().y};
+        Rect newSide = getDrawableRect();
+        updateAnimationSidePosition(oldSide, newSide, sideTransitionState, lastNormalizedMove);
+        SDL_RenderCopy(render, oldSideFrame, NULL, &oldSide);
         sideTransitionState += deltaT * 10;
         if (sideTransitionState >= 1) {
             sideTransitionState = 0;
             sideTransitionAnimating = false;
         }
+        getCurrentSide()->Render(game, gameState, render, diceData, BASIC_GO_DATA_PASSTHROUGH, newSide);
     } else
         getCurrentSide()->Render(game, gameState, render, diceData, BASIC_GO_DATA_PASSTHROUGH, drawableRect);
 }
@@ -102,7 +126,7 @@ Rect CubeMap::playerDrawPosition() {
 }
 
 void CubeMap::saveCurrentFrame() {
-    Texture *currTarget = SDL_GetRenderTarget(render);
+    Texture *currTarget = renderTarget;
     if (oldSideFrameSize != game.getCurrentRenderTargetSize() || oldSideFrame == NULL) {
         if (oldSideFrame != NULL) SDL_DestroyTexture(oldSideFrame);
         Point targetSize = game.getCurrentRenderTargetSize();
