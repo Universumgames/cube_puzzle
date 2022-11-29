@@ -3,10 +3,13 @@
 #include "CubeMap.hpp"
 #include "../data/spriteDefs.hpp"
 
+#define PLAYER_MOVEMENT_COUNTDOWN_MILLIS 500
+
 Player::Player(CubeGame &game, ComplexGameState *gameState, SDL_Renderer *render) : GameObject(game, gameState,
                                                                                                render) {}
 
 void Player::HandleEvent(const u32 frame, const u32 totalMSec, const float deltaT, Event event) {
+    if(lastMovementCountdown > 0) return;
     if (event.type != SDL_KEYDOWN) return;
     const Keysym &what_key = event.key.keysym;
     if (what_key.scancode == SDL_SCANCODE_UP) {
@@ -27,6 +30,7 @@ void Player::HandleEvent(const u32 frame, const u32 totalMSec, const float delta
 void Player::Update(const u32 frame, const u32 totalMSec, const float deltaT) {
     if (cubeMap == nullptr) return;
     nextDraw = cubeMap->playerDrawPosition();
+    lastMovementCountdown = max(0.0, lastMovementCountdown) - deltaT;
 }
 
 void Player::Render(const u32 frame, const u32 totalMSec, const float deltaT) {
@@ -44,6 +48,7 @@ void Player::setCubeMap(CubeMap *cubeMap) {
 }
 
 bool Player::move(PlayerMoveDirection direction) {
+    lastMovementCountdown = PLAYER_MOVEMENT_COUNTDOWN_MILLIS / 1000.0;
     return cubeMap->movePlayer(direction);
 }
 

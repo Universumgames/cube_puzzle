@@ -38,4 +38,5 @@ private:
     CubeMap *cubeMap;
     Rect nextDraw;
     AnimationState currentState;
+    double lastMovementCountdown = 0;
 };
