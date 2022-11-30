@@ -47,6 +47,9 @@ void LevelSelector::Events(const u32 frame, const u32 totalMSec, const float del
 void LevelSelector::Update(const u32 frame, const u32 totalMSec, const float deltaT) {
     text->setEnabled(cubeGame.isDebug());
     drawList();
+    if(oldSize != game.getWindowSize()){
+
+    }
 }
 
 void LevelSelector::Render(const u32 frame, const u32 totalMSec, const float deltaT) {
@@ -139,6 +142,7 @@ void LevelSelector::drawList() {
 
 void LevelSelector::Init() {
     GameState::Init();
+    oldSize = game.getWindowSize();
     // check if returned from level
     // if level was finished, load to next level, if not proceed
     if (cubeGame.interGameStateData.exitState == ExitState::FINISHED)
@@ -223,4 +227,8 @@ void LevelSelector::prepareLevelListItemTexture(LevelData &leveldata, Rect drawa
     t->RenderUI(0, 0, 0);
 
     SDL_SetRenderTarget(render, oldTarget);
+}
+
+void LevelSelector::prepareLevelListItems() {
+
 }

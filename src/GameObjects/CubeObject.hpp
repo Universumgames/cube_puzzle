@@ -104,6 +104,8 @@ public:
 
 class Flag : public Collectible {
 public:
+    // Level:: void returnToLevelSelector(ExitState exitState);
+    // ExitState::FINISHED
     void Render(CubeGame &game, Renderer *render, Point size, Point location, u32 frame, u32 totalMSec, float deltaT) override;
     bool canEnterPressurePlate() override;
     bool canActivatePressurePlate() override;

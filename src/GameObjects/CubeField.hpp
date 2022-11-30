@@ -9,9 +9,10 @@
 class CubeField {
 protected:
     Vector<GameObject *> objects;
-    Vector<CubeObject *> cubeObjects;
 
 public:
+    Vector<CubeObject *> cubeObjects;
+
     CubeField() = default;
     explicit CubeField(Vector<CubeObject *> &cubeObjects);
 
@@ -24,6 +25,8 @@ public:
 
     virtual bool canPlayerEnter() = 0;
     virtual bool canObjectEnter(CubeObject *cubeObject) = 0;
+
+    void addObject(CubeObject* cubeObject);
 };
 
 class EmptyField : public CubeField {

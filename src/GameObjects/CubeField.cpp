@@ -108,3 +108,11 @@ bool Static::canObjectEnter(CubeObject *cubeObject) {
 bool PressurePlate::canObjectEnter(CubeObject *cubeObject) {
     return cubeObject->canEnterPressurePlate();
 }
+
+
+
+
+
+void CubeField::addObject(CubeObject* cubeObject) {
+    this->cubeObjects.push_back(cubeObject);
+}

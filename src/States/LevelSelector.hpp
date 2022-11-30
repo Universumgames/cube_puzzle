@@ -49,9 +49,12 @@ private:
 
     void playNextLevel(int allStatesID);
 
+    void prepareLevelListItems();
+
     void prepareLevelListItemTexture(LevelData& leveldata, Rect drawableRect);
     
 private:
+    Point oldSize;
     int selectorIndex = 0;
     int columns = 2;
     int rows = 6;
