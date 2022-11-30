@@ -47,11 +47,14 @@ private:
 
     void playLevel(int levelID);
 
-    static Map<int, Map<int, Vector<WorldField::WorldFieldEnum>>> getLevelDataMap(std::string& fileString);
+    void playNextLevel(int allStatesID);
 
-
+    void renderLevelListItem(LevelData leveldata, Rect drawableRect);
     
 private:
+    int selectorX = 0, selectorY = 0;
+    int columns = 2;
+    int rows = 6;
     Vector<LevelData> levelData;
     bool levelsLoaded = false;
     Text *text;

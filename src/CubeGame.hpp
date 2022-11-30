@@ -6,21 +6,40 @@
 
 class LevelSelector;
 
+enum class ExitState {
+    UNSET, FINISHED, CANCELLED
+};
+struct GameStateData {
+    int sourceStateID = -1;
+    ExitState exitState = ExitState::UNSET;
+    char optionalDataTypeIdentifier = '\0';
+    void *optionalData = nullptr;
+    size_t optionalDataSize = -1;
+};
+
 /// Cube Game handler
 class CubeGame final : public Game {
 public:
+
+public:
     CubeGame();
 
-    AudioPlayer  audio;
+    AudioPlayer audio;
 
     bool HandleEvent(const Event event) override;
 
     SpriteStorage *getSpriteStorage() override;
 
     /// should display debug info
-    bool isDebug();
+    bool isDebug() const;
 
     Point getCurrentRenderTargetSize();
+
+    /// return to level selector, set interGameStateData to send some data along
+    void returnToLevelSelector();
+
+    /// set gamestate data for next gamestate to load
+    GameStateData interGameStateData;
 
 private:
     SpriteStorage spriteStorage;

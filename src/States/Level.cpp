@@ -111,10 +111,10 @@ void Level::updateTextures() {
         if (prepareTex != nullptr) {
             SDL_DestroyTexture(prepareTex);
         }
-        if(gameTexture != nullptr){
+        if (gameTexture != nullptr) {
             SDL_DestroyTexture(gameTexture);
         }
-        if(uiTexture != nullptr){
+        if (uiTexture != nullptr) {
             SDL_DestroyTexture(uiTexture);
         }
         oldSize = game.getWindowSize();
@@ -192,4 +192,9 @@ Rect Level::getUIRenderDst() {
     Point totalSize = {s, s};
     Point offset = center - (totalSize / 2);
     return {offset.x, offset.y, s, s};
+}
+
+void Level::returnToLevelSelector(ExitState exitState = ExitState::CANCELLED) {
+    cubeGame.interGameStateData = {.sourceStateID = (int)levelData.allStatesIndex, .exitState = exitState};
+    cubeGame.returnToLevelSelector();
 }

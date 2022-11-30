@@ -31,7 +31,8 @@ bool CubeGame::HandleEvent(const Event event) {
         case SDL_KEYDOWN: {
             const Keysym &what_key = event.key.keysym;
             if (what_key.scancode == SDL_SCANCODE_0) {
-                SetNextState(0);
+                interGameStateData = {.sourceStateID = -1, .exitState = ExitState::CANCELLED};
+                returnToLevelSelector();
                 return true;
             }
             if (what_key.scancode == SDL_SCANCODE_F3) {
@@ -70,7 +71,7 @@ void CubeGame::loadSprites() {
     }
 }
 
-bool CubeGame::isDebug() {
+bool CubeGame::isDebug() const {
     return debugView;
 }
 
@@ -84,4 +85,8 @@ Point CubeGame::getCurrentRenderTargetSize() {
     int w = 0, h = 0;
     SDL_GetRendererOutputSize(render, &w, &h);
     return {w, h};
+}
+
+void CubeGame::returnToLevelSelector() {
+    SetNextState(0);
 }

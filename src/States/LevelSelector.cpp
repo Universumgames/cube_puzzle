@@ -21,16 +21,28 @@ void LevelSelector::Events(const u32 frame, const u32 totalMSec, const float del
             const Keysym &what_key = event.key.keysym;
             if (what_key.scancode >= SDL_SCANCODE_1 && what_key.scancode < SDL_SCANCODE_0) {
                 int id = what_key.scancode + 1 - SDL_SCANCODE_1;
-                    playLevel(id);
+                playLevel(id);
             } else if (what_key.scancode >= SDL_SCANCODE_KP_1 && what_key.scancode < SDL_SCANCODE_KP_0) {
                 int id = what_key.scancode + 1 - SDL_SCANCODE_KP_1;
-                    playLevel(id);
+                playLevel(id);
+            }
+
+            // navigation in selector
+            if (what_key.scancode == SDL_SCANCODE_RIGHT) {
+
+            } else if (what_key.scancode == SDL_SCANCODE_LEFT) {
+
+            } else if (what_key.scancode == SDL_SCANCODE_UP) {
+
+            } else if (what_key.scancode == SDL_SCANCODE_DOWN) {
+
             }
         }
     }
 }
 
 void LevelSelector::Update(const u32 frame, const u32 totalMSec, const float deltaT) {
+    text->setEnabled(cubeGame.isDebug());
     drawList();
 }
 
@@ -39,6 +51,22 @@ void LevelSelector::Render(const u32 frame, const u32 totalMSec, const float del
     SDL_RenderClear(render);
     SDL_SetRenderDrawColor(render, 200, 0, 255, 255);
     SDL_RenderFillRect(render, EntireRect);
+
+
+    int padding = 10;
+
+    Point listStartPoint = {0, 0};
+    Rect drawableUISpace = centerIn(addPadding(getDrawableUIRect(), 20), getDrawableUIRect());
+    Point usedListStartPoint = {listStartPoint.x + drawableUISpace.x, listStartPoint.y + drawableUISpace.y};
+    Point levelRectSize = {max(100, drawableUISpace.w / columns), max(50, drawableUISpace.h / rows)};
+
+    for (int i = 0; i < levelData.size(); i++) {
+        int row = i % rows, column = i / columns;
+        Point rectStartPoint =
+                usedListStartPoint + Point{(levelRectSize.x + padding) * column, (levelRectSize.y + padding) * row};
+        Rect drawable = {rectStartPoint.x, rectStartPoint.y, levelRectSize.x, levelRectSize.y};
+        renderLevelListItem(levelData[i], drawable);
+    }
 
     text->RenderUI(frame, totalMSec, deltaT);
 
@@ -80,7 +108,7 @@ void LevelSelector::loadList() {
 
 void LevelSelector::drawList() {
     std::string debugString = "Bitte wähle ein Level aus der Liste\n";
-    for (const auto& level: levelData) {
+    for (const auto &level: levelData) {
         debugString += std::to_string(level.id) + ": " + level.name + "\n";
     }
     text->changeText(debugString);
@@ -88,12 +116,18 @@ void LevelSelector::drawList() {
 
 void LevelSelector::Init() {
     GameState::Init();
-    if (levelsLoaded)
-        return;
-    loadList();
+    // check if returned from level
+    // if level was finished, load to next level, if not proceed
+    if (cubeGame.interGameStateData.exitState == ExitState::FINISHED)
+        playNextLevel(cubeGame.interGameStateData.sourceStateID);
 
-    levelsLoaded = true;
-    text = new Text(cubeGame, this, render, 500, "level selector", game.getSpriteStorage()->debugFont, {10, 10}, 1, white);
+    // else check if levels are all loaded, if not load them
+    if (!levelsLoaded) {
+        loadList();
+        levelsLoaded = true;
+    }
+    text = new Text(cubeGame, this, render, 500, "level selector", game.getSpriteStorage()->debugFont, {10, 10}, 1,
+                    white);
     text->Init();
 }
 
@@ -105,79 +139,23 @@ void LevelSelector::playLevel(const LevelData &level) {
     game.SetNextState(level.allStatesIndex);
 }
 
-void LevelSelector::playLevel(int levelId){
-    for(auto level: levelData){
-        if(levelId == level.id) game.SetNextState(level.allStatesIndex);
+void LevelSelector::playLevel(int levelId) {
+    for (const auto &level: levelData) {
+        if (levelId == level.id) game.SetNextState(level.allStatesIndex);
     }
 }
 
-Map<int, Map<int, Vector<WorldField::WorldFieldEnum>>> LevelSelector::getLevelDataMap(std::string &fileString) {
-    Map<int, Map<int, Vector<WorldField::WorldFieldEnum>>> levelDataMap;
-    Map<int, Vector<WorldField::WorldFieldEnum>> cubeSide1, cubeSide2, cubeSide3, cubeSide4, cubeSide5, cubeSide6;
-    int cubeSide = 5;
-    int rowOfCubeSide = FIRST_ROW;
-    Vector<WorldField::WorldFieldEnum> row;
-    for (char &c: fileString) {
-        if (c == ';' || c == ',' || c == '-') {
-            switch (cubeSide) {
-                case 1:
-                    cubeSide1.insert_or_assign(rowOfCubeSide, row);
-                    break;
-                case 2:
-                    cubeSide2.insert_or_assign(rowOfCubeSide, row);
-                    break;
-                case 3:
-                    cubeSide3.insert_or_assign(rowOfCubeSide, row);
-                    break;
-                case 4:
-                    cubeSide4.insert_or_assign(rowOfCubeSide, row);
-                    break;
-                case 5:
-                    cubeSide5.insert_or_assign(rowOfCubeSide, row);
-                    break;
-                case 6:
-                    cubeSide6.insert_or_assign(rowOfCubeSide, row);
-                    break;
-            }
-            row.clear();
-            if (c == ';') {
-                rowOfCubeSide = FIRST_ROW;
-                if (cubeSide == 5) {
-                    cubeSide = 4;
-                } else if (cubeSide == 3) {
-                    cubeSide = 2;
-                } else {
-                    cubeSide = 6;
-                }
-            } else if (c == ',') {
-                if (cubeSide == 4) {
-                    cubeSide = 1;
-                } else if (cubeSide == 1) {
-                    cubeSide = 3;
-                }
-            } else if (c == '-') {
-                rowOfCubeSide++;
-                if (cubeSide == 3) {
-                    cubeSide = 4;
-                }
-            }
-        } else {
-            row.emplace_back(WorldField::convertCharToEnum(c));
-        }
+void LevelSelector::playNextLevel(int allStatesID) {
+    LevelData data;
+    for (const auto &level: levelData) {
+        if (allStatesID == level.allStatesIndex) data = level;
     }
-    levelDataMap.insert_or_assign(1, cubeSide1);
-    levelDataMap.insert_or_assign(2, cubeSide2);
-    levelDataMap.insert_or_assign(3, cubeSide3);
-    levelDataMap.insert_or_assign(4, cubeSide4);
-    levelDataMap.insert_or_assign(5, cubeSide5);
-    levelDataMap.insert_or_assign(6, cubeSide6);
-
-    return levelDataMap;
+    playLevel(data.id + 1);
 }
 
 Rect LevelSelector::getDrawableGameRect() {
     Point wSize = game.getWindowSize();
-    return {0,0, wSize.x, wSize.y};
+    return {0, 0, wSize.x, wSize.y};
 }
 
 Rect LevelSelector::getDrawableUIRect() {
@@ -190,4 +168,9 @@ Rect LevelSelector::getGameRenderDst() {
 
 Rect LevelSelector::getUIRenderDst() {
     return getDrawableUIRect();
+}
+
+void LevelSelector::renderLevelListItem(LevelData leveldata, Rect drawableRect) {
+    SDL_SetRenderDrawColor(render, 255, 255, 0, 255);
+    SDL_RenderFillRect(render, &drawableRect);
 }

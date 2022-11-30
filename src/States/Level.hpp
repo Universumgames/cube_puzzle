@@ -16,6 +16,10 @@ class WorldMap;
 
 class CubeGame;
 
+class GameStateData;
+
+enum class ExitState;
+
 /// Level handler, create new object for every level
 class Level final : public ComplexGameState {
 public:
@@ -50,7 +54,7 @@ public:
     /// alternative to load(...) function, if this level should be generated from template data
     LevelData loadTemplateLevel(size_t id);
 
-
+    void returnToLevelSelector(ExitState exitState);
 
 private:
     void updateTextures();

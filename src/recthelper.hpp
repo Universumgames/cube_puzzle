@@ -38,7 +38,7 @@ constexpr bool operator==(const Point &lhs, const Point rhs) {
     return lhs.x == rhs.x && lhs.y == rhs.y;
 }
 
-constexpr bool operator!=( const Point &lhs, const Point rhs){
+constexpr bool operator!=(const Point &lhs, const Point rhs) {
     return !(lhs == rhs);
 }
 
@@ -74,6 +74,16 @@ constexpr Rect &operator+=(Rect &lhs, const Rect rhs) {
 constexpr Rect &operator-=(Rect &lhs, const Rect rhs) {
     lhs = lhs - rhs;
     return lhs;
+}
+
+constexpr Rect addPadding(Rect r, int padding) {
+    return {r.x + padding, r.y + padding, r.w - 2 * padding, r.h - 2 * padding};
+}
+
+constexpr Rect centerIn(Rect toCenter, Rect context) {
+    Point center = Point{context.x, context.y} + (Point{context.w, context.h} / 2);
+    Point offset = center - (Point{toCenter.w, toCenter.h} / 2);
+    return {offset.x, offset.y, toCenter.w, toCenter.h};
 }
 
 constexpr FPoint operator+(const FPoint lhs, const FPoint rhs) { return FPoint{lhs.x + rhs.x, lhs.y + rhs.y}; }
