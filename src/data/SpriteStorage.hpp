@@ -3,6 +3,7 @@
 #include "../global.hpp"
 #include "DiceData.hpp"
 #include "paths.hpp"
+#include "Colors.hpp"
 
 #define SPRITE_TILE_SIZE 16
 #define SIDE_SIZE 48
@@ -51,6 +52,19 @@ inline void drawColoredFilledRect(Renderer *render, Color color, Rect *dst) {
 inline void drawColoredFilledRect(Renderer *render, Color color, Rect dst) {
     SDL_SetRenderDrawColor(render, color.r, color.g, color.b, color.a);
     SDL_RenderFillRect(render, &dst);
+}
+
+
+inline void drawBorder(Renderer * render, Rect dst, Color borderColor = spriteBorderColor){
+    SDL_SetRenderDrawColor(render, borderColor.r, borderColor.g, borderColor.b, borderColor.a);
+    SDL_RenderDrawRect(render, &dst);
+}
+
+inline void drawSpriteBorder(bool isDebug, Renderer *render, Rect dst) {
+    if (!isDebug) {
+        return;
+    }
+    drawBorder(render, dst, spriteBorderColor);
 }
 
 /// Storage object to store all global textures and fonts

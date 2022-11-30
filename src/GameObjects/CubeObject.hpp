@@ -98,7 +98,8 @@ public:
 };
 
 class Collectible : public CubeObject {
-
+public:
+    bool canPlayerEnter() override;
 };
 
 class Flag : public Collectible {

@@ -3,7 +3,7 @@
 #include "Level.hpp"
 #include "../recthelper.hpp"
 #include "../data/paths.hpp"
-
+#include "../data/SpriteStorage.hpp"
 #include <utility>
 #include <filesystem>
 #include "../filehelper.hpp"
@@ -33,10 +33,13 @@ void LevelSelector::Events(const u32 frame, const u32 totalMSec, const float del
             } else if (what_key.scancode == SDL_SCANCODE_LEFT) {
 
             } else if (what_key.scancode == SDL_SCANCODE_UP) {
-
+                selectorIndex--;
             } else if (what_key.scancode == SDL_SCANCODE_DOWN) {
-
+                selectorIndex++;
+            } else if (what_key.scancode == SDL_SCANCODE_KP_ENTER || what_key.scancode == SDL_SCANCODE_RETURN) {
+                playLevel(levelData[selectorIndex]);
             }
+            selectorIndex = (int) (max(0, selectorIndex) % levelData.size());
         }
     }
 }
@@ -52,21 +55,36 @@ void LevelSelector::Render(const u32 frame, const u32 totalMSec, const float del
     SDL_SetRenderDrawColor(render, 200, 0, 255, 255);
     SDL_RenderFillRect(render, EntireRect);
 
-
     int padding = 10;
 
     Point listStartPoint = {0, 0};
     Rect drawableUISpace = centerIn(addPadding(getDrawableUIRect(), 20), getDrawableUIRect());
+    SDL_SetRenderDrawColor(render, 200, 255, 0, 255);
+    SDL_RenderFillRect(render, &drawableUISpace);
     Point usedListStartPoint = {listStartPoint.x + drawableUISpace.x, listStartPoint.y + drawableUISpace.y};
     Point levelRectSize = {max(100, drawableUISpace.w / columns), max(50, drawableUISpace.h / rows)};
 
+    // TODO fix display list when overflowing window
+    int column = 0;
     for (int i = 0; i < levelData.size(); i++) {
-        int row = i % rows, column = i / columns;
+        int row = i % rows;
+        if(usedListStartPoint.y + (levelRectSize.y + padding) * row > drawableUISpace.y + drawableUISpace.h){
+            rows--;
+            row = i % rows;
+            columns++;
+        }
         Point rectStartPoint =
                 usedListStartPoint + Point{(levelRectSize.x + padding) * column, (levelRectSize.y + padding) * row};
         Rect drawable = {rectStartPoint.x, rectStartPoint.y, levelRectSize.x, levelRectSize.y};
-        renderLevelListItem(levelData[i], drawable);
+
+        if (selectorIndex == i) {
+            drawColoredFilledRect(render, Color{0, 255, 0, 255}, addPadding(drawable, -5));
+        }
+        if(row == rows -1) column ++;
+
+        SDL_RenderCopy(render, levelData[i].selectorTexture, NULL, &drawable);
     }
+
 
     text->RenderUI(frame, totalMSec, deltaT);
 
@@ -92,18 +110,22 @@ void LevelSelector::loadList() {
         return;
     }
 
-    // level loading
-    for (auto const &dirEntry: std::filesystem::directory_iterator{levels}) {
-        std::string path = dirEntry.path().string();
-        if (!dirEntry.is_regular_file() || dirEntry.path().extension() != ".level") {
-            continue;
+    for(int i = 0; i < 5; i++) {
+        // level loading
+        for (auto const &dirEntry: std::filesystem::directory_iterator{levels}) {
+            std::string path = dirEntry.path().string();
+            if (!dirEntry.is_regular_file() || dirEntry.path().extension() != ".level") {
+                continue;
+            }
+            auto data = LevelLoader::loadLevel(path);
+            auto *levelX = new Level(cubeGame, render);
+            auto levelD = levelX->load(data, cubeGame.allStates.size());
+            levelData.push_back(levelD);
+            cubeGame.allStates.push_back(levelX);
         }
-        auto data = LevelLoader::loadLevel(path);
-        auto *levelX = new Level(cubeGame, render);
-        auto levelD = levelX->load(data, cubeGame.allStates.size());
-        levelData.push_back(levelD);
-        cubeGame.allStates.push_back(levelX);
     }
+
+    std::sort(levelData.begin(), levelData.end(), LevelData::sort);
 }
 
 void LevelSelector::drawList() {
@@ -129,6 +151,23 @@ void LevelSelector::Init() {
     text = new Text(cubeGame, this, render, 500, "level selector", game.getSpriteStorage()->debugFont, {10, 10}, 1,
                     white);
     text->Init();
+
+    int padding = 10;
+
+    Point listStartPoint = {0, 0};
+    Rect drawableUISpace = centerIn(addPadding(getDrawableUIRect(), 20), getDrawableUIRect());
+    Point usedListStartPoint = {listStartPoint.x + drawableUISpace.x, listStartPoint.y + drawableUISpace.y};
+    Point levelRectSize = {max(100, drawableUISpace.w / columns), max(50, drawableUISpace.h / rows)};
+
+    for (int i = 0; i < levelData.size(); i++) {
+        int row = i % rows, column = i / columns;
+        Point rectStartPoint =
+                usedListStartPoint + Point{(levelRectSize.x + padding) * column, (levelRectSize.y + padding) * row};
+        Rect drawable = {rectStartPoint.x, rectStartPoint.y, levelRectSize.x, levelRectSize.y};
+
+        prepareLevelListItemTexture(levelData[i], drawable);
+
+    }
 }
 
 void LevelSelector::UnInit() {
@@ -170,7 +209,16 @@ Rect LevelSelector::getUIRenderDst() {
     return getDrawableUIRect();
 }
 
-void LevelSelector::renderLevelListItem(LevelData leveldata, Rect drawableRect) {
+void LevelSelector::prepareLevelListItemTexture(LevelData &leveldata, Rect drawableRect) {
+    leveldata.selectorTexture = SDL_CreateTexture(render, SDL_PIXELFORMAT_ARGB8888,
+                                                  SDL_TEXTUREACCESS_TARGET, drawableRect.w, drawableRect.h);
+    Texture *oldTarget = SDL_GetRenderTarget(render);
+    SDL_SetRenderTarget(render, leveldata.selectorTexture);
     SDL_SetRenderDrawColor(render, 255, 255, 0, 255);
-    SDL_RenderFillRect(render, &drawableRect);
+    SDL_RenderFillRect(render, NULL);
+    Text *t = new Text(cubeGame, this, render, drawableRect.w - 10 * 2, "", cubeGame.spriteStorage.basicFont, {10, 10});
+    t->changeText(std::to_string(leveldata.id) + ". Level \n " + leveldata.name);
+    t->RenderUI(0, 0, 0);
+
+    SDL_SetRenderTarget(render, oldTarget);
 }

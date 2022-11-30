@@ -112,9 +112,112 @@ bool Moveable::canEnterPressurePlate() {
     return true;
 }
 
+bool Collectible::canPlayerEnter() {
+    return true;
+}
+
 bool Flag::canEnterPressurePlate() {
     return false;
 }
 bool Flag::canActivatePressurePlate() {
     return false;
 }
+
+
+
+
+
+// -------------------------- unused code (for now) --------------------------
+
+/*
+/// return-value tells you if the activation took place or not.
+bool Activatable::activate() {
+    if (!this->isOpen) {
+        this->isOpen = true;
+        return true;
+    }
+    return false;
+}
+
+/// return-value tells you if the deactivation took place or not.
+bool Activatable::deactivate() {
+    if (this->isDeactivatable && this->isOpen) {
+        this->isOpen = false;
+        return true;
+    }
+    return false;
+}*/
+
+// -------------------------- unused code (for now) --------------------------
+
+/*class GravityObject : public CubeField {
+public:
+    bool canPlayerEnter() override {
+        return false;
+    }
+
+    bool canObjectEnter() override {
+        return false;
+    }
+
+    /// Handle input events
+    void HandleEvent(CubeGame &game, const u32 frame, const u32 totalMSec, const float deltaT, Event event) override {
+
+    }
+
+    /// physics, etc. update method
+    void Update(CubeGame &game, const u32 frame, const u32 totalMSec, const float deltaT) override {
+
+    }
+    // TODO implement logic
+};*/
+
+/*class FallingStone : public GravityObject {
+};*/
+
+/*class Piston : public Interactable {
+public:
+    bool canPlayerEnter() override {
+        return false;
+    }
+
+    bool canObjectEnter() override {
+        return false;
+    }
+};*/
+
+/*class Activatable : public CubeField {
+protected:
+    bool isOpen;
+    bool isDeactivatable;
+
+public:
+    explicit Activatable(bool isDeactivatable) : isDeactivatable(isDeactivatable), isOpen(false) {}
+
+    Activatable(bool isDeactivatable, bool isOpen) : isDeactivatable(isDeactivatable), isOpen(isOpen) {}
+
+    bool canPlayerEnter() override {
+        return this->isOpen;
+    }
+
+    bool canObjectEnter() override {
+        return this->isOpen;
+    }
+
+    /// Handle input events
+    void HandleEvent(CubeGame &game, const u32 frame, const u32 totalMSec, const float deltaT, Event event) override {
+
+    }
+
+    /// physics, etc. update method
+    void Update(CubeGame &game, const u32 frame, const u32 totalMSec, const float deltaT) override {
+
+    }
+
+    bool activate();
+
+    bool deactivate();
+};
+
+class SlidingWall : public Activatable {
+};*/

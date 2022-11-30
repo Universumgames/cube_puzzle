@@ -49,10 +49,10 @@ private:
 
     void playNextLevel(int allStatesID);
 
-    void renderLevelListItem(LevelData leveldata, Rect drawableRect);
+    void prepareLevelListItemTexture(LevelData& leveldata, Rect drawableRect);
     
 private:
-    int selectorX = 0, selectorY = 0;
+    int selectorIndex = 0;
     int columns = 2;
     int rows = 6;
     Vector<LevelData> levelData;

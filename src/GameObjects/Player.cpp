@@ -29,7 +29,7 @@ void Player::HandleEvent(const u32 frame, const u32 totalMSec, const float delta
 
 void Player::Update(const u32 frame, const u32 totalMSec, const float deltaT) {
     if (cubeMap == nullptr) return;
-    nextDraw = cubeMap->playerDrawPosition();
+    nextDraw = cubeMap->getPlayerDrawPosition();
     lastMovementCountdown = max(0.0, lastMovementCountdown) - deltaT;
 }
 

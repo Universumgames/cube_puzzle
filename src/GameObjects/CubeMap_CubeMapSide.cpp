@@ -1,6 +1,7 @@
 #include "CubeMap.hpp"
 #include "../recthelper.hpp"
 
+/// convert the coordinates to the correct coordinates according to current rotation
 Point CubeMapSide::cubePositionToScreenPosition(DiceData diceData, Point cubePos) const {
     DiceSideRotation faceDirection = diceData.getDiceSideRotation(sideID);
     Point res = {};
@@ -60,6 +61,7 @@ void CubeMapSide::Render(CubeGame &game, ComplexGameState* gameState, Renderer *
     renderGridOverlay(game, render, diceData, BASIC_GO_DATA_PASSTHROUGH, drawableRect);
 }
 
+/// Gibt die Anzahl der Pixel zurück, die ein einzelnes Feld breit und hoch ist.
 Point CubeMapSide::getFieldSize(Rect drawableRect) {
     int w = min(drawableRect.w, drawableRect.h) / max(width, height);
     return {w, w};
@@ -108,6 +110,11 @@ void CubeMapSide::renderGridOverlay(CubeGame &game, Renderer *render, DiceData d
         }
         SDL_RenderFillRect(render, &dst);
     }
+}
+
+void CubeMapSide::renderCubeFields(CubeGame &game, Renderer *render, const u32 frame, const u32 totalMSec, const float deltaT, Rect drawableRect) {
+
+    //CubeGame &game, Renderer *render, Point size, Point location, u32 frame, u32 totalMSec, float deltaT
 }
 
 Point CubeMapSide::screenPositionToCubePosition(DiceData diceData, Point screenPos) const {

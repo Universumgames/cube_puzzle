@@ -1,6 +1,8 @@
 #pragma once
 
-#include "LevelData.hpp"
+#include <string>
+#include "../recthelper.hpp"
+#include "WorldField.hpp"
 
 class CubeMapSide;
 

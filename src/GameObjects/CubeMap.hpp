@@ -1,5 +1,7 @@
 #pragma once
 
+#include <utility>
+
 #include "GameObject.hpp"
 #include "CubeField.hpp"
 #include "../data/MoveDirections.hpp"
@@ -14,7 +16,7 @@ class CubeMapSide;
 
 class CubeMapMiniMap;
 
-/// Logic class for handling player movement on cube and calling cubefiled methods
+/// Logic class for handling player movement on cube and calling cubeField methods
 class CubeMap final : public GameObject {
 public:
     /// map initializer
@@ -22,7 +24,7 @@ public:
             int startSide = 2,
             Point playerPos = {0, 0});
 
-    /// set world map pointer, has to be set befor run
+    /// set world map pointer, has to be set before run
     void SetWorldMap(WorldMap *worldMap) { this->worldMap = worldMap; }
 
     void HandleEvent(const u32 frame, const u32 totalMSec, const float deltaT, Event event) override;
@@ -38,7 +40,9 @@ public:
 public:
     bool movePlayer(PlayerMoveDirection dir);
 
-    Rect playerDrawPosition();
+    Rect getPlayerDrawPosition();
+
+    Rect getDrawPosition(Point point, double scale = 1.0);
 
     CubeMapSide *getCurrentSide();
 
@@ -95,10 +99,10 @@ public:
     CubeMapSide() = default;
 
     CubeMapSide(Vector<CubeField *> side, int width, int height, int sideID) : width(width), height(height),
-                                                                               sideID(sideID) { this->side = side; }
+                                                                               sideID(sideID) { this->side = std::move(side); }
 
     CubeMapSide(Vector<CubeField *> side, Point size, int sideID) : width(size.x), height(size.y),
-                                                                    sideID(sideID) { this->side = side; }
+                                                                    sideID(sideID) { this->side = std::move(side); }
 
     Vector<CubeField *> side;
     int width, height, sideID;
@@ -117,12 +121,11 @@ public:
 
     void Update(CubeGame &game, const u32 frame, const u32 totalMSec, const float deltaT);
 
-    void Render(CubeGame &game, ComplexGameState *gameState, Renderer *render, DiceData diceData, const u32 frame,
-                const u32 totalMSec,
-                const float deltaT, Rect drawableRect);
+    void Render(CubeGame &game, ComplexGameState *gameState, Renderer *render, DiceData diceData, const u32 frame, const u32 totalMSec, const float deltaT, Rect drawableRect);
 
-    void renderGridOverlay(CubeGame &game, Renderer *render, DiceData diceData, const u32 frame, const u32 totalMSec,
-                           const float deltaT, Rect drawableRect);
+    void renderGridOverlay(CubeGame &game, Renderer *render, DiceData diceData, const u32 frame, const u32 totalMSec, const float deltaT, Rect drawableRect);
+
+    void renderCubeFields(CubeGame &game, Renderer *render, const u32 frame, const u32 totalMSec, const float deltaT, Rect drawableRect);
 
     [[nodiscard]] Point cubePositionToScreenPosition(DiceData diceData, Point cubePos) const;
 

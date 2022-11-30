@@ -8,7 +8,6 @@
 /// basic data of level
 // TODO extend data
 struct LevelData {
-    Map<int, Map<int, Vector<WorldField::WorldFieldEnum>>> levelDataMap;
     /// path of file to retrieve leveldata
     std::string path;
     /// id of level
@@ -16,4 +15,10 @@ struct LevelData {
     ///  (index in allstates vector in Game)
     size_t allStatesIndex;
     std::string name = "unknown";
+
+    Texture * selectorTexture = nullptr;
+
+    static bool sort(const LevelData& d1, const LevelData& d2){
+        return d1.id < d2.id;
+    }
 };

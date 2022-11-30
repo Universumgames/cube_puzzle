@@ -112,16 +112,27 @@ void CubeMap::Init() {
     GameObject::Init();
 }
 
+/// gibt den Spielbereich zurück (ohne den schwarzen Rand drumrum)
 Rect CubeMap::getDrawableRect() {
     return gameState->getDrawableGameRect();
 }
 
-Rect CubeMap::playerDrawPosition() {
+Rect CubeMap::getPlayerDrawPosition() {
     CubeMapSide *side = getCurrentSide();
     auto origSize = side->getFieldSize(getDrawableRect());
     auto size = origSize * 0.8;
     auto gridOffset = getDrawableRect() + ((origSize - size) / 2);
-    auto screenGridPos = getCurrentSide()->cubePositionToScreenPosition(diceData, playerPos);
+    auto screenGridPos = getCurrentSide()->cubePositionToScreenPosition(this->diceData, playerPos);
+    return {origSize.x * screenGridPos.x + gridOffset.x, origSize.y * screenGridPos.y + gridOffset.y, size.x, size.y};
+}
+
+ /// returns the rect in which the desired object can be drawn
+Rect CubeMap::getDrawPosition(Point point, double scale) {
+    CubeMapSide *side = getCurrentSide();
+    auto origSize = side->getFieldSize((getDrawableRect()));
+    auto size = origSize * scale;
+    auto gridOffset = getDrawableRect() + ((origSize - size) / 2);
+    auto screenGridPos = getCurrentSide()->cubePositionToScreenPosition(this->diceData, point);
     return {origSize.x * screenGridPos.x + gridOffset.x, origSize.y * screenGridPos.y + gridOffset.y, size.x, size.y};
 }
 

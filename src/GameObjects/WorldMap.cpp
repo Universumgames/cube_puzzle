@@ -31,7 +31,7 @@ int WorldMap::getFieldIndex(int x, int y) const {
 
 void WorldMap::RenderUI(const u32 frame, const u32 totalMSec, const float deltaT) {
     mapCoordinates->RenderUI(BASIC_GO_DATA_PASSTHROUGH);
-    drawMinimap();
+    //drawMinimap();
 }
 
 void WorldMap::drawMinimap() {
