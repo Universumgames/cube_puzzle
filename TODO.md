@@ -1,16 +1,6 @@
 # ToDo List
 
-- LevelSelector
-  - loadlist
-  - drawList
-  - loadlevel(int)
-- Level
-  - load
-- CubeMap
-  - map 
-  - minimap
-- Worldmap
-  - worldfield
-- CubeField
-- Player
-  - movement
+- cube objects
+- player animations
+- sounds
+- level creation

@@ -223,7 +223,6 @@ bool CubeMap::rotateCubeIfNecessary(Point &newPlayerPos, PlayerMoveDirection mov
             moveCubeInWorld(diceRollDirection);
         }
     } else if (oldSideId != this->currentSideId) { // if not, rollback
-        // TODO play a sound that makes it clear that yes, the input was acknowledged, but no, you cannot move to the other cubeField because there's an obstacle.
         this->currentSideId = oldSideId;
         newPlayerPos.x = oldPlayerPos.x;
         newPlayerPos.y = oldPlayerPos.y;
