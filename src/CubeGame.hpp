@@ -14,7 +14,7 @@ struct GameStateData {
     ExitState exitState = ExitState::UNSET;
     char optionalDataTypeIdentifier = '\0';
     void *optionalData = nullptr;
-    size_t optionalDataSize = -1;
+    size_t optionalDataSize = 1;
 };
 
 /// Cube Game handler

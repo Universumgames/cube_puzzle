@@ -77,7 +77,7 @@ private:
     Text *minimapText;
     Text *debugDiceData;
 
-    Texture *renderTarget;
+    Texture *renderTarget = nullptr;
     Texture *oldSideFrame = nullptr;
     Point oldSideFrameSize;
     double sideTransitionState = 0;
