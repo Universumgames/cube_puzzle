@@ -64,11 +64,8 @@ void LevelSelector::Render(const u32 frame, const u32 totalMSec, const float del
     Point usedListStartPoint = {listStartPoint.x + drawableUISpace.x, listStartPoint.y + drawableUISpace.y};
     int selectWidth = max(drawableUISpace.w / 2, 100);
     int selectHeight = max(drawableUISpace.h / 6, 50);
-    cout << selectHeight << endl;
     rows = drawableUISpace.h / selectHeight;
-    cout << rows << endl;
-    selectHeight = drawableUISpace.h / rows;
-    cout << selectHeight<< endl;
+    selectHeight = (drawableUISpace.h - (rows-1)*padding) / rows;
     columns = 2;
 
     Point levelRectSize = {selectWidth, selectHeight};
@@ -114,7 +111,7 @@ void LevelSelector::loadList() {
         return;
     }
 
-    for(int i = 0; i < 5; i++) {
+    for(int i = 0; i < 8; i++) {
         // level loading
         for (auto const &dirEntry: std::filesystem::directory_iterator{levels}) {
             std::string path = dirEntry.path().string();
@@ -214,6 +211,7 @@ Rect LevelSelector::getUIRenderDst() {
 }
 
 void LevelSelector::prepareLevelListItemTexture(LevelData &leveldata, Rect drawableRect) {
+    if(leveldata.selectorTexture == nullptr) SDL_DestroyTexture(leveldata.selectorTexture);
     leveldata.selectorTexture = SDL_CreateTexture(render, SDL_PIXELFORMAT_ARGB8888,
                                                   SDL_TEXTUREACCESS_TARGET, drawableRect.w, drawableRect.h);
     Texture *oldTarget = SDL_GetRenderTarget(render);

@@ -35,17 +35,20 @@ void CubeField::Render(CubeGame &game, Renderer *render, Point size, Point locat
     Rect dst = {location.x, location.y, size.x, size.y};
     SDL_RenderFillRect(render, &dst);
     drawSpriteBorder(game.isDebug(), render, dst);
-    Point locationNew = {location.x + 1, location.y + 1};
-    Point sizeNew = {size.x - 2, size.y - 2};
-    for (CubeObject* cube_object : this->cubeObjects) {
-        cube_object->Render(game, render, sizeNew, locationNew, frame, totalMSec, deltaT);
-        locationNew = {locationNew.x + 1, locationNew.y + 1};
-        sizeNew = {sizeNew.x - 2, sizeNew.y - 2};
+    Point locationNew = {location.x + 10, location.y + 10};
+    Point sizeNew = {size.x - 20, size.y - 20};
+    for (CubeObject* cubeObject : this->cubeObjects) {
+        //std::cout << "Wir sind in der for-Schleife." << std::endl;
+        cubeObject->Render(game, render, sizeNew, locationNew, frame, totalMSec, deltaT);
+        locationNew = {locationNew.x + 10, locationNew.y + 10};
+        sizeNew = {sizeNew.x - 20, sizeNew.y - 20};
     }
 }
 
 void EmptyField::Render(CubeGame &game, Renderer *render, Point size, Point location, const u32 frame, const u32 totalMSec, const float deltaT) {
-    drawSpriteBorder(game.isDebug(), render, {location.x, location.y, size.x, size.y});
+    SDL_SetRenderDrawColor(render, 0, 0, 0, 0);
+    CubeField::Render(game, render, size, location, frame, totalMSec, deltaT);
+
 }
 
 void Grass::Render(CubeGame& game, Renderer *render, Point size, Point location, u32 frame, u32 totalMSec, float deltaT) {
