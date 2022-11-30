@@ -32,6 +32,12 @@ void MovingMagnet::Render(CubeGame& game, Renderer *render, Point size, Point lo
     CubeObject::Render(game, render, size, location, frame, totalMSec, deltaT);
 }
 
+void Flag::Render(CubeGame& game, Renderer *render, Point size, Point location, u32 frame, u32 totalMSec, float deltaT) {
+    SDL_SetRenderDrawColor(render, 255, 0, 0, 255);
+    CubeObject::Render(game, render, size, location, frame, totalMSec, deltaT);
+}
+
+
 void CubeObject::drawSpriteBorder(CubeGame &game, Renderer *render, Rect dst) {
     if (!game.isDebug())
         return;

@@ -101,6 +101,7 @@ class Collectible : public CubeObject {
 
 class Flag : public Collectible {
 public:
+    void Render(CubeGame &game, Renderer *render, Point size, Point location, u32 frame, u32 totalMSec, float deltaT) override;
     bool canEnterPressurePlate() override;
     bool canActivatePressurePlate() override;
 };
