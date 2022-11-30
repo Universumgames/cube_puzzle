@@ -32,6 +32,7 @@ bool CubeMap::movePlayer(PlayerMoveDirection dir) {
     if (!getCurrentSide()->getField(newPlayerPos)->canPlayerEnter())
         return false;
     this->playerPos = newPlayerPos;
+    //doLevelFinishedLogic();
     return true;
 }
 
@@ -222,7 +223,7 @@ bool CubeMap::rotateCubeIfNecessary(Point &newPlayerPos, PlayerMoveDirection mov
             moveCubeInWorld(diceRollDirection);
         }
     } else if (oldSideId != this->currentSideId) { // if not, rollback
-        // TODO play a sound that makes it clear that yes, the input was acknowledged, but no, you cannot move to the other cube cubeFields because there's an obstacle.
+        // TODO play a sound that makes it clear that yes, the input was acknowledged, but no, you cannot move to the other cubeField because there's an obstacle.
         this->currentSideId = oldSideId;
         newPlayerPos.x = oldPlayerPos.x;
         newPlayerPos.y = oldPlayerPos.y;
@@ -236,3 +237,7 @@ bool CubeMap::checkCubeSideTransition(int sideAId, int sideBId, int oldSideId) c
     return ((sideAId == oldSideId && sideBId == this->currentSideId) ||
             (sideBId == oldSideId && sideAId == this->currentSideId));
 }
+
+/*void CubeMap::doLevelFinishedLogic() {
+    getCurrentSide()->getField(this->playerPos)->
+}*/

@@ -6,27 +6,27 @@
 // ################################# Konstruktoren ###################################################################################
 
 CubeField::CubeField(Vector<CubeObject *>& cubeObjects) {
-    this->cubeObjects = std::move(cubeObjects);
+    this->cubeObjects = cubeObjects;
 }
 
 EmptyField::EmptyField(Vector<CubeObject *>& cubeObjects) {
-    this->cubeObjects = std::move(cubeObjects);
+    this->cubeObjects = cubeObjects;
 }
 
 Wall_1::Wall_1(Vector<CubeObject *>& cubeObjects) {
-    this->cubeObjects = std::move(cubeObjects);
+    this->cubeObjects = cubeObjects;
 }
 
 Wall_2::Wall_2(Vector<CubeObject *>& cubeObjects) {
-    this->cubeObjects = std::move(cubeObjects);
+    this->cubeObjects = cubeObjects;
 }
 
 Grass::Grass(Vector<CubeObject *>& cubeObjects) {
-    this->cubeObjects = std::move(cubeObjects);
+    this->cubeObjects = cubeObjects;
 }
 
 PressurePlate::PressurePlate(Vector<CubeObject *>& cubeObjects) {
-    this->cubeObjects = std::move(cubeObjects);
+    this->cubeObjects = cubeObjects;
 }
 
 // ################################# Alle Render-Methoden ############################################################################
@@ -78,24 +78,29 @@ void EmptyField::Update(CubeGame &game, u32 frame, u32 totalMSec, float deltaT) 
 }
 
 void Wall_1::Update(CubeGame &game, u32 frame, u32 totalMSec, float deltaT) {
-
+    // maybe add code later?
 }
 
 void Wall_2::Update(CubeGame &game, u32 frame, u32 totalMSec, float deltaT) {
-
+    // maybe add code later?
 }
 
 void Grass::Update(CubeGame &game, u32 frame, u32 totalMSec, float deltaT) {
-
+    // maybe add code later?
 }
 
 void PressurePlate::Update(CubeGame &game, u32 frame, u32 totalMSec, float deltaT) {
-
+    // maybe add code later?
 }
 
 // ################################# canPlayerEnter-Methoden #########################################################################
 
 bool EmptyField::canPlayerEnter() {
+    for (CubeObject* cubeObject : this->cubeObjects) {
+        if (!cubeObject->canPlayerEnter()) {
+            return false;
+        }
+    }
     return true;
 }
 
@@ -104,6 +109,11 @@ bool Static::canPlayerEnter() {
 }
 
 bool PressurePlate::canPlayerEnter() {
+    for (CubeObject* cubeObject : this->cubeObjects) {
+        if (!cubeObject->canPlayerEnter()) {
+            return false;
+        }
+    }
     return true;
 }
 

@@ -90,7 +90,7 @@ CubeMap::CubeMap(CubeGame &game1, ComplexGameState *gameState, SDL_Renderer *ren
                  const Vector<CubeMapSide *> &sides, int startSide,
                  Point playerPos)
         : GameObject(game1, gameState, render1) {
-    this->sides.assign(sides.begin(), sides.end());
+    this->sides = sides;
     this->currentSideId = startSide;
     this->playerPos = playerPos;
     this->debugSideIndicator = new Text(game, gameState, render, 400, "", game1.getSpriteStorage()->debugFont,

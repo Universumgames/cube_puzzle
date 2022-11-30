@@ -47,14 +47,14 @@ LevelLoader::LoadedLevelData LevelLoader::loadLevel(const std::string &path)
     Vector<WorldField::WorldFieldEnum> worldField;
     Point cubePos = {0, 0};
     Point playerPos = {1, 1};
-    int cubeSide = 0;
+    int cubeSide = 2;
     std::string levelName;
     int id = 0;
 
     std::ifstream is(path);
     is >> levelName;
     is >> id;
-    for (int s = 0; s < 6; s++)
+    for (int s = 1; s < 7; s++)
     {
         CubeMapSide *side_temp = new CubeMapSide();
 

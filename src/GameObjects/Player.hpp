@@ -3,8 +3,6 @@
 #include "GameObject.hpp"
 #include "../data/MoveDirections.hpp"
 
-class Level;
-
 class CubeMap;
 
 /// Helper class to handle player movement INPUT and rendering player, movement handled in CubeMap
@@ -16,9 +14,7 @@ public:
     void setCubeMap(CubeMap *cubeMap);
 
     void HandleEvent(u32 frame, u32 totalMSec, float deltaT, Event event) override;
-
     void Update(u32 frame, u32 totalMSec, float deltaT) override;
-
     void Render(u32 frame, u32 totalMSec, float deltaT) override;
 
     /// move player, relative to screen

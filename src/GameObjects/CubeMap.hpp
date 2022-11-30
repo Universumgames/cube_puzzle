@@ -28,13 +28,9 @@ public:
     void SetWorldMap(WorldMap *worldMap) { this->worldMap = worldMap; }
 
     void HandleEvent(const u32 frame, const u32 totalMSec, const float deltaT, Event event) override;
-
     void Update(const u32 frame, const u32 totalMSec, const float deltaT) override;
-
     void Render(const u32 frame, const u32 totalMSec, const float deltaT) override;
-
     void RenderUI(const u32 frame, const u32 totalMSec, const float deltaT) override;
-
     void Init() override;
 
 public:
@@ -67,6 +63,8 @@ private:
     Rect getDrawableRect();
 
     void saveCurrentFrame();
+
+    //void doLevelFinishedLogic();
 
 private:
     WorldMap *worldMap = nullptr;

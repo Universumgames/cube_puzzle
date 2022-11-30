@@ -95,9 +95,13 @@ bool Flag::canActivatePressurePlate() {
     return false;
 }
 
+// ################################# sonstige Methoden ###############################################################################
 
+bool Flag::enter() {
 
-
+    // Level:: void returnToLevelSelector(ExitState exitState);
+    // ExitState::FINISHED
+}
 
 
 

@@ -15,9 +15,7 @@ public:
     CubeField() = default;
     explicit CubeField(Vector<CubeObject *> &cubeObjects);
 
-    /// Handle input events, probably unused
     virtual void HandleEvent(CubeGame &game, u32 frame, u32 totalMSec, float deltaT, Event event) {};
-    /// physics, etc. update method
     virtual void Update(CubeGame &game, u32 frame, u32 totalMSec, float deltaT) = 0;
     virtual void Render(CubeGame &game, Renderer *render, Point size, Point location, u32 frame, u32 totalMSec, float deltaT);
 
@@ -62,8 +60,7 @@ public:
     explicit Wall_2(Vector<CubeObject *> &cubeObjects);
 
     void Update(CubeGame &game, u32 frame, u32 totalMSec, float deltaT) override;
-    void Render(CubeGame &game, Renderer *render, Point size, Point location, u32 frame, u32 totalMSec,
-                float deltaT) override;
+    void Render(CubeGame &game, Renderer *render, Point size, Point location, u32 frame, u32 totalMSec, float deltaT) override;
 };
 
 class Grass : public EmptyField {
@@ -72,8 +69,7 @@ public:
     explicit Grass(Vector<CubeObject *> &cubeObjects);
 
     void Update(CubeGame &game, u32 frame, u32 totalMSec, float deltaT) override;
-    void Render(CubeGame &game, Renderer *render, Point size, Point location, u32 frame, u32 totalMSec,
-                float deltaT) override;
+    void Render(CubeGame &game, Renderer *render, Point size, Point location, u32 frame, u32 totalMSec, float deltaT) override;
 };
 
 class Interactable : public CubeField {
@@ -86,8 +82,7 @@ public:
     explicit PressurePlate(Vector<CubeObject *> &cubeObjects);
 
     void Update(CubeGame &game, u32 frame, u32 totalMSec, float deltaT) override;
-    void Render(CubeGame &game, Renderer *render, Point size, Point location, u32 frame, u32 totalMSe,
-                float deltaT) override;
+    void Render(CubeGame &game, Renderer *render, Point size, Point location, u32 frame, u32 totalMSe, float deltaT) override;
 
     bool canPlayerEnter() override;
     bool canObjectEnter(CubeObject *cubeObject) override;

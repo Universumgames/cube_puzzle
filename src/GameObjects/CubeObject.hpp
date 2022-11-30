@@ -65,4 +65,6 @@ public:
 
     bool canEnterPressurePlate() override;
     bool canActivatePressurePlate() override;
+
+    bool enter();
 };

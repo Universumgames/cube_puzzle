@@ -17,11 +17,12 @@ inline Vector<WorldField::WorldFieldEnum> emptyWorldField = {/*
 */};
 
 inline Vector<CubeObject *> objectVec = {new Flag()};
+inline Vector<CubeObject *> stoneVec = {new Stone()};
 inline Point emptyCubeMapSidesSize = {5, 5};
 inline Vector<CubeField *> emptySide = {
         new Grass(), new EmptyField(objectVec), new EmptyField(), new EmptyField(), new EmptyField(),
         new EmptyField(), new EmptyField(), new EmptyField(), new EmptyField(), new EmptyField(),
-        new EmptyField(), new EmptyField(), new EmptyField(), new EmptyField(), new EmptyField(),
+        new EmptyField(), new EmptyField(stoneVec), new EmptyField(), new EmptyField(), new EmptyField(),
         new EmptyField(), new PressurePlate(), new EmptyField(), new EmptyField(), new EmptyField(),
         new EmptyField(), new EmptyField(), new EmptyField(), new EmptyField(), new EmptyField()
 };

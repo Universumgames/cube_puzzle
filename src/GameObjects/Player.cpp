@@ -3,7 +3,7 @@
 #include "CubeMap.hpp"
 #include "../data/spriteDefs.hpp"
 
-#define PLAYER_MOVEMENT_COUNTDOWN_MILLIS 500
+#define PLAYER_MOVEMENT_COUNTDOWN_MILLIS 250s
 
 Player::Player(CubeGame &game, ComplexGameState *gameState, SDL_Renderer *render) : GameObject(game, gameState,
                                                                                                render) {}
