@@ -13,6 +13,8 @@ protected:
 
 public:
     CubeField() = default;
+    
+    explicit CubeField(Vector<CubeObject *>& cubeObjects);
 
     /// Handle input events, probably unused
     virtual void HandleEvent(CubeGame &game, u32 frame, u32 totalMSec, float deltaT, Event event) = 0;
@@ -21,9 +23,7 @@ public:
     virtual void Update(CubeGame &game, u32 frame, u32 totalMSec, float deltaT) = 0;
 
     /// render only method
-    virtual void
-    Render(CubeGame &game, Renderer *render, Point size, Point location, u32 frame, u32 totalMSec,
-           float deltaT);
+    virtual void Render(CubeGame &game, Renderer *render, Point size, Point location, u32 frame, u32 totalMSec, float deltaT);
 
     /// return true if player can move to this tile, false otherwise
     virtual bool canPlayerEnter() = 0;
@@ -107,8 +107,19 @@ public:
     static Static *decode(std::string data);
 };
 
+class Wall_1 : public Static {
+public:
+    void Render(CubeGame &game, Renderer *render, Point size, Point location, u32 frame, u32 totalMSec, float deltaT) override;
+};
+
+class Wall_2 : public Static {
+public:
+    void Render(CubeGame &game, Renderer *render, Point size, Point location, u32 frame, u32 totalMSec, float deltaT) override;
+};
+
 class Grass : public Static {
 public:
+    void Render(CubeGame &game, Renderer *render, Point size, Point location, u32 frame, u32 totalMSec, float deltaT) override;
     std::string encode() override {
         return Static::encode() + "g";
     }
@@ -141,6 +152,7 @@ public:
 
 class PressurePlate : public Interactable {
 public:
+    void Render(CubeGame &game, Renderer *render, Point size, Point location, u32 frame, u32 totalMSec, float deltaT) override;
     bool canPlayerEnter() override {
         return true;
     }

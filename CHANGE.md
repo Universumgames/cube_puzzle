@@ -5,6 +5,11 @@
 - fix minimap animation, when moving from side to side fast enough, the arrow changes, but the fade would not reset, this is fixed now
 - implement basic side transition animation
 - slow down player movement to one move every 500 ms (adjustable via define in [`src/GameObjects/Player.cpp`](src/GameObjects/Player.cpp))
+- created class "CubeObject" ([`src/GameObjects/CubeObject.hpp`](src/GameObjects/CubeObject.hpp), [`src/GameObjects/CubeObject.cpp`](src/GameObjects/CubeObject.cpp))
+- some objects that were CubeFields before are now CubeObjects: GravityObjects (FallingStone and RestingStone) and Slider.
+- every CubeField now has a <code>Vector<CubeObject *></code>, where all the objects currently positioned on that field can be stored. The constructor of CubeField has been overloaded to accept a <code>Vector<CubeObject *>&</code>.
+- the CubeObjects available as of now are: Slider, RestingMagnet, MovingMagnet (which is intended to moves with the player), RestingStone, FallingStone, Flag.
+- the CubeFields available as of now are: EmptyField, Wall_1, Wall_2, Grass, PressurePlate.
 - implement inter game state routing for finishing levels and loading next
 
 # Für Vorlesung 2022/11/23

@@ -1,86 +1,107 @@
 #pragma once
 
+#include "../CubeGame.hpp"
 #include "GameObject.hpp"
 
 class CubeObject {
 public:
     /// Handle input events, probably unused
-    virtual void HandleEvent(CubeGame &game, u32 frame, u32 totalMSec, float deltaT, Event event) = 0;
+    virtual void HandleEvent(CubeGame &game, u32 frame, u32 totalMSec, float deltaT, Event event);
     
     /// physics, etc. update method
-    virtual void Update(CubeGame &game, u32 frame, u32 totalMSec, float deltaT) = 0;
+    virtual void Update(CubeGame &game, u32 frame, u32 totalMSec, float deltaT);
     
     /// render only method
-    virtual void Render(CubeGame &game, Renderer *render, Point size, Point location, u32 frame, u32 totalMSec,
-           float deltaT);
+    virtual void Render(CubeGame &game, Renderer *render, Point size, Point location, u32 frame, u32 totalMSec, float deltaT);
     
-    virtual bool canEnterPressurePlate() = 0;
+    void drawSpriteBorder(CubeGame &game, Renderer *render, Rect dst);
     
-    virtual bool canActivatePressurePlate() = 0;
+    virtual bool canEnterPressurePlate();
+    
+    virtual bool canActivatePressurePlate();
 };
 
-class GravityObject : CubeObject {
+class GravityObject : public CubeObject {
 public:
     bool canEnterPressurePlate() override;
 };
 
 class FallingGravityObject;
 
-class RestingGravityObject : GravityObject {
+class RestingGravityObject : public GravityObject {
 public:
     void HandleEvent(CubeGame &game, u32 frame, u32 totalMSec, float deltaT, Event event) override;
     void Update(CubeGame &game, u32 frame, u32 totalMSec, float deltaT) override;
     RestingGravityObject() = default;
-    FallingGravityObject* switchToFallingGravityObject();
+    virtual FallingGravityObject* switchToFallingGravityObject() = 0;
     bool canActivatePressurePlate() override;
 };
 
-class RestingStone : RestingGravityObject {
-
+class RestingStone : public RestingGravityObject {
+public:
+    void Render(CubeGame &game, Renderer *render, Point size, Point location, u32 frame, u32 totalMSec, float deltaT) override;
+    FallingGravityObject* switchToFallingGravityObject() override;
 };
 
-class FallingGravityObject : GravityObject {
+class FallingGravityObject : public GravityObject {
 public:
     void HandleEvent(CubeGame &game, u32 frame, u32 totalMSec, float deltaT, Event event) override;
     void Update(CubeGame &game, u32 frame, u32 totalMSec, float deltaT) override;
     FallingGravityObject() = default;
-    RestingGravityObject* switchToRestingGravityObject();
+    virtual RestingGravityObject* switchToRestingGravityObject() = 0;
     bool canActivatePressurePlate() override;
 
 };
 
-class FallingStone : FallingGravityObject {
-
+class FallingStone : public FallingGravityObject {
+public:
+    void Render(CubeGame &game, Renderer *render, Point size, Point location, u32 frame, u32 totalMSec, float deltaT) override;
+    RestingGravityObject* switchToRestingGravityObject() override;
 };
 
-class Activatable : CubeObject {
+class Activatable : public CubeObject {
 public:
     bool canEnterPressurePlate() override;
     bool canActivatePressurePlate() override;
     
 };
 
-class Slider : Activatable {
+class Slider : public Activatable {
+public:
+    void Render(CubeGame &game, Renderer *render, Point size, Point location, u32 frame, u32 totalMSec, float deltaT) override;
 
 };
 
-class Moveable : CubeObject {
+class Moveable : public CubeObject {
 public:
     bool canEnterPressurePlate() override;
 };
 
-class RestingMoveable : Moveable {
+class RestingMoveable : public Moveable {
 
 };
 
-class RestingMagnet : RestingMoveable {
+class RestingMagnet : public RestingMoveable {
+public:
+    void Render(CubeGame &game, Renderer *render, Point size, Point location, u32 frame, u32 totalMSec, float deltaT) override;
+};
+
+class MovingMoveable : public Moveable {
 
 };
 
-class MovingMoveable : Moveable {
+class MovingMagnet : public MovingMoveable {
+public:
+    void Render(CubeGame &game, Renderer *render, Point size, Point location, u32 frame, u32 totalMSec, float deltaT) override;
+};
+
+class Collectible : public CubeObject {
 
 };
 
-class MovingMagnet : MovingMoveable {
-
+class Flag : public Collectible {
+public:
+    void Render(CubeGame &game, Renderer *render, Point size, Point location, u32 frame, u32 totalMSec, float deltaT) override;
+    bool canEnterPressurePlate() override;
+    bool canActivatePressurePlate() override;
 };

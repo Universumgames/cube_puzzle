@@ -63,6 +63,8 @@ void CubeGame::loadSprites() {
     loadPNGTexture(spriteStorage.playerSpriteSheet, render, PLAYER_SPRITE_SHEET_PATH)
     loadPNGTexture(spriteStorage.arrowSemiCircle, render, ARROW_SEMICIRCLE_PATH)
     loadPNGTexture(spriteStorage.arrowStraight, render, ARROW_STRAIGHT_PATH)
+    loadPNGTexture(spriteStorage.cubeFieldSpriteSheet, render, CUBE_FIELD_PATH)
+    loadPNGTexture(spriteStorage.cubeObjectSpriteSheet, render, CUBE_OBJECT_PATH)
 
     for (int i = 1; i <= 6; i++) {
         Texture *tmp;
