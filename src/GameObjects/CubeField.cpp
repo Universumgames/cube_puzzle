@@ -39,6 +39,9 @@ void CubeField::drawSpriteBorder(CubeGame &game, Renderer *render, Rect dst) {
     SDL_SetRenderDrawColor(render, spriteBorderColor.r, spriteBorderColor.g, spriteBorderColor.b, spriteBorderColor.a);
     SDL_RenderDrawRect(render, &dst);
 }
+CubeField::CubeField(Vector<CubeObject *>& cubeObjects) {
+    this->cubeObjects = cubeObjects;
+}
 
 Static *Static::decode(std::string data) {
     char c = data[0];

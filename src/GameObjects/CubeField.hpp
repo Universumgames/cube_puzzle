@@ -13,6 +13,8 @@ protected:
 
 public:
     CubeField() = default;
+    
+    explicit CubeField(Vector<CubeObject *>& cubeObjects);
 
     /// Handle input events, probably unused
     virtual void HandleEvent(CubeGame &game, u32 frame, u32 totalMSec, float deltaT, Event event) = 0;
