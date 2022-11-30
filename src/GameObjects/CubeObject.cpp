@@ -37,12 +37,25 @@ void Flag::Render(CubeGame& game, Renderer *render, Point size, Point location, 
     CubeObject::Render(game, render, size, location, frame, totalMSec, deltaT);
 }
 
+void CubeObject::Update(CubeGame& game, u32 frame, u32 totalMSec, float deltaT) {
+}
+
+void CubeObject::HandleEvent(CubeGame& game, u32 frame, u32 totalMSec, float deltaT, Event event) {
+}
 
 void CubeObject::drawSpriteBorder(CubeGame &game, Renderer *render, Rect dst) {
     if (!game.isDebug())
         return;
     SDL_SetRenderDrawColor(render, spriteBorderColor.r, spriteBorderColor.g, spriteBorderColor.b, spriteBorderColor.a);
     SDL_RenderDrawRect(render, &dst);
+}
+
+bool CubeObject::canEnterPressurePlate() {
+    return false;
+}
+
+bool CubeObject::canActivatePressurePlate() {
+    return false;
 }
 
 bool GravityObject::canEnterPressurePlate() {

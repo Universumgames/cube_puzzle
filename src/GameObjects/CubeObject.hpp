@@ -6,19 +6,19 @@
 class CubeObject {
 public:
     /// Handle input events, probably unused
-    virtual void HandleEvent(CubeGame &game, u32 frame, u32 totalMSec, float deltaT, Event event) = 0;
+    virtual void HandleEvent(CubeGame &game, u32 frame, u32 totalMSec, float deltaT, Event event);
     
     /// physics, etc. update method
-    virtual void Update(CubeGame &game, u32 frame, u32 totalMSec, float deltaT) = 0;
+    virtual void Update(CubeGame &game, u32 frame, u32 totalMSec, float deltaT);
     
     /// render only method
     virtual void Render(CubeGame &game, Renderer *render, Point size, Point location, u32 frame, u32 totalMSec, float deltaT);
     
     void drawSpriteBorder(CubeGame &game, Renderer *render, Rect dst);
     
-    virtual bool canEnterPressurePlate() = 0;
+    virtual bool canEnterPressurePlate();
     
-    virtual bool canActivatePressurePlate() = 0;
+    virtual bool canActivatePressurePlate();
 };
 
 class GravityObject : public CubeObject {
