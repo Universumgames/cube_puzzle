@@ -109,6 +109,14 @@ public:
     static Static *decode(std::string data);
 };
 
+class Wall_1 : public Static {
+
+};
+
+class Wall_2 : public Static {
+
+};
+
 class Grass : public Static {
 public:
     std::string encode() override {

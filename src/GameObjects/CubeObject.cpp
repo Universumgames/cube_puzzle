@@ -38,6 +38,7 @@ void FallingGravityObject::Update(CubeGame &game, u32 frame, u32 totalMSec, floa
 RestingGravityObject* FallingGravityObject::switchToRestingGravityObject() {
     return new RestingGravityObject();
 }
+
 bool FallingGravityObject::canActivatePressurePlate() {
     return false;
 }

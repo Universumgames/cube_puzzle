@@ -60,6 +60,8 @@ struct SpriteStorage {
     Texture *playerSpriteSheet = nullptr;
     Texture *arrowSemiCircle = nullptr;
     Texture *arrowStraight = nullptr;
+    Texture *cubeFieldSpriteSheet = nullptr;
+    Texture *cubeObjectSpriteSheet = nullptr;
     Texture *temp = nullptr;
     Font *basicFont = nullptr;
     Font *debugFont = nullptr;
