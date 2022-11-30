@@ -8,7 +8,7 @@
 - created class "CubeObject" ([`src/GameObjects/CubeObject.hpp`](src/GameObjects/CubeObject.hpp), [`src/GameObjects/CubeObject.cpp`](src/GameObjects/CubeObject.cpp))
 - some objects that were CubeFields before are now CubeObjects: GravityObjects (FallingStone and RestingStone) and Slider.
 - every CubeField now has a <code>Vector<CubeObject *></code>, where all the objects currently positioned on that field can be stored. The constructor of CubeField has been overloaded to accept a <code>Vector<CubeObject *>&</code>.
-- the CubeObjects available as of now are: Slider, RestingMagnet, MovingMagnet (which is intended to moves with the player), RestingStone, FallingStone.
+- the CubeObjects available as of now are: Slider, RestingMagnet, MovingMagnet (which is intended to moves with the player), RestingStone, FallingStone, Flag.
 - the CubeFields available as of now are: EmptyField, Wall_1, Wall_2, Grass, PressurePlate.
 
 # Für Vorlesung 2022/11/23

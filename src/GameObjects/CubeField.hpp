@@ -23,8 +23,7 @@ public:
     virtual void Update(CubeGame &game, u32 frame, u32 totalMSec, float deltaT) = 0;
 
     /// render only method
-    virtual void
-    Render(CubeGame &game, Renderer *render, Point size, Point location, u32 frame, u32 totalMSec,
+    virtual void Render(CubeGame &game, Renderer *render, Point size, Point location, u32 frame, u32 totalMSec,
            float deltaT);
 
     /// return true if player can move to this tile, false otherwise
