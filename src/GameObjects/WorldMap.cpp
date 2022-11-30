@@ -7,8 +7,8 @@ void WorldMap::HandleEvent(const u32 frame, const u32 totalMSec, const float del
 }
 
 void WorldMap::Update(const u32 frame, const u32 totalMSec, const float deltaT) {
-    mapCoordinates->setEnabled(game.isDebug());
-    mapCoordinates->changeText("CubePos in world: x" + std::to_string(cubePos.x) + " y" + std::to_string(cubePos.y));
+    //mapCoordinates->setEnabled(game.isDebug());
+    //mapCoordinates->changeText("CubePos in world: x" + std::to_string(cubePos.x) + " y" + std::to_string(cubePos.y));
 }
 
 void WorldMap::Render(const u32 frame, const u32 totalMSec, const float deltaT) {
@@ -30,7 +30,7 @@ int WorldMap::getFieldIndex(int x, int y) const {
 }
 
 void WorldMap::RenderUI(const u32 frame, const u32 totalMSec, const float deltaT) {
-    mapCoordinates->RenderUI(BASIC_GO_DATA_PASSTHROUGH);
+    //mapCoordinates->RenderUI(BASIC_GO_DATA_PASSTHROUGH);
     //drawMinimap();
 }
 

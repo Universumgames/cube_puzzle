@@ -19,13 +19,13 @@ Point CubeMapSide::cubePositionToScreenPosition(DiceData diceData, Point cubePos
 }
 
 void CubeMapSide::HandleEvent(CubeGame &game, const u32 frame, const u32 totalMSec, const float deltaT, Event event) {
-    for (auto *field: side) {
+    for (auto *field: cubeFields) {
         field->HandleEvent(game, BASIC_GO_DATA_PASSTHROUGH, event);
     }
 }
 
 void CubeMapSide::Update(CubeGame &game, const u32 frame, const u32 totalMSec, const float deltaT) {
-    for (auto *field: side) {
+    for (auto *field: cubeFields) {
         field->Update(game, BASIC_GO_DATA_PASSTHROUGH);
     }
     if (overlay != nullptr) overlay->setEnabled(game.isDebug());
@@ -45,7 +45,7 @@ void CubeMapSide::Render(CubeGame &game, ComplexGameState* gameState, Renderer *
     if (overlay == nullptr) {
         overlay = new Text(game, gameState, render, 400, "", game.getSpriteStorage()->debugFont, {0, 0});
     }
-    for (auto *field: side) {
+    for (auto *field: cubeFields) {
         Point pos = cubePositionToScreenPosition(diceData, {x, y});
         field->Render(game, render, size, {size.x * pos.x + offset.x, size.y * pos.y + offset.y},
                       BASIC_GO_DATA_PASSTHROUGH);
@@ -113,7 +113,13 @@ void CubeMapSide::renderGridOverlay(CubeGame &game, Renderer *render, DiceData d
 }
 
 void CubeMapSide::renderCubeFields(CubeGame &game, Renderer *render, const u32 frame, const u32 totalMSec, const float deltaT, Rect drawableRect) {
-
+    for (int w = 0; w < this->width; w++) {
+        for (int h = 0; h < this->height; h++) {
+            //getDrawPosition({w, h}, 0.9);
+            int index = getIndex(w, h);
+            //cubeFields[index]->Render(game, render, size, location, frame, totalMSec, deltaT);
+        }
+    }
     //CubeGame &game, Renderer *render, Point size, Point location, u32 frame, u32 totalMSec, float deltaT
 }
 

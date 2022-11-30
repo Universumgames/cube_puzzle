@@ -42,8 +42,6 @@ public:
 
     Rect getPlayerDrawPosition();
 
-    Rect getDrawPosition(Point point, double scale = 1.0);
-
     CubeMapSide *getCurrentSide();
 
     bool isAnimating() { return sideTransitionAnimating; }
@@ -59,7 +57,7 @@ private:
 
     [[nodiscard]] bool checkCubeSideTransition(int sideAId, int sideBId, int oldSideId) const;
 
-    /// get side of dice (1-6)
+    /// get cubeFields of dice (1-6)
     CubeMapSide *getSide(int i);
 
     CubeField *getField(int side, int x, int y);
@@ -98,34 +96,40 @@ class CubeMapSide {
 public:
     CubeMapSide() = default;
 
-    CubeMapSide(Vector<CubeField *> side, int width, int height, int sideID) : width(width), height(height),
-                                                                               sideID(sideID) { this->side = std::move(side); }
+    CubeMapSide(Vector<CubeField *> cubeFields, int width, int height, int sideID) : width(width), height(height),
+                                                                                     sideID(sideID) {
+        this->cubeFields = std::move(cubeFields);
+    }
 
-    CubeMapSide(Vector<CubeField *> side, Point size, int sideID) : width(size.x), height(size.y),
-                                                                    sideID(sideID) { this->side = std::move(side); }
+    CubeMapSide(Vector<CubeField *> cubeFields, Point size, int sideID) : width(size.x), height(size.y),
+                                                                          sideID(sideID) {
+        this->cubeFields = std::move(cubeFields);
+    }
 
-    Vector<CubeField *> side;
+    Vector<CubeField *> cubeFields;
     int width, height, sideID;
     Text *overlay = nullptr;
 
-    CubeField *getField(int x, int y) { return side[getIndex(x, y)]; }
+    CubeField *getField(int x, int y) { return cubeFields[getIndex(x, y)]; }
 
     CubeField *getField(Point pos) { return getField(pos.x, pos.y); }
 
-    [[nodiscard]] int getIndex(int x, int y) const { return x * width + y; }
+    [[nodiscard]] int getIndex(int x, int y) const { return y * width + x; }
 
     Point getFieldSize(Rect drawableRect);
-
 
     void HandleEvent(CubeGame &game, const u32 frame, const u32 totalMSec, const float deltaT, Event event);
 
     void Update(CubeGame &game, const u32 frame, const u32 totalMSec, const float deltaT);
 
-    void Render(CubeGame &game, ComplexGameState *gameState, Renderer *render, DiceData diceData, const u32 frame, const u32 totalMSec, const float deltaT, Rect drawableRect);
+    void Render(CubeGame &game, ComplexGameState *gameState, Renderer *render, DiceData diceData, const u32 frame,
+                const u32 totalMSec, const float deltaT, Rect drawableRect);
 
-    void renderGridOverlay(CubeGame &game, Renderer *render, DiceData diceData, const u32 frame, const u32 totalMSec, const float deltaT, Rect drawableRect);
+    void renderGridOverlay(CubeGame &game, Renderer *render, DiceData diceData, const u32 frame, const u32 totalMSec,
+                           const float deltaT, Rect drawableRect);
 
-    void renderCubeFields(CubeGame &game, Renderer *render, const u32 frame, const u32 totalMSec, const float deltaT, Rect drawableRect);
+    void renderCubeFields(CubeGame &game, Renderer *render, const u32 frame, const u32 totalMSec, const float deltaT,
+                          Rect drawableRect);
 
     [[nodiscard]] Point cubePositionToScreenPosition(DiceData diceData, Point cubePos) const;
 

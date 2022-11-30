@@ -85,32 +85,32 @@ void CubeMapMiniMap::updateMinimap(const u32 frame, const u32 totalMSec, const f
     Point rotatedTransitionOffset = {};
     Point xAxisOffset = {}, yAxisOffset = {};
     RenderData add = {};
-    switch (lastMoveDir) { // add "pushing side"
+    switch (lastMoveDir) { // add "pushing cubeFields"
         case PlayerMoveDirection::UP: // move y axis down
             rotatedTransitionOffset = {0, transitionOffset};
             yAxisOffset = rotatedTransitionOffset;
-            add = {.side = b, .dst = {offset.x + sideSize + yAxisOffset.x, offset.y + yAxisOffset.y - sideSize,
+            add = {.cubeFields = b, .dst = {offset.x + sideSize + yAxisOffset.x, offset.y + yAxisOffset.y - sideSize,
                                       sideSize,
                                       sideSize}, .angle = (double) cloneData.getDiceSideRotation(b)};
             break;
         case PlayerMoveDirection::DOWN: // move y axis up
             rotatedTransitionOffset = {0, -transitionOffset};
             yAxisOffset = rotatedTransitionOffset;
-            add = {.side = n, .dst = {offset.x + sideSize + yAxisOffset.x, offset.y + sideSize * 4 + yAxisOffset.y,
+            add = {.cubeFields = n, .dst = {offset.x + sideSize + yAxisOffset.x, offset.y + sideSize * 4 + yAxisOffset.y,
                                       sideSize,
                                       sideSize}, .angle = (double) cloneData.getDiceSideRotation(b)};
             break;
         case PlayerMoveDirection::LEFT: // move x axis right
             rotatedTransitionOffset = {transitionOffset, 0};
             xAxisOffset = rotatedTransitionOffset;
-            add = {.side = b, .dst = {offset.x + xAxisOffset.x - sideSize, offset.y + sideSize + xAxisOffset.y,
+            add = {.cubeFields = b, .dst = {offset.x + xAxisOffset.x - sideSize, offset.y + sideSize + xAxisOffset.y,
                                       sideSize,
                                       sideSize}, .angle = (double) cloneData.getDiceSideRotation(b)};
             break;
         case PlayerMoveDirection::RIGHT: // move x axis left
             rotatedTransitionOffset = {-transitionOffset, 0};
             xAxisOffset = rotatedTransitionOffset;
-            add = {.side = b, .dst = {offset.x + sideSize * 3 + xAxisOffset.x, offset.y + sideSize + xAxisOffset.y,
+            add = {.cubeFields = b, .dst = {offset.x + sideSize * 3 + xAxisOffset.x, offset.y + sideSize + xAxisOffset.y,
                                       sideSize,
                                       sideSize}, .angle = (double) cloneData.getDiceSideRotation(b)};
             break;
@@ -123,18 +123,18 @@ void CubeMapMiniMap::updateMinimap(const u32 frame, const u32 totalMSec, const f
                                     (double) diceData.getDiceSideRotation(e),
                                     animationProgress);
     sidesDst = {
-            {.side = n, .dst = {offset.x + sideSize + yAxisOffset.x, offset.y + yAxisOffset.y, sideSize,
+            {.cubeFields = n, .dst = {offset.x + sideSize + yAxisOffset.x, offset.y + yAxisOffset.y, sideSize,
                                 sideSize}, .angle = (double) nRot},
-            {.side = w, .dst = {offset.x + xAxisOffset.x, offset.y + sideSize + xAxisOffset.y, sideSize,
+            {.cubeFields = w, .dst = {offset.x + xAxisOffset.x, offset.y + sideSize + xAxisOffset.y, sideSize,
                                 sideSize}, .angle = wLerpAngle},
-            {.side = c, .dst = {offset.x + sideSize + xAxisOffset.x + yAxisOffset.x,
+            {.cubeFields = c, .dst = {offset.x + sideSize + xAxisOffset.x + yAxisOffset.x,
                                 offset.y + sideSize + xAxisOffset.y + yAxisOffset.y, sideSize,
                                 sideSize}, .angle = (double) cloneData.getDiceSideRotation(c)},
-            {.side = e, .dst = {offset.x + sideSize * 2 + xAxisOffset.x, offset.y + sideSize + xAxisOffset.y, sideSize,
+            {.cubeFields = e, .dst = {offset.x + sideSize * 2 + xAxisOffset.x, offset.y + sideSize + xAxisOffset.y, sideSize,
                                 sideSize}, .angle = eLerpAngle},
-            {.side = s, .dst = {offset.x + sideSize + yAxisOffset.x, offset.y + sideSize * 2 + yAxisOffset.y, sideSize,
+            {.cubeFields = s, .dst = {offset.x + sideSize + yAxisOffset.x, offset.y + sideSize * 2 + yAxisOffset.y, sideSize,
                                 sideSize}, .angle = (double) sRot},
-            {.side = b, .dst = {offset.x + sideSize + yAxisOffset.x, offset.y + sideSize * 3 + yAxisOffset.y, sideSize,
+            {.cubeFields = b, .dst = {offset.x + sideSize + yAxisOffset.x, offset.y + sideSize * 3 + yAxisOffset.y, sideSize,
                                 sideSize}, .angle = (double) cloneData.getDiceSideRotation(b)}
     };
 

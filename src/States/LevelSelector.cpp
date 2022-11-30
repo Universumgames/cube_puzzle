@@ -62,17 +62,21 @@ void LevelSelector::Render(const u32 frame, const u32 totalMSec, const float del
     SDL_SetRenderDrawColor(render, 200, 255, 0, 255);
     SDL_RenderFillRect(render, &drawableUISpace);
     Point usedListStartPoint = {listStartPoint.x + drawableUISpace.x, listStartPoint.y + drawableUISpace.y};
-    Point levelRectSize = {max(100, drawableUISpace.w / columns), max(50, drawableUISpace.h / rows)};
+    int selectWidth = max(drawableUISpace.w / 2, 100);
+    int selectHeight = max(drawableUISpace.h / 6, 50);
+    cout << selectHeight << endl;
+    rows = drawableUISpace.h / selectHeight;
+    cout << rows << endl;
+    selectHeight = drawableUISpace.h / rows;
+    cout << selectHeight<< endl;
+    columns = 2;
+
+    Point levelRectSize = {selectWidth, selectHeight};
 
     // TODO fix display list when overflowing window
     int column = 0;
     for (int i = 0; i < levelData.size(); i++) {
         int row = i % rows;
-        if(usedListStartPoint.y + (levelRectSize.y + padding) * row > drawableUISpace.y + drawableUISpace.h){
-            rows--;
-            row = i % rows;
-            columns++;
-        }
         Point rectStartPoint =
                 usedListStartPoint + Point{(levelRectSize.x + padding) * column, (levelRectSize.y + padding) * row};
         Rect drawable = {rectStartPoint.x, rectStartPoint.y, levelRectSize.x, levelRectSize.y};

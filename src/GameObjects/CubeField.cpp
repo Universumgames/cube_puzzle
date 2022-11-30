@@ -9,6 +9,26 @@ CubeField::CubeField(Vector<CubeObject *>& cubeObjects) {
     this->cubeObjects = std::move(cubeObjects);
 }
 
+EmptyField::EmptyField(Vector<CubeObject *>& cubeObjects) {
+    this->cubeObjects = std::move(cubeObjects);
+}
+
+Wall_1::Wall_1(Vector<CubeObject *>& cubeObjects) {
+    this->cubeObjects = std::move(cubeObjects);
+}
+
+Wall_2::Wall_2(Vector<CubeObject *>& cubeObjects) {
+    this->cubeObjects = std::move(cubeObjects);
+}
+
+Grass::Grass(Vector<CubeObject *>& cubeObjects) {
+    this->cubeObjects = std::move(cubeObjects);
+}
+
+PressurePlate::PressurePlate(Vector<CubeObject *>& cubeObjects) {
+    this->cubeObjects = std::move(cubeObjects);
+}
+
 // ################################# Alle Render-Methoden ############################################################################
 
 void CubeField::Render(CubeGame &game, Renderer *render, Point size, Point location, const u32 frame, const u32 totalMSec, const float deltaT) {
@@ -52,6 +72,10 @@ void PressurePlate::Render(CubeGame& game, Renderer *render, Point size, Point l
 
 void EmptyField::Update(CubeGame &game, u32 frame, u32 totalMSec, float deltaT) {
     // maybe add code later?
+}
+
+void PressurePlate::Update(CubeGame &game, u32 frame, u32 totalMSec, float deltaT) {
+
 }
 
 // ################################# canPlayerEnter-Methoden #########################################################################

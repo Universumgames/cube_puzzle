@@ -19,7 +19,7 @@ enum class DiceSide {
     NORTH, SOUTH, WEST, EAST, TOP, BOTTOM
 };
 
-/// Direction when viewing straight on dice side
+/// Direction when viewing straight on dice cubeFields
 enum class DiceSideRotation {
     UP = 0, DOWN = 180, LEFT = 270, RIGHT = 90
 };
@@ -34,30 +34,30 @@ public:
      * Roll cube in direction
      * @param direction direction to roll to
      * @param side
-     * @return new side facing in same direction
+     * @return new cubeFields facing in same direction
      */
     int rotate(DiceRollDirection direction, int side = 1);
 
-    /// get dice side facing direction
+    /// get dice cubeFields facing direction
     [[nodiscard]] int getSide(DiceSide side) const;
 
-    /// get facing direction of side
+    /// get facing direction of cubeFields
     [[nodiscard]] DiceSide getSideFacing(int side) const;
 
     [[nodiscard]] std::string toString() const;
 
     /**
-     * get the side of the cube where the top left corner is relative to
-     * example: the anchor of side 1 is 5, because rotating the cube like above, you can see what is meant with top left corner of side 1
-     * @param side side to which you want to get the anchor from
+     * get the cubeFields of the cube where the top left corner is relative to
+     * example: the anchor of cubeFields 1 is 5, because rotating the cube like above, you can see what is meant with top left corner of cubeFields 1
+     * @param side cubeFields to which you want to get the anchor from
      * @return
      */
     static int getAnchorSideOfTopLeftCorner(int side);
 
     /**
-     * get global orientation of side when looking straight on side
+     * get global orientation of cubeFields when looking straight on cubeFields
      * @param side
-     * @return get rotation of side on global space (no result for top and bottom of dice)
+     * @return get rotation of cubeFields on global space (no result for top and bottom of dice)
      */
     DiceSideRotation getDiceSideRotation(int side);
 
@@ -72,7 +72,7 @@ public:
 private:
     int up, north, west;
 public:
-    /// get opposite side, getOpposite(6) = 1
+    /// get opposite cubeFields, getOpposite(6) = 1
     static int getOpposite(int side);
 };
 

@@ -80,6 +80,6 @@ struct SpriteStorage {
     Font *basicFont = nullptr;
     Font *debugFont = nullptr;
 
-    /// dice backgrounds, side x is stored in [x-1]
+    /// dice backgrounds, cubeFields x is stored in [x-1]
     std::vector<Texture *> sideSprites;
 };

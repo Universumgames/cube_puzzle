@@ -66,7 +66,7 @@ LevelLoader::LoadedLevelData LevelLoader::loadLevel(const std::string& path) {
                 for(int y = 0; y < side->height; y++) {
                     std::string field;
                     stream >> field;
-                    //side->side.push_back(CubeField::decode(field));
+                    //cubeFields->cubeFields.push_back(CubeField::decode(field));
                 }
             }
             sides.push_back(side);

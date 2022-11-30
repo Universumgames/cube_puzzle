@@ -7,7 +7,7 @@
 
 ## Description
 
--   side 2d
+-   cubeFields 2d
 -   minimap(s) oben rechts
 -   spieler ist würfel
 -   spielwelt ist ein würfel

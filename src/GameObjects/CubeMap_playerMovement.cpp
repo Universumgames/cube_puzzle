@@ -96,7 +96,7 @@ PlayerMoveDirection CubeMap::screenDirectionToDirectionOnCubeSide(PlayerMoveDire
     return PlayerMoveDirection::LEFT;
 }
 
-/// if player overstepped an edge: sets the new side, rotates the cube, and sets the new player position
+/// if player overstepped an edge: sets the new cubeFields, rotates the cube, and sets the new player position
 bool CubeMap::rotateCubeIfNecessary(Point &newPlayerPos, PlayerMoveDirection moveDirection) {
     auto *side = getSide(this->currentSideId);
     DiceSideRotation oldSideOrientation = diceData.getDiceSideRotation(this->currentSideId);
@@ -105,7 +105,7 @@ bool CubeMap::rotateCubeIfNecessary(Point &newPlayerPos, PlayerMoveDirection mov
     Point oldPlayerPos = this->playerPos;
     bool rollDice = false;
     DiceRollDirection diceRollDirection;
-    if (newPlayerPos.x < 0) { // move left out of side
+    if (newPlayerPos.x < 0) { // move left out of cubeFields
         switch (oldSideOrientation) {
             case DiceSideRotation::UP:
                 this->currentSideId = this->diceData.getSideWhenMovingInDirX(this->currentSideId,
@@ -127,7 +127,7 @@ bool CubeMap::rotateCubeIfNecessary(Point &newPlayerPos, PlayerMoveDirection mov
                 diceRollDirection = sideToRollDirection(oldSide);
                 break;
         }
-    } else if (newPlayerPos.x >= side->width) { // move right out of side
+    } else if (newPlayerPos.x >= side->width) { // move right out of cubeFields
         switch (oldSideOrientation) {
             case DiceSideRotation::UP:
                 this->currentSideId = this->diceData.getSideWhenMovingInDirX(this->currentSideId,
@@ -149,7 +149,7 @@ bool CubeMap::rotateCubeIfNecessary(Point &newPlayerPos, PlayerMoveDirection mov
                 diceRollDirection = getOppositeDiceRollDirection(sideToRollDirection(oldSide));
                 break;
         }
-    } else if (newPlayerPos.y < 0) { // move up out of side
+    } else if (newPlayerPos.y < 0) { // move up out of cubeFields
         switch (oldSideOrientation) {
             case DiceSideRotation::UP:
                 this->currentSideId = this->diceData.getSideWhenMovingInDirX(this->currentSideId, DiceSideRotation::UP);
@@ -171,7 +171,7 @@ bool CubeMap::rotateCubeIfNecessary(Point &newPlayerPos, PlayerMoveDirection mov
                                                                              DiceSideRotation::RIGHT);
                 break;
         }
-    } else if (newPlayerPos.y >= side->height) { // move down out of side
+    } else if (newPlayerPos.y >= side->height) { // move down out of cubeFields
         switch (oldSideOrientation) {
             case DiceSideRotation::UP:
                 this->currentSideId = this->diceData.getSideWhenMovingInDirX(this->currentSideId,
@@ -195,7 +195,7 @@ bool CubeMap::rotateCubeIfNecessary(Point &newPlayerPos, PlayerMoveDirection mov
         }
     }
 
-    // reposition player if cube side transition took place
+    // reposition player if cube cubeFields transition took place
     if (oldSideId != this->currentSideId) {
         this->lastNormalizedMove = moveDirection;
         int maxRow = getCurrentSide()->height - 1;
@@ -216,13 +216,13 @@ bool CubeMap::rotateCubeIfNecessary(Point &newPlayerPos, PlayerMoveDirection mov
         }
     }
 
-    // check if side transition is allowed
+    // check if cubeFields transition is allowed
     if (getCurrentSide()->getField(newPlayerPos)->canPlayerEnter()) {
         if (rollDice) {
             moveCubeInWorld(diceRollDirection);
         }
     } else if (oldSideId != this->currentSideId) { // if not, rollback
-        // TODO play a sound that makes it clear that yes, the input was acknowledged, but no, you cannot move to the other cube side because there's an obstacle.
+        // TODO play a sound that makes it clear that yes, the input was acknowledged, but no, you cannot move to the other cube cubeFields because there's an obstacle.
         this->currentSideId = oldSideId;
         newPlayerPos.x = oldPlayerPos.x;
         newPlayerPos.y = oldPlayerPos.y;
@@ -231,7 +231,7 @@ bool CubeMap::rotateCubeIfNecessary(Point &newPlayerPos, PlayerMoveDirection mov
     return oldSideId != this->currentSideId;
 }
 
-/// checks if the player transitioned from side A to side B or the other way around
+/// checks if the player transitioned from cubeFields A to cubeFields B or the other way around
 bool CubeMap::checkCubeSideTransition(int sideAId, int sideBId, int oldSideId) const {
     return ((sideAId == oldSideId && sideBId == this->currentSideId) ||
             (sideBId == oldSideId && sideAId == this->currentSideId));

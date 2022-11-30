@@ -6,22 +6,23 @@
 
 // Template file for storing example level data
 
-inline Point emptyWorldFieldSize = {5, 5};
+inline Point emptyWorldFieldSize = {0, 0};
 
-inline Vector<WorldField::WorldFieldEnum> emptyWorldField = {
+inline Vector<WorldField::WorldFieldEnum> emptyWorldField = {/*
         WorldField::WorldFieldEnum::DEFAULT, WorldField::WorldFieldEnum::DEFAULT, WorldField::WorldFieldEnum::DEFAULT, WorldField::WorldFieldEnum::DEFAULT, WorldField::WorldFieldEnum::DEFAULT,
         WorldField::WorldFieldEnum::DEFAULT, WorldField::WorldFieldEnum::DEFAULT, WorldField::WorldFieldEnum::DEFAULT, WorldField::WorldFieldEnum::DEFAULT, WorldField::WorldFieldEnum::DEFAULT,
         WorldField::WorldFieldEnum::DEFAULT, WorldField::WorldFieldEnum::DEFAULT, WorldField::WorldFieldEnum::DEFAULT, WorldField::WorldFieldEnum::DEFAULT, WorldField::WorldFieldEnum::DEFAULT,
         WorldField::WorldFieldEnum::DEFAULT, WorldField::WorldFieldEnum::DEFAULT, WorldField::WorldFieldEnum::DEFAULT, WorldField::WorldFieldEnum::DEFAULT, WorldField::WorldFieldEnum::DEFAULT,
         WorldField::WorldFieldEnum::DEFAULT, WorldField::WorldFieldEnum::DEFAULT, WorldField::WorldFieldEnum::DEFAULT, WorldField::WorldFieldEnum::DEFAULT, WorldField::WorldFieldEnum::DEFAULT,
-};
+*/};
 
+inline Vector<CubeObject *> objectVec = {new Flag()};
 inline Point emptyCubeMapSidesSize = {5, 5};
 inline Vector<CubeField *> emptySide = {
+        new Grass(), new EmptyField(objectVec), new EmptyField(), new EmptyField(), new EmptyField(),
         new EmptyField(), new EmptyField(), new EmptyField(), new EmptyField(), new EmptyField(),
         new EmptyField(), new EmptyField(), new EmptyField(), new EmptyField(), new EmptyField(),
-        new EmptyField(), new EmptyField(), new EmptyField(), new EmptyField(), new EmptyField(),
-        new EmptyField(), new EmptyField(), new EmptyField(), new EmptyField(), new EmptyField(),
+        new EmptyField(), new PressurePlate(), new EmptyField(), new EmptyField(), new EmptyField(),
         new EmptyField(), new EmptyField(), new EmptyField(), new EmptyField(), new EmptyField()
 };
 
