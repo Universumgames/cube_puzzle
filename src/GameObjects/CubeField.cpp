@@ -77,6 +77,18 @@ void EmptyField::Update(CubeGame &game, u32 frame, u32 totalMSec, float deltaT) 
     // maybe add code later?
 }
 
+void Wall_1::Update(CubeGame &game, u32 frame, u32 totalMSec, float deltaT) {
+
+}
+
+void Wall_2::Update(CubeGame &game, u32 frame, u32 totalMSec, float deltaT) {
+
+}
+
+void Grass::Update(CubeGame &game, u32 frame, u32 totalMSec, float deltaT) {
+    
+}
+
 void PressurePlate::Update(CubeGame &game, u32 frame, u32 totalMSec, float deltaT) {
 
 }
@@ -108,11 +120,12 @@ bool Static::canObjectEnter(CubeObject *cubeObject) {
 bool PressurePlate::canObjectEnter(CubeObject *cubeObject) {
     return cubeObject->canEnterPressurePlate();
 }
-
-
-
-
+// ################################# sonstige Methoden ###############################################################################
 
 void CubeField::addObject(CubeObject* cubeObject) {
     this->cubeObjects.push_back(cubeObject);
+}
+
+void CubeField::removeObject(CubeObject* cubeObject) {
+    // TODO Mina: Methode implementieren.
 }

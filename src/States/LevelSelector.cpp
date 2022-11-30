@@ -29,9 +29,9 @@ void LevelSelector::Events(const u32 frame, const u32 totalMSec, const float del
 
             // navigation in selector
             if (what_key.scancode == SDL_SCANCODE_RIGHT) {
-
+                selectorIndex = (selectorIndex + rows) % (int) levelData.size();
             } else if (what_key.scancode == SDL_SCANCODE_LEFT) {
-
+                selectorIndex = (selectorIndex + 2 * rows) % (int) levelData.size();
             } else if (what_key.scancode == SDL_SCANCODE_UP) {
                 selectorIndex--;
             } else if (what_key.scancode == SDL_SCANCODE_DOWN) {
@@ -47,33 +47,33 @@ void LevelSelector::Events(const u32 frame, const u32 totalMSec, const float del
 void LevelSelector::Update(const u32 frame, const u32 totalMSec, const float deltaT) {
     text->setEnabled(cubeGame.isDebug());
     drawList();
-    if(oldSize != game.getWindowSize()){
-
+    if (oldSize != game.getWindowSize()) {
+        prepareLevelListItems();
+        oldSize = game.getWindowSize();
     }
 }
 
 void LevelSelector::Render(const u32 frame, const u32 totalMSec, const float deltaT) {
-    SDL_SetRenderDrawColor(render, 0, 0, 0, 255);
+    SDL_SetRenderDrawColor(render, 20, 20, 20, 255);
     SDL_RenderClear(render);
-    SDL_SetRenderDrawColor(render, 200, 0, 255, 255);
-    SDL_RenderFillRect(render, EntireRect);
+
+    Point headlineSize = headline->getTextSize();
+    headline->changePosition({(game.getWindowSize().x - headlineSize.x) / 2, 10});
 
     int padding = 10;
 
     Point listStartPoint = {0, 0};
     Rect drawableUISpace = centerIn(addPadding(getDrawableUIRect(), 20), getDrawableUIRect());
-    SDL_SetRenderDrawColor(render, 200, 255, 0, 255);
-    SDL_RenderFillRect(render, &drawableUISpace);
+    drawableUISpace.y += headline->getDrawedRect().y + headline->getDrawedRect().h + padding;
+    drawableUISpace.h -= headline->getDrawedRect().y + headline->getDrawedRect().h + padding;
     Point usedListStartPoint = {listStartPoint.x + drawableUISpace.x, listStartPoint.y + drawableUISpace.y};
     int selectWidth = max(drawableUISpace.w / 2, 100);
     int selectHeight = max(drawableUISpace.h / 6, 50);
     rows = drawableUISpace.h / selectHeight;
-    selectHeight = (drawableUISpace.h - (rows-1)*padding) / rows;
+    selectHeight = (drawableUISpace.h - (rows - 1) * padding) / rows;
     columns = 2;
 
     Point levelRectSize = {selectWidth, selectHeight};
-
-    // TODO fix display list when overflowing window
     int column = 0;
     for (int i = 0; i < levelData.size(); i++) {
         int row = i % rows;
@@ -84,13 +84,15 @@ void LevelSelector::Render(const u32 frame, const u32 totalMSec, const float del
         if (selectorIndex == i) {
             drawColoredFilledRect(render, Color{0, 255, 0, 255}, addPadding(drawable, -5));
         }
-        if(row == rows -1) column ++;
+        if (row == rows - 1) column++;
 
         SDL_RenderCopy(render, levelData[i].selectorTexture, NULL, &drawable);
     }
 
 
     text->RenderUI(frame, totalMSec, deltaT);
+    headline->RenderUI(BASIC_GO_DATA_PASSTHROUGH);
+
 
     SDL_RenderPresent(render);
 }
@@ -114,7 +116,7 @@ void LevelSelector::loadList() {
         return;
     }
 
-    for(int i = 0; i < 8; i++) {
+    for (int i = 0; i < 8; i++) {
         // level loading
         for (auto const &dirEntry: std::filesystem::directory_iterator{levels}) {
             std::string path = dirEntry.path().string();
@@ -157,22 +159,10 @@ void LevelSelector::Init() {
                     white);
     text->Init();
 
-    int padding = 10;
+    headline = new Text(cubeGame, this, render, 500, "Select a level to play", game.getSpriteStorage()->basicFont, {});
+    headline->Init();
 
-    Point listStartPoint = {0, 0};
-    Rect drawableUISpace = centerIn(addPadding(getDrawableUIRect(), 20), getDrawableUIRect());
-    Point usedListStartPoint = {listStartPoint.x + drawableUISpace.x, listStartPoint.y + drawableUISpace.y};
-    Point levelRectSize = {max(100, drawableUISpace.w / columns), max(50, drawableUISpace.h / rows)};
-
-    for (int i = 0; i < levelData.size(); i++) {
-        int row = i % rows, column = i / columns;
-        Point rectStartPoint =
-                usedListStartPoint + Point{(levelRectSize.x + padding) * column, (levelRectSize.y + padding) * row};
-        Rect drawable = {rectStartPoint.x, rectStartPoint.y, levelRectSize.x, levelRectSize.y};
-
-        prepareLevelListItemTexture(levelData[i], drawable);
-
-    }
+    prepareLevelListItems();
 }
 
 void LevelSelector::UnInit() {
@@ -215,20 +205,36 @@ Rect LevelSelector::getUIRenderDst() {
 }
 
 void LevelSelector::prepareLevelListItemTexture(LevelData &leveldata, Rect drawableRect) {
-    if(leveldata.selectorTexture == nullptr) SDL_DestroyTexture(leveldata.selectorTexture);
+    if (leveldata.selectorTexture == nullptr) SDL_DestroyTexture(leveldata.selectorTexture);
     leveldata.selectorTexture = SDL_CreateTexture(render, SDL_PIXELFORMAT_ARGB8888,
                                                   SDL_TEXTUREACCESS_TARGET, drawableRect.w, drawableRect.h);
     Texture *oldTarget = SDL_GetRenderTarget(render);
     SDL_SetRenderTarget(render, leveldata.selectorTexture);
-    SDL_SetRenderDrawColor(render, 255, 255, 0, 255);
-    SDL_RenderFillRect(render, NULL);
+    SDL_SetRenderDrawColor(render, 40, 40, 40, 255);
+    SDL_RenderClear(render);
     Text *t = new Text(cubeGame, this, render, drawableRect.w - 10 * 2, "", cubeGame.spriteStorage.basicFont, {10, 10});
     t->changeText(std::to_string(leveldata.id) + ". Level \n " + leveldata.name);
+    t->setDebug(false);
     t->RenderUI(0, 0, 0);
 
     SDL_SetRenderTarget(render, oldTarget);
 }
 
 void LevelSelector::prepareLevelListItems() {
+    int padding = 10;
 
+    Point listStartPoint = {0, 0};
+    Rect drawableUISpace = centerIn(addPadding(getDrawableUIRect(), 20), getDrawableUIRect());
+    Point usedListStartPoint = {listStartPoint.x + drawableUISpace.x, listStartPoint.y + drawableUISpace.y};
+    Point levelRectSize = {max(100, drawableUISpace.w / columns), max(50, drawableUISpace.h / rows)};
+
+    for (int i = 0; i < levelData.size(); i++) {
+        int row = i % rows, column = i / columns;
+        Point rectStartPoint =
+                usedListStartPoint + Point{(levelRectSize.x + padding) * column, (levelRectSize.y + padding) * row};
+        Rect drawable = {rectStartPoint.x, rectStartPoint.y, levelRectSize.x, levelRectSize.y};
+
+        prepareLevelListItemTexture(levelData[i], drawable);
+
+    }
 }

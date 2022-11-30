@@ -2,8 +2,10 @@
 #include <utility>
 #include "../global.hpp"
 #include "../recthelper.hpp"
+#include "../CubeGame.hpp"
 
-Text::Text(CubeGame &game, ComplexGameState* gameState, SDL_Renderer *render, int maxWidth, std::string text, Font *font, Point position,
+Text::Text(CubeGame &game, ComplexGameState *gameState, SDL_Renderer *render, int maxWidth, std::string text,
+           Font *font, Point position,
            int shadowOffset,
            Color color) : GameObject(game, gameState, render) {
     this->position = position;
@@ -15,7 +17,8 @@ Text::Text(CubeGame &game, ComplexGameState* gameState, SDL_Renderer *render, in
     this->maxWidth = maxWidth;
 }
 
-Text::Text(CubeGame &game, ComplexGameState* gameState, SDL_Renderer *render, int maxWidth, std::string text, const char *fontPath, int pointSize,
+Text::Text(CubeGame &game, ComplexGameState *gameState, SDL_Renderer *render, int maxWidth, std::string text,
+           const char *fontPath, int pointSize,
            Point position, int shadowOffset, Color color) : GameObject(game, gameState, render) {
     this->position = position;
     this->shadowOffset = shadowOffset;
@@ -41,7 +44,7 @@ void Text::RenderUI(const u32 frame, const u32 totalMSec, const float deltaT) {
         SDL_SetTextureColorMod(texture, color.r, color.g, color.b);
         const Rect dst_rect = {p.x, p.y, blendedTextSize.x, blendedTextSize.y};
         SDL_RenderCopy(render, texture, EntireRect, &dst_rect);
-        drawSpriteBorder(dst_rect);
+        if(debug && game.isDebug()) drawSpriteBorder(dst_rect);
     }
 }
 
@@ -118,4 +121,12 @@ void Text::setEnabled(bool active) {
 
 Point Text::getTextSize() {
     return blendedTextSize;
+}
+
+void Text::setDebug(bool debug) {
+    this->debug = debug;
+}
+
+Rect Text::getDrawedRect() const {
+    return {position.x, position.y, blendedTextSize.x, blendedTextSize.y};
 }

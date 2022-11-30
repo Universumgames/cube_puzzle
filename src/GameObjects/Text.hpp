@@ -49,8 +49,12 @@ public:
     /// disable text on the fly
     void setEnabled(bool active);
 
+    void setDebug(bool debug);
+
     /// get size of generated texture
     Point getTextSize();
+
+    Rect getDrawedRect() const;
 
 private:
     /// regenerate texture
@@ -70,5 +74,6 @@ private:
     Color color;
     Array<Point, 8> shadowOffsets;
     bool enabled = true;
+    bool debug = true;
 };
 

@@ -61,5 +61,6 @@ private:
     Vector<LevelData> levelData;
     bool levelsLoaded = false;
     Text *text;
+    Text* headline;
 };
 
