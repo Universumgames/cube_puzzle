@@ -50,6 +50,10 @@ void CubeObject::drawSpriteBorder(CubeGame &game, Renderer *render, Rect dst) {
     SDL_RenderDrawRect(render, &dst);
 }
 
+bool CubeObject::canPlayerEnter() {
+    return false;
+}
+
 bool CubeObject::canEnterPressurePlate() {
     return false;
 }

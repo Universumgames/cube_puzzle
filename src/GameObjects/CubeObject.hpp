@@ -15,7 +15,9 @@ public:
     virtual void Render(CubeGame &game, Renderer *render, Point size, Point location, u32 frame, u32 totalMSec, float deltaT);
     
     void drawSpriteBorder(CubeGame &game, Renderer *render, Rect dst);
-    
+
+    virtual bool canPlayerEnter();
+
     virtual bool canEnterPressurePlate();
     
     virtual bool canActivatePressurePlate();
