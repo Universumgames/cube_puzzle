@@ -11,6 +11,7 @@
 - the CubeObjects available as of now are: Slider, RestingMagnet, MovingMagnet (which is intended to moves with the player), RestingStone, FallingStone, Flag.
 - the CubeFields available as of now are: EmptyField, Wall_1, Wall_2, Grass, PressurePlate.
 - implement inter game state routing for finishing levels and loading next
+- implement level selector
 
 # Für Vorlesung 2022/11/23
 - Neue Zeichnung zu Cube Transition erstellt ([`readme_images/Cube Transitions.jpg`](readme_images/Cube%20Transitions.jpg)) und analysiert

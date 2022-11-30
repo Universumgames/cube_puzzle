@@ -86,7 +86,7 @@ void Wall_2::Update(CubeGame &game, u32 frame, u32 totalMSec, float deltaT) {
 }
 
 void Grass::Update(CubeGame &game, u32 frame, u32 totalMSec, float deltaT) {
-    
+
 }
 
 void PressurePlate::Update(CubeGame &game, u32 frame, u32 totalMSec, float deltaT) {
