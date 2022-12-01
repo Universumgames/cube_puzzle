@@ -6,24 +6,30 @@
 #define PLAYER_MOVEMENT_COUNTDOWN_MILLIS 250
 
 Player::Player(CubeGame &game, ComplexGameState *gameState, SDL_Renderer *render) : GameObject(game, gameState,
-                                                                                               render) {}
+                                                                                               render) {
+    moveCancelledAudio = new AudioPlayer(MUSIC_HIT_WALL_PATH);
+}
 
 void Player::HandleEvent(const u32 frame, const u32 totalMSec, const float deltaT, Event event) {
     if(lastMovementCountdown > 0) return;
     if (event.type != SDL_KEYDOWN) return;
     const Keysym &what_key = event.key.keysym;
+    bool moved = false;
     if (what_key.scancode == SDL_SCANCODE_UP) {
-        move(PlayerMoveDirection::UP);
+        moved = move(PlayerMoveDirection::UP);
     } else if (what_key.scancode == SDL_SCANCODE_DOWN) {
-        move(PlayerMoveDirection::DOWN);
+        moved = move(PlayerMoveDirection::DOWN);
     } else if (what_key.scancode == SDL_SCANCODE_RIGHT) {
-        move(PlayerMoveDirection::RIGHT);
+        moved = move(PlayerMoveDirection::RIGHT);
         currentState = AnimationState::RIGHT;
     } else if (what_key.scancode == SDL_SCANCODE_LEFT) {
-        move(PlayerMoveDirection::LEFT);
+        moved = move(PlayerMoveDirection::LEFT);
         currentState = AnimationState::LEFT;
     } else {
         currentState = AnimationState::IDLE;
+    }
+    if(!moved && moveCancelledAudio != nullptr){
+        moveCancelledAudio->playOnce();
     }
 }
 

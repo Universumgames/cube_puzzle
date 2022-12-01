@@ -2,6 +2,7 @@
 
 #include "GameObject.hpp"
 #include "../data/MoveDirections.hpp"
+#include "../AudioHandler.hpp"
 
 class CubeMap;
 
@@ -35,4 +36,5 @@ private:
     Rect nextDraw;
     AnimationState currentState;
     double lastMovementCountdown = 0;
+    AudioPlayer* moveCancelledAudio = nullptr;
 };

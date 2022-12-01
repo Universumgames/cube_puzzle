@@ -24,7 +24,7 @@ public:
 public:
     CubeGame();
 
-    AudioPlayer audio;
+    AudioHandler* audioHandler;
 
     bool HandleEvent(const Event event) override;
 
@@ -51,6 +51,8 @@ private:
 
     /// this should be set to false in final version
     bool debugView = true;
+
+    AudioPlayer* backgroundMusic;
 protected:
     friend class LevelSelector;
 };

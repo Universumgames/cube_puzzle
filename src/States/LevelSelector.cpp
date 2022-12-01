@@ -8,8 +8,6 @@
 #include <filesystem>
 #include "../filehelper.hpp"
 
-#define FIRST_ROW 1
-
 void LevelSelector::Events(const u32 frame, const u32 totalMSec, const float deltaT) {
     SDL_PumpEvents();
 
