@@ -16,6 +16,7 @@ public:
     virtual bool canPlayerEnter();
     virtual bool canEnterPressurePlate();
     virtual bool canActivatePressurePlate();
+    virtual bool isLevelFinishedIfEntered();
 };
 
 class GravityObject : public CubeObject {
@@ -65,6 +66,6 @@ public:
 
     bool canEnterPressurePlate() override;
     bool canActivatePressurePlate() override;
-
-    bool enter();
+    
+    bool isLevelFinishedIfEntered() override;
 };

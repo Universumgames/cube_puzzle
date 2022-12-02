@@ -21,6 +21,7 @@ public:
 
     virtual bool canPlayerEnter() = 0;
     virtual bool canObjectEnter(CubeObject *cubeObject) = 0;
+    bool isLevelFinishedIfEntered();
     void addObject(CubeObject *cubeObject);
     void removeObject(CubeObject *cubeObject);
 };

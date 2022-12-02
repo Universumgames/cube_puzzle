@@ -64,7 +64,7 @@ private:
 
     void saveCurrentFrame();
 
-    //void doLevelFinishedLogic();
+    void doLevelFinishedLogic();
 
 private:
     WorldMap *worldMap = nullptr;

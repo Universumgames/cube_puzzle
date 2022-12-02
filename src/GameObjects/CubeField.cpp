@@ -38,7 +38,6 @@ void CubeField::Render(CubeGame &game, Renderer *render, Point size, Point locat
     Point locationNew = {location.x + 10, location.y + 10};
     Point sizeNew = {size.x - 20, size.y - 20};
     for (CubeObject* cubeObject : this->cubeObjects) {
-        //std::cout << "Wir sind in der for-Schleife." << std::endl;
         cubeObject->Render(game, render, sizeNew, locationNew, frame, totalMSec, deltaT);
         locationNew = {locationNew.x + 10, locationNew.y + 10};
         sizeNew = {sizeNew.x - 20, sizeNew.y - 20};
@@ -48,7 +47,6 @@ void CubeField::Render(CubeGame &game, Renderer *render, Point size, Point locat
 void EmptyField::Render(CubeGame &game, Renderer *render, Point size, Point location, const u32 frame, const u32 totalMSec, const float deltaT) {
     SDL_SetRenderDrawColor(render, 0, 0, 0, 0);
     CubeField::Render(game, render, size, location, frame, totalMSec, deltaT);
-
 }
 
 void Grass::Render(CubeGame& game, Renderer *render, Point size, Point location, u32 frame, u32 totalMSec, float deltaT) {
@@ -131,6 +129,15 @@ bool PressurePlate::canObjectEnter(CubeObject *cubeObject) {
     return cubeObject->canEnterPressurePlate();
 }
 // ################################# sonstige Methoden ###############################################################################
+
+bool CubeField::isLevelFinishedIfEntered() {
+    for (CubeObject* cubeObject : this->cubeObjects) {
+        if (cubeObject->isLevelFinishedIfEntered()) {
+            return true;
+        }
+    }
+    return false;
+}
 
 void CubeField::addObject(CubeObject* cubeObject) {
     this->cubeObjects.push_back(cubeObject);

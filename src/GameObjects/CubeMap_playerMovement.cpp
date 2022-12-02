@@ -4,6 +4,7 @@
 #include "../recthelper.hpp"
 #include "../matrix.hpp"
 #include "CubeMapMiniMap.hpp"
+#include "../States/Level.hpp"
 
 bool CubeMap::movePlayer(PlayerMoveDirection dir) {
     if(sideTransitionAnimating) return false;
@@ -32,7 +33,7 @@ bool CubeMap::movePlayer(PlayerMoveDirection dir) {
     if (!getCurrentSide()->getField(newPlayerPos)->canPlayerEnter())
         return false;
     this->playerPos = newPlayerPos;
-    //doLevelFinishedLogic();
+    doLevelFinishedLogic();
     return true;
 }
 
@@ -237,6 +238,10 @@ bool CubeMap::checkCubeSideTransition(int sideAId, int sideBId, int oldSideId) c
             (sideBId == oldSideId && sideAId == this->currentSideId));
 }
 
-/*void CubeMap::doLevelFinishedLogic() {
-    getCurrentSide()->getField(this->playerPos)->
-}*/
+void CubeMap::doLevelFinishedLogic() {
+    CubeMapSide* currentSide = getCurrentSide();
+    CubeField* currentCubeField = currentSide->getField(this->playerPos);
+    if (currentCubeField->isLevelFinishedIfEntered()) {
+        reinterpret_cast<Level*>(this->gameState)->returnToLevelSelector(ExitState::FINISHED);
+    }
+}

@@ -97,10 +97,12 @@ bool Flag::canActivatePressurePlate() {
 
 // ################################# sonstige Methoden ###############################################################################
 
-bool Flag::enter() {
+bool CubeObject::isLevelFinishedIfEntered() {
+    return false;
+}
 
-    // Level:: void returnToLevelSelector(ExitState exitState);
-    // ExitState::FINISHED
+bool Flag::isLevelFinishedIfEntered() {
+    return true;
 }
 
 
