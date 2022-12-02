@@ -95,17 +95,17 @@ private:
 
 class CubeMapSide {
 public:
-    CubeMapSide() = default;
-
+    CubeMapSide() = delete;
+    
     CubeMapSide(Vector<CubeField *> cubeFields, int width, int height, int sideID) : width(width), height(height),
                                                                                      sideID(sideID) {
         this->cubeFields = std::move(cubeFields);
+        for (CubeField* cubeField : this->cubeFields) {
+            cubeField->setSideId(sideID);
+        }
     }
 
-    CubeMapSide(Vector<CubeField *> cubeFields, Point size, int sideID) : width(size.x), height(size.y),
-                                                                          sideID(sideID) {
-        this->cubeFields = std::move(cubeFields);
-    }
+    CubeMapSide(Vector<CubeField *> cubeFields, Point size, int sideID) : CubeMapSide(std::move(cubeFields), size.x, size.y, sideID) {}
 
     Vector<CubeField *> cubeFields;
     int width, height, sideID;
@@ -119,21 +119,21 @@ public:
 
     Point getFieldSize(Rect drawableRect);
 
-    void HandleEvent(CubeGame &game, const u32 frame, const u32 totalMSec, const float deltaT, Event event);
+    void HandleEvent(CubeGame &game, u32 frame, u32 totalMSec, float deltaT, Event event);
 
-    void Update(CubeGame &game, const u32 frame, const u32 totalMSec, const float deltaT);
+    void Update(CubeGame &game, u32 frame, u32 totalMSec, float deltaT);
 
-    void Render(CubeGame &game, ComplexGameState *gameState, Renderer *render, DiceData diceData, const u32 frame,
-                const u32 totalMSec, const float deltaT, Rect drawableRect);
+    void Render(CubeGame &game, ComplexGameState *gameState, Renderer *render, DiceData diceData, u32 frame,
+                u32 totalMSec, float deltaT, Rect drawableRect);
 
-    void renderGridOverlay(CubeGame &game, Renderer *render, DiceData diceData, const u32 frame, const u32 totalMSec,
-                           const float deltaT, Rect drawableRect);
+    void renderGridOverlay(CubeGame &game, Renderer *render, DiceData diceData, u32 frame, u32 totalMSec,
+                           float deltaT, Rect drawableRect);
 
-    void renderCubeFields(CubeGame &game, Renderer *render, const u32 frame, const u32 totalMSec, const float deltaT,
+    void renderCubeFields(CubeGame &game, Renderer *render, u32 frame, u32 totalMSec, float deltaT,
                           Rect drawableRect);
 
     [[nodiscard]] Point cubePositionToScreenPosition(DiceData diceData, Point cubePos) const;
 
-    Point screenPositionToCubePosition(DiceData diceData, Point screenPos) const;
+    [[nodiscard]] Point screenPositionToCubePosition(DiceData diceData, Point screenPos) const;
 
 };

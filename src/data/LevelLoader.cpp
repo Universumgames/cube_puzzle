@@ -39,8 +39,7 @@
 #define LINE_INDEX_CUBEPOS (LINE_INDEX_WORLDMAP + 1)
 #define LINE_INDEX_PLAYERPOS (LINE_INDEX_CUBEPOS + 1)
 
-LevelLoader::LoadedLevelData LevelLoader::loadLevel(const std::string &path)
-{
+LevelLoader::LoadedLevelData LevelLoader::loadLevel(const std::string &path) {
 
     Vector<CubeMapSide *> sides;
     Point worldSize = {0, 0};
@@ -54,65 +53,62 @@ LevelLoader::LoadedLevelData LevelLoader::loadLevel(const std::string &path)
     std::ifstream is(path);
     is >> levelName;
     is >> id;
-    for (int s = 1; s < 7; s++)
-    {
-        CubeMapSide *side_temp = new CubeMapSide();
+    for (int s = 1; s < 7; s++) {
+        int width, height, sideID;
+        Vector<CubeField *> cubeFields;
+        is >> width;
+        is >> height;
+        sideID = s;
 
-        is >> side_temp->width;
-        is >> side_temp->height;
-        side_temp->sideID = s;
-
-        for (int x = 0; x < side_temp->width; x++)
-        {
-            for (int y = 0; y < side_temp->height; y++)
-            {
+        for (int x = 0; x < width; x++) {
+            for (int y = 0; y < height; y++) {
                 int inType = -1;
                 is >> inType;
                 // du darfst keine variablen in einem case erstellen.....
                 // und momentan wird immer ein empty erstellt obwohl er nicht immer verwendet wird...
                 // so, jetzt sollte das gehen ^^
                 CubeField *temp = nullptr;
-                switch (inType)
-                {
+                switch (inType) {
                 case 0:
-                    side_temp->cubeFields.push_back(new EmptyField());
+                    cubeFields.push_back(new EmptyField());
                     break;
                 case 1:
                     temp = new EmptyField();
                     temp->cubeObjects.push_back(new Flag());
-                    side_temp->cubeFields.push_back(temp);
+                    cubeFields.push_back(temp);
                     break;
                 case 2:
-                    side_temp->cubeFields.push_back(new Wall_1());
+                    cubeFields.push_back(new Wall_1());
                     break;
                 case 3:
-                    side_temp->cubeFields.push_back(new Wall_2());
+                    cubeFields.push_back(new Wall_2());
                     break;
                 case 4:
-                    side_temp->cubeFields.push_back(new PressurePlate());
+                    cubeFields.push_back(new PressurePlate());
                     break;
                 case 5:
                     temp = new EmptyField();
                     temp->cubeObjects.push_back(new Slider());
-                    side_temp->cubeFields.push_back(temp);
+                    cubeFields.push_back(temp);
                     break;
                 case 6:
                     temp = new EmptyField();
                     temp->cubeObjects.push_back(new Magnet());
-                    side_temp->cubeFields.push_back(temp);
+                    cubeFields.push_back(temp);
                     break;
                 case 7:
                     temp = new EmptyField();
                     temp->cubeObjects.push_back(new Stone());
-                    side_temp->cubeFields.push_back(temp);
+                    cubeFields.push_back(temp);
                     break;
                 default:
-                    side_temp->cubeFields.push_back(new EmptyField());
+                    cubeFields.push_back(new EmptyField());
                     break;
                 }
             }
         }
-        sides.push_back(side_temp);
+        auto *sideTemp = new CubeMapSide(cubeFields, width, height, sideID);
+        sides.push_back(sideTemp);
     }
     is.close();
     return {.path = path, .name = levelName, .id = id, .sides = sides, .worldSize = worldSize, .worldField = worldField, .cubePos = cubePos, .playerPos = playerPos, .cubeSide = cubeSide};

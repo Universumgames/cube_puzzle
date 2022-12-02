@@ -9,16 +9,20 @@
 class CubeField {
 protected:
     Vector<GameObject *> objects;
+    int sideId;
 
 public:
     Vector<CubeObject *> cubeObjects;
     CubeField() = default;
     explicit CubeField(Vector<CubeObject *> &cubeObjects);
-
+    CubeField(Vector<CubeObject *> &cubeObjects, int sideId);
+    
     virtual void HandleEvent(CubeGame &game, u32 frame, u32 totalMSec, float deltaT, Event event) {};
     virtual void Update(CubeGame &game, u32 frame, u32 totalMSec, float deltaT) = 0;
     virtual void Render(CubeGame &game, Renderer *render, Point size, Point location, u32 frame, u32 totalMSec, float deltaT);
 
+    void setSideId(int sideID);
+    
     virtual bool canPlayerEnter() = 0;
     virtual bool canObjectEnter(CubeObject *cubeObject) = 0;
     bool isLevelFinishedIfEntered();

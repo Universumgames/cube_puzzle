@@ -249,6 +249,8 @@ void CubeMap::doLevelFinishedLogic() {
     CubeMapSide *currentSide = getCurrentSide();
     CubeField *currentCubeField = currentSide->getField(this->playerPos);
     if (currentCubeField->isLevelFinishedIfEntered()) {
-        reinterpret_cast<Level *>(this->gameState)->returnToLevelSelector(ExitState::FINISHED);
+        reinterpret_cast<Level*>(this->gameState)->returnToLevelSelector(ExitState::FINISHED);
+        this->playerPos = {0, 0};
+        this->currentSideId = 2;
     }
 }

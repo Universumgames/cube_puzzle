@@ -9,6 +9,11 @@ CubeField::CubeField(Vector<CubeObject *>& cubeObjects) {
     this->cubeObjects = cubeObjects;
 }
 
+CubeField::CubeField(Vector<CubeObject *> &cubeObjects, int sideId) {
+    this->cubeObjects = cubeObjects;
+    this->sideId = sideId;
+}
+
 EmptyField::EmptyField(Vector<CubeObject *>& cubeObjects) {
     this->cubeObjects = cubeObjects;
 }
@@ -89,6 +94,12 @@ void Grass::Update(CubeGame &game, u32 frame, u32 totalMSec, float deltaT) {
 
 void PressurePlate::Update(CubeGame &game, u32 frame, u32 totalMSec, float deltaT) {
     // maybe add code later?
+}
+
+// ################################# Setter & Getter #################################################################################
+
+void CubeField::setSideId(int sideID) {
+    this->sideId = sideID;
 }
 
 // ################################# canPlayerEnter-Methoden #########################################################################
