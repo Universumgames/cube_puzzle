@@ -11,7 +11,10 @@ Player::Player(CubeGame &game, ComplexGameState *gameState, SDL_Renderer *render
 }
 
 void Player::HandleEvent(const u32 frame, const u32 totalMSec, const float deltaT, Event event) {
-    if(lastMovementCountdown > 0) return;
+    if (lastMovementCountdown > 0) {
+        //if (moveCancelledAudio != nullptr)moveCancelledAudio->playOnce();
+        return;
+    }
     if (event.type != SDL_KEYDOWN) return;
     const Keysym &what_key = event.key.keysym;
     bool moved = false;
@@ -28,7 +31,7 @@ void Player::HandleEvent(const u32 frame, const u32 totalMSec, const float delta
     } else {
         currentState = AnimationState::IDLE;
     }
-    if(!moved && moveCancelledAudio != nullptr){
+    if (!moved && moveCancelledAudio != nullptr) {
         moveCancelledAudio->playOnce();
     }
 }

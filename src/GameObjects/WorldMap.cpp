@@ -66,6 +66,7 @@ void WorldMap::drawMinimap() {
 }
 
 void WorldMap::fixCubePosOutBounds() {
+    if(size.y == 0 || size.x == 0) return;
     cubePos.x = (cubePos.x < 0) ? size.x - cubePos.x - 2 : cubePos.x % size.x;
     cubePos.y = (cubePos.y < 0) ? size.y - cubePos.y - 2 : cubePos.y % size.y;
 }
