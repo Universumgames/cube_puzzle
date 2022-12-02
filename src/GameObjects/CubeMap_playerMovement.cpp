@@ -252,5 +252,6 @@ void CubeMap::doLevelFinishedLogic() {
         reinterpret_cast<Level*>(this->gameState)->returnToLevelSelector(ExitState::FINISHED);
         this->playerPos = {0, 0};
         this->currentSideId = 2;
+        this->diceData = *(new DiceData());
     }
 }

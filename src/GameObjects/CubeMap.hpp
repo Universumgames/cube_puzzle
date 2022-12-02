@@ -68,6 +68,8 @@ private:
     void saveCurrentFrame();
 
     void doLevelFinishedLogic();
+    
+    void updateDiceDataInCubeMapSide();
 
 private:
     WorldMap *worldMap = nullptr;
@@ -94,6 +96,9 @@ private:
 };
 
 class CubeMapSide {
+private:
+    DiceData *diceData;
+    
 public:
     CubeMapSide() = delete;
     
@@ -119,21 +124,21 @@ public:
 
     Point getFieldSize(Rect drawableRect);
 
+    void setDiceData(DiceData* dice_data);
+    
     void HandleEvent(CubeGame &game, u32 frame, u32 totalMSec, float deltaT, Event event);
 
     void Update(CubeGame &game, u32 frame, u32 totalMSec, float deltaT);
 
-    void Render(CubeGame &game, ComplexGameState *gameState, Renderer *render, DiceData diceData, u32 frame,
-                u32 totalMSec, float deltaT, Rect drawableRect);
+    void Render(CubeGame &game, ComplexGameState *gameState, Renderer *render, u32 frame, u32 totalMSec, float deltaT, Rect drawableRect);
 
-    void renderGridOverlay(CubeGame &game, Renderer *render, DiceData diceData, u32 frame, u32 totalMSec,
-                           float deltaT, Rect drawableRect);
+    void renderGridOverlay(CubeGame &game, Renderer *render, u32 frame, u32 totalMSec, float deltaT, Rect drawableRect);
 
     void renderCubeFields(CubeGame &game, Renderer *render, u32 frame, u32 totalMSec, float deltaT,
                           Rect drawableRect);
 
-    [[nodiscard]] Point cubePositionToScreenPosition(DiceData diceData, Point cubePos) const;
+    [[nodiscard]] Point cubePositionToScreenPosition(Point cubePos) const;
 
-    [[nodiscard]] Point screenPositionToCubePosition(DiceData diceData, Point screenPos) const;
+    [[nodiscard]] Point screenPositionToCubePosition(Point screenPos) const;
 
 };

@@ -27,7 +27,7 @@ enum class DiceSideRotation {
 /// Helper Class for Dice Logic
 class DiceData {
 public:
-    /// default cube is 1up, 5north, 3west
+    /// default cube is 1up, 5north, 3east, player starting on 2
     DiceData();
 
     /**

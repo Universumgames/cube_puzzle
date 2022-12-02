@@ -2,8 +2,8 @@
 #include "../recthelper.hpp"
 
 /// convert the coordinates to the correct coordinates according to current rotation
-Point CubeMapSide::cubePositionToScreenPosition(DiceData diceData, Point cubePos) const {
-    DiceSideRotation faceDirection = diceData.getDiceSideRotation(sideID);
+Point CubeMapSide::cubePositionToScreenPosition(Point cubePos) const {
+    DiceSideRotation faceDirection = this->diceData->getDiceSideRotation(sideID);
     Point res = {};
     switch (faceDirection) {
         case DiceSideRotation::UP:
@@ -31,12 +31,12 @@ void CubeMapSide::Update(CubeGame &game, const u32 frame, const u32 totalMSec, c
     if (overlay != nullptr) overlay->setEnabled(game.isDebug());
 }
 
-void CubeMapSide::Render(CubeGame &game, ComplexGameState* gameState, Renderer *render, DiceData diceData, const u32 frame, const u32 totalMSec,
+void CubeMapSide::Render(CubeGame &game, ComplexGameState* gameState, Renderer *render, const u32 frame, const u32 totalMSec,
                          const float deltaT, Rect drawableRect) {
     int x = 0, y = 0;
     Point size = getFieldSize(drawableRect);
     Point offset = {drawableRect.x, drawableRect.y};
-    DiceSideRotation rotation = diceData.getDiceSideRotation(sideID);
+    DiceSideRotation rotation = diceData->getDiceSideRotation(sideID);
     int dimm = sin(frame / 120.0) * 20;
     SDL_SetTextureColorMod(game.getSpriteStorage()->sideSprites[sideID - 1], 230 + dimm,230 + dimm,230 + dimm);
     drawSide(game.getSpriteStorage()->sideSprites[sideID - 1], render, drawableRect, rotation);
@@ -46,7 +46,7 @@ void CubeMapSide::Render(CubeGame &game, ComplexGameState* gameState, Renderer *
         overlay = new Text(game, gameState, render, 400, "", game.getSpriteStorage()->debugFont, {0, 0});
     }
     for (auto *field: cubeFields) {
-        Point pos = cubePositionToScreenPosition(diceData, {x, y});
+        Point pos = cubePositionToScreenPosition({x, y});
         field->Render(game, render, size, {size.x * pos.x + offset.x, size.y * pos.y + offset.y},
                       BASIC_GO_DATA_PASSTHROUGH);
         overlay->changePosition({size.x * pos.x + offset.x, size.y * pos.y + offset.y});
@@ -58,7 +58,7 @@ void CubeMapSide::Render(CubeGame &game, ComplexGameState* gameState, Renderer *
             x = 0;
         }
     }
-    renderGridOverlay(game, render, diceData, BASIC_GO_DATA_PASSTHROUGH, drawableRect);
+    renderGridOverlay(game, render, BASIC_GO_DATA_PASSTHROUGH, drawableRect);
 }
 
 /// Gibt die Anzahl der Pixel zurück, die ein einzelnes Feld breit und hoch ist.
@@ -68,7 +68,7 @@ Point CubeMapSide::getFieldSize(Rect drawableRect) {
 }
 
 
-void CubeMapSide::renderGridOverlay(CubeGame &game, Renderer *render, DiceData diceData, const u32 frame,
+void CubeMapSide::renderGridOverlay(CubeGame &game, Renderer *render, const u32 frame,
                                     const u32 totalMSec, const float deltaT, Rect drawableRect) {
     Point size = getFieldSize(drawableRect);
     Point offset = {drawableRect.x, drawableRect.y};
@@ -88,7 +88,7 @@ void CubeMapSide::renderGridOverlay(CubeGame &game, Renderer *render, DiceData d
 
 
         // colored rectangle
-        auto sideOrientation = diceData.getDiceSideRotation(sideID);
+        auto sideOrientation = this->diceData->getDiceSideRotation(sideID);
         Rect dst = {0, 0, 0, 0};
         switch (sideOrientation) {
             case DiceSideRotation::UP:
@@ -123,12 +123,12 @@ void CubeMapSide::renderCubeFields(CubeGame &game, Renderer *render, const u32 f
     //CubeGame &game, Renderer *render, Point size, Point location, u32 frame, u32 totalMSec, float deltaT
 }
 
-Point CubeMapSide::screenPositionToCubePosition(DiceData diceData, Point screenPos) const {
+Point CubeMapSide::screenPositionToCubePosition(Point screenPos) const {
     Point p = {};
     for(int x = 0; x < width; x++){
         for(int y = 0; y < height; y++){
             p = {x,y};
-            Point s = cubePositionToScreenPosition(diceData, p);
+            Point s = cubePositionToScreenPosition(p);
             if( s.x == screenPos.x && s.y == screenPos.y) break;
         }
     }
@@ -137,4 +137,8 @@ Point CubeMapSide::screenPositionToCubePosition(DiceData diceData, Point screenP
 
 CubeMapSide *CubeMap::getCurrentSide() {
     return getSide(this->currentSideId);
+}
+
+void CubeMapSide::setDiceData(DiceData* dice_data) {
+    this->diceData = dice_data;
 }

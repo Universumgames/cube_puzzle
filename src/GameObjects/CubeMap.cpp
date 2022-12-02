@@ -142,3 +142,7 @@ void CubeMap::saveCurrentFrame() {
     SDL_RenderCopy(render, currTarget, NULL, NULL);
     SDL_SetRenderTarget(render, currTarget);
 }
+
+void CubeMap::updateDiceDataInCubeMapSide() {
+
+}

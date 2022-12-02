@@ -172,15 +172,19 @@ void LevelSelector::playLevel(const LevelData &level) {
 }
 
 void LevelSelector::playLevel(int levelId) {
-    for (const auto &level: levelData) {
-        if (levelId == level.id) game.SetNextState(level.allStatesIndex);
+    for (const auto &level: this->levelData) {
+        if (levelId == level.id) {
+            game.SetNextState(level.allStatesIndex);
+        }
     }
 }
 
 void LevelSelector::playNextLevel(int allStatesID) {
     LevelData data;
-    for (const auto &level: levelData) {
-        if (allStatesID == level.allStatesIndex) data = level;
+    for (const auto &level: this->levelData) {
+        if (allStatesID == level.allStatesIndex) {
+            data = level;
+        }
     }
     playLevel(data.id + 1);
 }
