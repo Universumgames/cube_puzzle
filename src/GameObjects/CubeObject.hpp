@@ -8,6 +8,7 @@ public:
     /// Handle input events, probably unused
     virtual void HandleEvent(CubeGame &game, u32 frame, u32 totalMSec, float deltaT, Event event);
     /// physics, etc. update method
+    // TODO mina hier wirst GARANTIERT auch die Dice Data und sideID benötigen.....
     virtual void Update(CubeGame &game, u32 frame, u32 totalMSec, float deltaT);
     /// render only method
     // TODO Mina ich brauche irgendeine Möglichkeit um auf diceData und die Würfelseite (beispiel sideID in CubeMapSide)
