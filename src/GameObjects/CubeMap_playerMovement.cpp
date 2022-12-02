@@ -6,8 +6,12 @@
 #include "CubeMapMiniMap.hpp"
 #include "../States/Level.hpp"
 
+bool CubeMap::playerCanMove() {
+    return !sideTransitionAnimating;
+}
+
 bool CubeMap::movePlayer(PlayerMoveDirection dir) {
-    if(sideTransitionAnimating) return false;
+    if (!playerCanMove()) return false;
     PlayerMoveDirection normalizedDirection = screenDirectionToDirectionOnCubeSide(dir);
 
     Point moveDir = {};
@@ -26,12 +30,15 @@ bool CubeMap::movePlayer(PlayerMoveDirection dir) {
             break;
     }
     Point newPlayerPos = this->playerPos + moveDir;
+    int oldSideId = currentSideId;
     bool moved = rotateCubeIfNecessary(newPlayerPos, dir);
     if (moved)
         sideTransitionAnimating = true;
 
-    if (!getCurrentSide()->getField(newPlayerPos)->canPlayerEnter())
+    if (!getCurrentSide()->getField(newPlayerPos)->canPlayerEnter()) {
+        currentSideId = oldSideId;
         return false;
+    }
     this->playerPos = newPlayerPos;
     doLevelFinishedLogic();
     return true;
@@ -239,9 +246,9 @@ bool CubeMap::checkCubeSideTransition(int sideAId, int sideBId, int oldSideId) c
 }
 
 void CubeMap::doLevelFinishedLogic() {
-    CubeMapSide* currentSide = getCurrentSide();
-    CubeField* currentCubeField = currentSide->getField(this->playerPos);
+    CubeMapSide *currentSide = getCurrentSide();
+    CubeField *currentCubeField = currentSide->getField(this->playerPos);
     if (currentCubeField->isLevelFinishedIfEntered()) {
-        reinterpret_cast<Level*>(this->gameState)->returnToLevelSelector(ExitState::FINISHED);
+        reinterpret_cast<Level *>(this->gameState)->returnToLevelSelector(ExitState::FINISHED);
     }
 }

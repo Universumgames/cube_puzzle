@@ -11,17 +11,19 @@ Player::Player(CubeGame &game, ComplexGameState *gameState, SDL_Renderer *render
 }
 
 void Player::HandleEvent(const u32 frame, const u32 totalMSec, const float deltaT, Event event) {
-    if (lastMovementCountdown > 0) {
+    if (lastMovementCountdown > 0 || !cubeMap->playerCanMove()) {
         //if (moveCancelledAudio != nullptr)moveCancelledAudio->playOnce();
         return;
     }
     if (event.type != SDL_KEYDOWN) return;
     const Keysym &what_key = event.key.keysym;
-    bool moved = false;
+    bool moved = true;
     if (what_key.scancode == SDL_SCANCODE_UP) {
         moved = move(PlayerMoveDirection::UP);
+        currentState = AnimationState::UP;
     } else if (what_key.scancode == SDL_SCANCODE_DOWN) {
         moved = move(PlayerMoveDirection::DOWN);
+        currentState = AnimationState::DOWN;
     } else if (what_key.scancode == SDL_SCANCODE_RIGHT) {
         moved = move(PlayerMoveDirection::RIGHT);
         currentState = AnimationState::RIGHT;
@@ -66,6 +68,10 @@ int Player::getAnimationIndex(const u32 totalMSec) {
     switch (currentState) {
         case AnimationState::IDLE:
             return scaled % SPRITE_PLAYER_IDLE_WIDTH;
+        case AnimationState::LEFT:
+            return scaled % SPRITE_PLAYER_WALK_WIDTH;
+        case AnimationState::RIGHT:
+            return scaled % SPRITE_PLAYER_WALK_WIDTH;
         default:
             return 0;
     }

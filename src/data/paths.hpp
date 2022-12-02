@@ -11,7 +11,7 @@
 #define ICON_PATH "./asset/graphic/mac1024_2.png"
 // "./asset/graphic/mac1024.png"
 
-#define PLAYER_SPRITE_SHEET_PATH "./asset/graphic/idle.png"
+#define PLAYER_SPRITE_SHEET_PATH "./asset/graphic/playerSheet.png"
 #define ARROW_SEMICIRCLE_PATH "./asset/graphic/arroMini.png"
 #define ARROW_STRAIGHT_PATH "./asset/graphic/rrowig.png"
 #define CUBE_FIELD_PATH "./asset/graphic/AllTestTileWater.png"

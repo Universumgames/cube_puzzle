@@ -25,8 +25,10 @@ private:
     /// stored int value is row in player sprite
     enum class AnimationState{
         IDLE = 0,
-        LEFT = 0,
-        RIGHT = 0
+        LEFT = 2,
+        RIGHT = 1,
+        UP = 0,
+        DOWN = 0
     };
 
     int getAnimationIndex(u32 totalMSec);

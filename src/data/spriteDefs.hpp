@@ -1,3 +1,4 @@
 #pragma once
 
 #define SPRITE_PLAYER_IDLE_WIDTH 5
+#define SPRITE_PLAYER_WALK_WIDTH 6

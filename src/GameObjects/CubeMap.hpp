@@ -34,7 +34,10 @@ public:
     void Init() override;
 
 public:
+    /// returns true, when move was successful, false otherwise
     bool movePlayer(PlayerMoveDirection dir);
+
+    bool playerCanMove();
 
     Rect getPlayerDrawPosition();
 
