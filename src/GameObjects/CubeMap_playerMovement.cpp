@@ -249,8 +249,6 @@ void CubeMap::doLevelFinishedLogic() {
     CubeMapSide *currentSide = getCurrentSide();
     CubeField *currentCubeField = currentSide->getField(this->playerPos);
     if (currentCubeField->isLevelFinishedIfEntered()) {
-        game.interGameStateData.exitState = ExitState::FINISHED;
-        game.interGameStateData.sourceStateID = 0;
-        game.returnToLevelSelector();
+        gameState->returnToLevelSelector(ExitState::FINISHED);
     }
 }

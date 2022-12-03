@@ -4,6 +4,8 @@
 
 class CubeGame;
 
+enum class ExitState;
+
 /// complex game state to store additional CubeGame
 class ComplexGameState : public GameState {
 public:
@@ -11,6 +13,8 @@ public:
 
     virtual Rect getDrawableGameRect() = 0;
     virtual Rect getDrawableUIRect() = 0;
+
+    virtual void returnToLevelSelector(ExitState exitState);
 
 protected:
     virtual Rect getGameRenderDst() = 0;

@@ -7,3 +7,9 @@
 ComplexGameState::ComplexGameState(CubeGame &cubeGame, Renderer *render) : GameState(cubeGame, render),
                                                                            cubeGame(cubeGame) {
 }
+
+void ComplexGameState::returnToLevelSelector(ExitState exitState) {
+    cubeGame.interGameStateData.exitState = exitState;
+    cubeGame.interGameStateData.sourceStateID = -1;
+    cubeGame.returnToLevelSelector();
+}

@@ -54,7 +54,7 @@ public:
     /// alternative to load(...) function, if this level should be generated from template data
     LevelData loadTemplateLevel(size_t id);
 
-    void returnToLevelSelector(ExitState exitState);
+    void returnToLevelSelector(ExitState exitState) override;
 
 private:
     void updateTextures();
@@ -84,6 +84,4 @@ private:
 
     Texture * gameTexture = nullptr;
     Texture* uiTexture = nullptr;
-
-    bool played = false;
 };
