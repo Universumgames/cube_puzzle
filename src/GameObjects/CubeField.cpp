@@ -5,22 +5,6 @@
 
 // ################################# Konstruktoren ###################################################################################
 
-/*CubeField::CubeField(Vector<CubeObject *>& cubeObjects) {
-    this->cubeObjects = cubeObjects;
-}*/
-
-/*CubeField::CubeField(Vector<CubeObject *> &cubeObjects, int sideId) {
-    this->cubeObjects = cubeObjects;
-    this->sideId = sideId;
-    for (auto cubeObject : this->cubeObjects) {
-        cubeObject->setSideId(this->sideId);
-    }
-}*/
-
-/*CubeField::CubeField(int sideId) {
-
-}*/
-
 CubeField::CubeField(int sideId, const Vector<CubeObject *>& cubeObjects) {
     this->sideId = sideId;
     this->cubeObjects = cubeObjects;
@@ -132,11 +116,11 @@ void CubeField::setCubeMapSideRef(CubeMapSide* cube_map_side) {
     this->cubeMapSideRef = cube_map_side;
 }
 
-bool PressurePlate::getIsActivated() {
+bool PressurePlate::getIsActivated() const {
     return this->isActivated;
 }
 
-int PressurePlate::getId() {
+int PressurePlate::getId() const {
     return this->id;
 }
 
@@ -240,11 +224,36 @@ int PressurePlate::leave() {
     return this->id;
 }
 
-
 void PressurePlate::activateAllSlidersWithSameId() {
-
+    CubeMap* cubeMap = this->cubeMapSideRef->getCubeMapRef();
+    Vector<CubeMapSide*> allCubeMapSides = *cubeMap->getAllCubeMapSides();
+    for (auto anyCubeMapSide : allCubeMapSides) {
+        for (auto cubeField : anyCubeMapSide->cubeFields) {
+            for (auto cubeObject : cubeField->cubeObjects) {
+                if (cubeObject->isSlider()) {
+                    auto *slider = dynamic_cast<Slider*>(cubeObject);
+                    if (slider->getId() == this->id) {
+                        slider->activate();
+                    }
+                }
+            }
+        }
+    }
 }
 
 void PressurePlate::deactivateAllSlidersWithSameId() {
-
+    CubeMap* cubeMap = this->cubeMapSideRef->getCubeMapRef();
+    Vector<CubeMapSide*> allCubeMapSides = *cubeMap->getAllCubeMapSides();
+    for (auto anyCubeMapSide : allCubeMapSides) {
+        for (auto cubeField : anyCubeMapSide->cubeFields) {
+            for (auto cubeObject : cubeField->cubeObjects) {
+                if (cubeObject->isSlider()) {
+                    auto *slider = dynamic_cast<Slider*>(cubeObject);
+                    if (slider->getId() == this->id) {
+                        slider->deactivate();
+                    }
+                }
+            }
+        }
+    }
 }

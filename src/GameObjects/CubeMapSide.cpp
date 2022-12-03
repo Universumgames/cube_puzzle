@@ -8,6 +8,7 @@ CubeMapSide::CubeMapSide(Vector<CubeField *> cubeFields, int width, int height, 
     this->cubeFields = std::move(cubeFields);
     for (CubeField* cubeField : this->cubeFields) {
         cubeField->setSideId(sideID);
+        cubeField->setCubeMapSideRef(this);
     }
 }
 
@@ -116,7 +117,7 @@ void CubeMapSide::Update(CubeGame &game, const u32 frame, const u32 totalMSec, c
 // ################################# Setter & Getter #################################################################################
 
 void CubeMapSide::setCubeMapRef(CubeMap *cube_map) {
-    this->cubeMap = cube_map;
+    this->cubeMapRef = cube_map;
 }
 
 void CubeMapSide::setDiceData(DiceData* dice_data) {
@@ -127,7 +128,7 @@ void CubeMapSide::setDiceData(DiceData* dice_data) {
 }
 
 CubeMap* CubeMapSide::getCubeMapRef() {
-    return this->cubeMap;
+    return this->cubeMapRef;
 }
 
 CubeField* CubeMapSide::getField(int x, int y) {

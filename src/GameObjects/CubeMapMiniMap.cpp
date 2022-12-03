@@ -62,7 +62,7 @@ void CubeMapMiniMap::RenderUI(const u32 frame, const u32 totalMSec, const float 
 
 /*
 void CubeMapMiniMap::updateMinimap(const u32 frame, const u32 totalMSec, const float deltaT) {
-    PlayerMoveDirection lastMoveDir = cubeMap->lastNormalizedMove;
+    PlayerMoveDirection lastMoveDir = cubeMapRef->lastNormalizedMove;
     int c = oldSide, n = 0, w = 0, e = 0, s = 0, b = 0;
     int relativeToWindow = max(game.getWindowSize().x, game.getWindowSize().y) / 20.0;
     int sideSize = max(relativeToWindow, 32);
@@ -148,7 +148,7 @@ void CubeMapMiniMap::updateMinimap(const u32 frame, const u32 totalMSec, const f
         animationProgress = 0;
         animationState = AnimationState::FINISHED;
         oldDiceData = DiceData(diceData);
-        oldSide = cubeMap->currentSideId;
+        oldSide = cubeMapRef->currentSideId;
     }
 }*/
 

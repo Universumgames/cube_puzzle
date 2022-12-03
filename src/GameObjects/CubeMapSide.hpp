@@ -11,7 +11,7 @@ class CubeField;
 class CubeMapSide {
 private:
     DiceData *diceData;
-    CubeMap *cubeMap;
+    CubeMap *cubeMapRef;
 
 public:
     Vector<CubeField *> cubeFields;

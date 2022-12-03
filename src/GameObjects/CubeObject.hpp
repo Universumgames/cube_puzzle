@@ -78,6 +78,8 @@ public:
     [[nodiscard]] bool canEnterPressurePlate() override;
     [[nodiscard]] bool canActivatePressurePlate() override;
     [[nodiscard]] bool isSlider() override;
+    void activate();
+    void deactivate();
 };
 
 // ################################# Moveable ########################################################################################

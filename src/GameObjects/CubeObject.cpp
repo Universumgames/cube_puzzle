@@ -175,3 +175,13 @@ bool CubeObject::isSlider() {
 bool Slider::isSlider() {
     return true;
 }
+
+void Slider::activate() {
+    cout << "ich wurde aktiviert yeeeha!!" << endl;
+    this->isActivated = true;
+}
+
+void Slider::deactivate() {
+    cout << "Oh noes, ich wurde deaktiviert :((((" << endl;
+    this->isActivated = false;
+}

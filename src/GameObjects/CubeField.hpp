@@ -114,8 +114,8 @@ public:
     void Render(CubeGame &game, Renderer *render, Point size, Point location, u32 frame, u32 totalMSe, float deltaT) override;
     void Update(CubeGame &game, u32 frame, u32 totalMSec, float deltaT) override;
 
-    bool getIsActivated();
-    int getId();
+    bool getIsActivated() const;
+    int getId() const;
     bool canPlayerEnter() override;
     bool canObjectEnter(CubeObject *cubeObject) override;
     bool isPressurePlate() override;
