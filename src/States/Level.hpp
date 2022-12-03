@@ -64,12 +64,15 @@ private:
     /// internal funciton to render ui into ui frame buffer
     void internalUIRender(const u32 frame, const u32 totalMSec, const float deltaT);
 
+    void initLevel();
+
 protected:
     Rect getGameRenderDst() override;
 
     Rect getUIRenderDst() override;
 
 private:
+    LevelLoader::LoadedLevelData originalLevelData;
     Vector<GameObject *> gameObjects;
     Player *player = nullptr;
     CubeMap *cubeMap = nullptr;
@@ -81,4 +84,6 @@ private:
 
     Texture * gameTexture = nullptr;
     Texture* uiTexture = nullptr;
+
+    bool played = false;
 };

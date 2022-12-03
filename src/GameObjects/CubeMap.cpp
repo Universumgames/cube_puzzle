@@ -76,9 +76,9 @@ void CubeMap::drawMap(const u32 frame, const u32 totalMSec, const float deltaT) 
             sideTransitionState = 0;
             sideTransitionAnimating = false;
         }
-        getCurrentSide()->Render(game, gameState, render, diceData, BASIC_GO_DATA_PASSTHROUGH, newSide);
+        getCurrentSide()->Render(game, gameState, render, BASIC_GO_DATA_PASSTHROUGH, newSide);
     } else
-        getCurrentSide()->Render(game, gameState, render, diceData, BASIC_GO_DATA_PASSTHROUGH, drawableRect);
+        getCurrentSide()->Render(game, gameState, render, BASIC_GO_DATA_PASSTHROUGH, drawableRect);
 }
 
 
@@ -98,6 +98,10 @@ CubeMap::CubeMap(CubeGame &game1, ComplexGameState *gameState, SDL_Renderer *ren
     this->minimapText = new Text(game, gameState, render, 400, "", game.getSpriteStorage()->debugFont, {10, 60});
     this->debugDiceData = new Text(game, gameState, render, 400, "", game.getSpriteStorage()->debugFont, {10, 230});
     this->miniMap = new CubeMapMiniMap(game, gameState, render, this);
+
+    for(auto side : sides){
+        side->setDiceData(&diceData);
+    }
 }
 
 CubeField *CubeMap::getField(int side, int x, int y) {
@@ -122,7 +126,7 @@ Rect CubeMap::getPlayerDrawPosition() {
     auto origSize = side->getFieldSize(getDrawableRect());
     auto size = origSize * 0.8;
     auto gridOffset = getDrawableRect() + ((origSize - size) / 2);
-    auto screenGridPos = getCurrentSide()->cubePositionToScreenPosition(this->diceData, playerPos);
+    auto screenGridPos = getCurrentSide()->cubePositionToScreenPosition(playerPos);
     return {origSize.x * screenGridPos.x + gridOffset.x, origSize.y * screenGridPos.y + gridOffset.y, size.x, size.y};
 }
 
@@ -144,5 +148,6 @@ void CubeMap::saveCurrentFrame() {
 }
 
 void CubeMap::updateDiceDataInCubeMapSide() {
-
+ // moved to constructor
+ // TODO delete method
 }

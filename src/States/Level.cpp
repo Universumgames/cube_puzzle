@@ -68,15 +68,20 @@ Level::Level(CubeGame &game, Renderer *render) : ComplexGameState(game, render) 
 }
 
 void Level::Init() {
+    if(played) {
+        gameObjects = Vector<GameObject*>();
+        initLevel();
+    }
     GameState::Init();
     gameObjects.push_back(worldMap);
     gameObjects.push_back(cubeMap);
     gameObjects.push_back(player);
     gameObjects.push_back(text);
     iterateGameObjects(Init())
-    game.SetPerfDrawMode(Game::PerformanceDrawMode::Title);
+    //game.SetPerfDrawMode(Game::PerformanceDrawMode::Title);
     oldSize = {};
     updateTextures();
+    played = true;
 }
 
 void Level::UnInit() {
@@ -85,23 +90,16 @@ void Level::UnInit() {
 }
 
 LevelData Level::loadTemplateLevel(size_t id) {
-    worldMap = new WorldMap(cubeGame, this, render, emptyWorldFieldSize, emptyWorldField, {0, 0});
-    cubeMap = new CubeMap(cubeGame, this, render, emptyCubeMapSides);
-    worldMap->setCubeMap(cubeMap);
-    cubeMap->SetWorldMap(worldMap);
-    player = new Player(cubeGame, this, render);
-    player->setCubeMap(cubeMap);
+    originalLevelData = {.path = "/dev/zero", .name = "template level", .id = 1, .sides = emptyCubeMapSides, .worldSize = emptyWorldFieldSize, .worldField = emptyWorldField, .cubePos = {
+            0, 0}, .playerPos = {0, 0}, .cubeSide = 2};
+    initLevel();
     levelData = {.path = "", .id = 1, .allStatesIndex = id, .name = "template level"};
     return levelData;
 }
 
 LevelData Level::load(const LevelLoader::LoadedLevelData &data, size_t arrayIndex) {
-    worldMap = new WorldMap(cubeGame, this, render, data.worldSize, data.worldField, data.cubePos);
-    cubeMap = new CubeMap(cubeGame, this, render, data.sides, data.cubeSide, data.playerPos);
-    worldMap->setCubeMap(cubeMap);
-    cubeMap->SetWorldMap(worldMap);
-    player = new Player(cubeGame, this, render);
-    player->setCubeMap(cubeMap);
+    originalLevelData = data;
+    initLevel();
     levelData = {.path=data.path, .id=data.id, .allStatesIndex = arrayIndex, .name = data.name};
     return levelData;
 }
@@ -195,6 +193,20 @@ Rect Level::getUIRenderDst() {
 }
 
 void Level::returnToLevelSelector(ExitState exitState = ExitState::CANCELLED) {
-    cubeGame.interGameStateData = {.sourceStateID = (int)levelData.allStatesIndex, .exitState = exitState};
+    cubeGame.interGameStateData = {.sourceStateID = (int) levelData.allStatesIndex, .exitState = exitState};
     cubeGame.returnToLevelSelector();
+}
+
+void Level::initLevel() {
+    auto data = originalLevelData;
+    if(worldMap != nullptr) delete worldMap;
+    if(cubeMap != nullptr) delete cubeMap;
+    if(player != nullptr) delete player;
+    worldMap = new WorldMap(cubeGame, this, render, data.worldSize, data.worldField, data.cubePos);
+    cubeMap = new CubeMap(cubeGame, this, render, data.sides, data.cubeSide, data.playerPos);
+    worldMap->setCubeMap(cubeMap);
+    cubeMap->SetWorldMap(worldMap);
+    player = new Player(cubeGame, this, render);
+    player->setCubeMap(cubeMap);
+    played = false;
 }
