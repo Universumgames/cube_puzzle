@@ -236,6 +236,5 @@ void LevelSelector::prepareLevelListItems() {
         Rect drawable = {rectStartPoint.x, rectStartPoint.y, levelRectSize.x, levelRectSize.y};
 
         prepareLevelListItemTexture(levelData[i], drawable);
-
     }
 }
