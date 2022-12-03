@@ -54,6 +54,25 @@ Vector<AudioPlayer *> AudioHandler::getPlayers()
     return players;
 }
 
+void AudioHandler::enableAudio(bool enabled) {
+    this->enabled = enabled;
+    if(enabled){
+        for(auto player : players){
+            player->resume();
+        }
+        cout << "play";
+    }else{
+        for(auto player : players){
+            player->tempPause();
+        }
+        cout << "pause";
+    }
+}
+
+bool AudioHandler::getAudioEnabled() {
+    return enabled;
+}
+
 AudioPlayer::AudioPlayer(const char *filePath)
 {
     chunk = Mix_LoadWAV(filePath);
@@ -65,6 +84,8 @@ AudioPlayer::AudioPlayer(const char *filePath)
 
 void AudioPlayer::playOnce()
 {
+    looping = false;
+    if(!audioHandler->getAudioEnabled()) return;
     channel = Mix_PlayChannel(-1, chunk, 0);
     //Mix_PlayMusic(music, 1);
     playing = true;
@@ -74,10 +95,14 @@ void AudioPlayer::pause()
 {
     Mix_Pause(channel);
     playing = false;
+    wantsToPlay = false;
 }
 
 void AudioPlayer::playLoop()
 {
+    wantsToPlay = true;
+    looping = true;
+    if(!audioHandler->getAudioEnabled()) return;
     channel = Mix_PlayChannel(-1, chunk, -1);
     playing = true;
 }
@@ -85,4 +110,14 @@ void AudioPlayer::playLoop()
 bool AudioPlayer::isPlaying()
 {
     return playing;
+}
+
+void AudioPlayer::resume() {
+    if(!wantsToPlay) return;
+    if(looping) playLoop();
+    else playOnce();
+}
+
+void AudioPlayer::tempPause() {
+    Mix_Pause(channel);
 }

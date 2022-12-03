@@ -15,11 +15,12 @@
 
 CubeGame::CubeGame() : Game("CubeGame") {
     loadSprites();
-    // Level selctor loads all levels and adds them procedually to the states
+    // Level selector loads all levels and adds them procedually to the states
     allStates = {new LevelSelector(*this, render)};
     audioHandler = AudioHandler::getInstance();
     audioHandler->init();
     backgroundMusic = new AudioPlayer(MUSIC_BACKGROUND_PATH);
+    backgroundMusic->playLoop();
     SetNextState(0);
 
     SDL_SetRenderDrawBlendMode(render, SDL_BLENDMODE_BLEND);
@@ -43,8 +44,7 @@ bool CubeGame::HandleEvent(const Event event) {
                 return true;
             }
             if (what_key.scancode == SDL_SCANCODE_M) {
-                if (backgroundMusic->isPlaying()) backgroundMusic->pause();
-                else backgroundMusic->playLoop();
+                audioHandler->enableAudio(!audioHandler->getAudioEnabled());
             }
             break;
         }
