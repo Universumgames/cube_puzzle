@@ -1,38 +1,20 @@
-#include "CubeMap.hpp"
-#include "../recthelper.hpp"
+#include "CubeMapSide.hpp"
 
-/// convert the coordinates to the correct coordinates according to current rotation
-Point CubeMapSide::cubePositionToScreenPosition(Point cubePos) const {
-    DiceSideRotation faceDirection = this->diceData->getDiceSideRotation(sideID);
-    Point res = {};
-    switch (faceDirection) {
-        case DiceSideRotation::UP:
-            return cubePos;
-        case DiceSideRotation::DOWN:
-            return {this->width - cubePos.x - 1, this->height - cubePos.y - 1};
-        case DiceSideRotation::LEFT:
-            return {cubePos.y, this->width - cubePos.x - 1};
-        case DiceSideRotation::RIGHT:
-            return {this->height - cubePos.y - 1, cubePos.x};
-    }
-    return res;
-}
+// ################################# Konstruktoren ###################################################################################
 
-void CubeMapSide::HandleEvent(CubeGame &game, const u32 frame, const u32 totalMSec, const float deltaT, Event event) {
-    for (auto *field: cubeFields) {
-        field->HandleEvent(game, BASIC_GO_DATA_PASSTHROUGH, event);
+CubeMapSide::CubeMapSide(Vector<CubeField *> cubeFields, int width, int height, int sideID) : width(width), height(height), sideID(sideID) {
+    this->cubeFields = std::move(cubeFields);
+    for (CubeField* cubeField : this->cubeFields) {
+        cubeField->setSideId(sideID);
     }
 }
 
-void CubeMapSide::Update(CubeGame &game, const u32 frame, const u32 totalMSec, const float deltaT) {
-    for (auto *field: cubeFields) {
-        field->Update(game, BASIC_GO_DATA_PASSTHROUGH);
-    }
-    if (overlay != nullptr) overlay->setEnabled(game.isDebug());
-}
+CubeMapSide::CubeMapSide(Vector<CubeField *> cubeFields, Point size, int sideID)
+    : CubeMapSide(std::move(cubeFields), size.x, size.y, sideID) {}
 
-void CubeMapSide::Render(CubeGame &game, ComplexGameState* gameState, Renderer *render, const u32 frame, const u32 totalMSec,
-                         const float deltaT, Rect drawableRect) {
+// ################################# Alle Render-Methoden ############################################################################
+
+void CubeMapSide::Render(CubeGame &game, ComplexGameState* gameState, Renderer *render, const u32 frame, const u32 totalMSec, const float deltaT, Rect drawableRect) {
     int x = 0, y = 0;
     Point size = getFieldSize(drawableRect);
     Point offset = {drawableRect.x, drawableRect.y};
@@ -41,7 +23,7 @@ void CubeMapSide::Render(CubeGame &game, ComplexGameState* gameState, Renderer *
     SDL_SetTextureColorMod(game.getSpriteStorage()->sideSprites[sideID - 1], 230 + dimm,230 + dimm,230 + dimm);
     drawSide(game.getSpriteStorage()->sideSprites[sideID - 1], render, drawableRect, rotation);
     SDL_SetTextureColorMod(game.getSpriteStorage()->sideSprites[sideID - 1], 255,255,255);
-
+    
     if (overlay == nullptr) {
         overlay = new Text(game, gameState, render, 400, "", game.getSpriteStorage()->debugFont, {0, 0});
     }
@@ -61,15 +43,7 @@ void CubeMapSide::Render(CubeGame &game, ComplexGameState* gameState, Renderer *
     renderGridOverlay(game, render, BASIC_GO_DATA_PASSTHROUGH, drawableRect);
 }
 
-/// Gibt die Anzahl der Pixel zurück, die ein einzelnes Feld breit und hoch ist.
-Point CubeMapSide::getFieldSize(Rect drawableRect) {
-    int w = min(drawableRect.w, drawableRect.h) / max(width, height);
-    return {w, w};
-}
-
-
-void CubeMapSide::renderGridOverlay(CubeGame &game, Renderer *render, const u32 frame,
-                                    const u32 totalMSec, const float deltaT, Rect drawableRect) {
+void CubeMapSide::renderGridOverlay(CubeGame &game, Renderer *render, const u32 frame, const u32 totalMSec, const float deltaT, Rect drawableRect) {
     Point size = getFieldSize(drawableRect);
     Point offset = {drawableRect.x, drawableRect.y};
     if (game.isDebug()) {
@@ -85,8 +59,7 @@ void CubeMapSide::renderGridOverlay(CubeGame &game, Renderer *render, const u32 
             SDL_SetRenderDrawColor(render, 0, 0, 0, 100);
             SDL_RenderFillRect(render, &dst);
         }
-
-
+        
         // colored rectangle
         auto sideOrientation = this->diceData->getDiceSideRotation(sideID);
         Rect dst = {0, 0, 0, 0};
@@ -123,6 +96,67 @@ void CubeMapSide::renderCubeFields(CubeGame &game, Renderer *render, const u32 f
     //CubeGame &game, Renderer *render, Point size, Point location, u32 frame, u32 totalMSec, float deltaT
 }
 
+// ################################# HandleEvent und Update-Methoden #################################################################
+
+void CubeMapSide::HandleEvent(CubeGame &game, const u32 frame, const u32 totalMSec, const float deltaT, Event event) {
+    for (auto *field: cubeFields) {
+        field->HandleEvent(game, BASIC_GO_DATA_PASSTHROUGH, event);
+    }
+}
+
+void CubeMapSide::Update(CubeGame &game, const u32 frame, const u32 totalMSec, const float deltaT) {
+    for (auto *field: cubeFields) {
+        field->Update(game, BASIC_GO_DATA_PASSTHROUGH);
+    }
+    if (overlay != nullptr) overlay->setEnabled(game.isDebug());
+}
+
+// ################################# Setter & Getter #################################################################################
+
+void CubeMapSide::setDiceData(DiceData* dice_data) {
+    this->diceData = dice_data;
+    for (CubeField* cubeField : this->cubeFields) {
+        cubeField->setDiceData(this->diceData);
+    }
+}
+
+CubeField* CubeMapSide::getField(int x, int y) {
+    return this->cubeFields[getIndex(x, y)];
+}
+
+CubeField* CubeMapSide::getField(Point pos) {
+    return getField(pos.x, pos.y);
+}
+
+int CubeMapSide::getIndex(int x, int y) const {
+    return y * width + x;
+}
+
+/// Gibt die Anzahl der Pixel zurück, die ein einzelnes Feld breit und hoch ist.
+Point CubeMapSide::getFieldSize(Rect drawableRect) const {
+    int w = min(drawableRect.w, drawableRect.h) / max(width, height);
+    return {w, w};
+}
+
+// ################################# sonstige Methoden ###############################################################################
+
+/// convert the coordinates to the correct coordinates according to current rotation
+Point CubeMapSide::cubePositionToScreenPosition(Point cubePos) const {
+    DiceSideRotation faceDirection = this->diceData->getDiceSideRotation(sideID);
+    Point res = {};
+    switch (faceDirection) {
+        case DiceSideRotation::UP:
+            return cubePos;
+        case DiceSideRotation::DOWN:
+            return {this->width - cubePos.x - 1, this->height - cubePos.y - 1};
+        case DiceSideRotation::LEFT:
+            return {cubePos.y, this->width - cubePos.x - 1};
+        case DiceSideRotation::RIGHT:
+            return {this->height - cubePos.y - 1, cubePos.x};
+    }
+    return res;
+}
+
 Point CubeMapSide::screenPositionToCubePosition(Point screenPos) const {
     Point p = {};
     for(int x = 0; x < width; x++){
@@ -133,12 +167,4 @@ Point CubeMapSide::screenPositionToCubePosition(Point screenPos) const {
         }
     }
     return p;
-}
-
-CubeMapSide *CubeMap::getCurrentSide() {
-    return getSide(this->currentSideId);
-}
-
-void CubeMapSide::setDiceData(DiceData* dice_data) {
-    this->diceData = dice_data;
 }

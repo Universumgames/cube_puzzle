@@ -2,16 +2,15 @@
 #include "WorldMap.hpp"
 #include "CubeField.hpp"
 #include "../recthelper.hpp"
-#include "../matrix.hpp"
 #include "CubeMapMiniMap.hpp"
 #include "../States/Level.hpp"
 
-bool CubeMap::playerCanMove() {
+bool CubeMap::canPlayerMove() const {
     return !sideTransitionAnimating;
 }
 
 bool CubeMap::movePlayer(PlayerMoveDirection dir) {
-    if (!playerCanMove()) return false;
+    if (!canPlayerMove()) return false;
     PlayerMoveDirection normalizedDirection = screenDirectionToDirectionOnCubeSide(dir);
 
     Point moveDir = {};
@@ -42,25 +41,6 @@ bool CubeMap::movePlayer(PlayerMoveDirection dir) {
     this->playerPos = newPlayerPos;
     doLevelFinishedLogic();
     return true;
-}
-
-void CubeMap::moveCubeInWorld(DiceRollDirection rollDirection) {
-    switch (rollDirection) {
-        case DiceRollDirection::NORTH:
-            this->worldMap->cubePos += 1_up;
-            break;
-        case DiceRollDirection::SOUTH:
-            this->worldMap->cubePos += 1_down;
-            break;
-        case DiceRollDirection::WEST:
-            this->worldMap->cubePos += 1_left;
-            break;
-        case DiceRollDirection::EAST:
-            this->worldMap->cubePos += 1_right;
-            break;
-    }
-    worldMap->fixCubePosOutBounds();
-    diceData.rotate(rollDirection);
 }
 
 PlayerMoveDirection CubeMap::screenDirectionToDirectionOnCubeSide(PlayerMoveDirection direction) {

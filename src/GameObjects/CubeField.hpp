@@ -4,12 +4,14 @@
 #include "../CubeGame.hpp"
 #include "../stringhelper.hpp"
 #include "CubeObject.hpp"
+#include "../data/DiceData.hpp"
 
 /// Field on CubeMap
 class CubeField {
 protected:
     Vector<GameObject *> objects;
     int sideId;
+    DiceData* diceData;
 
 public:
     Vector<CubeObject *> cubeObjects;
@@ -22,6 +24,7 @@ public:
     virtual void Render(CubeGame &game, Renderer *render, Point size, Point location, u32 frame, u32 totalMSec, float deltaT);
 
     void setSideId(int sideID);
+    void setDiceData(DiceData* dice_data);
     
     virtual bool canPlayerEnter() = 0;
     virtual bool canObjectEnter(CubeObject *cubeObject) = 0;
@@ -35,8 +38,8 @@ public:
     EmptyField() = default;
     explicit EmptyField(Vector<CubeObject *> &cubeObjects);
 
-    void Update(CubeGame &game, u32 frame, u32 totalMSec, float deltaT) override;
     void Render(CubeGame &game, Renderer *render, Point size, Point location, u32 frame, u32 totalMSec, float deltaT) override;
+    void Update(CubeGame &game, u32 frame, u32 totalMSec, float deltaT) override;
 
     bool canPlayerEnter() override;
     bool canObjectEnter(CubeObject *cubeObject) override;
@@ -54,9 +57,9 @@ public:
     Wall_1() = default;
     explicit Wall_1(Vector<CubeObject *> &cubeObjects);
 
-    void Update(CubeGame &game, u32 frame, u32 totalMSec, float deltaT) override;
     void Render(CubeGame &game, Renderer *render, Point size, Point location, u32 frame, u32 totalMSec,
                 float deltaT) override;
+    void Update(CubeGame &game, u32 frame, u32 totalMSec, float deltaT) override;
 };
 
 class Wall_2 : public Static {
@@ -64,8 +67,8 @@ public:
     Wall_2() = default;
     explicit Wall_2(Vector<CubeObject *> &cubeObjects);
 
-    void Update(CubeGame &game, u32 frame, u32 totalMSec, float deltaT) override;
     void Render(CubeGame &game, Renderer *render, Point size, Point location, u32 frame, u32 totalMSec, float deltaT) override;
+    void Update(CubeGame &game, u32 frame, u32 totalMSec, float deltaT) override;
 };
 
 class Grass : public EmptyField {
@@ -73,8 +76,10 @@ public:
     Grass() = default;
     explicit Grass(Vector<CubeObject *> &cubeObjects);
 
-    void Update(CubeGame &game, u32 frame, u32 totalMSec, float deltaT) override;
     void Render(CubeGame &game, Renderer *render, Point size, Point location, u32 frame, u32 totalMSec, float deltaT) override;
+    void Update(CubeGame &game, u32 frame, u32 totalMSec, float deltaT) override;
+    
+    bool canObjectEnter(CubeObject *cubeObject) override;
 };
 
 class Interactable : public CubeField {
@@ -86,8 +91,8 @@ public:
     PressurePlate() = default;
     explicit PressurePlate(Vector<CubeObject *> &cubeObjects);
 
-    void Update(CubeGame &game, u32 frame, u32 totalMSec, float deltaT) override;
     void Render(CubeGame &game, Renderer *render, Point size, Point location, u32 frame, u32 totalMSe, float deltaT) override;
+    void Update(CubeGame &game, u32 frame, u32 totalMSec, float deltaT) override;
 
     bool canPlayerEnter() override;
     bool canObjectEnter(CubeObject *cubeObject) override;

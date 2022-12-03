@@ -24,7 +24,7 @@ set(CMAKE_XCODE_SCHEME_WORKING_DIRECTORY ./)
         src/data/LevelData.hpp src/data/MoveDirections.hpp src/data/DiceData.hpp src/data/DiceData.cpp
         src/data/EmptyData.hpp src/data/SpriteStorage.hpp src/GameObjects/Text.cpp src/GameObjects/Text.hpp
         src/data/Colors.hpp src/States/ComplexGameState.hpp src/States/ComplexGameState.cpp
-        src/GameObjects/CubeMap_CubeMapSide.cpp src/GameObjects/CubeMap_playerMovement.cpp src/data/WorldField.cpp
+        src/GameObjects/CubeMapSide.cpp src/GameObjects/CubeMapSide.hpp src/GameObjects/CubeMap_playerMovement.cpp src/data/WorldField.cpp
         src/data/paths.hpp src/stringhelper.hpp src/data/LevelLoader.cpp src/data/LevelLoader.hpp src/filehelper.hpp
         src/AudioHandler.hpp src/AudioHandler.cpp src/matrix.hpp src/GameObjects/CubeMapMiniMap.cpp
         src/GameObjects/CubeMapMiniMap.hpp src/data/bezier.hpp src/mathhelper.hpp src/data/spriteDefs.hpp)]]

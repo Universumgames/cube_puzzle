@@ -11,7 +11,7 @@ Player::Player(CubeGame &game, ComplexGameState *gameState, SDL_Renderer *render
 }
 
 void Player::HandleEvent(const u32 frame, const u32 totalMSec, const float deltaT, Event event) {
-    if (lastMovementCountdown > 0 || !cubeMap->playerCanMove()) {
+    if (lastMovementCountdown > 0 || !cubeMap->canPlayerMove()) {
         //if (moveCancelledAudio != nullptr)moveCancelledAudio->playOnce();
         return;
     }

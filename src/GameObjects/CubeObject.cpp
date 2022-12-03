@@ -1,5 +1,4 @@
 #include "CubeObject.hpp"
-#include "../data/Colors.hpp"
 
 // ################################# Konstruktoren ###################################################################################
 
@@ -38,8 +37,9 @@ void Flag::Render(CubeGame& game, Renderer *render, Point size, Point location, 
 }
 
 void CubeObject::drawSpriteBorder(CubeGame &game, Renderer *render, Rect dst) {
-    if (!game.isDebug())
+    if (!game.isDebug()) {
         return;
+    }
     SDL_SetRenderDrawColor(render, spriteBorderColor.r, spriteBorderColor.g, spriteBorderColor.b, spriteBorderColor.a);
     SDL_RenderDrawRect(render, &dst);
 }
@@ -56,6 +56,16 @@ void CubeObject::HandleEvent(CubeGame& game, u32 frame, u32 totalMSec, float del
 }
 
 void Stone::HandleEvent(CubeGame &game, u32 frame, u32 totalMSec, float deltaT, Event event) {
+}
+
+// ################################# Setter & Getter #################################################################################
+
+void CubeObject::setDiceData(DiceData* dice_data) {
+    this->diceData = dice_data;
+}
+
+void CubeObject::setSideId(int sideID) {
+    this->sideId = sideID;
 }
 
 // ################################# canPlayerEnter-Methoden #########################################################################

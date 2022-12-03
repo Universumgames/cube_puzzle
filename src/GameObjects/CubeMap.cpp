@@ -5,6 +5,45 @@
 #include "CubeMapMiniMap.hpp"
 #include "../States/Level.hpp"
 
+// ################################# File-internal Helper-Function ###################################################################
+
+void updateAnimationSidePosition(Rect& oldSide, Rect& newSide, double transitionState, PlayerMoveDirection moveDir);
+
+// ################################# Konstruktoren ###################################################################################
+
+CubeMap::CubeMap(CubeGame &game1, ComplexGameState *gameState, SDL_Renderer *render1,
+                 const Vector<CubeMapSide *> &sides, int startSide,
+                 Point playerPos)
+        : GameObject(game1, gameState, render1) {
+    this->sides = sides;
+    this->currentSideId = startSide;
+    this->playerPos = playerPos;
+    this->debugSideIndicator = new Text(game, gameState, render, 400, "", game1.getSpriteStorage()->debugFont,
+                                        {10, 30});
+    this->minimapText = new Text(game, gameState, render, 400, "", game.getSpriteStorage()->debugFont, {10, 60});
+    this->debugDiceData = new Text(game, gameState, render, 400, "", game.getSpriteStorage()->debugFont, {10, 230});
+    this->miniMap = new CubeMapMiniMap(game, gameState, render, this);
+    
+    for(auto side : sides){
+        side->setDiceData(&diceData);
+    }
+}
+
+// ################################# Alle Render-Methoden ############################################################################
+
+void CubeMap::Render(const u32 frame, const u32 totalMSec, const float deltaT) {
+    renderTarget = SDL_GetRenderTarget(render);
+    drawMap(BASIC_GO_DATA_PASSTHROUGH);
+}
+
+void CubeMap::RenderUI(const u32 frame, const u32 totalMSec, const float deltaT) {
+    debugSideIndicator->RenderUI(BASIC_GO_DATA_PASSTHROUGH);
+    debugDiceData->RenderUI(BASIC_GO_DATA_PASSTHROUGH);
+    miniMap->RenderUI(BASIC_GO_DATA_PASSTHROUGH);
+}
+
+// ################################# HandleEvent, Update- und Init-Methoden ##########################################################
+
 void CubeMap::HandleEvent(const u32 frame, const u32 totalMSec, const float deltaT, Event event) {
     //if (event.type != SDL_KEYDOWN) return;
     const Keysym &what_key = event.key.keysym;
@@ -31,37 +70,75 @@ void CubeMap::Update(const u32 frame, const u32 totalMSec, const float deltaT) {
     }
 }
 
-void CubeMap::Render(const u32 frame, const u32 totalMSec, const float deltaT) {
-    renderTarget = SDL_GetRenderTarget(render);
-
-    drawMap(BASIC_GO_DATA_PASSTHROUGH);
-
+void CubeMap::Init() {
+    GameObject::Init();
 }
 
-void CubeMap::RenderUI(const u32 frame, const u32 totalMSec, const float deltaT) {
-    debugSideIndicator->RenderUI(BASIC_GO_DATA_PASSTHROUGH);
-    debugDiceData->RenderUI(BASIC_GO_DATA_PASSTHROUGH);
-    miniMap->RenderUI(BASIC_GO_DATA_PASSTHROUGH);
+// ################################# Setter & Getter #################################################################################
+// ####### public #######
+
+void CubeMap::SetWorldMap(WorldMap *world_map) {
+    this->worldMap = world_map;
 }
-void updateAnimationSidePosition(Rect& oldSide, Rect& newSide, double transitionState, PlayerMoveDirection moveDir){
-    switch(moveDir) {
-        case PlayerMoveDirection::UP:
-            newSide.y -= newSide.h * (1-transitionState);
-            oldSide.y += newSide.h * transitionState;
+
+Rect CubeMap::getPlayerDrawPosition() {
+    CubeMapSide *side = getCurrentSide();
+    auto origSize = side->getFieldSize(getDrawableRect());
+    auto size = origSize * 0.8;
+    auto gridOffset = getDrawableRect() + ((origSize - size) / 2);
+    auto screenGridPos = getCurrentSide()->cubePositionToScreenPosition(playerPos);
+    return {origSize.x * screenGridPos.x + gridOffset.x, origSize.y * screenGridPos.y + gridOffset.y, size.x, size.y};
+}
+
+CubeMapSide *CubeMap::getCurrentSide() {
+    return getSide(this->currentSideId);
+}
+
+// ####### private ######
+
+CubeMapSide *CubeMap::getSide(int i) {
+    return sides[i - 1];
+}
+
+CubeField *CubeMap::getField(int side, int x, int y) {
+    return getSide(side)->getField(x, y);
+}
+
+CubeField *CubeMap::getField(int side, Point p) {
+    return getSide(side)->getField(p.x, p.y);
+}
+
+/// gibt den Spielbereich zurück (ohne den schwarzen Rand drumrum)
+Rect CubeMap::getDrawableRect() {
+    return gameState->getDrawableGameRect();
+}
+
+// ################################# sonstige Methoden ###############################################################################
+// ####### public #######
+
+bool CubeMap::isAnimating() const {
+    return sideTransitionAnimating;
+}
+
+// ####### private ######
+
+void CubeMap::moveCubeInWorld(DiceRollDirection rollDirection) {
+    switch (rollDirection) {
+        case DiceRollDirection::NORTH:
+            this->worldMap->cubePos += 1_up;
             break;
-        case PlayerMoveDirection::DOWN:
-            newSide.y += newSide.h * (1-transitionState);
-            oldSide.y -= newSide.h * transitionState;
+        case DiceRollDirection::SOUTH:
+            this->worldMap->cubePos += 1_down;
             break;
-        case PlayerMoveDirection::LEFT:
-            newSide.x -= newSide.w * (1-transitionState);
-            oldSide.x += newSide.w * transitionState;
+        case DiceRollDirection::WEST:
+            this->worldMap->cubePos += 1_left;
             break;
-        case PlayerMoveDirection::RIGHT:
-            newSide.x += newSide.w * (1-transitionState);
-            oldSide.x -= newSide.w * transitionState;
+        case DiceRollDirection::EAST:
+            this->worldMap->cubePos += 1_right;
             break;
     }
+    worldMap->fixCubePosOutBounds();
+    diceData.rotate(rollDirection);
 }
 
 void CubeMap::drawMap(const u32 frame, const u32 totalMSec, const float deltaT) {
@@ -81,55 +158,6 @@ void CubeMap::drawMap(const u32 frame, const u32 totalMSec, const float deltaT) 
         getCurrentSide()->Render(game, gameState, render, BASIC_GO_DATA_PASSTHROUGH, drawableRect);
 }
 
-
-CubeMapSide *CubeMap::getSide(int i) {
-    return sides[i - 1];
-}
-
-CubeMap::CubeMap(CubeGame &game1, ComplexGameState *gameState, SDL_Renderer *render1,
-                 const Vector<CubeMapSide *> &sides, int startSide,
-                 Point playerPos)
-        : GameObject(game1, gameState, render1) {
-    this->sides = sides;
-    this->currentSideId = startSide;
-    this->playerPos = playerPos;
-    this->debugSideIndicator = new Text(game, gameState, render, 400, "", game1.getSpriteStorage()->debugFont,
-                                        {10, 30});
-    this->minimapText = new Text(game, gameState, render, 400, "", game.getSpriteStorage()->debugFont, {10, 60});
-    this->debugDiceData = new Text(game, gameState, render, 400, "", game.getSpriteStorage()->debugFont, {10, 230});
-    this->miniMap = new CubeMapMiniMap(game, gameState, render, this);
-
-    for(auto side : sides){
-        side->setDiceData(&diceData);
-    }
-}
-
-CubeField *CubeMap::getField(int side, int x, int y) {
-    return getSide(side)->getField(x, y);
-}
-
-CubeField *CubeMap::getField(int side, Point p) {
-    return getSide(side)->getField(p.x, p.y);
-}
-
-void CubeMap::Init() {
-    GameObject::Init();
-}
-
-/// gibt den Spielbereich zurück (ohne den schwarzen Rand drumrum)
-Rect CubeMap::getDrawableRect() {
-    return gameState->getDrawableGameRect();
-}
-
-Rect CubeMap::getPlayerDrawPosition() {
-    CubeMapSide *side = getCurrentSide();
-    auto origSize = side->getFieldSize(getDrawableRect());
-    auto size = origSize * 0.8;
-    auto gridOffset = getDrawableRect() + ((origSize - size) / 2);
-    auto screenGridPos = getCurrentSide()->cubePositionToScreenPosition(playerPos);
-    return {origSize.x * screenGridPos.x + gridOffset.x, origSize.y * screenGridPos.y + gridOffset.y, size.x, size.y};
-}
-
 void CubeMap::saveCurrentFrame() {
     Texture *currTarget = renderTarget;
     if (oldSideFrameSize != game.getCurrentRenderTargetSize() || oldSideFrame == NULL) {
@@ -147,7 +175,25 @@ void CubeMap::saveCurrentFrame() {
     SDL_SetRenderTarget(render, currTarget);
 }
 
-void CubeMap::updateDiceDataInCubeMapSide() {
- // moved to constructor
- // TODO delete method
+// ################################# File-internal Helper-Function ###################################################################
+
+void updateAnimationSidePosition(Rect& oldSide, Rect& newSide, double transitionState, PlayerMoveDirection moveDir) {
+    switch(moveDir) {
+        case PlayerMoveDirection::UP:
+            newSide.y -= newSide.h * (1-transitionState);
+            oldSide.y += newSide.h * transitionState;
+            break;
+        case PlayerMoveDirection::DOWN:
+            newSide.y += newSide.h * (1-transitionState);
+            oldSide.y -= newSide.h * transitionState;
+            break;
+        case PlayerMoveDirection::LEFT:
+            newSide.x -= newSide.w * (1-transitionState);
+            oldSide.x += newSide.w * transitionState;
+            break;
+        case PlayerMoveDirection::RIGHT:
+            newSide.x += newSide.w * (1-transitionState);
+            oldSide.x -= newSide.w * transitionState;
+            break;
+    }
 }

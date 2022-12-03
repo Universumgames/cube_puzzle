@@ -5,20 +5,27 @@
 
 class CubeObject {
 public:
+    /// render only method
+    // TODO Mina ich brauche irgendeine Möglichkeit um auf diceData und die Würfelseite (beispiel sideID in CubeMapSide)
+    virtual void Render(CubeGame &game, Renderer *render, Point size, Point location, u32 frame, u32 totalMSec, float deltaT);
     /// Handle input events, probably unused
     virtual void HandleEvent(CubeGame &game, u32 frame, u32 totalMSec, float deltaT, Event event);
     /// physics, etc. update method
     // TODO mina hier wirst GARANTIERT auch die Dice Data und sideID benötigen.....
     virtual void Update(CubeGame &game, u32 frame, u32 totalMSec, float deltaT);
-    /// render only method
-    // TODO Mina ich brauche irgendeine Möglichkeit um auf diceData und die Würfelseite (beispiel sideID in CubeMapSide)
-    virtual void Render(CubeGame &game, Renderer *render, Point size, Point location, u32 frame, u32 totalMSec, float deltaT);
 
+    void setDiceData(DiceData* dice_data);
+    void setSideId(int sideID);
+    
     void drawSpriteBorder(CubeGame &game, Renderer *render, Rect dst);
     virtual bool canPlayerEnter();
     virtual bool canEnterPressurePlate();
     virtual bool canActivatePressurePlate();
     virtual bool isLevelFinishedIfEntered();
+    
+protected:
+    DiceData *diceData;
+    int sideId;
 };
 
 class GravityObject : public CubeObject {

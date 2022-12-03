@@ -100,6 +100,16 @@ void PressurePlate::Update(CubeGame &game, u32 frame, u32 totalMSec, float delta
 
 void CubeField::setSideId(int sideID) {
     this->sideId = sideID;
+    for (auto cubeObject : this->cubeObjects) {
+        cubeObject->setSideId(this->sideId);
+    }
+}
+
+void CubeField::setDiceData(DiceData* dice_data) {
+    this->diceData = dice_data;
+    for (auto cubeObject : this->cubeObjects) {
+        cubeObject->setDiceData(this->diceData);
+    }
 }
 
 // ################################# canPlayerEnter-Methoden #########################################################################
@@ -136,9 +146,14 @@ bool Static::canObjectEnter(CubeObject *cubeObject) {
     return false;
 }
 
+bool Grass::canObjectEnter(CubeObject *cubeObject) {
+    return false;
+}
+
 bool PressurePlate::canObjectEnter(CubeObject *cubeObject) {
     return cubeObject->canEnterPressurePlate();
 }
+
 // ################################# sonstige Methoden ###############################################################################
 
 bool CubeField::isLevelFinishedIfEntered() {
