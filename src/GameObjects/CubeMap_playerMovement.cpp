@@ -79,6 +79,7 @@ PlayerMoveDirection CubeMap::screenDirectionToDirectionOnCubeSide(PlayerMoveDire
                 case PlayerMoveDirection::RIGHT:
                     return PlayerMoveDirection::LEFT;
             }
+            break;
         case DiceSideRotation::LEFT:
             switch (direction) {
                 case PlayerMoveDirection::UP:
@@ -90,6 +91,7 @@ PlayerMoveDirection CubeMap::screenDirectionToDirectionOnCubeSide(PlayerMoveDire
                 case PlayerMoveDirection::RIGHT:
                     return PlayerMoveDirection::DOWN;
             }
+            break;
         case DiceSideRotation::RIGHT:
             switch (direction) {
                 case PlayerMoveDirection::UP:
@@ -101,6 +103,7 @@ PlayerMoveDirection CubeMap::screenDirectionToDirectionOnCubeSide(PlayerMoveDire
                 case PlayerMoveDirection::RIGHT:
                     return PlayerMoveDirection::UP;
             }
+            break;
     }
     return PlayerMoveDirection::LEFT;
 }
