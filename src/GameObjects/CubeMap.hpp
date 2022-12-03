@@ -12,6 +12,7 @@ class WorldMap;
 class Player;
 class CubeMapSide;
 class CubeMapMiniMap;
+class CubeField;
 
 /// Logic class for handling player movement on cube and calling cubeField methods
 class CubeMap final : public GameObject {
@@ -19,6 +20,7 @@ class CubeMap final : public GameObject {
     friend class CubeMapMiniMap;
     
 public:
+    CubeMap() = delete;
     /// map initializer
     CubeMap(CubeGame &game, ComplexGameState *gameState, SDL_Renderer *render, const Vector<CubeMapSide *> &sides,
             int startSide = 2, Point playerPos = {0, 0});
@@ -34,6 +36,7 @@ public:
     void SetWorldMap(WorldMap *worldMap);
     Rect getPlayerDrawPosition();
     CubeMapSide *getCurrentSide();
+    Vector<CubeMapSide*>* getAllCubeMapSides();
     
     [[nodiscard]] bool isAnimating() const;
     

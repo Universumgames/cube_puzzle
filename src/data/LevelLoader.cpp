@@ -3,6 +3,7 @@
 #include "../GameObjects/CubeMap.hpp"
 #include <string>
 #include <fstream>
+#include "../GameObjects/CubeMapSide.hpp"
 
 /* File Format:
  * name
@@ -29,6 +30,8 @@
  * x,y, cubeside
  *
  */
+
+class CubeMapSide;
 
 #define LINE_INDEX_NAME 0
 #define LINE_INDEX_ID (LINE_INDEX_NAME + 1)
@@ -67,43 +70,41 @@ LevelLoader::LoadedLevelData LevelLoader::loadLevel(const std::string &path) {
                 // und momentan wird immer ein empty erstellt obwohl er nicht immer verwendet wird...
                 // so, jetzt sollte das gehen ^^
                 CubeField *temp = nullptr;
+                Vector<CubeObject*> vec_temp;
                 switch (inType) {
                 case 0:
-                    cubeFields.push_back(new EmptyField());
+                    temp = new EmptyField(sideID);
                     break;
                 case 1:
-                    temp = new EmptyField();
-                    temp->cubeObjects.push_back(new Flag());
-                    cubeFields.push_back(temp);
+                    vec_temp.push_back(new Flag());
+                    temp = new EmptyField(sideID, vec_temp);
                     break;
                 case 2:
-                    cubeFields.push_back(new Wall_1());
+                    temp = new Wall_1(sideID);
                     break;
                 case 3:
-                    cubeFields.push_back(new Wall_2());
+                    temp = new Wall_2(sideID);
                     break;
                 case 4:
-                    cubeFields.push_back(new PressurePlate());
+                    temp = new PressurePlate(sideID, 1);
                     break;
                 case 5:
-                    temp = new EmptyField();
-                    temp->cubeObjects.push_back(new Slider());
-                    cubeFields.push_back(temp);
+                    vec_temp.push_back(new Slider(Slider::MovementDirectionIfActivated::moveToBigX, 1));
+                    temp = new EmptyField(sideID, vec_temp);
                     break;
                 case 6:
-                    temp = new EmptyField();
-                    temp->cubeObjects.push_back(new Magnet());
-                    cubeFields.push_back(temp);
+                    vec_temp.push_back(new Magnet());
+                    temp = new EmptyField(sideID, vec_temp);
                     break;
                 case 7:
-                    temp = new EmptyField();
-                    temp->cubeObjects.push_back(new Stone());
-                    cubeFields.push_back(temp);
+                    vec_temp.push_back(new Stone());
+                    temp = new EmptyField(sideID, vec_temp);
                     break;
                 default:
-                    cubeFields.push_back(new EmptyField());
+                    temp = new EmptyField(sideID);
                     break;
                 }
+                cubeFields.push_back(temp);
             }
         }
         auto *sideTemp = new CubeMapSide(cubeFields, width, height, sideID);

@@ -209,7 +209,14 @@ bool CubeMap::rotateCubeIfNecessary(Point &newPlayerPos, PlayerMoveDirection mov
     }
 
     // check if cubeFields transition is allowed
-    if (getCurrentSide()->getField(newPlayerPos)->canPlayerEnter()) {
+    auto currentSide = getCurrentSide();
+    auto oldCubeMapSide = getSide(oldSideId);
+    auto newField = currentSide->getField(newPlayerPos);
+    auto oldField = oldCubeMapSide->getField(oldPlayerPos);
+    if (newField->canPlayerEnter()) {
+        oldField->leave();
+        newField->enter();
+        currentSide->setAllSlidersInMotion();
         if (rollDice) {
             moveCubeInWorld(diceRollDirection);
         }

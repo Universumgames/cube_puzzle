@@ -3,10 +3,15 @@
 #include "../data/DiceData.hpp"
 #include "CubeField.hpp"
 #include "Text.hpp"
+#include "CubeMap.hpp"
+
+class CubeMap;
+class CubeField;
 
 class CubeMapSide {
 private:
     DiceData *diceData;
+    CubeMap *cubeMap;
 
 public:
     Vector<CubeField *> cubeFields;
@@ -24,7 +29,9 @@ public:
     void HandleEvent(CubeGame &game, u32 frame, u32 totalMSec, float deltaT, Event event);
     void Update(CubeGame &game, u32 frame, u32 totalMSec, float deltaT);
     
+    void setCubeMapRef(CubeMap *cube_map);
     void setDiceData(DiceData* dice_data);
+    CubeMap* getCubeMapRef();
     CubeField *getField(int x, int y);
     CubeField *getField(Point pos);
     [[nodiscard]] int getIndex(int x, int y) const;
@@ -32,4 +39,5 @@ public:
     
     [[nodiscard]] Point cubePositionToScreenPosition(Point cubePos) const;
     [[nodiscard]] Point screenPositionToCubePosition(Point screenPos) const;
+    void setAllSlidersInMotion();
 };

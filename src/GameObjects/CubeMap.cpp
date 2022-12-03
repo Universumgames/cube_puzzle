@@ -26,6 +26,7 @@ CubeMap::CubeMap(CubeGame &game1, ComplexGameState *gameState, SDL_Renderer *ren
     
     for(auto side : sides){
         side->setDiceData(&diceData);
+        side->setCubeMapRef(this);
     }
 }
 
@@ -92,6 +93,10 @@ Rect CubeMap::getPlayerDrawPosition() {
 
 CubeMapSide *CubeMap::getCurrentSide() {
     return getSide(this->currentSideId);
+}
+
+Vector<CubeMapSide*>* CubeMap::getAllCubeMapSides() {
+    return &(this->sides);
 }
 
 // ####### private ######

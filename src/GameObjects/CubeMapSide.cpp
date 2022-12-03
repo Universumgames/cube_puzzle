@@ -1,5 +1,7 @@
 #include "CubeMapSide.hpp"
 
+#include <utility>
+
 // ################################# Konstruktoren ###################################################################################
 
 CubeMapSide::CubeMapSide(Vector<CubeField *> cubeFields, int width, int height, int sideID) : width(width), height(height), sideID(sideID) {
@@ -113,11 +115,19 @@ void CubeMapSide::Update(CubeGame &game, const u32 frame, const u32 totalMSec, c
 
 // ################################# Setter & Getter #################################################################################
 
+void CubeMapSide::setCubeMapRef(CubeMap *cube_map) {
+    this->cubeMap = cube_map;
+}
+
 void CubeMapSide::setDiceData(DiceData* dice_data) {
     this->diceData = dice_data;
     for (CubeField* cubeField : this->cubeFields) {
         cubeField->setDiceData(this->diceData);
     }
+}
+
+CubeMap* CubeMapSide::getCubeMapRef() {
+    return this->cubeMap;
 }
 
 CubeField* CubeMapSide::getField(int x, int y) {
@@ -167,4 +177,35 @@ Point CubeMapSide::screenPositionToCubePosition(Point screenPos) const {
         }
     }
     return p;
+}
+
+void CubeMapSide::setAllSlidersInMotion() {
+    auto cubeMapRef = this->getCubeMapRef();
+    Vector<CubeMapSide*>* allCubeMapSides;
+    Vector<int> allActivatedPressurePlates;
+    Vector<int> allDeactivatedPressurePlates;
+    Vector<Slider*> allSliders;
+    
+    allCubeMapSides = cubeMapRef->getAllCubeMapSides();
+    for (auto anyCubeMapSide : *allCubeMapSides) {
+        for (auto cubeField : anyCubeMapSide->cubeFields) {
+            if (cubeField->isPressurePlate()) {
+                auto* pressurePlate = dynamic_cast<PressurePlate*>(cubeField);
+                if (pressurePlate->getIsActivated()) {
+                    allActivatedPressurePlates.push_back(pressurePlate->getId());
+                } else {
+                    allDeactivatedPressurePlates.push_back(pressurePlate->getId());
+                }
+            }
+            for (auto cubeObject : cubeField->cubeObjects) {
+                if (cubeObject->isSlider()) {
+                    allSliders.push_back(dynamic_cast<Slider*>(cubeObject));
+                }
+            }
+        }
+    }
+    for (auto slider : allSliders) {
+    
+    }
+    //cout << "Slider sollte sich jetzt bewegen huiiii" << endl;
 }

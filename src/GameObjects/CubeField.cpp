@@ -5,36 +5,49 @@
 
 // ################################# Konstruktoren ###################################################################################
 
-CubeField::CubeField(Vector<CubeObject *>& cubeObjects) {
+/*CubeField::CubeField(Vector<CubeObject *>& cubeObjects) {
     this->cubeObjects = cubeObjects;
-}
+}*/
 
-CubeField::CubeField(Vector<CubeObject *> &cubeObjects, int sideId) {
+/*CubeField::CubeField(Vector<CubeObject *> &cubeObjects, int sideId) {
     this->cubeObjects = cubeObjects;
     this->sideId = sideId;
     for (auto cubeObject : this->cubeObjects) {
         cubeObject->setSideId(this->sideId);
     }
-}
+}*/
 
-EmptyField::EmptyField(Vector<CubeObject *>& cubeObjects) {
+/*CubeField::CubeField(int sideId) {
+
+}*/
+
+CubeField::CubeField(int sideId, const Vector<CubeObject *>& cubeObjects) {
+    this->sideId = sideId;
     this->cubeObjects = cubeObjects;
 }
 
-Wall_1::Wall_1(Vector<CubeObject *>& cubeObjects) {
-    this->cubeObjects = cubeObjects;
-}
+EmptyField::EmptyField(int sideId, const Vector<CubeObject *>& cubeObjects)
+        : CubeField(sideId, cubeObjects) {}
 
-Wall_2::Wall_2(Vector<CubeObject *>& cubeObjects) {
-    this->cubeObjects = cubeObjects;
-}
+Grass::Grass(int sideId, const Vector<CubeObject *>& cubeObjects)
+        : EmptyField(sideId, cubeObjects) {}
 
-Grass::Grass(Vector<CubeObject *>& cubeObjects) {
-    this->cubeObjects = cubeObjects;
-}
+Static::Static(int sideId, const Vector<CubeObject *>& cubeObjects)
+        : CubeField(sideId, cubeObjects) {}
 
-PressurePlate::PressurePlate(Vector<CubeObject *>& cubeObjects) {
-    this->cubeObjects = cubeObjects;
+Wall_1::Wall_1(int sideId, const Vector<CubeObject *>& cubeObjects)
+        : Static(sideId, cubeObjects) {}
+
+Wall_2::Wall_2(int sideId, const Vector<CubeObject *>& cubeObjects)
+    : Static(sideId, cubeObjects) {}
+    
+Interactable::Interactable(int sideId, const Vector<CubeObject *>& cubeObjects)
+    : CubeField(sideId, cubeObjects) {}
+
+PressurePlate::PressurePlate(int sideId, int id, bool activated, const Vector<CubeObject *>& cubeObjects)
+    : Interactable(sideId, cubeObjects) {
+    this->id = id;
+    this->isActivated = activated;
 }
 
 // ################################# Alle Render-Methoden ############################################################################
@@ -115,6 +128,18 @@ void CubeField::setDiceData(DiceData* dice_data) {
     }
 }
 
+void CubeField::setCubeMapSideRef(CubeMapSide* cube_map_side) {
+    this->cubeMapSideRef = cube_map_side;
+}
+
+bool PressurePlate::getIsActivated() {
+    return this->isActivated;
+}
+
+int PressurePlate::getId() {
+    return this->id;
+}
+
 // ################################# canPlayerEnter-Methoden #########################################################################
 
 bool EmptyField::canPlayerEnter() {
@@ -168,10 +193,58 @@ bool CubeField::isLevelFinishedIfEntered() {
     return false;
 }
 
+bool CubeField::isPressurePlate() {
+    return false;
+}
+
+bool PressurePlate::isPressurePlate() {
+    return true;
+}
+
 void CubeField::addObject(CubeObject* cubeObject) {
     this->cubeObjects.push_back(cubeObject);
 }
 
 void CubeField::removeObject(CubeObject* cubeObject) {
     // TODO Mina: Methode implementieren.
+}
+
+
+int CubeField::enter() {
+    return -1;
+}
+
+/// returns the id of the PressurePlate. The Sliders activated by this PressurePlate have the same id.
+int PressurePlate::enter() {
+    if (!this->canPlayerEnter()) {
+        return -1;
+    }
+    if (!this->isActivated) {
+        this->isActivated = true;
+        this->activateAllSlidersWithSameId();
+        return this->id;
+    }
+    return -1;
+}
+
+int CubeField::leave() {
+    return -1;
+}
+
+int PressurePlate::leave() {
+    if (!this->isActivated) {
+        return -1;
+    }
+    this->isActivated = false;
+    this->deactivateAllSlidersWithSameId();
+    return this->id;
+}
+
+
+void PressurePlate::activateAllSlidersWithSameId() {
+
+}
+
+void PressurePlate::deactivateAllSlidersWithSameId() {
+
 }
