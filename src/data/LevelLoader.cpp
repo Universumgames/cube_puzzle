@@ -61,47 +61,44 @@ LevelLoader::LoadedLevelData LevelLoader::loadLevel(const std::string &path) {
         is >> width;
         is >> height;
         sideID = s;
-
-        for (int x = 0; x < width; x++) {
-            for (int y = 0; y < height; y++) {
+    
+        for (int y = 0; y < height; y++) {
+            for (int x = 0; x < width; x++) {
                 int inType = -1;
                 is >> inType;
-                // du darfst keine variablen in einem case erstellen.....
-                // und momentan wird immer ein empty erstellt obwohl er nicht immer verwendet wird...
-                // so, jetzt sollte das gehen ^^
                 CubeField *temp = nullptr;
                 Vector<CubeObject*> vec_temp;
                 switch (inType) {
                 case 0:
-                    temp = new EmptyField(sideID);
+                    temp = new EmptyField(sideID, x, y);
                     break;
                 case 1:
                     vec_temp.push_back(new Flag());
-                    temp = new EmptyField(sideID, vec_temp);
+                    temp = new EmptyField(sideID, x, y, vec_temp);
                     break;
                 case 2:
-                    temp = new Wall_1(sideID);
+                    temp = new Wall_1(sideID, x, y);
                     break;
                 case 3:
-                    temp = new Wall_2(sideID);
+                    temp = new Wall_2(sideID, x, y);
                     break;
                 case 4:
-                    temp = new PressurePlate(sideID, 1);
+                    temp = new PressurePlate(sideID, x, y, 1);
                     break;
                 case 5:
-                    vec_temp.push_back(new Slider(Slider::MovementDirectionIfActivated::moveToBigX, 1));
-                    temp = new EmptyField(sideID, vec_temp);
+                    vec_temp.push_back(new Slider(Slider::MovementDirection::moveToBigX, 1));
+                    temp = new EmptyField(sideID, x, y, vec_temp);
                     break;
                 case 6:
                     vec_temp.push_back(new Magnet());
-                    temp = new EmptyField(sideID, vec_temp);
+                    temp = new EmptyField(sideID, x, y, vec_temp);
                     break;
                 case 7:
                     vec_temp.push_back(new Stone());
-                    temp = new EmptyField(sideID, vec_temp);
+                    temp = new EmptyField(sideID, x, y, vec_temp);
                     break;
                 default:
-                    temp = new EmptyField(sideID);
+                    temp = new EmptyField(sideID, x, y);
                     break;
                 }
                 cubeFields.push_back(temp);

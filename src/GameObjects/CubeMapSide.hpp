@@ -7,6 +7,7 @@
 
 class CubeMap;
 class CubeField;
+class CubeObject;
 
 class CubeMapSide {
 private:
@@ -37,6 +38,7 @@ public:
     [[nodiscard]] int getIndex(int x, int y) const;
     [[nodiscard]] Point getFieldSize(Rect drawableRect) const;
     
+    [[nodiscard]] bool canObjectEnterFieldAt(CubeObject* cubeObject, int x, int y);
     [[nodiscard]] Point cubePositionToScreenPosition(Point cubePos) const;
     [[nodiscard]] Point screenPositionToCubePosition(Point screenPos) const;
     void setAllSlidersInMotion();

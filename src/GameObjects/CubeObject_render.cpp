@@ -3,7 +3,7 @@
 
 // ################################# Alle Render-Methoden ############################################################################
 
-void drawCubeObject(Renderer* render, Texture* sheet, Point size, Point location, Point imageIndex, DiceSideRotation rotation){
+void drawCubeObject(Renderer* render, Texture* sheet, Point size, Point location, Point imageIndex, DiceSideRotation rotation) {
     drawSprite(sheet, render, imageIndex, {location.x, location.y, size.x, size.y}, (int)rotation);
 }
 
@@ -19,14 +19,14 @@ void Stone::Render(CubeGame& game, Renderer *render, Point size, Point location,
 
 void Slider::Render(CubeGame& game, Renderer *render, Point size, Point location, u32 frame, u32 totalMSec, float deltaT) {
     // TODO implement rotated rendering depending on orientation of slider
-    switch(direction){
-        case MovementDirectionIfActivated::moveToBigX:
+    switch(currentMovementDirection) {
+        case MovementDirection::moveToBigX:
             break;
-        case MovementDirectionIfActivated::moveToSmallX:
+        case MovementDirection::moveToSmallX:
             break;
-        case MovementDirectionIfActivated::moveToBigY:
+        case MovementDirection::moveToBigY:
             break;
-        case MovementDirectionIfActivated::moveToSmallY:
+        case MovementDirection::moveToSmallY:
             break;
     }
     drawCubeObject(render, game.getSpriteStorage()->cubeObjectSpriteSheet, size, location, SPRITE_SLIDER_INDEX, diceData->getDiceSideRotation(sideId));

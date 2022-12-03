@@ -6,31 +6,36 @@
 
 // ################################# Konstruktoren ###################################################################################
 
-CubeField::CubeField(int sideId, const Vector<CubeObject *>& cubeObjects) {
+CubeField::CubeField(int sideId, int x, int y, const Vector<CubeObject *>& cubeObjects) {
     this->sideId = sideId;
     this->cubeObjects = cubeObjects;
+    this->x = x;
+    this->y = y;
+    for (auto cubeObject: cubeObjects) {
+        cubeObject->setCubeFieldRef(this);
+    }
 }
 
-EmptyField::EmptyField(int sideId, const Vector<CubeObject *>& cubeObjects)
-        : CubeField(sideId, cubeObjects) {}
+EmptyField::EmptyField(int sideId, int x, int y, const Vector<CubeObject *>& cubeObjects)
+        : CubeField(sideId, x, y, cubeObjects) {}
 
-Grass::Grass(int sideId, const Vector<CubeObject *>& cubeObjects)
-        : EmptyField(sideId, cubeObjects) {}
+Grass::Grass(int sideId, int x, int y, const Vector<CubeObject *>& cubeObjects)
+        : EmptyField(sideId, x, y, cubeObjects) {}
 
-Static::Static(int sideId, const Vector<CubeObject *>& cubeObjects)
-        : CubeField(sideId, cubeObjects) {}
+Static::Static(int sideId, int x, int y, const Vector<CubeObject *>& cubeObjects)
+        : CubeField(sideId, x, y, cubeObjects) {}
 
-Wall_1::Wall_1(int sideId, const Vector<CubeObject *>& cubeObjects)
-        : Static(sideId, cubeObjects) {}
+Wall_1::Wall_1(int sideId, int x, int y, const Vector<CubeObject *>& cubeObjects)
+        : Static(sideId, x, y, cubeObjects) {}
 
-Wall_2::Wall_2(int sideId, const Vector<CubeObject *>& cubeObjects)
-    : Static(sideId, cubeObjects) {}
+Wall_2::Wall_2(int sideId, int x, int y, const Vector<CubeObject *>& cubeObjects)
+    : Static(sideId, x, y, cubeObjects) {}
     
-Interactable::Interactable(int sideId, const Vector<CubeObject *>& cubeObjects)
-    : CubeField(sideId, cubeObjects) {}
+Interactable::Interactable(int sideId, int x, int y, const Vector<CubeObject *>& cubeObjects)
+    : CubeField(sideId, x, y, cubeObjects) {}
 
-PressurePlate::PressurePlate(int sideId, int id, bool activated, const Vector<CubeObject *>& cubeObjects)
-    : Interactable(sideId, cubeObjects) {
+PressurePlate::PressurePlate(int sideId, int x, int y, int id, bool activated, const Vector<CubeObject *>& cubeObjects)
+    : Interactable(sideId, x, y, cubeObjects) {
     this->id = id;
     this->isActivated = activated;
 }
@@ -69,29 +74,45 @@ void Wall_2::Render(CubeGame& game, Renderer *render, Point size, Point location
 }
 
 void PressurePlate::Render(CubeGame& game, Renderer *render, Point size, Point location, u32 frame, u32 totalMSec, float deltaT) {
-    drawSprite(game.getSpriteStorage()->cubeFieldSpriteSheet, render, SPRITE_PRESSURE_PLATE_INDEX, {location.x, location.y, size.x, size.y}, (int)diceData->getDiceSideRotation(sideId));
+    drawSprite(game.getSpriteStorage()->cubeFieldSpriteSheet, render, SPRITE_PRESSURE_PLATE_INDEX, {location.x, location.y, size.x, size.y}/*, (int)diceData->getDiceSideRotation(sideId)*/);
 }
 
 // ################################# HandleEvent und Update-Methoden #################################################################
 
+void CubeField::Update(CubeGame &game, u32 frame, u32 totalMSec, float deltaT) {
+    for (auto cubeObject : this->cubeObjects) {
+        cubeObject->Update(game, frame, totalMSec, deltaT);
+    }
+}
+
 void EmptyField::Update(CubeGame &game, u32 frame, u32 totalMSec, float deltaT) {
-    // maybe add code later?
+    for (auto cubeObject : this->cubeObjects) {
+        cubeObject->Update(game, frame, totalMSec, deltaT);
+    }
 }
 
 void Wall_1::Update(CubeGame &game, u32 frame, u32 totalMSec, float deltaT) {
-    // maybe add code later?
+    for (auto cubeObject : this->cubeObjects) {
+        cubeObject->Update(game, frame, totalMSec, deltaT);
+    }
 }
 
 void Wall_2::Update(CubeGame &game, u32 frame, u32 totalMSec, float deltaT) {
-    // maybe add code later?
+    for (auto cubeObject : this->cubeObjects) {
+        cubeObject->Update(game, frame, totalMSec, deltaT);
+    }
 }
 
 void Grass::Update(CubeGame &game, u32 frame, u32 totalMSec, float deltaT) {
-    // maybe add code later?
+    for (auto cubeObject : this->cubeObjects) {
+        cubeObject->Update(game, frame, totalMSec, deltaT);
+    }
 }
 
 void PressurePlate::Update(CubeGame &game, u32 frame, u32 totalMSec, float deltaT) {
-    // maybe add code later?
+    for (auto cubeObject : this->cubeObjects) {
+        cubeObject->Update(game, frame, totalMSec, deltaT);
+    }
 }
 
 // ################################# Setter & Getter #################################################################################
@@ -112,6 +133,22 @@ void CubeField::setDiceData(DiceData* dice_data) {
 
 void CubeField::setCubeMapSideRef(CubeMapSide* cube_map_side) {
     this->cubeMapSideRef = cube_map_side;
+}
+
+CubeMapSide* CubeField::getCubeMapSideRef() {
+    return this->cubeMapSideRef;
+}
+
+Point CubeField::getCoordinates() {
+    return {.x = this->x, .y = this->y};
+}
+
+int CubeField::getX() const {
+    return this->x;
+}
+
+int CubeField::getY() const {
+    return this->y;
 }
 
 bool PressurePlate::getIsActivated() const {
@@ -187,8 +224,14 @@ void CubeField::addObject(CubeObject* cubeObject) {
     this->cubeObjects.push_back(cubeObject);
 }
 
-void CubeField::removeObject(CubeObject* cubeObject) {
-    // TODO Mina: Methode implementieren.
+bool CubeField::removeObject(CubeObject* cubeObject) {
+    for (int i = 0; i < cubeObjects.size(); i++) {
+        if (cubeObject->getType() == this->cubeObjects[i]->getType()) {
+            this->cubeObjects.erase(this->cubeObjects.begin() + i);
+            return true;
+        }
+    }
+    return false;
 }
 
 

@@ -12,6 +12,7 @@ class CubeMapSide;
 /// Field on CubeMap
 class CubeField {
 protected:
+    int x, y;
     CubeMapSide* cubeMapSideRef;
     Vector<GameObject *> objects;
     int sideId;
@@ -20,25 +21,26 @@ protected:
 public:
     Vector<CubeObject *> cubeObjects;
     CubeField() = delete;
-    //explicit CubeField(Vector<CubeObject *> &cubeObjects);
-    //CubeField(Vector<CubeObject *> &cubeObjects, int sideId);
-    //CubeField(int sideId);
-    explicit CubeField(int sideId, const Vector<CubeObject *>& cubeObjects = Vector<CubeObject*>());
+    explicit CubeField(int sideId, int x, int y, const Vector<CubeObject *>& cubeObjects = Vector<CubeObject*>());
     
     virtual void HandleEvent(CubeGame &game, u32 frame, u32 totalMSec, float deltaT, Event event) {};
-    virtual void Update(CubeGame &game, u32 frame, u32 totalMSec, float deltaT) = 0;
+    virtual void Update(CubeGame &game, u32 frame, u32 totalMSec, float deltaT);
     virtual void Render(CubeGame &game, Renderer *render, Point size, Point location, u32 frame, u32 totalMSec, float deltaT);
 
     void setSideId(int sideID);
     void setDiceData(DiceData* dice_data);
     void setCubeMapSideRef(CubeMapSide* cube_map_side);
+    CubeMapSide* getCubeMapSideRef();
+    [[nodiscard]] Point getCoordinates();
+    [[nodiscard]] int getX() const;
+    [[nodiscard]] int getY() const;
     
     virtual bool canPlayerEnter() = 0;
     virtual bool canObjectEnter(CubeObject *cubeObject) = 0;
     bool isLevelFinishedIfEntered();
     virtual bool isPressurePlate();
     void addObject(CubeObject *cubeObject);
-    void removeObject(CubeObject *cubeObject);
+    bool removeObject(CubeObject *cubeObject);
     virtual int enter();
     virtual int leave();
 };
@@ -48,7 +50,7 @@ public:
 class EmptyField : public CubeField {
 public:
     EmptyField() = delete;
-    explicit EmptyField(int sideId, const Vector<CubeObject *>& cubeObjects = Vector<CubeObject*>());
+    explicit EmptyField(int sideId, int x, int y, const Vector<CubeObject *>& cubeObjects = Vector<CubeObject*>());
 
     void Render(CubeGame &game, Renderer *render, Point size, Point location, u32 frame, u32 totalMSec, float deltaT) override;
     void Update(CubeGame &game, u32 frame, u32 totalMSec, float deltaT) override;
@@ -60,7 +62,7 @@ public:
 class Grass : public EmptyField {
 public:
     Grass() = delete;
-    explicit Grass(int sideId, const Vector<CubeObject *>& cubeObjects = Vector<CubeObject*>());
+    explicit Grass(int sideId, int x, int y, const Vector<CubeObject *>& cubeObjects = Vector<CubeObject*>());
     
     void Render(CubeGame &game, Renderer *render, Point size, Point location, u32 frame, u32 totalMSec, float deltaT) override;
     void Update(CubeGame &game, u32 frame, u32 totalMSec, float deltaT) override;
@@ -72,7 +74,7 @@ public:
 
 class Static : public CubeField { // walls, unmovable obstacles
 public:
-    explicit Static(int sideId, const Vector<CubeObject *>& cubeObjects = Vector<CubeObject*>());
+    explicit Static(int sideId, int x, int y, const Vector<CubeObject *>& cubeObjects = Vector<CubeObject*>());
     bool canPlayerEnter() override;
     bool canObjectEnter(CubeObject *cubeObject) override;
 };
@@ -80,7 +82,7 @@ public:
 class Wall_1 : public Static {
 public:
     Wall_1() = delete;
-    explicit Wall_1(int sideId, const Vector<CubeObject *>& cubeObjects = Vector<CubeObject*>());
+    explicit Wall_1(int sideId, int x, int y, const Vector<CubeObject *>& cubeObjects = Vector<CubeObject*>());
 
     void Render(CubeGame &game, Renderer *render, Point size, Point location, u32 frame, u32 totalMSec,
                 float deltaT) override;
@@ -90,7 +92,7 @@ public:
 class Wall_2 : public Static {
 public:
     Wall_2() = delete;
-    explicit Wall_2(int sideId, const Vector<CubeObject *>& cubeObjects = Vector<CubeObject*>());
+    explicit Wall_2(int sideId, int x, int y, const Vector<CubeObject *>& cubeObjects = Vector<CubeObject*>());
 
     void Render(CubeGame &game, Renderer *render, Point size, Point location, u32 frame, u32 totalMSec, float deltaT) override;
     void Update(CubeGame &game, u32 frame, u32 totalMSec, float deltaT) override;
@@ -100,7 +102,7 @@ public:
 
 class Interactable : public CubeField {
 public:
-    explicit Interactable(int sideId, const Vector<CubeObject *>& cubeObjects = Vector<CubeObject*>());
+    explicit Interactable(int sideId, int x, int y, const Vector<CubeObject *>& cubeObjects = Vector<CubeObject*>());
 };
 
 class PressurePlate : public Interactable {
@@ -109,13 +111,13 @@ private:
     bool isActivated = false;
 public:
     PressurePlate() = delete;
-    PressurePlate(int sideId, int id, bool activated = false, const Vector<CubeObject *>& cubeObjects = Vector<CubeObject*>());
+    PressurePlate(int sideId, int x, int y, int id, bool activated = false, const Vector<CubeObject *>& cubeObjects = Vector<CubeObject*>());
 
     void Render(CubeGame &game, Renderer *render, Point size, Point location, u32 frame, u32 totalMSe, float deltaT) override;
     void Update(CubeGame &game, u32 frame, u32 totalMSec, float deltaT) override;
 
-    bool getIsActivated() const;
-    int getId() const;
+    [[nodiscard]] bool getIsActivated() const;
+    [[nodiscard]] int getId() const;
     bool canPlayerEnter() override;
     bool canObjectEnter(CubeObject *cubeObject) override;
     bool isPressurePlate() override;

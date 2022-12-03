@@ -65,7 +65,7 @@ void CubeMap::Update(const u32 frame, const u32 totalMSec, const float deltaT) {
     getCurrentSide()->Update(game, BASIC_GO_DATA_PASSTHROUGH);
 
     miniMap->Update(BASIC_GO_DATA_PASSTHROUGH);
-    if (!sideTransitionAnimating) {
+    if (!isSideTransitionAnimationInProgress) {
         saveCurrentFrame();
         sideTransitionState = 0;
     }
@@ -80,6 +80,10 @@ void CubeMap::Init() {
 
 void CubeMap::SetWorldMap(WorldMap *world_map) {
     this->worldMap = world_map;
+}
+
+void CubeMap::setIsAnimating(bool isAnimating) {
+    this->isObjectAnimationInProgress = isAnimating;
 }
 
 Rect CubeMap::getPlayerDrawPosition() {
@@ -122,7 +126,7 @@ Rect CubeMap::getDrawableRect() {
 // ####### public #######
 
 bool CubeMap::isAnimating() const {
-    return sideTransitionAnimating;
+    return isSideTransitionAnimationInProgress || this->isObjectAnimationInProgress;
 }
 
 // ####### private ######
@@ -148,7 +152,7 @@ void CubeMap::moveCubeInWorld(DiceRollDirection rollDirection) {
 
 void CubeMap::drawMap(const u32 frame, const u32 totalMSec, const float deltaT) {
     Rect drawableRect = getDrawableRect();
-    if (sideTransitionAnimating) {
+    if (isSideTransitionAnimationInProgress) {
         Rect oldSide = {0,0, game.getWindowSize().x, game.getWindowSize().y};
         Rect newSide = getDrawableRect();
         updateAnimationSidePosition(oldSide, newSide, sideTransitionState, lastNormalizedMove);
@@ -156,7 +160,7 @@ void CubeMap::drawMap(const u32 frame, const u32 totalMSec, const float deltaT) 
         sideTransitionState += deltaT * 10;
         if (sideTransitionState >= 1) {
             sideTransitionState = 0;
-            sideTransitionAnimating = false;
+            isSideTransitionAnimationInProgress = false;
         }
         getCurrentSide()->Render(game, gameState, render, BASIC_GO_DATA_PASSTHROUGH, newSide);
     } else

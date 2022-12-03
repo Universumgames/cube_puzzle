@@ -4,10 +4,34 @@
 #include "GameObject.hpp"
 #include "CubeField.hpp"
 
+#define OBJECT_MOVEMENT_COUNTDOWN_MILLIS 1000
+
+class CubeField;
+
 class CubeObject {
+public:
+    enum class MovementDirection {
+        moveToBigX,
+        moveToSmallX,
+        moveToBigY,
+        moveToSmallY,
+        none
+    };
+    enum class ObjectType {
+        typeStone,
+        typeSlider,
+        typeMagnet,
+        typeFlag,
+        none
+    };
+    
 protected:
+    double lastMovementCountdown = OBJECT_MOVEMENT_COUNTDOWN_MILLIS / 1000.0;
     DiceData *diceData;
     int sideId;
+    CubeField* cubeFieldRef;
+    MovementDirection currentMovementDirection = MovementDirection::none;
+    ObjectType type = ObjectType::none;
     
 public:
     /// render only method
@@ -21,6 +45,8 @@ public:
 
     void setDiceData(DiceData* dice_data);
     void setSideId(int sideID);
+    void setCubeFieldRef(CubeField* cube_field);
+    [[nodiscard]] ObjectType getType();
     
     void drawSpriteBorder(CubeGame &game, Renderer *render, Rect dst);
     [[nodiscard]] virtual bool canPlayerEnter();
@@ -54,20 +80,14 @@ class Activatable : public CubeObject {
 };
 
 class Slider : public Activatable {
-public:
-    enum class MovementDirectionIfActivated {
-        moveToBigX,
-        moveToSmallX,
-        moveToBigY,
-        moveToSmallY
-    };
 private:
     int id;
     bool isActivated = false;
-    MovementDirectionIfActivated direction;
+    MovementDirection directionIfActivated;
+    
 public:
     Slider() = delete;
-    explicit Slider(MovementDirectionIfActivated movementDirectionEnum, int id, bool activated = false);
+    explicit Slider(MovementDirection movementDirectionEnum, int id, bool activated = false);
     
     void Render(CubeGame &game, Renderer *render, Point size, Point location, u32 frame, u32 totalMSec, float deltaT) override;
     
@@ -88,6 +108,8 @@ class Moveable : public CubeObject {
 };
 
 class Magnet : public Moveable {
+private:
+    bool isGrabbed = false;
 public:
     void Render(CubeGame &game, Renderer *render, Point size, Point location, u32 frame, u32 totalMSec, float deltaT) override;
     

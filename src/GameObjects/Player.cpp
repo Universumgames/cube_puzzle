@@ -3,7 +3,7 @@
 #include "CubeMap.hpp"
 #include "../data/spriteDefs.hpp"
 
-#define PLAYER_MOVEMENT_COUNTDOWN_MILLIS 250
+#define PLAYER_MOVEMENT_COUNTDOWN_MILLIS 0 // set 250 for actual gameplay
 
 Player::Player(CubeGame &game, ComplexGameState *gameState, SDL_Renderer *render) : GameObject(game, gameState,
                                                                                                render) {
@@ -39,14 +39,20 @@ void Player::HandleEvent(const u32 frame, const u32 totalMSec, const float delta
 }
 
 void Player::Update(const u32 frame, const u32 totalMSec, const float deltaT) {
-    if (cubeMap == nullptr) return;
+    if (cubeMap == nullptr) {
+        return;
+    }
     nextDraw = cubeMap->getPlayerDrawPosition();
     lastMovementCountdown = max(0.0, lastMovementCountdown) - deltaT;
 }
 
 void Player::Render(const u32 frame, const u32 totalMSec, const float deltaT) {
-    if (cubeMap == nullptr) return;
-    if (cubeMap->isAnimating()) return;
+    if (cubeMap == nullptr) {
+        return;
+    }
+    if (cubeMap->isAnimating()) {
+        return;
+    }
     Rect r = nextDraw;
     r.y += (int) (sin(frame / 20.0) * 2);
     drawSprite(game.getSpriteStorage()->playerSpriteSheet, render, {getAnimationIndex(totalMSec), (int) currentState},

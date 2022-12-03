@@ -111,7 +111,8 @@ void CubeMapSide::Update(CubeGame &game, const u32 frame, const u32 totalMSec, c
     for (auto *field: cubeFields) {
         field->Update(game, BASIC_GO_DATA_PASSTHROUGH);
     }
-    if (overlay != nullptr) overlay->setEnabled(game.isDebug());
+    if (overlay != nullptr)
+        overlay->setEnabled(game.isDebug());
 }
 
 // ################################# Setter & Getter #################################################################################
@@ -132,6 +133,11 @@ CubeMap* CubeMapSide::getCubeMapRef() {
 }
 
 CubeField* CubeMapSide::getField(int x, int y) {
+    /*for (auto cubeField : this->cubeFields) {
+        if (cubeField->getX() == x && cubeField->getY() == y) {
+            return cubeField;
+        }
+    }*/
     return this->cubeFields[getIndex(x, y)];
 }
 
@@ -150,6 +156,15 @@ Point CubeMapSide::getFieldSize(Rect drawableRect) const {
 }
 
 // ################################# sonstige Methoden ###############################################################################
+
+bool CubeMapSide::canObjectEnterFieldAt(CubeObject* cubeObject, int x, int y) {
+    for (auto cubeField : this->cubeFields) {
+        if (x == cubeField->getX() && y == cubeField->getY()) {
+            return cubeField->canObjectEnter(cubeObject);
+        }
+    }
+    return false;
+}
 
 /// convert the coordinates to the correct coordinates according to current rotation
 Point CubeMapSide::cubePositionToScreenPosition(Point cubePos) const {

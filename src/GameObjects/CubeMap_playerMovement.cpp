@@ -6,7 +6,7 @@
 #include "../States/Level.hpp"
 
 bool CubeMap::canPlayerMove() const {
-    return !sideTransitionAnimating;
+    return !isSideTransitionAnimationInProgress;
 }
 
 bool CubeMap::movePlayer(PlayerMoveDirection dir) {
@@ -32,7 +32,7 @@ bool CubeMap::movePlayer(PlayerMoveDirection dir) {
     int oldSideId = currentSideId;
     bool moved = rotateCubeIfNecessary(newPlayerPos, dir);
     if (moved)
-        sideTransitionAnimating = true;
+        isSideTransitionAnimationInProgress = true;
 
     if (!getCurrentSide()->getField(newPlayerPos)->canPlayerEnter()) {
         currentSideId = oldSideId;

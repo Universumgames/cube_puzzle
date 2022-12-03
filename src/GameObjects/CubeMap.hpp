@@ -34,6 +34,7 @@ public:
     
     /// set world map pointer, has to be set before run
     void SetWorldMap(WorldMap *worldMap);
+    void setIsAnimating(bool isAnimating);
     Rect getPlayerDrawPosition();
     CubeMapSide *getCurrentSide();
     Vector<CubeMapSide*>* getAllCubeMapSides();
@@ -59,7 +60,8 @@ private:
     Texture *oldSideFrame = nullptr;
     Point oldSideFrameSize;
     double sideTransitionState = 0;
-    bool sideTransitionAnimating = false;
+    bool isSideTransitionAnimationInProgress = false;
+    bool isObjectAnimationInProgress = false;
     PlayerMoveDirection lastNormalizedMove;
     
     /// get cubeFields of dice (1-6)
