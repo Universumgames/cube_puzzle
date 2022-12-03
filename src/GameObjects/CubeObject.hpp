@@ -64,7 +64,7 @@ public:
 private:
     int id;
     bool isActivated = false;
-    MovementDirectionIfActivated diretion;
+    MovementDirectionIfActivated direction;
 public:
     Slider() = delete;
     explicit Slider(MovementDirectionIfActivated movementDirectionEnum, int id, bool activated = false);

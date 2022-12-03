@@ -2,6 +2,7 @@
 #include "GameObject.hpp"
 #include "../data/SpriteStorage.hpp"
 #include "../data/Colors.hpp"
+#include "../data/spriteDefs.hpp"
 
 // ################################# Konstruktoren ###################################################################################
 
@@ -55,23 +56,20 @@ void EmptyField::Render(CubeGame &game, Renderer *render, Point size, Point loca
 }
 
 void Grass::Render(CubeGame& game, Renderer *render, Point size, Point location, u32 frame, u32 totalMSec, float deltaT) {
-    SDL_SetRenderDrawColor(render, 0, 255, 0, 255);
-    CubeField::Render(game, render, size, location, frame, totalMSec, deltaT);
+    drawSprite(game.getSpriteStorage()->cubeFieldSpriteSheet, render, SPRITE_GRASS_INDEX,
+               {location.x, location.y, size.x, size.y}, (int) diceData->getDiceSideRotation(sideId));
 }
 
 void Wall_1::Render(CubeGame& game, Renderer *render, Point size, Point location, u32 frame, u32 totalMSec, float deltaT) {
-    SDL_SetRenderDrawColor(render, 100, 120, 0, 255);
-    CubeField::Render(game, render, size, location, frame, totalMSec, deltaT);
+    drawSprite(game.getSpriteStorage()->cubeFieldSpriteSheet, render, SPRITE_WALL1_INDEX, {location.x, location.y, size.x, size.y}, (int)diceData->getDiceSideRotation(sideId));
 }
 
 void Wall_2::Render(CubeGame& game, Renderer *render, Point size, Point location, u32 frame, u32 totalMSec, float deltaT) {
-    SDL_SetRenderDrawColor(render, 50, 84, 65, 255);
-    CubeField::Render(game, render, size, location, frame, totalMSec, deltaT);
+    drawSprite(game.getSpriteStorage()->cubeFieldSpriteSheet, render, SPRITE_WALL2_INDEX, {location.x, location.y, size.x, size.y}, (int)diceData->getDiceSideRotation(sideId));
 }
 
 void PressurePlate::Render(CubeGame& game, Renderer *render, Point size, Point location, u32 frame, u32 totalMSec, float deltaT) {
-    SDL_SetRenderDrawColor(render, 154, 60, 78, 255);
-    CubeField::Render(game, render, size, location, frame, totalMSec, deltaT);
+    drawSprite(game.getSpriteStorage()->cubeFieldSpriteSheet, render, SPRITE_PRESSURE_PLATE_INDEX, {location.x, location.y, size.x, size.y}, (int)diceData->getDiceSideRotation(sideId));
 }
 
 // ################################# HandleEvent und Update-Methoden #################################################################

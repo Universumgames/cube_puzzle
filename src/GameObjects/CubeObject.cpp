@@ -4,7 +4,7 @@
 
 
 Slider::Slider(MovementDirectionIfActivated movementDirectionEnum, int id, bool activated) {
-    this->diretion = movementDirectionEnum;
+    this->direction = movementDirectionEnum;
     this->id = id;
     this->isActivated = activated;
 }
