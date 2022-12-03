@@ -3,7 +3,6 @@
 #include "../GameObjects/CubeMap.hpp"
 #include <string>
 #include <fstream>
-#include <iostream>
 
 /* File Format:
  * name

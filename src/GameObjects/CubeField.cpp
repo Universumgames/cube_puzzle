@@ -12,6 +12,9 @@ CubeField::CubeField(Vector<CubeObject *>& cubeObjects) {
 CubeField::CubeField(Vector<CubeObject *> &cubeObjects, int sideId) {
     this->cubeObjects = cubeObjects;
     this->sideId = sideId;
+    for (auto cubeObject : this->cubeObjects) {
+        cubeObject->setSideId(this->sideId);
+    }
 }
 
 EmptyField::EmptyField(Vector<CubeObject *>& cubeObjects) {
