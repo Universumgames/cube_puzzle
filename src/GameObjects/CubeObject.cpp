@@ -62,12 +62,14 @@ void CubeObject::Update(CubeGame& game, u32 frame, u32 totalMSec, float deltaT) 
             if (cubeField->removeObject(this)) {
                 newField->addObject(this);
                 this->cubeFieldRef = newField;
-            } else {
             }
         } else { // Slider reached the end
             cubeMapSide->getCubeMapRef()->setIsAnimating(false);
             this->lastMovementCountdown = OBJECT_MOVEMENT_COUNTDOWN_MILLIS / 1000.0;
         }
+    } else {
+        cubeMapSide->getCubeMapRef()->setIsAnimating(false);
+        this->lastMovementCountdown = OBJECT_MOVEMENT_COUNTDOWN_MILLIS / 1000.0;
     }
 }
 

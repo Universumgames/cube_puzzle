@@ -192,26 +192,19 @@ bool EmptyField::canObjectEnter(CubeObject *cubeObject) {
     if (currentPlayerPos.x == this->x && currentPlayerPos.y == this->y) {
         return false;
     }
+    for (auto anyCubeObject : this->cubeObjects) {
+        if (!anyCubeObject->canAnotherObjectEnter()) {
+            return false;
+        }
+    }
     return true;
 }
 
 bool Static::canObjectEnter(CubeObject *cubeObject) {
-    CubeMapSide* cubeMapSide = this->cubeMapSideRef;
-    CubeMap* cubeMap = cubeMapSide->getCubeMapRef();
-    Point currentPlayerPos = cubeMap->getCurrentPlayerPos();
-    if (currentPlayerPos.x == this->x && currentPlayerPos.y == this->y) {
-        return false;
-    }
     return false;
 }
 
 bool Grass::canObjectEnter(CubeObject *cubeObject) {
-    CubeMapSide* cubeMapSide = this->cubeMapSideRef;
-    CubeMap* cubeMap = cubeMapSide->getCubeMapRef();
-    Point currentPlayerPos = cubeMap->getCurrentPlayerPos();
-    if (currentPlayerPos.x == this->x && currentPlayerPos.y == this->y) {
-        return false;
-    }
     return false;
 }
 
@@ -221,6 +214,11 @@ bool PressurePlate::canObjectEnter(CubeObject *cubeObject) {
     Point currentPlayerPos = cubeMap->getCurrentPlayerPos();
     if (currentPlayerPos.x == this->x && currentPlayerPos.y == this->y) {
         return false;
+    }
+    for (auto anyCubeObject : this->cubeObjects) {
+        if (!anyCubeObject->canAnotherObjectEnter()) {
+            return false;
+        }
     }
     return cubeObject->canEnterPressurePlate();
 }

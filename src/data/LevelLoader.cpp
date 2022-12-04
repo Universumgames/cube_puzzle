@@ -69,34 +69,48 @@ LevelLoader::LoadedLevelData LevelLoader::loadLevel(const std::string &path) {
                 CubeField *temp = nullptr;
                 Vector<CubeObject*> vec_temp;
                 switch (inType) {
-                case 0:
-                    temp = new EmptyField(sideID, x, y);
-                    break;
-                case 1:
-                    vec_temp.push_back(new Flag());
-                    temp = new EmptyField(sideID, x, y, vec_temp);
-                    break;
-                case 2:
-                    temp = new Wall_1(sideID, x, y);
-                    break;
-                case 3:
-                    temp = new Wall_2(sideID, x, y);
-                    break;
-                case 4:
-                    temp = new PressurePlate(sideID, x, y, 1);
-                    break;
-                case 5:
-                    vec_temp.push_back(new Slider(Slider::MovementDirection::moveToBigX, 1));
-                    temp = new EmptyField(sideID, x, y, vec_temp);
-                    break;
-                case 6:
-                    vec_temp.push_back(new Magnet());
-                    temp = new EmptyField(sideID, x, y, vec_temp);
-                    break;
-                case 7:
-                    vec_temp.push_back(new Stone());
-                    temp = new EmptyField(sideID, x, y, vec_temp);
-                    break;
+                    case 0:
+                        temp = new EmptyField(sideID, x, y);
+                        break;
+                    case 1:
+                        vec_temp.push_back(new Flag());
+                        temp = new EmptyField(sideID, x, y, vec_temp);
+                        break;
+                    case 2:
+                        temp = new Wall_1(sideID, x, y);
+                        break;
+                    case 3:
+                        temp = new Wall_2(sideID, x, y);
+                        break;
+                    case 4:
+                        temp = new PressurePlate(sideID, x, y, 1);
+                        break;
+                    case 5:
+                        vec_temp.push_back(new Slider(Slider::MovementDirection::moveToBigX, 1));
+                        temp = new EmptyField(sideID, x, y, vec_temp);
+                        break;
+                    case 6:
+                        vec_temp.push_back(new Magnet());
+                        temp = new EmptyField(sideID, x, y, vec_temp);
+                        break;
+                    case 7:
+                        vec_temp.push_back(new Stone());
+                        temp = new EmptyField(sideID, x, y, vec_temp);
+                        break;
+                    case 8:
+                        temp = new PressurePlate(sideID, x, y, 2);
+                        break;
+                    case 9:
+                        vec_temp.push_back(new Slider(Slider::MovementDirection::moveToSmallX, 2));
+                        temp = new EmptyField(sideID, x, y, vec_temp);
+                        break;
+                    case 10:
+                        temp = new PressurePlate(sideID, x, y, 3);
+                        break;
+                    case 11:
+                        vec_temp.push_back(new Slider(Slider::MovementDirection::moveToBigY, 3));
+                        temp = new EmptyField(sideID, x, y, vec_temp);
+                        break;
                 default:
                     temp = new EmptyField(sideID, x, y);
                     break;
