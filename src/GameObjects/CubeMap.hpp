@@ -35,9 +35,10 @@ public:
     /// set world map pointer, has to be set before run
     void SetWorldMap(WorldMap *worldMap);
     void setIsAnimating(bool isAnimating);
-    Rect getPlayerDrawPosition();
-    CubeMapSide *getCurrentSide();
-    Vector<CubeMapSide*>* getAllCubeMapSides();
+    [[nodiscard]] Rect getPlayerDrawPosition();
+    [[nodiscard]] CubeMapSide *getCurrentSide();
+    [[nodiscard]] Vector<CubeMapSide*>* getAllCubeMapSides();
+    [[nodiscard]] Point getCurrentPlayerPos() const;
     
     [[nodiscard]] bool isAnimating() const;
     

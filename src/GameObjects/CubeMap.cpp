@@ -103,6 +103,10 @@ Vector<CubeMapSide*>* CubeMap::getAllCubeMapSides() {
     return &(this->sides);
 }
 
+Point CubeMap::getCurrentPlayerPos() const {
+    return this->playerPos;
+}
+
 // ####### private ######
 
 CubeMapSide *CubeMap::getSide(int i) {

@@ -186,18 +186,42 @@ bool PressurePlate::canPlayerEnter() {
 // ################################# canObjectEnter-Methoden #########################################################################
 
 bool EmptyField::canObjectEnter(CubeObject *cubeObject) {
+    CubeMapSide* cubeMapSide = this->cubeMapSideRef;
+    CubeMap* cubeMap = cubeMapSide->getCubeMapRef();
+    Point currentPlayerPos = cubeMap->getCurrentPlayerPos();
+    if (currentPlayerPos.x == this->x && currentPlayerPos.y == this->y) {
+        return false;
+    }
     return true;
 }
 
 bool Static::canObjectEnter(CubeObject *cubeObject) {
+    CubeMapSide* cubeMapSide = this->cubeMapSideRef;
+    CubeMap* cubeMap = cubeMapSide->getCubeMapRef();
+    Point currentPlayerPos = cubeMap->getCurrentPlayerPos();
+    if (currentPlayerPos.x == this->x && currentPlayerPos.y == this->y) {
+        return false;
+    }
     return false;
 }
 
 bool Grass::canObjectEnter(CubeObject *cubeObject) {
+    CubeMapSide* cubeMapSide = this->cubeMapSideRef;
+    CubeMap* cubeMap = cubeMapSide->getCubeMapRef();
+    Point currentPlayerPos = cubeMap->getCurrentPlayerPos();
+    if (currentPlayerPos.x == this->x && currentPlayerPos.y == this->y) {
+        return false;
+    }
     return false;
 }
 
 bool PressurePlate::canObjectEnter(CubeObject *cubeObject) {
+    CubeMapSide* cubeMapSide = this->cubeMapSideRef;
+    CubeMap* cubeMap = cubeMapSide->getCubeMapRef();
+    Point currentPlayerPos = cubeMap->getCurrentPlayerPos();
+    if (currentPlayerPos.x == this->x && currentPlayerPos.y == this->y) {
+        return false;
+    }
     return cubeObject->canEnterPressurePlate();
 }
 
@@ -222,18 +246,12 @@ bool PressurePlate::isPressurePlate() {
 
 void CubeField::addObject(CubeObject* cubeObject) {
     this->cubeObjects.push_back(cubeObject);
-    for (auto cubeObject : this->cubeObjects) {
-        if (cubeObject->getType() == CubeObject::ObjectType::typeSlider) {
-            cout << "And here we have a brand new slider at " << this->x << ", " << this->y << endl;
-        }
-    }
 }
 
 bool CubeField::removeObject(CubeObject* cubeObject) {
     for (int i = 0; i < cubeObjects.size(); i++) {
         if (cubeObject->getType() == this->cubeObjects[i]->getType()) {
             this->cubeObjects.erase(this->cubeObjects.begin() + i);
-            cout << "Aaaand the slider's gone..... " << this->x << ", " << this->y << endl;
             return true;
         }
     }
