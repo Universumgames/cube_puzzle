@@ -13,6 +13,7 @@ class CubeMapSide {
 private:
     DiceData *diceData;
     CubeMap *cubeMapRef;
+    MovementDirection currentGravityDirection;
 
 public:
     Vector<CubeField *> cubeFields;
@@ -32,6 +33,7 @@ public:
     
     void setCubeMapRef(CubeMap *cube_map);
     void setDiceData(DiceData* dice_data);
+    void setGravityDirection(MovementDirection dir);
     CubeMap* getCubeMapRef();
     CubeField *getField(int x, int y);
     CubeField *getField(Point pos);

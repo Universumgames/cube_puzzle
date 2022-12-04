@@ -80,3 +80,11 @@ using Duration = Clock::duration;
 using std::cout, std::cin, std::cerr, std::endl;
 
 #define BASIC_GO_DATA_PASSTHROUGH frame, totalMSec, deltaT
+
+enum class MovementDirection {
+    moveToBigX = 1,
+    moveToSmallX = 2,
+    moveToBigY = 3,
+    moveToSmallY = 4,
+    none = 5
+};

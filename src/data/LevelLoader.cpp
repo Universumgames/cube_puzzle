@@ -86,7 +86,7 @@ LevelLoader::LoadedLevelData LevelLoader::loadLevel(const std::string &path) {
                         temp = new PressurePlate(sideID, x, y, 1);
                         break;
                     case 5:
-                        vec_temp.push_back(new Slider(Slider::MovementDirection::moveToBigX, 1));
+                        vec_temp.push_back(new Slider(MovementDirection::moveToBigX, 1));
                         temp = new EmptyField(sideID, x, y, vec_temp);
                         break;
                     case 6:
@@ -101,14 +101,14 @@ LevelLoader::LoadedLevelData LevelLoader::loadLevel(const std::string &path) {
                         temp = new PressurePlate(sideID, x, y, 2);
                         break;
                     case 9:
-                        vec_temp.push_back(new Slider(Slider::MovementDirection::moveToSmallX, 2));
+                        vec_temp.push_back(new Slider(MovementDirection::moveToSmallX, 2));
                         temp = new EmptyField(sideID, x, y, vec_temp);
                         break;
                     case 10:
                         temp = new PressurePlate(sideID, x, y, 3);
                         break;
                     case 11:
-                        vec_temp.push_back(new Slider(Slider::MovementDirection::moveToBigY, 3));
+                        vec_temp.push_back(new Slider(MovementDirection::moveToBigY, 3));
                         temp = new EmptyField(sideID, x, y, vec_temp);
                         break;
                 default:

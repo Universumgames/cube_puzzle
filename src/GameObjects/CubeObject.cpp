@@ -3,6 +3,12 @@
 
 // ################################# Konstruktoren ###################################################################################
 
+Stone::Stone() {
+    this->fallingDirection = MovementDirection::none;
+    this->currentMovementDirection = this->fallingDirection;
+    this->type = CubeObject::ObjectType::typeStone;
+}
+
 Slider::Slider(MovementDirection direction, int id, bool activated) {
     this->directionIfActivated = direction;
     this->id = id;
@@ -17,7 +23,6 @@ Slider::Slider(MovementDirection direction, int id, bool activated) {
 // ################################# HandleEvent und Update-Methoden #################################################################
 
 void CubeObject::Update(CubeGame& game, u32 frame, u32 totalMSec, float deltaT) {
-    //cout << "CubeObject::Update is being called." << endl;
     CubeField* cubeField = this->cubeFieldRef;
     int oldX = cubeField->getX();
     int oldY = cubeField->getY();
@@ -51,6 +56,18 @@ void CubeObject::Update(CubeGame& game, u32 frame, u32 totalMSec, float deltaT) 
             break;
     }
     if (oldX != newX || oldY != newY) {
+        if (this->type == CubeObject::ObjectType::typeStone) {
+            cout << "I falliiiiiiiin whuiiiiii" << endl;
+            if (this->currentMovementDirection == MovementDirection::moveToSmallY) {
+                cout << "I wanna move to small y :>" << endl;
+            } else if (this->currentMovementDirection == MovementDirection::moveToSmallX) {
+                cout << "I wanna move to small x :>" << endl;
+            } else if (this->currentMovementDirection == MovementDirection::moveToBigX) {
+                cout << "I wanna move to BIG X :>" << endl;
+            } else if (this->currentMovementDirection == MovementDirection::moveToBigY) {
+                cout << "I wanna move to BIG Y :>" << endl;
+            }
+        }
         if (cubeMapSide->canObjectEnterFieldAt(this, newX, newY)) {
             this->lastMovementCountdown = std::max(0.0, static_cast<double>(this->lastMovementCountdown)) - deltaT;
             if (this->lastMovementCountdown > 0) {
@@ -91,6 +108,15 @@ void CubeObject::setCubeFieldRef(CubeField* cube_field) {
 }
 
 CubeObject::ObjectType CubeObject::getType() {
+    return this->type;
+}
+
+void Stone::setFallingDirection(MovementDirection dir) {
+    this->fallingDirection = dir;
+    this->currentMovementDirection = this->fallingDirection;
+}
+
+CubeObject::ObjectType Stone::getType() {
     return this->type;
 }
 

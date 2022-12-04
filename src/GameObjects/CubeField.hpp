@@ -30,6 +30,7 @@ public:
     void setSideId(int sideID);
     void setDiceData(DiceData* dice_data);
     void setCubeMapSideRef(CubeMapSide* cube_map_side);
+    void setGravityDirection(MovementDirection dir);
     CubeMapSide* getCubeMapSideRef();
     [[nodiscard]] Point getCoordinates();
     [[nodiscard]] int getX() const;

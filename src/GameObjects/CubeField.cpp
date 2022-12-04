@@ -135,6 +135,14 @@ void CubeField::setCubeMapSideRef(CubeMapSide* cube_map_side) {
     this->cubeMapSideRef = cube_map_side;
 }
 
+void CubeField::setGravityDirection(MovementDirection dir) {
+    for (auto cubeObject : this->cubeObjects) {
+        if (cubeObject->getType() == CubeObject::ObjectType::typeStone) {
+            dynamic_cast<Stone*>(cubeObject)->setFallingDirection(dir);
+        }
+    }
+}
+
 CubeMapSide* CubeField::getCubeMapSideRef() {
     return this->cubeMapSideRef;
 }

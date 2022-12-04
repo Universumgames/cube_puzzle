@@ -128,6 +128,13 @@ void CubeMapSide::setDiceData(DiceData* dice_data) {
     }
 }
 
+void CubeMapSide::setGravityDirection(MovementDirection dir) {
+    this->currentGravityDirection = dir;
+    for (auto cubeField : this->cubeFields) {
+        cubeField->setGravityDirection(dir);
+    }
+}
+
 CubeMap* CubeMapSide::getCubeMapRef() {
     return this->cubeMapRef;
 }

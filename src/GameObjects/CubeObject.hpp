@@ -10,13 +10,6 @@ class CubeField;
 
 class CubeObject {
 public:
-    enum class MovementDirection {
-        moveToBigX,
-        moveToSmallX,
-        moveToBigY,
-        moveToSmallY,
-        none
-    };
     enum class ObjectType {
         typeStone,
         typeSlider,
@@ -27,10 +20,10 @@ public:
     
 protected:
     double lastMovementCountdown = OBJECT_MOVEMENT_COUNTDOWN_MILLIS / 1000.0;
+    MovementDirection currentMovementDirection = MovementDirection::none;
     DiceData *diceData;
     int sideId;
     CubeField* cubeFieldRef;
-    MovementDirection currentMovementDirection = MovementDirection::none;
     ObjectType type = ObjectType::none;
     
 public:
@@ -46,7 +39,7 @@ public:
     void setDiceData(DiceData* dice_data);
     void setSideId(int sideID);
     void setCubeFieldRef(CubeField* cube_field);
-    [[nodiscard]] ObjectType getType();
+    [[nodiscard]] virtual ObjectType getType();
     
     void drawSpriteBorder(CubeGame &game, Renderer *render, Rect dst);
     [[nodiscard]] virtual bool canPlayerEnter();
@@ -64,9 +57,13 @@ class GravityObject : public CubeObject {
 
 class Stone : public GravityObject {
 private:
-    bool isFalling = false;
+    MovementDirection fallingDirection;
 public:
+    Stone();
     void Render(CubeGame &game, Renderer *render, Point size, Point location, u32 frame, u32 totalMSec, float deltaT) override;
+    
+    void setFallingDirection(MovementDirection dir);
+    [[nodiscard]] ObjectType getType() override;
     
     [[nodiscard]] bool canPlayerEnter() override;
     [[nodiscard]] bool canAnotherObjectEnter() override;

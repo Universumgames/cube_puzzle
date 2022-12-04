@@ -18,7 +18,7 @@ inline Vector<WorldField::WorldFieldEnum> emptyWorldField = {/*
 
 inline Vector<CubeObject *> flagVec = {new Flag()};
 inline Vector<CubeObject *> stoneVec = {new Stone()};
-inline Vector<CubeObject *> sliderVec = {new Slider(Slider::MovementDirection::moveToBigX, 1)};
+inline Vector<CubeObject *> sliderVec = {new Slider(MovementDirection::moveToBigX, 1)};
 inline Point emptyCubeMapSidesSize = {5, 5};
 inline Vector<CubeField *> side1 = {
         new EmptyField(1, 0, 0), new EmptyField(1, 0, 1), new EmptyField(1, 0, 2), new EmptyField(1, 0, 3), new EmptyField(1, 0, 4),
