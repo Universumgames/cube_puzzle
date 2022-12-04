@@ -124,6 +124,8 @@ public:
     bool isPressurePlate() override;
     int enter() override;
     int leave() override;
+    int activate();
+    int deactivate();
     void activateAllSlidersWithSameId();
     void deactivateAllSlidersWithSameId();
 };

@@ -252,12 +252,18 @@ bool PressurePlate::isPressurePlate() {
 
 void CubeField::addObject(CubeObject* cubeObject) {
     this->cubeObjects.push_back(cubeObject);
+    if (this->isPressurePlate() && cubeObject->canActivatePressurePlate()) {
+        dynamic_cast<PressurePlate*>(this)->activate();
+    }
 }
 
 bool CubeField::removeObject(CubeObject* cubeObject) {
     for (int i = 0; i < cubeObjects.size(); i++) {
         if (cubeObject->getType() == this->cubeObjects[i]->getType()) {
             this->cubeObjects.erase(this->cubeObjects.begin() + i);
+            if (this->isPressurePlate() && cubeObject->canActivatePressurePlate()) {
+                dynamic_cast<PressurePlate*>(this)->deactivate();
+            }
             return true;
         }
     }
@@ -293,6 +299,24 @@ int PressurePlate::leave() {
     this->isActivated = false;
     this->deactivateAllSlidersWithSameId();
     return this->id;
+}
+
+int PressurePlate::activate() {
+    if (!this->isActivated) {
+        this->isActivated = true;
+        this->activateAllSlidersWithSameId();
+        return this->id;
+    }
+    return -1;
+}
+
+int PressurePlate::deactivate() {
+    if (this->isActivated) {
+        this->isActivated = false;
+        this->deactivateAllSlidersWithSameId();
+        return this->id;
+    }
+    return -1;
 }
 
 void PressurePlate::activateAllSlidersWithSameId() {
