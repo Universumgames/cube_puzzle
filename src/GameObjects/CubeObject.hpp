@@ -4,7 +4,7 @@
 #include "GameObject.hpp"
 #include "CubeField.hpp"
 
-#define OBJECT_MOVEMENT_COUNTDOWN_MILLIS 1000
+#define OBJECT_MOVEMENT_COUNTDOWN_MILLIS 100
 
 class CubeField;
 

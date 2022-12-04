@@ -6,11 +6,13 @@
 #include "../States/Level.hpp"
 
 bool CubeMap::canPlayerMove() const {
-    return !isSideTransitionAnimationInProgress;
+    return !isSideTransitionAnimationInProgress && !isObjectAnimationInProgress;
 }
 
 bool CubeMap::movePlayer(PlayerMoveDirection dir) {
-    if (!canPlayerMove()) return false;
+    if (!canPlayerMove()) {
+        return false;
+    }
     PlayerMoveDirection normalizedDirection = screenDirectionToDirectionOnCubeSide(dir);
 
     Point moveDir = {};

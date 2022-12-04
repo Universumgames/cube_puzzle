@@ -17,11 +17,7 @@ Slider::Slider(MovementDirection direction, int id, bool activated) {
 // ################################# HandleEvent und Update-Methoden #################################################################
 
 void CubeObject::Update(CubeGame& game, u32 frame, u32 totalMSec, float deltaT) {
-    this->lastMovementCountdown = std::max(0.0, static_cast<double>(this->lastMovementCountdown)) - deltaT;
-    if (this->lastMovementCountdown > 0) {
-        return;
-    }
-    cout << "CubeObject::Update is being called." << endl;
+    //cout << "CubeObject::Update is being called." << endl;
     CubeField* cubeField = this->cubeFieldRef;
     int oldX = cubeField->getX();
     int oldY = cubeField->getY();
@@ -56,12 +52,17 @@ void CubeObject::Update(CubeGame& game, u32 frame, u32 totalMSec, float deltaT) 
     }
     if (oldX != newX || oldY != newY) {
         if (cubeMapSide->canObjectEnterFieldAt(this, newX, newY)) {
+            this->lastMovementCountdown = std::max(0.0, static_cast<double>(this->lastMovementCountdown)) - deltaT;
+            if (this->lastMovementCountdown > 0) {
+                return;
+            }
+            this->lastMovementCountdown = OBJECT_MOVEMENT_COUNTDOWN_MILLIS / 1000.0;
             cubeMapSide->getCubeMapRef()->setIsAnimating(true);
             auto newField = cubeMapSide->getField(newX, newY);
             if (cubeField->removeObject(this)) {
                 newField->addObject(this);
+                this->cubeFieldRef = newField;
             } else {
-                cerr << "Fehler beim Löschen des Objektes." << endl;
             }
         } else { // Slider reached the end
             cubeMapSide->getCubeMapRef()->setIsAnimating(false);

@@ -126,7 +126,7 @@ Rect CubeMap::getDrawableRect() {
 // ####### public #######
 
 bool CubeMap::isAnimating() const {
-    return isSideTransitionAnimationInProgress || this->isObjectAnimationInProgress;
+    return isSideTransitionAnimationInProgress;
 }
 
 // ####### private ######
