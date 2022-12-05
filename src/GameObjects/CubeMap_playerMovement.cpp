@@ -104,23 +104,19 @@ bool CubeMap::rotateCubeIfNecessary(Point &newPlayerPos, PlayerMoveDirection mov
             case DiceSideRotation::UP:
                 this->currentSideId = this->diceData.getSideWhenMovingInDirX(this->currentSideId,
                                                                              DiceSideRotation::LEFT);
-                this->getCurrentSide()->setGravityDirection(MovementDirection::moveToBigX); // TODO check if this is correct
                 break;
             case DiceSideRotation::DOWN:
                 this->currentSideId = this->diceData.getSideWhenMovingInDirX(this->currentSideId,
                                                                              DiceSideRotation::RIGHT);
-                this->getCurrentSide()->setGravityDirection(MovementDirection::moveToSmallX); // TODO check if this is correct
                 break;
             case DiceSideRotation::LEFT:
                 this->currentSideId = this->diceData.getSideWhenMovingInDirX(this->currentSideId,
                                                                              DiceSideRotation::DOWN);
-                this->getCurrentSide()->setGravityDirection(MovementDirection::moveToBigY); // TODO check if this is correct
                 rollDice = true;
                 diceRollDirection = getOppositeDiceRollDirection(sideToRollDirection(oldSide));
                 break;
             case DiceSideRotation::RIGHT:
                 this->currentSideId = this->diceData.getSideWhenMovingInDirX(this->currentSideId, DiceSideRotation::UP);
-                this->getCurrentSide()->setGravityDirection(MovementDirection::moveToSmallY); // TODO check if this is correct
                 rollDice = true;
                 diceRollDirection = sideToRollDirection(oldSide);
                 break;
@@ -130,23 +126,19 @@ bool CubeMap::rotateCubeIfNecessary(Point &newPlayerPos, PlayerMoveDirection mov
             case DiceSideRotation::UP:
                 this->currentSideId = this->diceData.getSideWhenMovingInDirX(this->currentSideId,
                                                                              DiceSideRotation::RIGHT);
-                this->getCurrentSide()->setGravityDirection(MovementDirection::moveToSmallX); // TODO check if this is correct
                 break;
             case DiceSideRotation::DOWN:
                 this->currentSideId = this->diceData.getSideWhenMovingInDirX(this->currentSideId,
                                                                              DiceSideRotation::LEFT);
-                this->getCurrentSide()->setGravityDirection(MovementDirection::moveToBigX); // TODO check if this is correct
                 break;
             case DiceSideRotation::LEFT:
                 this->currentSideId = this->diceData.getSideWhenMovingInDirX(this->currentSideId, DiceSideRotation::UP);
-                this->getCurrentSide()->setGravityDirection(MovementDirection::moveToSmallY); // TODO check if this is correct
                 rollDice = true;
                 diceRollDirection = sideToRollDirection(oldSide);
                 break;
             case DiceSideRotation::RIGHT:
                 this->currentSideId = this->diceData.getSideWhenMovingInDirX(this->currentSideId,
                                                                              DiceSideRotation::DOWN);
-                this->getCurrentSide()->setGravityDirection(MovementDirection::moveToBigY); // TODO check if this is correct
                 rollDice = true;
                 diceRollDirection = getOppositeDiceRollDirection(sideToRollDirection(oldSide));
                 break;
@@ -155,26 +147,22 @@ bool CubeMap::rotateCubeIfNecessary(Point &newPlayerPos, PlayerMoveDirection mov
         switch (oldSideOrientation) {
             case DiceSideRotation::UP:
                 this->currentSideId = this->diceData.getSideWhenMovingInDirX(this->currentSideId, DiceSideRotation::UP);
-                this->getCurrentSide()->setGravityDirection(MovementDirection::moveToBigY); // TODO check if this is correct
                 rollDice = true;
                 diceRollDirection = sideToRollDirection(oldSide);
                 break;
             case DiceSideRotation::DOWN:
                 this->currentSideId = this->diceData.getSideWhenMovingInDirX(this->currentSideId,
                                                                              DiceSideRotation::DOWN);
-                this->getCurrentSide()->setGravityDirection(MovementDirection::moveToSmallY); // TODO check if this is correct
                 rollDice = true;
                 diceRollDirection = getOppositeDiceRollDirection(sideToRollDirection(oldSide));
                 break;
             case DiceSideRotation::LEFT:
                 this->currentSideId = this->diceData.getSideWhenMovingInDirX(this->currentSideId,
                                                                              DiceSideRotation::LEFT);
-                this->getCurrentSide()->setGravityDirection(MovementDirection::moveToBigX); // TODO check if this is correct
                 break;
             case DiceSideRotation::RIGHT:
                 this->currentSideId = this->diceData.getSideWhenMovingInDirX(this->currentSideId,
                                                                              DiceSideRotation::RIGHT);
-                this->getCurrentSide()->setGravityDirection(MovementDirection::moveToSmallX); // TODO check if this is correct
                 break;
         }
     } else if (newPlayerPos.y >= side->height) { // move down out of cubeFields
@@ -182,25 +170,21 @@ bool CubeMap::rotateCubeIfNecessary(Point &newPlayerPos, PlayerMoveDirection mov
             case DiceSideRotation::UP:
                 this->currentSideId = this->diceData.getSideWhenMovingInDirX(this->currentSideId,
                                                                              DiceSideRotation::DOWN);
-                this->getCurrentSide()->setGravityDirection(MovementDirection::moveToBigY); // TODO check if this is correct
                 rollDice = true;
                 diceRollDirection = getOppositeDiceRollDirection(sideToRollDirection(oldSide));
                 break;
             case DiceSideRotation::DOWN:
                 this->currentSideId = this->diceData.getSideWhenMovingInDirX(this->currentSideId, DiceSideRotation::UP);
-                this->getCurrentSide()->setGravityDirection(MovementDirection::moveToSmallY); // TODO check if this is correct
                 rollDice = true;
                 diceRollDirection = sideToRollDirection(oldSide);
                 break;
             case DiceSideRotation::LEFT:
                 this->currentSideId = this->diceData.getSideWhenMovingInDirX(this->currentSideId,
                                                                              DiceSideRotation::RIGHT);
-                this->getCurrentSide()->setGravityDirection(MovementDirection::moveToSmallX); // TODO check if this is correct
                 break;
             case DiceSideRotation::RIGHT:
                 this->currentSideId = this->diceData.getSideWhenMovingInDirX(this->currentSideId,
                                                                              DiceSideRotation::LEFT);
-                this->getCurrentSide()->setGravityDirection(MovementDirection::moveToBigX); // TODO check if this is correct
                 break;
         }
     }
@@ -237,6 +221,25 @@ bool CubeMap::rotateCubeIfNecessary(Point &newPlayerPos, PlayerMoveDirection mov
         currentSide->setAllSlidersInMotion();
         if (rollDice) {
             moveCubeInWorld(diceRollDirection);
+        }
+        if (oldSideId != this->currentSideId) {
+            DiceSideRotation rotation = diceData.getDiceSideRotation(this->currentSideId);
+            switch (rotation) {
+                case DiceSideRotation::UP:
+                    this->getCurrentSide()->setGravityDirection(MovementDirection::moveToBigY); // TODO check if this is correct
+                    break;
+                case DiceSideRotation::DOWN:
+                    this->getCurrentSide()->setGravityDirection(MovementDirection::moveToSmallY); // TODO check if this is correct
+                    break;
+                case DiceSideRotation::LEFT:
+                    this->getCurrentSide()->setGravityDirection(MovementDirection::moveToSmallX); // TODO check if this is correct
+                    break;
+                case DiceSideRotation::RIGHT:
+                    this->getCurrentSide()->setGravityDirection(MovementDirection::moveToBigX); // TODO check if this is correct
+                    break;
+                default:
+                    break;
+            }
         }
     } else if (oldSideId != this->currentSideId) { // if not, rollback
         this->currentSideId = oldSideId;

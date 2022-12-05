@@ -87,11 +87,8 @@ int DiceData::getAnchorSideOfTopLeftCorner(int side) {
         case 1:
             return 5;
         case 2:
-            return 1;
         case 3:
-            return 1;
         case 4:
-            return 1;
         case 5:
             return 1;
         case 6:

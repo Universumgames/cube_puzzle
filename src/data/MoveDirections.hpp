@@ -24,3 +24,11 @@ inline DiceRollDirection getOppositeDiceRollDirection(DiceRollDirection dir) {
     }
     return DiceRollDirection::NORTH;
 }
+
+enum class MovementDirection {
+    moveToBigX,
+    moveToSmallX,
+    moveToBigY,
+    moveToSmallY,
+    none
+};
