@@ -206,7 +206,7 @@ bool EmptyField::canObjectEnter(CubeObject *cubeObject) {
     CubeMapSide* cubeMapSide = this->cubeMapSideRef;
     CubeMap* cubeMap = cubeMapSide->getCubeMapRef();
     Point currentPlayerPos = cubeMap->getCurrentPlayerPos();
-    if (currentPlayerPos.x == this->x && currentPlayerPos.y == this->y) {
+    if (currentPlayerPos.x == this->x && currentPlayerPos.y == this->y && cubeObject->getType() != CubeObject::ObjectType::typeMagnet) {
         return false;
     }
     for (auto anyCubeObject : this->cubeObjects) {
@@ -229,7 +229,7 @@ bool PressurePlate::canObjectEnter(CubeObject *cubeObject) {
     CubeMapSide* cubeMapSide = this->cubeMapSideRef;
     CubeMap* cubeMap = cubeMapSide->getCubeMapRef();
     Point currentPlayerPos = cubeMap->getCurrentPlayerPos();
-    if (currentPlayerPos.x == this->x && currentPlayerPos.y == this->y) {
+    if (currentPlayerPos.x == this->x && currentPlayerPos.y == this->y && cubeObject->getType() != CubeObject::ObjectType::typeMagnet) {
         return false;
     }
     for (auto anyCubeObject : this->cubeObjects) {

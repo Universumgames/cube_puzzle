@@ -1,6 +1,12 @@
 # Für Vorlesung 2022/12/07
 - implement "hit wall" sound
-- player animation for moving left an right
+- player animation for moving left and right
+- Gravity working
+- PressurePlates & Sliders working
+- PressurePlates can be activated by: Player, Magnets, Stones
+- Grabbing a Magnet by pressing "Shift" working
+- Player can move around with Magnet(s) as long as "Shift" is held
+- If Magnet hits a wall but player doesn't, then the player moves and the magnet is automatically released
 
 # Für Vorlesung 2022/11/30
 - update [`src/States/Level.cpp`](src/States/Level.cpp) rendering Method to use frame-buffers (render ui und game into separate texures und render buffered frames then to the window)

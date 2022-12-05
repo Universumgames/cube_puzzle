@@ -178,7 +178,6 @@ Vector<Magnet*> CubeMapSide::getAllMagnetsSurroundingPlayer(int playerPosX, int 
             listMagnets.push_back(magnet);
         }
     }
-    std::cout << "detected " << listMagnets.size() << " magnets!" << std::endl;
     return listMagnets;
 }
 
@@ -223,13 +222,12 @@ Point CubeMapSide::screenPositionToCubePosition(Point screenPos) const {
 }
 
 void CubeMapSide::setAllSlidersInMotion() {
-    auto cubeMapRef = this->getCubeMapRef();
     Vector<CubeMapSide*>* allCubeMapSides;
     Vector<int> allActivatedPressurePlates;
     Vector<int> allDeactivatedPressurePlates;
     Vector<Slider*> allSliders;
     
-    allCubeMapSides = cubeMapRef->getAllCubeMapSides();
+    allCubeMapSides = this->cubeMapRef->getAllCubeMapSides();
     for (auto anyCubeMapSide : *allCubeMapSides) {
         for (auto cubeField : anyCubeMapSide->cubeFields) {
             if (cubeField->isPressurePlate()) {
@@ -247,8 +245,4 @@ void CubeMapSide::setAllSlidersInMotion() {
             }
         }
     }
-    for (auto slider : allSliders) {
-    
-    }
-    //cout << "Slider sollte sich jetzt bewegen huiiii" << endl;
 }

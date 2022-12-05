@@ -151,6 +151,9 @@ bool Slider::canAnotherObjectEnter() {
 }
 
 bool Magnet::canPlayerEnter() {
+    if (this->isGrabbed) {
+        return true;
+    }
     return false;
 }
 

@@ -39,16 +39,12 @@ void Player::HandleEvent(const u32 frame, const u32 totalMSec, const float delta
     }
     if (what_key.scancode == SDL_SCANCODE_LSHIFT || what_key.scancode == SDL_SCANCODE_RSHIFT) {
         if (event.type == SDL_KEYDOWN) {
-            std::cout << "registered Shift down!" << std::endl;
             this->listGrabbedMagnets = this->cubeMap->getAllNeighboringMagnets();
-            std::cout << "size of magnet-list: " << this->listGrabbedMagnets.size() << std::endl;
             for (auto magnet : this->listGrabbedMagnets) {
                 magnet->setIsGrabbed(true);
-                std::cout << "one Magnet registered!" << std::endl;
             }
         } else {
             this->deleteAllGrabbedMagnets();
-            std::cout << "deleted all magnets..." << std::endl;
         }
     }
     if (!moved && moveCancelledAudio != nullptr) {
