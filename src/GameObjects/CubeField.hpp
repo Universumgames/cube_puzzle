@@ -35,6 +35,7 @@ public:
     [[nodiscard]] Point getCoordinates();
     [[nodiscard]] int getX() const;
     [[nodiscard]] int getY() const;
+    [[nodiscard]] Magnet* getMagnetIfPresent();
     
     virtual bool canPlayerEnter() = 0;
     virtual bool canObjectEnter(CubeObject *cubeObject) = 0;

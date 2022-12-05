@@ -13,6 +13,7 @@ class Player;
 class CubeMapSide;
 class CubeMapMiniMap;
 class CubeField;
+class Magnet;
 
 /// Logic class for handling player movement on cube and calling cubeField methods
 class CubeMap final : public GameObject {
@@ -39,13 +40,14 @@ public:
     [[nodiscard]] CubeMapSide *getCurrentSide();
     [[nodiscard]] Vector<CubeMapSide*>* getAllCubeMapSides();
     [[nodiscard]] Point getCurrentPlayerPos() const;
+    [[nodiscard]] Vector<Magnet*> getAllNeighboringMagnets();
     
     [[nodiscard]] bool isAnimating() const;
     
     // the following 2 methods are implemented in CubeMap_playerMovement:
     /// returns true if move was successful, false otherwise
     [[nodiscard]] bool canPlayerMove() const;
-    bool movePlayer(PlayerMoveDirection dir);
+    bool movePlayer(PlayerMoveDirection dir, const Vector<Magnet*>& listGrabbedMagnets);
     
 private:
     WorldMap *worldMap = nullptr;

@@ -3,6 +3,7 @@
 #include "GameObject.hpp"
 #include "../data/MoveDirections.hpp"
 #include "../AudioHandler.hpp"
+#include "CubeObject.hpp"
 
 class CubeMap;
 
@@ -20,10 +21,14 @@ public:
 
     /// move player, relative to screen
     bool move(PlayerMoveDirection direction);
+    
+    void registerGrabbedMagnet(Magnet* magnet);
+    void deleteGrabbedMagnet(Magnet* magnet);
+    void deleteAllGrabbedMagnets();
 
 private:
     /// stored int value is row in player sprite
-    enum class AnimationState{
+    enum class AnimationState {
         IDLE = 0,
         LEFT = 2,
         RIGHT = 1,
@@ -34,6 +39,7 @@ private:
     int getAnimationIndex(u32 totalMSec);
 
 private:
+    Vector<Magnet*> listGrabbedMagnets = Vector<Magnet*>();
     CubeMap *cubeMap;
     Rect nextDraw;
     AnimationState currentState;

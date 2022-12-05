@@ -107,6 +107,12 @@ Point CubeMap::getCurrentPlayerPos() const {
     return this->playerPos;
 }
 
+Vector<Magnet*> CubeMap::getAllNeighboringMagnets() {
+    CubeMapSide* currentSide = this->getCurrentSide();
+    Vector<Magnet*> listMagnets = currentSide->getAllMagnetsSurroundingPlayer(this->playerPos.x, this->playerPos.y);
+    return listMagnets;
+}
+
 // ####### private ######
 
 CubeMapSide *CubeMap::getSide(int i) {
@@ -160,7 +166,7 @@ void CubeMap::drawMap(const u32 frame, const u32 totalMSec, const float deltaT) 
         Rect oldSide = {0,0, game.getWindowSize().x, game.getWindowSize().y};
         Rect newSide = getDrawableRect();
         updateAnimationSidePosition(oldSide, newSide, sideTransitionState, lastNormalizedMove);
-        SDL_RenderCopy(render, oldSideFrame, NULL, &oldSide);
+        SDL_RenderCopy(render, oldSideFrame, nullptr, &oldSide);
         sideTransitionState += deltaT * 10;
         if (sideTransitionState >= 1) {
             sideTransitionState = 0;
@@ -173,8 +179,8 @@ void CubeMap::drawMap(const u32 frame, const u32 totalMSec, const float deltaT) 
 
 void CubeMap::saveCurrentFrame() {
     Texture *currTarget = renderTarget;
-    if (oldSideFrameSize != game.getCurrentRenderTargetSize() || oldSideFrame == NULL) {
-        if (oldSideFrame != NULL) SDL_DestroyTexture(oldSideFrame);
+    if (oldSideFrameSize != game.getCurrentRenderTargetSize() || oldSideFrame == nullptr) {
+        if (oldSideFrame != nullptr) SDL_DestroyTexture(oldSideFrame);
         Point targetSize = game.getCurrentRenderTargetSize();
         oldSideFrame = SDL_CreateTexture(render, SDL_PIXELFORMAT_ARGB8888,
                                          SDL_TEXTUREACCESS_TARGET, targetSize.x, targetSize.y);
@@ -184,7 +190,7 @@ void CubeMap::saveCurrentFrame() {
     SDL_SetRenderDrawColor(render, 0, 0, 0, 0);
     SDL_RenderClear(render);
     SDL_SetTextureBlendMode(oldSideFrame, SDL_BLENDMODE_BLEND);
-    SDL_RenderCopy(render, currTarget, NULL, NULL);
+    SDL_RenderCopy(render, currTarget, nullptr, nullptr);
     SDL_SetRenderTarget(render, currTarget);
 }
 

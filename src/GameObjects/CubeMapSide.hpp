@@ -39,6 +39,7 @@ public:
     CubeField *getField(Point pos);
     [[nodiscard]] int getIndex(int x, int y) const;
     [[nodiscard]] Point getFieldSize(Rect drawableRect) const;
+    [[nodiscard]] Vector<Magnet*> getAllMagnetsSurroundingPlayer(int playerPosX, int playerPosY);
     
     [[nodiscard]] bool canObjectEnterFieldAt(CubeObject* cubeObject, int x, int y);
     [[nodiscard]] Point cubePositionToScreenPosition(Point cubePos) const;

@@ -28,12 +28,10 @@ protected:
     
 public:
     /// render only method
-    // TODO Mina ich brauche irgendeine Möglichkeit um auf diceData und die Würfelseite (beispiel sideID in CubeMapSide)
     virtual void Render(CubeGame &game, Renderer *render, Point size, Point location, u32 frame, u32 totalMSec, float deltaT);
     /// Handle input events, probably unused
     virtual void HandleEvent(CubeGame &game, u32 frame, u32 totalMSec, float deltaT, Event event);
     /// physics, etc. update method
-    // TODO mina hier wirst GARANTIERT auch die Dice Data und sideID benötigen.....
     virtual void Update(CubeGame &game, u32 frame, u32 totalMSec, float deltaT);
 
     void setDiceData(DiceData* dice_data);
@@ -108,12 +106,18 @@ class Magnet : public Moveable {
 private:
     bool isGrabbed = false;
 public:
+    Magnet();
     void Render(CubeGame &game, Renderer *render, Point size, Point location, u32 frame, u32 totalMSec, float deltaT) override;
+    
+    void setIsGrabbed(bool isGrabbed);
+    [[nodiscard]] bool getIsGrabbed() const;
     
     [[nodiscard]] bool canPlayerEnter() override;
     [[nodiscard]] bool canAnotherObjectEnter() override;
     [[nodiscard]] bool canEnterPressurePlate() override;
     [[nodiscard]] bool canActivatePressurePlate() override;
+    
+    void move(MovementDirection direction);
 };
 
 // ################################# Collectible #####################################################################################

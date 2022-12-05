@@ -140,11 +140,6 @@ CubeMap* CubeMapSide::getCubeMapRef() {
 }
 
 CubeField* CubeMapSide::getField(int x, int y) {
-    /*for (auto cubeField : this->cubeFields) {
-        if (cubeField->getX() == x && cubeField->getY() == y) {
-            return cubeField;
-        }
-    }*/
     return this->cubeFields[getIndex(x, y)];
 }
 
@@ -160,6 +155,31 @@ int CubeMapSide::getIndex(int x, int y) const {
 Point CubeMapSide::getFieldSize(Rect drawableRect) const {
     int w = min(drawableRect.w, drawableRect.h) / max(width, height);
     return {w, w};
+}
+
+Vector<Magnet*> CubeMapSide::getAllMagnetsSurroundingPlayer(int playerPosX, int playerPosY) {
+    Vector<Magnet*> listMagnets;
+    Vector<CubeField*> listCubeFields;
+    if (playerPosX + 1 < this->width - 1) {
+        listCubeFields.push_back(getField(playerPosX + 1, playerPosY));
+    }
+    if (playerPosX > 0) {
+        listCubeFields.push_back(getField(playerPosX - 1, playerPosY));
+    }
+    if (playerPosY + 1 < this->height - 1) {
+        listCubeFields.push_back(getField(playerPosX, playerPosY + 1));
+    }
+    if (playerPosY > 0) {
+        listCubeFields.push_back(getField(playerPosX, playerPosY - 1));
+    }
+    for (auto anyCubeField : listCubeFields) {
+        Magnet* magnet = anyCubeField->getMagnetIfPresent();
+        if (magnet != nullptr) {
+            listMagnets.push_back(magnet);
+        }
+    }
+    std::cout << "detected " << listMagnets.size() << " magnets!" << std::endl;
+    return listMagnets;
 }
 
 // ################################# sonstige Methoden ###############################################################################

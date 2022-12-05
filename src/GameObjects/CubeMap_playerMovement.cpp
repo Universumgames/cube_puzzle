@@ -9,7 +9,7 @@ bool CubeMap::canPlayerMove() const {
     return !isSideTransitionAnimationInProgress && !isObjectAnimationInProgress;
 }
 
-bool CubeMap::movePlayer(PlayerMoveDirection dir) {
+bool CubeMap::movePlayer(PlayerMoveDirection dir, const Vector<Magnet*>& listGrabbedMagnets) {
     if (!canPlayerMove()) {
         return false;
     }
@@ -40,6 +40,23 @@ bool CubeMap::movePlayer(PlayerMoveDirection dir) {
         return false;
     }
     if (newPlayerPos.x != this->playerPos.x || newPlayerPos.y != this->playerPos.y) {
+        if (newPlayerPos.x > this->playerPos.x) {
+            for (auto magnet : listGrabbedMagnets) {
+                magnet->move(MovementDirection::moveToBigX);
+            }
+        } else if (newPlayerPos.x < this->playerPos.x) {
+            for (auto magnet : listGrabbedMagnets) {
+                magnet->move(MovementDirection::moveToSmallX);
+            }
+        } else if (newPlayerPos.y > this->playerPos.y) {
+            for (auto magnet : listGrabbedMagnets) {
+                magnet->move(MovementDirection::moveToBigY);
+            }
+        } else if (newPlayerPos.y < this->playerPos.y) {
+            for (auto magnet : listGrabbedMagnets) {
+                magnet->move(MovementDirection::moveToSmallY);
+            }
+        }
         this->playerPos = newPlayerPos;
         doLevelFinishedLogic();
         return true;

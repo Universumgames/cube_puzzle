@@ -20,9 +20,13 @@ Slider::Slider(MovementDirection direction, int id, bool activated) {
     this->lastMovementCountdown = OBJECT_MOVEMENT_COUNTDOWN_MILLIS / 1000.0;
 }
 
+Magnet::Magnet() {
+    this->type = CubeObject::ObjectType::typeMagnet;
+}
+
 // ################################# HandleEvent und Update-Methoden #################################################################
 
-void CubeObject::Update(CubeGame& game, u32 frame, u32 totalMSec, float deltaT) {
+void CubeObject::Update(CubeGame& game, const u32 frame, const u32 totalMSec, const float deltaT) {
     CubeField* cubeField = this->cubeFieldRef;
     int oldX = cubeField->getX();
     int oldY = cubeField->getY();
@@ -56,18 +60,6 @@ void CubeObject::Update(CubeGame& game, u32 frame, u32 totalMSec, float deltaT) 
             break;
     }
     if (oldX != newX || oldY != newY) {
-        if (this->type == CubeObject::ObjectType::typeStone) {
-            cout << "I falliiiiiiiin whuiiiiii" << endl;
-            if (this->currentMovementDirection == MovementDirection::moveToSmallY) {
-                cout << "I wanna move to small y :>" << endl;
-            } else if (this->currentMovementDirection == MovementDirection::moveToSmallX) {
-                cout << "I wanna move to small x :>" << endl;
-            } else if (this->currentMovementDirection == MovementDirection::moveToBigX) {
-                cout << "I wanna move to BIG X :>" << endl;
-            } else if (this->currentMovementDirection == MovementDirection::moveToBigY) {
-                cout << "I wanna move to BIG Y :>" << endl;
-            }
-        }
         if (cubeMapSide->canObjectEnterFieldAt(this, newX, newY)) {
             this->lastMovementCountdown = std::max(0.0, static_cast<double>(this->lastMovementCountdown)) - deltaT;
             if (this->lastMovementCountdown > 0) {
@@ -80,17 +72,17 @@ void CubeObject::Update(CubeGame& game, u32 frame, u32 totalMSec, float deltaT) 
                 newField->addObject(this);
                 this->cubeFieldRef = newField;
             }
-        } else { // Slider reached the end
+        } else { // Slider or Stone reached the end
             cubeMapSide->getCubeMapRef()->setIsAnimating(false);
             this->lastMovementCountdown = OBJECT_MOVEMENT_COUNTDOWN_MILLIS / 1000.0;
         }
-    } else {
+    } else { // Slider or Stone reached the end
         cubeMapSide->getCubeMapRef()->setIsAnimating(false);
         this->lastMovementCountdown = OBJECT_MOVEMENT_COUNTDOWN_MILLIS / 1000.0;
     }
 }
 
-void CubeObject::HandleEvent(CubeGame& game, u32 frame, u32 totalMSec, float deltaT, Event event) {
+void CubeObject::HandleEvent(CubeGame& game, const u32 frame, const u32 totalMSec, const float deltaT, Event event) {
 }
 
 // ################################# Setter & Getter #################################################################################
@@ -122,6 +114,14 @@ CubeObject::ObjectType Stone::getType() {
 
 int Slider::getId() const {
     return this->id;
+}
+
+void Magnet::setIsGrabbed(bool is_grabbed) {
+    this->isGrabbed = is_grabbed;
+}
+
+bool Magnet::getIsGrabbed() const {
+    return this->isGrabbed;
 }
 
 // ################################# can...Enter-Methoden ############################################################################
@@ -245,7 +245,59 @@ void Slider::deactivate() {
     }
 }
 
+// ################################# Magnet Logic Methoden ###########################################################################
+
+void Magnet::move(MovementDirection direction) {
+    CubeField* cubeField = this->cubeFieldRef;
+    int oldX = cubeField->getX();
+    int oldY = cubeField->getY();
+    int newX = oldX;
+    int newY = oldY;
+    CubeMapSide* cubeMapSide = cubeField->getCubeMapSideRef();
+    int height = cubeMapSide->height;
+    int width = cubeMapSide->width;
+    switch (direction) {
+        case MovementDirection::moveToBigX:
+            if (oldX < width - 1)  {
+                newX = oldX + 1;
+            }
+            break;
+        case MovementDirection::moveToSmallX:
+            if (oldX > 0) {
+                newX = oldX - 1;
+            }
+            break;
+        case MovementDirection::moveToBigY:
+            if (oldY < height - 1) {
+                newY = oldY + 1;
+            }
+            break;
+        case MovementDirection::moveToSmallY:
+            if (oldY > 0) {
+                newY = oldY - 1;
+            }
+            break;
+        default:
+            break;
+    }
+    if (oldX != newX || oldY != newY) {
+        if (cubeMapSide->canObjectEnterFieldAt(this, newX, newY)) {
+            auto newField = cubeMapSide->getField(newX, newY);
+            if (cubeField->removeObject(this)) {
+                newField->addObject(this);
+                this->cubeFieldRef = newField;
+                this->isGrabbed = true;
+            }
+        } else {
+            this->isGrabbed = false;
+        }
+    } else {
+        this->isGrabbed = false;
+    }
+}
+
 // ################################# Flag Logic Methoden #############################################################################
+
 bool CubeObject::isLevelFinishedIfEntered() {
     return false;
 }

@@ -159,6 +159,15 @@ int CubeField::getY() const {
     return this->y;
 }
 
+Magnet* CubeField::getMagnetIfPresent() {
+    for (auto cubeObj : this->cubeObjects) {
+        if (cubeObj->getType() == CubeObject::ObjectType::typeMagnet) {
+            return dynamic_cast<Magnet *>(cubeObj);
+        }
+    }
+    return nullptr;
+}
+
 bool PressurePlate::getIsActivated() const {
     return this->isActivated;
 }
