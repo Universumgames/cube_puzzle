@@ -35,14 +35,16 @@ bool CubeMap::movePlayer(PlayerMoveDirection dir) {
     bool moved = rotateCubeIfNecessary(newPlayerPos, dir);
     if (moved)
         isSideTransitionAnimationInProgress = true;
-
     if (!getCurrentSide()->getField(newPlayerPos)->canPlayerEnter()) {
         currentSideId = oldSideId;
         return false;
     }
-    this->playerPos = newPlayerPos;
-    doLevelFinishedLogic();
-    return true;
+    if (newPlayerPos.x != this->playerPos.x || newPlayerPos.y != this->playerPos.y) {
+        this->playerPos = newPlayerPos;
+        doLevelFinishedLogic();
+        return true;
+    }
+    return false;
 }
 
 PlayerMoveDirection CubeMap::screenDirectionToDirectionOnCubeSide(PlayerMoveDirection direction) {
@@ -226,16 +228,16 @@ bool CubeMap::rotateCubeIfNecessary(Point &newPlayerPos, PlayerMoveDirection mov
             DiceSideRotation rotation = diceData.getDiceSideRotation(this->currentSideId);
             switch (rotation) {
                 case DiceSideRotation::UP:
-                    this->getCurrentSide()->setGravityDirection(MovementDirection::moveToBigY); // TODO check if this is correct
+                    this->getCurrentSide()->setGravityDirection(MovementDirection::moveToBigY);
                     break;
                 case DiceSideRotation::DOWN:
-                    this->getCurrentSide()->setGravityDirection(MovementDirection::moveToSmallY); // TODO check if this is correct
+                    this->getCurrentSide()->setGravityDirection(MovementDirection::moveToSmallY);
                     break;
                 case DiceSideRotation::LEFT:
-                    this->getCurrentSide()->setGravityDirection(MovementDirection::moveToSmallX); // TODO check if this is correct
+                    this->getCurrentSide()->setGravityDirection(MovementDirection::moveToSmallX);
                     break;
                 case DiceSideRotation::RIGHT:
-                    this->getCurrentSide()->setGravityDirection(MovementDirection::moveToBigX); // TODO check if this is correct
+                    this->getCurrentSide()->setGravityDirection(MovementDirection::moveToBigX);
                     break;
                 default:
                     break;
