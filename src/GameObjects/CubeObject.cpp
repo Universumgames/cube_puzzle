@@ -37,21 +37,25 @@ void CubeObject::Update(CubeGame& game, const u32 frame, const u32 totalMSec, co
     int width = cubeMapSide->width;
     switch (this->currentMovementDirection) {
         case MovementDirection::moveToBigX:
+            cout << "case MovementDirection::moveToBigX:" << endl;
             if (oldX < width - 1)  {
                 newX = oldX + 1;
             }
             break;
         case MovementDirection::moveToSmallX:
+            cout << "case MovementDirection::moveToSmallX:" << endl;
             if (oldX > 0) {
                 newX = oldX - 1;
             }
             break;
         case MovementDirection::moveToBigY:
+            cout << "case MovementDirection::moveToBigY:" << endl;
             if (oldY < height - 1) {
                 newY = oldY + 1;
             }
             break;
         case MovementDirection::moveToSmallY:
+            cout << "case MovementDirection::moveToSmallY:" << endl;
             if (oldY > 0) {
                 newY = oldY - 1;
             }

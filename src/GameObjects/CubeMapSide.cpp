@@ -9,6 +9,7 @@ CubeMapSide::CubeMapSide(Vector<CubeField *> cubeFields, int width, int height, 
     for (CubeField* cubeField : this->cubeFields) {
         cubeField->setSideId(sideID);
         cubeField->setCubeMapSideRef(this);
+        cubeField->setGravityDirection(MovementDirection::moveToBigY);
     }
     this->currentGravityDirection = MovementDirection::moveToBigY;
 }
