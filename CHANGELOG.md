@@ -1,12 +1,13 @@
 # Für Vorlesung 2022/12/07
 - implement "hit wall" sound
 - player animation for moving left and right
-- Gravity working
-- PressurePlates & Sliders working
+- Gravity working for Stones
+- PressurePlates & Sliders working. Internally, PressurePlates and Sliders are connected by the same id. A Slider must have a "movement direction if activated" (passed into the constructor)
 - PressurePlates can be activated by: Player, Magnets, Stones
-- Grabbing a Magnet by pressing "Shift" working
+- Grabbing a Magnet by pressing "Shift"
 - Player can move around with Magnet(s) as long as "Shift" is held
 - If Magnet hits a wall but player doesn't, then the player moves and the magnet is automatically released
+- Refactoring in [`src/data/LevelLoader.cpp`](src/data/LevelLoader.cpp) to adjust the code to the new constructors
 
 # Für Vorlesung 2022/11/30
 - update [`src/States/Level.cpp`](src/States/Level.cpp) rendering Method to use frame-buffers (render ui und game into separate texures und render buffered frames then to the window)
