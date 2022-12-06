@@ -24,7 +24,7 @@ public:
     explicit CubeField(int sideId, int x, int y, const Vector<CubeObject *>& cubeObjects = Vector<CubeObject*>());
     
     virtual void HandleEvent(CubeGame &game, u32 frame, u32 totalMSec, float deltaT, Event event) {};
-    virtual void Update(CubeGame &game, u32 frame, u32 totalMSec, float deltaT);
+    void Update(CubeGame &game, u32 frame, u32 totalMSec, float deltaT);
     virtual void Render(CubeGame &game, Renderer *render, Point size, Point location, u32 frame, u32 totalMSec, float deltaT);
 
     void setSideId(int sideID);
@@ -55,7 +55,6 @@ public:
     explicit EmptyField(int sideId, int x, int y, const Vector<CubeObject *>& cubeObjects = Vector<CubeObject*>());
 
     void Render(CubeGame &game, Renderer *render, Point size, Point location, u32 frame, u32 totalMSec, float deltaT) override;
-    void Update(CubeGame &game, u32 frame, u32 totalMSec, float deltaT) override;
 
     bool canPlayerEnter() override;
     bool canObjectEnter(CubeObject *cubeObject) override;
@@ -67,7 +66,6 @@ public:
     explicit Grass(int sideId, int x, int y, const Vector<CubeObject *>& cubeObjects = Vector<CubeObject*>());
     
     void Render(CubeGame &game, Renderer *render, Point size, Point location, u32 frame, u32 totalMSec, float deltaT) override;
-    void Update(CubeGame &game, u32 frame, u32 totalMSec, float deltaT) override;
     
     bool canObjectEnter(CubeObject *cubeObject) override;
 };
@@ -88,7 +86,6 @@ public:
 
     void Render(CubeGame &game, Renderer *render, Point size, Point location, u32 frame, u32 totalMSec,
                 float deltaT) override;
-    void Update(CubeGame &game, u32 frame, u32 totalMSec, float deltaT) override;
 };
 
 class Wall_2 : public Static {
@@ -97,7 +94,6 @@ public:
     explicit Wall_2(int sideId, int x, int y, const Vector<CubeObject *>& cubeObjects = Vector<CubeObject*>());
 
     void Render(CubeGame &game, Renderer *render, Point size, Point location, u32 frame, u32 totalMSec, float deltaT) override;
-    void Update(CubeGame &game, u32 frame, u32 totalMSec, float deltaT) override;
 };
 
 // ################################# PressurePlate ###################################################################################
@@ -116,7 +112,6 @@ public:
     PressurePlate(int sideId, int x, int y, int id, bool activated = false, const Vector<CubeObject *>& cubeObjects = Vector<CubeObject*>());
 
     void Render(CubeGame &game, Renderer *render, Point size, Point location, u32 frame, u32 totalMSe, float deltaT) override;
-    void Update(CubeGame &game, u32 frame, u32 totalMSec, float deltaT) override;
 
     [[nodiscard]] bool getIsActivated() const;
     [[nodiscard]] int getId() const;

@@ -104,6 +104,9 @@ void Player::deleteGrabbedMagnet(Magnet* magnet) {
 }
 
 void Player::deleteAllGrabbedMagnets() {
+    for (auto magnet : this->listGrabbedMagnets) {
+        magnet->setIsGrabbed(false);
+    }
     this->listGrabbedMagnets.erase(listGrabbedMagnets.begin(), listGrabbedMagnets.end());
 }
 

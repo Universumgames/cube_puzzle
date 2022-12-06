@@ -85,36 +85,6 @@ void CubeField::Update(CubeGame &game, u32 frame, u32 totalMSec, float deltaT) {
     }
 }
 
-void EmptyField::Update(CubeGame &game, u32 frame, u32 totalMSec, float deltaT) {
-    for (auto cubeObject : this->cubeObjects) {
-        cubeObject->Update(game, frame, totalMSec, deltaT);
-    }
-}
-
-void Wall_1::Update(CubeGame &game, u32 frame, u32 totalMSec, float deltaT) {
-    for (auto cubeObject : this->cubeObjects) {
-        cubeObject->Update(game, frame, totalMSec, deltaT);
-    }
-}
-
-void Wall_2::Update(CubeGame &game, u32 frame, u32 totalMSec, float deltaT) {
-    for (auto cubeObject : this->cubeObjects) {
-        cubeObject->Update(game, frame, totalMSec, deltaT);
-    }
-}
-
-void Grass::Update(CubeGame &game, u32 frame, u32 totalMSec, float deltaT) {
-    for (auto cubeObject : this->cubeObjects) {
-        cubeObject->Update(game, frame, totalMSec, deltaT);
-    }
-}
-
-void PressurePlate::Update(CubeGame &game, u32 frame, u32 totalMSec, float deltaT) {
-    for (auto cubeObject : this->cubeObjects) {
-        cubeObject->Update(game, frame, totalMSec, deltaT);
-    }
-}
-
 // ################################# Setter & Getter #################################################################################
 
 void CubeField::setSideId(int sideID) {
