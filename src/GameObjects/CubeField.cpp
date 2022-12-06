@@ -44,7 +44,6 @@ PressurePlate::PressurePlate(int sideId, int x, int y, int id, bool activated, c
 
 void CubeField::Render(CubeGame &game, Renderer *render, Point size, Point location, const u32 frame, const u32 totalMSec, const float deltaT) {
     Rect dst = {location.x, location.y, size.x, size.y};
-    SDL_RenderFillRect(render, &dst);
     drawSpriteBorder(game.isDebug(), render, dst);
     Point locationNew = {location.x + 10, location.y + 10};
     Point sizeNew = {size.x - 20, size.y - 20};
@@ -63,18 +62,22 @@ void EmptyField::Render(CubeGame &game, Renderer *render, Point size, Point loca
 void Grass::Render(CubeGame& game, Renderer *render, Point size, Point location, u32 frame, u32 totalMSec, float deltaT) {
     drawSprite(game.getSpriteStorage()->cubeFieldSpriteSheet, render, SPRITE_GRASS_INDEX,
                {location.x, location.y, size.x, size.y}, (int) diceData->getDiceSideRotation(sideId));
+    CubeField::Render(game, render, size, location, frame, totalMSec, deltaT);
 }
 
 void Wall_1::Render(CubeGame& game, Renderer *render, Point size, Point location, u32 frame, u32 totalMSec, float deltaT) {
     drawSprite(game.getSpriteStorage()->cubeFieldSpriteSheet, render, SPRITE_WALL1_INDEX, {location.x, location.y, size.x, size.y}, (int)diceData->getDiceSideRotation(sideId));
+    CubeField::Render(game, render, size, location, frame, totalMSec, deltaT);
 }
 
 void Wall_2::Render(CubeGame& game, Renderer *render, Point size, Point location, u32 frame, u32 totalMSec, float deltaT) {
     drawSprite(game.getSpriteStorage()->cubeFieldSpriteSheet, render, SPRITE_WALL2_INDEX, {location.x, location.y, size.x, size.y}, (int)diceData->getDiceSideRotation(sideId));
+    CubeField::Render(game, render, size, location, frame, totalMSec, deltaT);
 }
 
 void PressurePlate::Render(CubeGame& game, Renderer *render, Point size, Point location, u32 frame, u32 totalMSec, float deltaT) {
-    drawSprite(game.getSpriteStorage()->cubeFieldSpriteSheet, render, SPRITE_PRESSURE_PLATE_INDEX, {location.x, location.y, size.x, size.y}/*, (int)diceData->getDiceSideRotation(sideId)*/);
+    drawSprite(game.getSpriteStorage()->cubeFieldSpriteSheet, render, SPRITE_PRESSURE_PLATE_INDEX, {location.x, location.y, size.x, size.y});
+    CubeField::Render(game, render, size, location, frame, totalMSec, deltaT);
 }
 
 // ################################# HandleEvent und Update-Methoden #################################################################
