@@ -187,7 +187,7 @@ Rect Level::getUIRenderDst() {
     return {offset.x, offset.y, s, s};
 }
 
-void Level::returnToLevelSelector(ExitState exitState = ExitState::CANCELLED) {
+void Level::returnToLevelSelector(ExitState exitState) {
     cubeGame.interGameStateData = {.sourceStateID = (int) levelData.allStatesIndex, .exitState = exitState};
     cubeGame.returnToLevelSelector();
 }

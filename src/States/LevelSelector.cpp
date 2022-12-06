@@ -168,12 +168,14 @@ void LevelSelector::UnInit() {
 
 void LevelSelector::playLevel(const LevelData &level) {
     game.SetNextState(level.allStatesIndex);
+    long index = std::find(levelData.begin(), levelData.end(), level) - levelData.begin();
+    selectorIndex = (int) index;
 }
 
 void LevelSelector::playLevel(int levelId) {
     for (const auto &level: this->levelData) {
         if (levelId == level.id) {
-            game.SetNextState(level.allStatesIndex);
+            playLevel(level);
         }
     }
 }

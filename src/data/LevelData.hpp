@@ -21,4 +21,8 @@ struct LevelData {
     static bool sort(const LevelData& d1, const LevelData& d2){
         return d1.id < d2.id;
     }
+
+    friend bool operator==(const LevelData rhs, const LevelData lhs){
+        return rhs.id == lhs.id;
+    }
 };
