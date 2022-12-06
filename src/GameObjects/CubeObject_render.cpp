@@ -18,18 +18,28 @@ void Stone::Render(CubeGame& game, Renderer *render, Point size, Point location,
 }
 
 void Slider::Render(CubeGame& game, Renderer *render, Point size, Point location, u32 frame, u32 totalMSec, float deltaT) {
+    DiceSideRotation rotation = diceData->getDiceSideRotation(sideId);
+
     // TODO implement rotated rendering depending on orientation of slider
+    Point imageIndex = {};
     switch(currentMovementDirection) {
         case MovementDirection::moveToBigX:
+            imageIndex = SPRITE_SLIDER_RIGHT_INDEX;
             break;
         case MovementDirection::moveToSmallX:
+            imageIndex = SPRITE_SLIDER_LEFT_INDEX;
             break;
         case MovementDirection::moveToBigY:
+            imageIndex = SPRITE_SLIDER_DOWN_INDEX;
             break;
         case MovementDirection::moveToSmallY:
+            imageIndex = SPRITE_SLIDER_UP_INDEX;
+            break;
+        case MovementDirection::none:
+            imageIndex = SPRITE_SLIDER_RIGHT_INDEX;
             break;
     }
-    drawCubeObject(render, game.getSpriteStorage()->cubeObjectSpriteSheet, size, location, SPRITE_SLIDER_INDEX, diceData->getDiceSideRotation(sideId));
+    drawCubeObject(render, game.getSpriteStorage()->cubeObjectSpriteSheet, size, location, imageIndex, diceData->getDiceSideRotation(sideId));
 }
 
 void Magnet::Render(CubeGame& game, Renderer *render, Point size, Point location, u32 frame, u32 totalMSec, float deltaT) {
