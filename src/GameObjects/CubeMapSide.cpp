@@ -175,6 +175,9 @@ Vector<Magnet*> CubeMapSide::getAllMagnetsSurroundingPlayer(int playerPosX, int 
     for (auto anyCubeField : listCubeFields) {
         Magnet* magnet = anyCubeField->getMagnetIfPresent();
         if (magnet != nullptr) {
+            if (magnet->getIsGrabbed()) {
+                return {};
+            }
             listMagnets.push_back(magnet);
         }
     }
