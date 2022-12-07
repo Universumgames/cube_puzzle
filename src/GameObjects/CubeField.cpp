@@ -60,7 +60,7 @@ void EmptyField::Render(CubeGame &game, Renderer *render, Point size, Point loca
 }
 
 void ObjectBarrier::Render(CubeGame& game, Renderer *render, Point size, Point location, u32 frame, u32 totalMSec, float deltaT) {
-    drawSprite(game.getSpriteStorage()->cubeFieldSpriteSheet, render, SPRITE_GRASS_INDEX,
+    drawSprite(game.getSpriteStorage()->cubeFieldSpriteSheet, render, SPRITE_OBJECTBLOCKER_INDEX,
                {location.x, location.y, size.x, size.y});
     CubeField::Render(game, render, size, location, frame, totalMSec, deltaT);
 }
