@@ -9,12 +9,14 @@ Stone::Stone() {
     this->type = CubeObject::ObjectType::typeStone;
 }
 
-Slider::Slider(MovementDirection direction, int id, bool activated) {
-    this->directionIfActivated = direction;
+Slider::Slider(MovementDirection movementDirectionIfActivated, int id, bool activated) {
+    this->directionIfActivated = movementDirectionIfActivated;
     this->id = id;
     this->isActivated = activated;
     if (this->isActivated) {
-        this->currentMovementDirection = direction;
+        this->currentMovementDirection = movementDirectionIfActivated;
+    } else {
+        this->currentMovementDirection = getOppositeMovementDirection(movementDirectionIfActivated);
     }
     this->type = CubeObject::ObjectType::typeSlider;
     this->lastMovementCountdown = OBJECT_MOVEMENT_COUNTDOWN_MILLIS / 1000.0;

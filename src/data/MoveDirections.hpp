@@ -32,3 +32,18 @@ enum class MovementDirection {
     moveToSmallY,
     none
 };
+
+inline MovementDirection getOppositeMovementDirection(MovementDirection dir) {
+    switch (dir) {
+        case MovementDirection::moveToBigY:
+            return MovementDirection::moveToSmallY;
+        case MovementDirection::moveToSmallY:
+            return MovementDirection::moveToBigY;
+        case MovementDirection::moveToBigX:
+            return MovementDirection::moveToSmallX;
+        case MovementDirection::moveToSmallX:
+            return MovementDirection::moveToBigX;
+        default:
+            return MovementDirection::none;
+    }
+}

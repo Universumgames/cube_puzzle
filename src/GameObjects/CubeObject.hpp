@@ -82,7 +82,7 @@ private:
     
 public:
     Slider() = delete;
-    explicit Slider(MovementDirection movementDirectionEnum, int id, bool activated = false);
+    explicit Slider(MovementDirection movementDirectionIfActivated, int id, bool activated = false);
     
     void Render(CubeGame &game, Renderer *render, Point size, Point location, u32 frame, u32 totalMSec, float deltaT) override;
     

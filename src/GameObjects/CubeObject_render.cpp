@@ -39,7 +39,7 @@ void Slider::Render(CubeGame& game, Renderer *render, Point size, Point location
             imageIndex = SPRITE_SLIDER_RIGHT_INDEX;
             break;
     }
-    drawCubeObject(render, game.getSpriteStorage()->cubeObjectSpriteSheet, size, location, imageIndex, diceData->getDiceSideRotation(sideId));
+    drawCubeObject(render, game.getSpriteStorage()->cubeObjectSpriteSheet, size, location, imageIndex, rotation);
 }
 
 void Magnet::Render(CubeGame& game, Renderer *render, Point size, Point location, u32 frame, u32 totalMSec, float deltaT) {
@@ -47,7 +47,7 @@ void Magnet::Render(CubeGame& game, Renderer *render, Point size, Point location
 }
 
 void Flag::Render(CubeGame& game, Renderer *render, Point size, Point location, u32 frame, u32 totalMSec, float deltaT) {
-    //Flag should always be render upright
+    //Flag should always be rendered upright
     drawCubeObject(render, game.getSpriteStorage()->cubeObjectSpriteSheet, size, location, SPRITE_FLAG_INDEX, DiceSideRotation::UP);
 }
 
