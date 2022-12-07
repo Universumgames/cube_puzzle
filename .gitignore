@@ -13,3 +13,4 @@ SDL2_mixer-2.6.2
 cmake-build-release
 cmake-build-relwithdebinfo
 xcode
+temp*
