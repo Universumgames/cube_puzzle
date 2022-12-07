@@ -27,7 +27,6 @@ void Slider::HandleEvent(CubeGame &game, u32 frame, u32 totalMSec, float deltaT,
     const Keysym &what_key = event.key.keysym;
     if (what_key.scancode == SDL_SCANCODE_G && (event.type == SDL_KEYUP || event.type == SDL_KEYDOWN)) {
         sliderRenderMethod = event.type == SDL_KEYUP;
-        cout << sliderRenderMethod;
     }
 }
 
