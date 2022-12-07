@@ -24,7 +24,7 @@ Stone::Render(CubeGame &game, Renderer *render, Point size, Point location, u32 
     drawCubeObject(render, game.getSpriteStorage()->cubeObjectSpriteSheet, size, location, SPRITE_STONE_INDEX);
 }
 
-bool sliderRenderMethod = false;
+bool sliderRenderMethod = true;
 
 void Slider::HandleEvent(CubeGame &game, u32 frame, u32 totalMSec, float deltaT, Event event) {
     const Keysym &what_key = event.key.keysym;
