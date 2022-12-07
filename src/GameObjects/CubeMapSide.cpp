@@ -151,6 +151,7 @@ CubeField* CubeMapSide::getField(Point pos) {
 }
 
 int CubeMapSide::getIndex(int x, int y) const {
+    if(x < 0 || y < 0) return -1;
     return y * width + x;
 }
 
