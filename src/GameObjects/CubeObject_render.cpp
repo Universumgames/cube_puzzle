@@ -8,6 +8,10 @@ void drawCubeObject(Renderer *render, Texture *sheet, Point size, Point location
     drawSprite(sheet, render, imageIndex, {location.x, location.y, size.x, size.y}, (int) rotation);
 }
 
+void drawCubeObject(Renderer *render, Texture *sheet, Point size, Point location, Point imageIndex) {
+    drawSprite(sheet, render, imageIndex, {location.x, location.y, size.x, size.y});
+}
+
 void CubeObject::Render(CubeGame &game, Renderer *render, Point size, Point location, u32 frame, u32 totalMSec,
                         float deltaT) {
     Rect dst = {location.x, location.y, size.x, size.y};
@@ -17,8 +21,7 @@ void CubeObject::Render(CubeGame &game, Renderer *render, Point size, Point loca
 
 void
 Stone::Render(CubeGame &game, Renderer *render, Point size, Point location, u32 frame, u32 totalMSec, float deltaT) {
-    drawCubeObject(render, game.getSpriteStorage()->cubeObjectSpriteSheet, size, location, SPRITE_STONE_INDEX,
-                   diceData->getDiceSideRotation(sideId));
+    drawCubeObject(render, game.getSpriteStorage()->cubeObjectSpriteSheet, size, location, SPRITE_STONE_INDEX);
 }
 
 bool sliderRenderMethod = false;
@@ -77,8 +80,7 @@ Slider::Render(CubeGame &game, Renderer *render, Point size, Point location, u32
 
 void
 Magnet::Render(CubeGame &game, Renderer *render, Point size, Point location, u32 frame, u32 totalMSec, float deltaT) {
-    drawCubeObject(render, game.getSpriteStorage()->cubeObjectSpriteSheet, size, location, SPRITE_MAGNET_INDEX,
-                   diceData->getDiceSideRotation(sideId));
+    drawCubeObject(render, game.getSpriteStorage()->cubeObjectSpriteSheet, size, location, SPRITE_MAGNET_INDEX);
 }
 
 void
