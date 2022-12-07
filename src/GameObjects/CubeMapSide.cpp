@@ -142,7 +142,7 @@ CubeMap* CubeMapSide::getCubeMapRef() {
 }
 
 CubeField* CubeMapSide::getField(int x, int y) {
-    if(getIndex(x,y) > cubeFields.size()) return nullptr;
+    if(getIndex(x,y) < 0 || getIndex(x,y) >= cubeFields.size()) return nullptr;
     return this->cubeFields[getIndex(x, y)];
 }
 
