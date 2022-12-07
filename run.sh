@@ -1,4 +1,6 @@
+mkdir -p build
 cd build
 cmake ../
 cmake --build .
-./bin/cube_puzzle
+cd bin
+./cube_puzzle
