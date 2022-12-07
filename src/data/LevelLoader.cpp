@@ -114,6 +114,9 @@ LevelLoader::LoadedLevelData LevelLoader::loadLevel(const std::string &path)
                     vec_temp.push_back(new Stone());
                     temp = new EmptyField(sideID, x, y, vec_temp);
                     break;
+                case 11:
+                    temp = new ObjectBarrier(sideID, x, y);
+                    break;
                 default:
                     temp = new EmptyField(sideID, x, y);
                     break;

@@ -19,7 +19,7 @@ CubeField::CubeField(int sideId, int x, int y, const Vector<CubeObject *>& cubeO
 EmptyField::EmptyField(int sideId, int x, int y, const Vector<CubeObject *>& cubeObjects)
         : CubeField(sideId, x, y, cubeObjects) {}
 
-Grass::Grass(int sideId, int x, int y, const Vector<CubeObject *>& cubeObjects)
+ObjectBarrier::ObjectBarrier(int sideId, int x, int y, const Vector<CubeObject *>& cubeObjects)
         : EmptyField(sideId, x, y, cubeObjects) {}
 
 Static::Static(int sideId, int x, int y, const Vector<CubeObject *>& cubeObjects)
@@ -59,7 +59,7 @@ void EmptyField::Render(CubeGame &game, Renderer *render, Point size, Point loca
     CubeField::Render(game, render, size, location, frame, totalMSec, deltaT);
 }
 
-void Grass::Render(CubeGame& game, Renderer *render, Point size, Point location, u32 frame, u32 totalMSec, float deltaT) {
+void ObjectBarrier::Render(CubeGame& game, Renderer *render, Point size, Point location, u32 frame, u32 totalMSec, float deltaT) {
     drawSprite(game.getSpriteStorage()->cubeFieldSpriteSheet, render, SPRITE_GRASS_INDEX,
                {location.x, location.y, size.x, size.y});
     CubeField::Render(game, render, size, location, frame, totalMSec, deltaT);
@@ -194,7 +194,7 @@ bool Static::canObjectEnter(CubeObject *cubeObject) {
     return false;
 }
 
-bool Grass::canObjectEnter(CubeObject *cubeObject) {
+bool ObjectBarrier::canObjectEnter(CubeObject *cubeObject) {
     return false;
 }
 

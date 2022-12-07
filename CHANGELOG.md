@@ -21,7 +21,7 @@
 - some objects that were CubeFields before are now CubeObjects: GravityObjects (FallingStone and RestingStone) and Slider.
 - every CubeField now has a <code>Vector<CubeObject *></code>, where all the objects currently positioned on that field can be stored. The constructor of CubeField has been overloaded to accept a <code>Vector<CubeObject *>&</code>.
 - the CubeObjects available as of now are: Slider, RestingMagnet, MovingMagnet (which is intended to moves with the player), RestingStone, FallingStone, Flag.
-- the CubeFields available as of now are: EmptyField, Wall_1, Wall_2, Grass, PressurePlate.
+- the CubeFields available as of now are: EmptyField, Wall_1, Wall_2, ObjectBarrier, PressurePlate.
 - implement inter game state routing for finishing levels and loading next
 - implement level selector
 
