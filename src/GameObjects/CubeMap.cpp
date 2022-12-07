@@ -63,7 +63,7 @@ void CubeMap::Update(const u32 frame, const u32 totalMSec, const float deltaT) {
     debugDiceData->changeText("DiceSides: n" + std::to_string(diceData.getSide(DiceSide::NORTH)) + " ,w" +
                               std::to_string(diceData.getSide(DiceSide::WEST)) + " , u" +
                               std::to_string(diceData.getSide(DiceSide::TOP)));
-    getCurrentSide()->Update(game, BASIC_GO_DATA_PASSTHROUGH);
+    if(!isSideTransitionAnimationInProgress) getCurrentSide()->Update(game, BASIC_GO_DATA_PASSTHROUGH);
 
     miniMap->Update(BASIC_GO_DATA_PASSTHROUGH);
     if (!isSideTransitionAnimationInProgress) {
