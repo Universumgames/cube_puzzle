@@ -56,6 +56,8 @@ public:
 
     Rect getDrawedRect() const;
 
+    void setMaxWidth(int maxWidth);
+
 private:
     /// regenerate texture
     void reloadTexture();

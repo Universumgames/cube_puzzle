@@ -51,16 +51,23 @@ private:
 
     void prepareLevelListItems();
 
-    void prepareLevelListItemTexture(LevelData& leveldata, Rect drawableRect);
+    void prepareLevelListItemTexture(LevelData& leveldata, Point drawableRect);
+
+    Point getLevelSelectSize();
+
+    Rect getDrawableUISpace();
+
+    Rect getListSpace();
+
+    Rect getSideBarSpace(int topPadding);
     
 private:
     Point oldSize;
     int selectorIndex = 0;
-    int columns = 2;
-    int rows = 6;
     Vector<LevelData> levelData;
     bool levelsLoaded = false;
-    Text *text;
+    Text *debugText;
+    Text* sideBarText;
     Text* headline;
 };
 

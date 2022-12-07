@@ -21,7 +21,7 @@ class GameStateData;
 enum class ExitState;
 
 /// Level handler, create new object for every level
-class Level final : public ComplexGameState {
+class Level : public ComplexGameState {
 public:
     Level(CubeGame &game, Renderer *render);
 

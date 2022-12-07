@@ -26,11 +26,11 @@ void LevelSelector::Events(const u32 frame, const u32 totalMSec, const float del
             }
 
             // navigation in selector
-            if (what_key.scancode == SDL_SCANCODE_RIGHT) {
+            /*if (what_key.scancode == SDL_SCANCODE_RIGHT) {
                 selectorIndex = (selectorIndex + rows) % (int) levelData.size();
             } else if (what_key.scancode == SDL_SCANCODE_LEFT) {
                 selectorIndex = (selectorIndex + 2 * rows) % (int) levelData.size();
-            } else if (what_key.scancode == SDL_SCANCODE_UP) {
+            } else */if (what_key.scancode == SDL_SCANCODE_UP) {
                 selectorIndex--;
             } else if (what_key.scancode == SDL_SCANCODE_DOWN) {
                 selectorIndex++;
@@ -43,7 +43,7 @@ void LevelSelector::Events(const u32 frame, const u32 totalMSec, const float del
 }
 
 void LevelSelector::Update(const u32 frame, const u32 totalMSec, const float deltaT) {
-    text->setEnabled(cubeGame.isDebug());
+    debugText->setEnabled(cubeGame.isDebug());
     drawList();
     if (oldSize != game.getWindowSize()) {
         prepareLevelListItems();
@@ -60,35 +60,35 @@ void LevelSelector::Render(const u32 frame, const u32 totalMSec, const float del
 
     int padding = 10;
 
-    Point listStartPoint = {0, 0};
-    Rect drawableUISpace = centerIn(addPadding(getDrawableUIRect(), 20), getDrawableUIRect());
-    drawableUISpace.y += headline->getDrawedRect().y + headline->getDrawedRect().h + padding;
-    drawableUISpace.h -= headline->getDrawedRect().y + headline->getDrawedRect().h + padding;
-    Point usedListStartPoint = {listStartPoint.x + drawableUISpace.x, listStartPoint.y + drawableUISpace.y};
-    int selectWidth = max(drawableUISpace.w / 2, 100);
-    int selectHeight = max(drawableUISpace.h / 6, 50);
-    rows = drawableUISpace.h / selectHeight;
-    selectHeight = (drawableUISpace.h - (rows - 1) * padding) / rows;
-    columns = 2;
+    Rect drawableListSpace = getListSpace();
+    drawableListSpace.y += headline->getDrawedRect().y + headline->getDrawedRect().h + padding;
+    drawableListSpace.h -= headline->getDrawedRect().y + headline->getDrawedRect().h + padding;
+    int selectWidth = getLevelSelectSize().x;
+    int selectHeight = getLevelSelectSize().y;
+    Point selectedPos = {drawableListSpace.x, drawableListSpace.y + drawableListSpace.h / 2 - (selectHeight / 2)};
+
+    Rect selectBorder = {selectedPos.x, selectedPos.y, selectWidth, selectHeight};
+    drawColoredFilledRect(render, Color{0, 255, 0, 255}, addPadding(selectBorder, -5));
 
     Point levelRectSize = {selectWidth, selectHeight};
-    int column = 0;
     for (int i = 0; i < levelData.size(); i++) {
-        int row = i % rows;
         Point rectStartPoint =
-                usedListStartPoint + Point{(levelRectSize.x + padding) * column, (levelRectSize.y + padding) * row};
+                selectedPos + Point{0, (levelRectSize.y + padding) * (i - selectorIndex)};
         Rect drawable = {rectStartPoint.x, rectStartPoint.y, levelRectSize.x, levelRectSize.y};
-
-        if (selectorIndex == i) {
-            drawColoredFilledRect(render, Color{0, 255, 0, 255}, addPadding(drawable, -5));
-        }
-        if (row == rows - 1) column++;
 
         SDL_RenderCopy(render, levelData[i].selectorTexture, NULL, &drawable);
     }
 
+    // draw sidebar text
+    Rect sideBarSpace = getSideBarSpace(headlineSize.y);
+    sideBarText->setMaxWidth(sideBarSpace.w);
+    Point sidebarTextSize = sideBarText->getTextSize();
+    Rect centeredSideBarTextRect = centerIn(Rect{0, 0, sidebarTextSize.x, sidebarTextSize.y}, sideBarSpace);
+    sideBarText->changePosition({centeredSideBarTextRect.x, centeredSideBarTextRect.y});
+    sideBarText->RenderUI(BASIC_GO_DATA_PASSTHROUGH);
 
-    text->RenderUI(frame, totalMSec, deltaT);
+
+    debugText->RenderUI(frame, totalMSec, deltaT);
     headline->RenderUI(BASIC_GO_DATA_PASSTHROUGH);
 
 
@@ -136,7 +136,7 @@ void LevelSelector::drawList() {
     for (const auto &level: levelData) {
         debugString += std::to_string(level.id) + ": " + level.name + "\n";
     }
-    text->changeText(debugString);
+    debugText->changeText(debugString);
 }
 
 void LevelSelector::Init() {
@@ -152,12 +152,19 @@ void LevelSelector::Init() {
         loadList();
         levelsLoaded = true;
     }
-    text = new Text(cubeGame, this, render, 500, "level selector", game.getSpriteStorage()->debugFont, {10, 10}, 1,
-                    white);
-    text->Init();
+    debugText = new Text(cubeGame, this, render, 500, "level selector", game.getSpriteStorage()->debugFont, {10, 10}, 1,
+                         white);
+    debugText->Init();
 
     headline = new Text(cubeGame, this, render, 500, "Select a level to play", game.getSpriteStorage()->basicFont, {});
     headline->Init();
+
+    sideBarText = new Text(cubeGame, this, render, 500,
+                           "Use the up/down keys to select a level\n"
+                           "Press Enter to start level\n\n"
+                           "Want to play the tutorial? Press t",
+                           game.getSpriteStorage()->basicFont, {});
+    sideBarText->Init();
 
     prepareLevelListItems();
 }
@@ -207,15 +214,15 @@ Rect LevelSelector::getUIRenderDst() {
     return getDrawableUIRect();
 }
 
-void LevelSelector::prepareLevelListItemTexture(LevelData &leveldata, Rect drawableRect) {
+void LevelSelector::prepareLevelListItemTexture(LevelData &leveldata, Point drawableRect) {
     if (leveldata.selectorTexture == nullptr) SDL_DestroyTexture(leveldata.selectorTexture);
     leveldata.selectorTexture = SDL_CreateTexture(render, SDL_PIXELFORMAT_ARGB8888,
-                                                  SDL_TEXTUREACCESS_TARGET, drawableRect.w, drawableRect.h);
+                                                  SDL_TEXTUREACCESS_TARGET, drawableRect.x, drawableRect.y);
     Texture *oldTarget = SDL_GetRenderTarget(render);
     SDL_SetRenderTarget(render, leveldata.selectorTexture);
     SDL_SetRenderDrawColor(render, 40, 40, 40, 255);
     SDL_RenderClear(render);
-    Text *t = new Text(cubeGame, this, render, drawableRect.w - 10 * 2, "", cubeGame.spriteStorage.basicFont, {10, 10});
+    Text *t = new Text(cubeGame, this, render, drawableRect.x - 10 * 2, "", cubeGame.spriteStorage.basicFont, {10, 10});
     t->changeText(std::to_string(leveldata.id) + ". Level \n " + leveldata.name);
     t->setDebug(false);
     t->RenderUI(0, 0, 0);
@@ -224,19 +231,32 @@ void LevelSelector::prepareLevelListItemTexture(LevelData &leveldata, Rect drawa
 }
 
 void LevelSelector::prepareLevelListItems() {
-    int padding = 10;
+    Point levelRectSize = getLevelSelectSize();
 
-    Point listStartPoint = {0, 0};
-    Rect drawableUISpace = centerIn(addPadding(getDrawableUIRect(), 20), getDrawableUIRect());
-    Point usedListStartPoint = {listStartPoint.x + drawableUISpace.x, listStartPoint.y + drawableUISpace.y};
-    Point levelRectSize = {max(100, drawableUISpace.w / columns), max(50, drawableUISpace.h / rows)};
-
-    for (int i = 0; i < levelData.size(); i++) {
-        int row = i % rows, column = i / columns;
-        Point rectStartPoint =
-                usedListStartPoint + Point{(levelRectSize.x + padding) * column, (levelRectSize.y + padding) * row};
-        Rect drawable = {rectStartPoint.x, rectStartPoint.y, levelRectSize.x, levelRectSize.y};
-
-        prepareLevelListItemTexture(levelData[i], drawable);
+    for (auto &i: levelData) {
+        prepareLevelListItemTexture(i, levelRectSize);
     }
+}
+
+Point LevelSelector::getLevelSelectSize() {
+    Rect listSpace = getListSpace();
+    return {listSpace.w, max(listSpace.h / 10, 100)};
+}
+
+Rect LevelSelector::getListSpace() {
+    Rect drawableUISpace = getDrawableUISpace();
+    drawableUISpace.w = max(100, drawableUISpace.w / 2);
+    return drawableUISpace;
+}
+
+Rect LevelSelector::getSideBarSpace(int topPadding) {
+    Rect drawableUISpace = getDrawableUISpace();
+    Rect listSpace = getListSpace();
+    return addPadding(
+            {drawableUISpace.x + listSpace.w, drawableUISpace.y, drawableUISpace.w - listSpace.w, drawableUISpace.h},
+            topPadding, 0, 10, 0);
+}
+
+Rect LevelSelector::getDrawableUISpace() {
+    return centerIn(addPadding(getDrawableUIRect(), 20), getDrawableUIRect());
 }

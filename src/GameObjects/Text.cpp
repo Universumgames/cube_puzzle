@@ -130,3 +130,9 @@ void Text::setDebug(bool debug) {
 Rect Text::getDrawedRect() const {
     return {position.x, position.y, blendedTextSize.x, blendedTextSize.y};
 }
+
+void Text::setMaxWidth(int maxWidth) {
+    if(this->maxWidth == maxWidth) return;
+    this->maxWidth = maxWidth;
+    reloadTexture();
+}
