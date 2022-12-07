@@ -162,13 +162,13 @@ Point CubeMapSide::getFieldSize(Rect drawableRect) const {
 Vector<Magnet*> CubeMapSide::getAllMagnetsSurroundingPlayer(int playerPosX, int playerPosY) {
     Vector<Magnet*> listMagnets;
     Vector<CubeField*> listCubeFields;
-    if (playerPosX <= this->width - 1) {
+    if (playerPosX + 1 < this->width - 1) {
         listCubeFields.push_back(getField(playerPosX + 1, playerPosY));
     }
     if (playerPosX > 0) {
         listCubeFields.push_back(getField(playerPosX - 1, playerPosY));
     }
-    if (playerPosY <= this->height - 1) {
+    if (playerPosY + 1< this->height - 1) {
         listCubeFields.push_back(getField(playerPosX, playerPosY + 1));
     }
     if (playerPosY > 0) {

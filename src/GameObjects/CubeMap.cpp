@@ -52,6 +52,7 @@ void CubeMap::HandleEvent(const u32 frame, const u32 totalMSec, const float delt
 
     }
     miniMap->HandleEvent(BASIC_GO_DATA_PASSTHROUGH, event);
+    getCurrentSide()->HandleEvent(game, BASIC_GO_DATA_PASSTHROUGH, event);
 }
 
 void CubeMap::Update(const u32 frame, const u32 totalMSec, const float deltaT) {

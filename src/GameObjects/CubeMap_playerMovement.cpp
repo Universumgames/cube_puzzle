@@ -39,6 +39,7 @@ bool CubeMap::movePlayer(PlayerMoveDirection dir, const Vector<Magnet*>& listGra
         currentSideId = oldSideId;
         return false;
     }
+    bool rollbackPlayerMovement = false;
     if (newPlayerPos.x != this->playerPos.x || newPlayerPos.y != this->playerPos.y) {
         if (newPlayerPos.x > this->playerPos.x) {
             for (auto magnet : listGrabbedMagnets) {
@@ -57,9 +58,14 @@ bool CubeMap::movePlayer(PlayerMoveDirection dir, const Vector<Magnet*>& listGra
                 magnet->move(MovementDirection::moveToSmallY);
             }
         }
-        this->playerPos = newPlayerPos;
-        doLevelFinishedLogic();
-        return true;
+        if (!getCurrentSide()->getField(newPlayerPos)->canPlayerEnter()) {
+            rollbackPlayerMovement = true;
+        }
+        if (!rollbackPlayerMovement) {
+            this->playerPos = newPlayerPos;
+            doLevelFinishedLogic();
+            return true;
+        }
     }
     return false;
 }

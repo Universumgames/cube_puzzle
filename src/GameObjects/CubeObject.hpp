@@ -85,7 +85,9 @@ public:
     explicit Slider(MovementDirection movementDirectionIfActivated, int id, bool activated = false);
     
     void Render(CubeGame &game, Renderer *render, Point size, Point location, u32 frame, u32 totalMSec, float deltaT) override;
-    
+
+    void HandleEvent(CubeGame &game, u32 frame, u32 totalMSec, float deltaT, Event event) override;
+
     [[nodiscard]] int getId() const;
     
     [[nodiscard]] bool canPlayerEnter() override;
@@ -108,7 +110,7 @@ private:
 public:
     Magnet();
     void Render(CubeGame &game, Renderer *render, Point size, Point location, u32 frame, u32 totalMSec, float deltaT) override;
-    
+
     void setIsGrabbed(bool isGrabbed);
     [[nodiscard]] bool getIsGrabbed() const;
     

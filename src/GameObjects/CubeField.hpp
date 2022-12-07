@@ -23,7 +23,7 @@ public:
     CubeField() = delete;
     explicit CubeField(int sideId, int x, int y, const Vector<CubeObject *>& cubeObjects = Vector<CubeObject*>());
     
-    virtual void HandleEvent(CubeGame &game, u32 frame, u32 totalMSec, float deltaT, Event event) {};
+    virtual void HandleEvent(CubeGame &game, u32 frame, u32 totalMSec, float deltaT, Event event);
     void Update(CubeGame &game, u32 frame, u32 totalMSec, float deltaT);
     virtual void Render(CubeGame &game, Renderer *render, Point size, Point location, u32 frame, u32 totalMSec, float deltaT);
 

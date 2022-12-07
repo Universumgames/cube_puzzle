@@ -274,6 +274,12 @@ int CubeField::leave() {
     return -1;
 }
 
+void CubeField::HandleEvent(CubeGame &game, u32 frame, u32 totalMSec, float deltaT, Event event) {
+    for(CubeObject *field: cubeObjects){
+        field->HandleEvent(game, BASIC_GO_DATA_PASSTHROUGH, event);
+    }
+}
+
 int PressurePlate::leave() {
     if (!this->isActivated) {
         return -1;
