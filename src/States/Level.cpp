@@ -76,7 +76,8 @@ void Level::Init() {
     gameObjects.push_back(player);
     gameObjects.push_back(text);
     iterateGameObjects(Init())
-    //game.SetPerfDrawMode(Game::PerformanceDrawMode::Title);
+    game.SetPerfDrawMode(Game::PerformanceDrawMode::None);
+    cubeGame.setWindowName("Level " + std::to_string(levelData.id) + " " + levelData.name);
     oldSize = {};
     updateTextures();
 }

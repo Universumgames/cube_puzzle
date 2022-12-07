@@ -41,6 +41,8 @@ public:
     /// set gamestate data for next gamestate to load
     GameStateData interGameStateData;
 
+    void setWindowName(std::string windowName);
+
 private:
     SpriteStorage spriteStorage;
 

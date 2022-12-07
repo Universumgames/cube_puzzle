@@ -8,7 +8,7 @@
 - Player can move around with Magnet(s) as long as "Shift" is held
 - If Magnet hits a wall but player doesn't, then the player moves and the magnet is automatically released
 - Refactoring in [`src/data/LevelLoader.cpp`](src/data/LevelLoader.cpp) to adjust the code to the new constructors
-- Hold "g" (or not) to switch between different slider display styles (arrow direction changes or doesn't change, depending on "g" key)
+- fix Wall rendering
 
 # Für Vorlesung 2022/11/30
 - update [`src/States/Level.cpp`](src/States/Level.cpp) rendering Method to use frame-buffers (render ui und game into separate texures und render buffered frames then to the window)
