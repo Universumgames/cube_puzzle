@@ -95,3 +95,7 @@ Point CubeGame::getCurrentRenderTargetSize() {
 void CubeGame::returnToLevelSelector() {
     SetNextState(0);
 }
+
+void CubeGame::setWindowName(std::string windowName) {
+    SDL_SetWindowTitle(window, windowName.c_str());
+}
