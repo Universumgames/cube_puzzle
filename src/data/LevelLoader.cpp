@@ -82,10 +82,10 @@ LevelLoader::LoadedLevelData LevelLoader::loadLevel(const std::string &path)
                     temp = new EmptyField(sideID, x, y, vec_temp);
                     break;
                 case 2:
-                    temp = new Wall_1(sideID, x, y);
+                    temp = new Wall(sideID, x, y);
                     break;
                 case 3:
-                    temp = new Wall_2(sideID, x, y);
+                    temp = new Wall(sideID, x, y);
                     break;
                 case 4:
                     temp = new PressurePlate(sideID, x, y, 1);

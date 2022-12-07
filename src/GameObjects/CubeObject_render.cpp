@@ -24,14 +24,6 @@ Stone::Render(CubeGame &game, Renderer *render, Point size, Point location, u32 
     drawCubeObject(render, game.getSpriteStorage()->cubeObjectSpriteSheet, size, location, SPRITE_STONE_INDEX);
 }
 
-bool sliderRenderMethod = true;
-
-void Slider::HandleEvent(CubeGame &game, u32 frame, u32 totalMSec, float deltaT, Event event) {
-    const Keysym &what_key = event.key.keysym;
-    if (what_key.scancode == SDL_SCANCODE_G && (event.type == SDL_KEYUP || event.type == SDL_KEYDOWN)) {
-        sliderRenderMethod = event.type == SDL_KEYUP;
-    }
-}
 
 void
 Slider::Render(CubeGame &game, Renderer *render, Point size, Point location, u32 frame, u32 totalMSec, float deltaT) {
@@ -39,7 +31,7 @@ Slider::Render(CubeGame &game, Renderer *render, Point size, Point location, u32
 
     // TODO implement rotated rendering depending on orientation of slider
     Point imageIndex = {};
-    switch (currentMovementDirection) {
+    switch (directionIfActivated) {
         case MovementDirection::moveToBigX:
             imageIndex = SPRITE_SLIDER_RIGHT_INDEX;
             break;
@@ -55,25 +47,6 @@ Slider::Render(CubeGame &game, Renderer *render, Point size, Point location, u32
         case MovementDirection::none:
             imageIndex = SPRITE_SLIDER_RIGHT_INDEX;
             break;
-    }
-    if (sliderRenderMethod) {
-        switch (directionIfActivated) {
-            case MovementDirection::moveToBigX:
-                imageIndex = SPRITE_SLIDER_RIGHT_INDEX;
-                break;
-            case MovementDirection::moveToSmallX:
-                imageIndex = SPRITE_SLIDER_LEFT_INDEX;
-                break;
-            case MovementDirection::moveToBigY:
-                imageIndex = SPRITE_SLIDER_DOWN_INDEX;
-                break;
-            case MovementDirection::moveToSmallY:
-                imageIndex = SPRITE_SLIDER_UP_INDEX;
-                break;
-            case MovementDirection::none:
-                imageIndex = SPRITE_SLIDER_RIGHT_INDEX;
-                break;
-        }
     }
     drawCubeObject(render, game.getSpriteStorage()->cubeObjectSpriteSheet, size, location, imageIndex, rotation);
 }

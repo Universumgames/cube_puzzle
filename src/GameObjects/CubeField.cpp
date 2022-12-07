@@ -6,7 +6,7 @@
 
 // ################################# Konstruktoren ###################################################################################
 
-CubeField::CubeField(int sideId, int x, int y, const Vector<CubeObject *>& cubeObjects) {
+CubeField::CubeField(int sideId, int x, int y, const Vector<CubeObject *> &cubeObjects) {
     this->sideId = sideId;
     this->cubeObjects = cubeObjects;
     this->x = x;
@@ -16,74 +16,92 @@ CubeField::CubeField(int sideId, int x, int y, const Vector<CubeObject *>& cubeO
     }
 }
 
-EmptyField::EmptyField(int sideId, int x, int y, const Vector<CubeObject *>& cubeObjects)
+EmptyField::EmptyField(int sideId, int x, int y, const Vector<CubeObject *> &cubeObjects)
         : CubeField(sideId, x, y, cubeObjects) {}
 
-ObjectBarrier::ObjectBarrier(int sideId, int x, int y, const Vector<CubeObject *>& cubeObjects)
+ObjectBarrier::ObjectBarrier(int sideId, int x, int y, const Vector<CubeObject *> &cubeObjects)
         : EmptyField(sideId, x, y, cubeObjects) {}
 
-Static::Static(int sideId, int x, int y, const Vector<CubeObject *>& cubeObjects)
+Static::Static(int sideId, int x, int y, const Vector<CubeObject *> &cubeObjects)
         : CubeField(sideId, x, y, cubeObjects) {}
 
-Wall_1::Wall_1(int sideId, int x, int y, const Vector<CubeObject *>& cubeObjects)
+Wall::Wall(int sideId, int x, int y, const Vector<CubeObject *> &cubeObjects)
         : Static(sideId, x, y, cubeObjects) {}
 
-Wall_2::Wall_2(int sideId, int x, int y, const Vector<CubeObject *>& cubeObjects)
-    : Static(sideId, x, y, cubeObjects) {}
-    
-Interactable::Interactable(int sideId, int x, int y, const Vector<CubeObject *>& cubeObjects)
-    : CubeField(sideId, x, y, cubeObjects) {}
+Interactable::Interactable(int sideId, int x, int y, const Vector<CubeObject *> &cubeObjects)
+        : CubeField(sideId, x, y, cubeObjects) {}
 
-PressurePlate::PressurePlate(int sideId, int x, int y, int id, bool activated, const Vector<CubeObject *>& cubeObjects)
-    : Interactable(sideId, x, y, cubeObjects) {
+PressurePlate::PressurePlate(int sideId, int x, int y, int id, bool activated, const Vector<CubeObject *> &cubeObjects)
+        : Interactable(sideId, x, y, cubeObjects) {
     this->id = id;
     this->isActivated = activated;
 }
 
 // ################################# Alle Render-Methoden ############################################################################
 
-void CubeField::Render(CubeGame &game, Renderer *render, Point size, Point location, const u32 frame, const u32 totalMSec, const float deltaT) {
+void
+CubeField::Render(CubeGame &game, Renderer *render, Point size, Point location, const u32 frame, const u32 totalMSec,
+                  const float deltaT) {
     Rect dst = {location.x, location.y, size.x, size.y};
     drawSpriteBorder(game.isDebug(), render, dst);
     Point locationNew = {location.x + 10, location.y + 10};
     Point sizeNew = {size.x - 20, size.y - 20};
-    for (CubeObject* cubeObject : this->cubeObjects) {
+    for (CubeObject *cubeObject: this->cubeObjects) {
         cubeObject->Render(game, render, sizeNew, locationNew, frame, totalMSec, deltaT);
         locationNew = {locationNew.x + 10, locationNew.y + 10};
         sizeNew = {sizeNew.x - 20, sizeNew.y - 20};
     }
 }
 
-void EmptyField::Render(CubeGame &game, Renderer *render, Point size, Point location, const u32 frame, const u32 totalMSec, const float deltaT) {
+void
+EmptyField::Render(CubeGame &game, Renderer *render, Point size, Point location, const u32 frame, const u32 totalMSec,
+                   const float deltaT) {
     SDL_SetRenderDrawColor(render, 0, 0, 0, 0);
     CubeField::Render(game, render, size, location, frame, totalMSec, deltaT);
 }
 
-void ObjectBarrier::Render(CubeGame& game, Renderer *render, Point size, Point location, u32 frame, u32 totalMSec, float deltaT) {
+void ObjectBarrier::Render(CubeGame &game, Renderer *render, Point size, Point location, u32 frame, u32 totalMSec,
+                           float deltaT) {
     drawSprite(game.getSpriteStorage()->cubeFieldSpriteSheet, render, SPRITE_OBJECTBLOCKER_INDEX,
                {location.x, location.y, size.x, size.y});
     CubeField::Render(game, render, size, location, frame, totalMSec, deltaT);
 }
 
-void Wall_1::Render(CubeGame& game, Renderer *render, Point size, Point location, u32 frame, u32 totalMSec, float deltaT) {
-    drawSprite(game.getSpriteStorage()->cubeFieldSpriteSheet, render, SPRITE_WALL1_INDEX, {location.x, location.y, size.x, size.y});
+void
+Wall::Render(CubeGame &game, Renderer *render, Point size, Point location, u32 frame, u32 totalMSec, float deltaT) {
+    Point locationToCheck = {};
+    switch (diceData->getDiceSideRotation(sideId)) {
+        case DiceSideRotation::UP:
+            locationToCheck = {x, y + 1};
+            break;
+        case DiceSideRotation::DOWN:
+            locationToCheck = {x, y - 1};
+            break;
+        case DiceSideRotation::LEFT:
+            locationToCheck = {x - 1, y};
+            break;
+        case DiceSideRotation::RIGHT:
+            locationToCheck = {x + 1, y};
+            break;
+    }
+    bool isWall1 = dynamic_cast<Wall *>(cubeMapSideRef->getField(locationToCheck.x, locationToCheck.y)) == nullptr;
+
+    drawSprite(game.getSpriteStorage()->cubeFieldSpriteSheet, render, isWall1 ? SPRITE_WALL1_INDEX : SPRITE_WALL2_INDEX,
+               {location.x, location.y, size.x, size.y});
     CubeField::Render(game, render, size, location, frame, totalMSec, deltaT);
 }
 
-void Wall_2::Render(CubeGame& game, Renderer *render, Point size, Point location, u32 frame, u32 totalMSec, float deltaT) {
-    drawSprite(game.getSpriteStorage()->cubeFieldSpriteSheet, render, SPRITE_WALL2_INDEX, {location.x, location.y, size.x, size.y});
-    CubeField::Render(game, render, size, location, frame, totalMSec, deltaT);
-}
-
-void PressurePlate::Render(CubeGame& game, Renderer *render, Point size, Point location, u32 frame, u32 totalMSec, float deltaT) {
-    drawSprite(game.getSpriteStorage()->cubeFieldSpriteSheet, render, SPRITE_PRESSURE_PLATE_INDEX, {location.x, location.y, size.x, size.y});
+void PressurePlate::Render(CubeGame &game, Renderer *render, Point size, Point location, u32 frame, u32 totalMSec,
+                           float deltaT) {
+    drawSprite(game.getSpriteStorage()->cubeFieldSpriteSheet, render, SPRITE_PRESSURE_PLATE_INDEX,
+               {location.x, location.y, size.x, size.y});
     CubeField::Render(game, render, size, location, frame, totalMSec, deltaT);
 }
 
 // ################################# HandleEvent und Update-Methoden #################################################################
 
 void CubeField::Update(CubeGame &game, u32 frame, u32 totalMSec, float deltaT) {
-    for (auto cubeObject : this->cubeObjects) {
+    for (auto cubeObject: this->cubeObjects) {
         cubeObject->Update(game, frame, totalMSec, deltaT);
     }
 }
@@ -92,31 +110,31 @@ void CubeField::Update(CubeGame &game, u32 frame, u32 totalMSec, float deltaT) {
 
 void CubeField::setSideId(int sideID) {
     this->sideId = sideID;
-    for (auto cubeObject : this->cubeObjects) {
+    for (auto cubeObject: this->cubeObjects) {
         cubeObject->setSideId(this->sideId);
     }
 }
 
-void CubeField::setDiceData(DiceData* dice_data) {
+void CubeField::setDiceData(DiceData *dice_data) {
     this->diceData = dice_data;
-    for (auto cubeObject : this->cubeObjects) {
+    for (auto cubeObject: this->cubeObjects) {
         cubeObject->setDiceData(this->diceData);
     }
 }
 
-void CubeField::setCubeMapSideRef(CubeMapSide* cube_map_side) {
+void CubeField::setCubeMapSideRef(CubeMapSide *cube_map_side) {
     this->cubeMapSideRef = cube_map_side;
 }
 
 void CubeField::setGravityDirection(MovementDirection dir) {
-    for (auto cubeObject : this->cubeObjects) {
+    for (auto cubeObject: this->cubeObjects) {
         if (cubeObject->getType() == CubeObject::ObjectType::typeStone) {
-            dynamic_cast<Stone*>(cubeObject)->setFallingDirection(dir);
+            dynamic_cast<Stone *>(cubeObject)->setFallingDirection(dir);
         }
     }
 }
 
-CubeMapSide* CubeField::getCubeMapSideRef() {
+CubeMapSide *CubeField::getCubeMapSideRef() {
     return this->cubeMapSideRef;
 }
 
@@ -132,8 +150,8 @@ int CubeField::getY() const {
     return this->y;
 }
 
-Magnet* CubeField::getMagnetIfPresent() {
-    for (auto cubeObj : this->cubeObjects) {
+Magnet *CubeField::getMagnetIfPresent() {
+    for (auto cubeObj: this->cubeObjects) {
         if (cubeObj->getType() == CubeObject::ObjectType::typeMagnet) {
             return dynamic_cast<Magnet *>(cubeObj);
         }
@@ -152,7 +170,7 @@ int PressurePlate::getId() const {
 // ################################# canPlayerEnter-Methoden #########################################################################
 
 bool EmptyField::canPlayerEnter() {
-    for (CubeObject* cubeObject : this->cubeObjects) {
+    for (CubeObject *cubeObject: this->cubeObjects) {
         if (!cubeObject->canPlayerEnter()) {
             return false;
         }
@@ -165,7 +183,7 @@ bool Static::canPlayerEnter() {
 }
 
 bool PressurePlate::canPlayerEnter() {
-    for (CubeObject* cubeObject : this->cubeObjects) {
+    for (CubeObject *cubeObject: this->cubeObjects) {
         if (!cubeObject->canPlayerEnter()) {
             return false;
         }
@@ -176,13 +194,14 @@ bool PressurePlate::canPlayerEnter() {
 // ################################# canObjectEnter-Methoden #########################################################################
 
 bool EmptyField::canObjectEnter(CubeObject *cubeObject) {
-    CubeMapSide* cubeMapSide = this->cubeMapSideRef;
-    CubeMap* cubeMap = cubeMapSide->getCubeMapRef();
+    CubeMapSide *cubeMapSide = this->cubeMapSideRef;
+    CubeMap *cubeMap = cubeMapSide->getCubeMapRef();
     Point currentPlayerPos = cubeMap->getCurrentPlayerPos();
-    if (currentPlayerPos.x == this->x && currentPlayerPos.y == this->y && cubeObject->getType() != CubeObject::ObjectType::typeMagnet) {
+    if (currentPlayerPos.x == this->x && currentPlayerPos.y == this->y &&
+        cubeObject->getType() != CubeObject::ObjectType::typeMagnet) {
         return false;
     }
-    for (auto anyCubeObject : this->cubeObjects) {
+    for (auto anyCubeObject: this->cubeObjects) {
         if (!anyCubeObject->canAnotherObjectEnter()) {
             return false;
         }
@@ -199,13 +218,14 @@ bool ObjectBarrier::canObjectEnter(CubeObject *cubeObject) {
 }
 
 bool PressurePlate::canObjectEnter(CubeObject *cubeObject) {
-    CubeMapSide* cubeMapSide = this->cubeMapSideRef;
-    CubeMap* cubeMap = cubeMapSide->getCubeMapRef();
+    CubeMapSide *cubeMapSide = this->cubeMapSideRef;
+    CubeMap *cubeMap = cubeMapSide->getCubeMapRef();
     Point currentPlayerPos = cubeMap->getCurrentPlayerPos();
-    if (currentPlayerPos.x == this->x && currentPlayerPos.y == this->y && cubeObject->getType() != CubeObject::ObjectType::typeMagnet) {
+    if (currentPlayerPos.x == this->x && currentPlayerPos.y == this->y &&
+        cubeObject->getType() != CubeObject::ObjectType::typeMagnet) {
         return false;
     }
-    for (auto anyCubeObject : this->cubeObjects) {
+    for (auto anyCubeObject: this->cubeObjects) {
         if (!anyCubeObject->canAnotherObjectEnter()) {
             return false;
         }
@@ -216,7 +236,7 @@ bool PressurePlate::canObjectEnter(CubeObject *cubeObject) {
 // ################################# sonstige Methoden ###############################################################################
 
 bool CubeField::isLevelFinishedIfEntered() {
-    for (CubeObject* cubeObject : this->cubeObjects) {
+    for (CubeObject *cubeObject: this->cubeObjects) {
         if (cubeObject->isLevelFinishedIfEntered()) {
             return true;
         }
@@ -232,19 +252,19 @@ bool PressurePlate::isPressurePlate() {
     return true;
 }
 
-void CubeField::addObject(CubeObject* cubeObject) {
+void CubeField::addObject(CubeObject *cubeObject) {
     this->cubeObjects.push_back(cubeObject);
     if (this->isPressurePlate() && cubeObject->canActivatePressurePlate()) {
-        dynamic_cast<PressurePlate*>(this)->activate();
+        dynamic_cast<PressurePlate *>(this)->activate();
     }
 }
 
-bool CubeField::removeObject(CubeObject* cubeObject) {
+bool CubeField::removeObject(CubeObject *cubeObject) {
     for (int i = 0; i < cubeObjects.size(); i++) {
         if (cubeObject->getType() == this->cubeObjects[i]->getType()) {
             this->cubeObjects.erase(this->cubeObjects.begin() + i);
             if (this->isPressurePlate() && cubeObject->canActivatePressurePlate()) {
-                dynamic_cast<PressurePlate*>(this)->deactivate();
+                dynamic_cast<PressurePlate *>(this)->deactivate();
             }
             return true;
         }
@@ -275,7 +295,7 @@ int CubeField::leave() {
 }
 
 void CubeField::HandleEvent(CubeGame &game, u32 frame, u32 totalMSec, float deltaT, Event event) {
-    for(CubeObject *field: cubeObjects){
+    for (CubeObject *field: cubeObjects) {
         field->HandleEvent(game, BASIC_GO_DATA_PASSTHROUGH, event);
     }
 }
@@ -308,13 +328,13 @@ int PressurePlate::deactivate() {
 }
 
 void PressurePlate::activateAllSlidersWithSameId() {
-    CubeMap* cubeMap = this->cubeMapSideRef->getCubeMapRef();
-    Vector<CubeMapSide*> allCubeMapSides = *cubeMap->getAllCubeMapSides();
-    for (auto anyCubeMapSide : allCubeMapSides) {
-        for (auto cubeField : anyCubeMapSide->cubeFields) {
-            for (auto cubeObject : cubeField->cubeObjects) {
+    CubeMap *cubeMap = this->cubeMapSideRef->getCubeMapRef();
+    Vector<CubeMapSide *> allCubeMapSides = *cubeMap->getAllCubeMapSides();
+    for (auto anyCubeMapSide: allCubeMapSides) {
+        for (auto cubeField: anyCubeMapSide->cubeFields) {
+            for (auto cubeObject: cubeField->cubeObjects) {
                 if (cubeObject->isSlider()) {
-                    auto *slider = dynamic_cast<Slider*>(cubeObject);
+                    auto *slider = dynamic_cast<Slider *>(cubeObject);
                     if (slider->getId() == this->id) {
                         slider->activate();
                     }
@@ -325,13 +345,13 @@ void PressurePlate::activateAllSlidersWithSameId() {
 }
 
 void PressurePlate::deactivateAllSlidersWithSameId() {
-    CubeMap* cubeMap = this->cubeMapSideRef->getCubeMapRef();
-    Vector<CubeMapSide*> allCubeMapSides = *cubeMap->getAllCubeMapSides();
-    for (auto anyCubeMapSide : allCubeMapSides) {
-        for (auto cubeField : anyCubeMapSide->cubeFields) {
-            for (auto cubeObject : cubeField->cubeObjects) {
+    CubeMap *cubeMap = this->cubeMapSideRef->getCubeMapRef();
+    Vector<CubeMapSide *> allCubeMapSides = *cubeMap->getAllCubeMapSides();
+    for (auto anyCubeMapSide: allCubeMapSides) {
+        for (auto cubeField: anyCubeMapSide->cubeFields) {
+            for (auto cubeObject: cubeField->cubeObjects) {
                 if (cubeObject->isSlider()) {
-                    auto *slider = dynamic_cast<Slider*>(cubeObject);
+                    auto *slider = dynamic_cast<Slider *>(cubeObject);
                     if (slider->getId() == this->id) {
                         slider->deactivate();
                     }

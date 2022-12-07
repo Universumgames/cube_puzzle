@@ -30,16 +30,16 @@ void Player::HandleEvent(const u32 frame, const u32 totalMSec, const float delta
     if (event.type != SDL_KEYDOWN)
         return;
     int moved = -1;
-    if (what_key.scancode == SDL_SCANCODE_UP) {
+    if (what_key.scancode == SDL_SCANCODE_UP || what_key.scancode == SDL_SCANCODE_W) {
         moved = move(PlayerMoveDirection::UP);
         currentState = AnimationState::UP;
-    } else if (what_key.scancode == SDL_SCANCODE_DOWN) {
+    } else if (what_key.scancode == SDL_SCANCODE_DOWN || what_key.scancode == SDL_SCANCODE_S) {
         moved = move(PlayerMoveDirection::DOWN);
         currentState = AnimationState::DOWN;
-    } else if (what_key.scancode == SDL_SCANCODE_RIGHT) {
+    } else if (what_key.scancode == SDL_SCANCODE_RIGHT|| what_key.scancode == SDL_SCANCODE_D) {
         moved = move(PlayerMoveDirection::RIGHT);
         currentState = AnimationState::RIGHT;
-    } else if (what_key.scancode == SDL_SCANCODE_LEFT) {
+    } else if (what_key.scancode == SDL_SCANCODE_LEFT|| what_key.scancode == SDL_SCANCODE_A) {
         moved = move(PlayerMoveDirection::LEFT);
         currentState = AnimationState::LEFT;
     } else {

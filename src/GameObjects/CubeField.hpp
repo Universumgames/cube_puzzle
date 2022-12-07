@@ -79,21 +79,13 @@ public:
     bool canObjectEnter(CubeObject *cubeObject) override;
 };
 
-class Wall_1 : public Static {
+class Wall : public Static {
 public:
-    Wall_1() = delete;
-    explicit Wall_1(int sideId, int x, int y, const Vector<CubeObject *>& cubeObjects = Vector<CubeObject*>());
+    Wall() = delete;
+    explicit Wall(int sideId, int x, int y, const Vector<CubeObject *>& cubeObjects = Vector<CubeObject*>());
 
     void Render(CubeGame &game, Renderer *render, Point size, Point location, u32 frame, u32 totalMSec,
                 float deltaT) override;
-};
-
-class Wall_2 : public Static {
-public:
-    Wall_2() = delete;
-    explicit Wall_2(int sideId, int x, int y, const Vector<CubeObject *>& cubeObjects = Vector<CubeObject*>());
-
-    void Render(CubeGame &game, Renderer *render, Point size, Point location, u32 frame, u32 totalMSec, float deltaT) override;
 };
 
 // ################################# PressurePlate ###################################################################################
