@@ -12,16 +12,24 @@ Player::Player(CubeGame &game, ComplexGameState *gameState, SDL_Renderer *render
 }
 
 void Player::HandleEvent(const u32 frame, const u32 totalMSec, const float deltaT, Event event) {
+    const Keysym &what_key = event.key.keysym;
+    if (what_key.scancode == SDL_SCANCODE_LSHIFT || what_key.scancode == SDL_SCANCODE_RSHIFT) {
+        if (event.type == SDL_KEYDOWN) {
+            deleteAllGrabbedMagnets();
+            this->listGrabbedMagnets = this->cubeMap->getAllNeighboringMagnets();
+            for (auto magnet : this->listGrabbedMagnets) {
+                magnet->setIsGrabbed(true);
+            }
+        } else if(event.type == SDL_KEYUP) {
+            this->deleteAllGrabbedMagnets();
+        }
+    }
     if (lastMovementCountdown > 0 || !cubeMap->canPlayerMove()) {
         return;
     }
-    if (event.type == SDL_KEYUP
-    && (event.key.keysym.scancode != SDL_SCANCODE_LSHIFT)
-    && (event.key.keysym.scancode != SDL_SCANCODE_RSHIFT)) {
+    if (event.type != SDL_KEYDOWN)
         return;
-    }
-    const Keysym &what_key = event.key.keysym;
-    bool moved = true;
+    int moved = -1;
     if (what_key.scancode == SDL_SCANCODE_UP) {
         moved = move(PlayerMoveDirection::UP);
         currentState = AnimationState::UP;
@@ -37,20 +45,10 @@ void Player::HandleEvent(const u32 frame, const u32 totalMSec, const float delta
     } else {
         currentState = AnimationState::IDLE;
     }
-    if (what_key.scancode == SDL_SCANCODE_LSHIFT || what_key.scancode == SDL_SCANCODE_RSHIFT) {
-        if (event.type == SDL_KEYDOWN) {
-            this->listGrabbedMagnets = this->cubeMap->getAllNeighboringMagnets();
-            for (auto magnet : this->listGrabbedMagnets) {
-                magnet->setIsGrabbed(true);
-            }
-        } else {
-            this->deleteAllGrabbedMagnets();
-        }
-    }
     if (!moved && moveCancelledAudio != nullptr) {
         moveCancelledAudio->playOnce();
     }
-    if (moved) {
+    if (moved == 1) {
         for (auto magnet : this->listGrabbedMagnets) {
             if (!magnet->getIsGrabbed()) {
                 this->deleteGrabbedMagnet(magnet);
@@ -95,6 +93,7 @@ void Player::registerGrabbedMagnet(Magnet* magnet) {
 }
 
 void Player::deleteGrabbedMagnet(Magnet* magnet) {
+    magnet->setIsGrabbed(false);
     for (int i = 0; i < listGrabbedMagnets.size(); i++) {
         Magnet* anyMagnet = listGrabbedMagnets[i];
         if (anyMagnet == magnet) {
