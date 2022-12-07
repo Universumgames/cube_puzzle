@@ -50,7 +50,7 @@ private:
     void setWindowIcon();
 
     /// this should be set to false in final version
-    bool debugView = true;
+    bool debugView = false;
 
     AudioPlayer* backgroundMusic;
 protected:
