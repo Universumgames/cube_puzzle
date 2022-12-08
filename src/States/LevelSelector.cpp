@@ -1,6 +1,7 @@
 #include "LevelSelector.hpp"
 #include "../CubeGame.hpp"
 #include "Level.hpp"
+#include "TutorialLevel.hpp"
 #include "../recthelper.hpp"
 #include "../data/paths.hpp"
 #include "../data/SpriteStorage.hpp"
@@ -44,7 +45,7 @@ void LevelSelector::Events(const u32 frame, const u32 totalMSec, const float del
 
 void LevelSelector::Update(const u32 frame, const u32 totalMSec, const float deltaT) {
     debugText->setEnabled(cubeGame.isDebug());
-    drawList();
+    drawDebugList();
     if (oldSize != game.getWindowSize()) {
         prepareLevelListItems();
         oldSize = game.getWindowSize();
@@ -98,7 +99,7 @@ void LevelSelector::Render(const u32 frame, const u32 totalMSec, const float del
 LevelSelector::LevelSelector(CubeGame &game, Renderer *render) : ComplexGameState(game, render) {
 }
 
-void LevelSelector::loadList() {
+void LevelSelector::loadLevels() {
 
     /// first add template level
     {
@@ -131,7 +132,33 @@ void LevelSelector::loadList() {
     std::sort(levelData.begin(), levelData.end(), LevelData::sort);
 }
 
-void LevelSelector::drawList() {
+
+void LevelSelector::loadTutorialLevels() {
+    const std::filesystem::path levels{LEVELS_DIR};
+
+    if (!std::filesystem::exists(levels)) {
+        return;
+    }
+
+    // level loading
+    for (auto const &dirEntry: std::filesystem::directory_iterator{levels}) {
+        std::string path = dirEntry.path().string();
+        if (!dirEntry.is_regular_file() || dirEntry.path().extension() != ".tut") {
+            continue;
+        }
+        auto data = LevelLoader::loadTutLevel(path);
+        auto *levelX = new TutorialLevel(cubeGame, render);
+        auto levelD = levelX->load(data, cubeGame.allStates.size());
+        tutLevelData.push_back(levelD);
+        cubeGame.allStates.push_back(levelX);
+    }
+
+
+    std::sort(levelData.begin(), levelData.end(), LevelData::sort);
+}
+
+
+void LevelSelector::drawDebugList() {
     std::string debugString = "Bitte wähle ein Level aus der Liste\n";
     for (const auto &level: levelData) {
         debugString += std::to_string(level.id) + ": " + level.name + "\n";
@@ -141,6 +168,8 @@ void LevelSelector::drawList() {
 
 void LevelSelector::Init() {
     GameState::Init();
+    game.SetPerfDrawMode(Game::PerformanceDrawMode::None);
+    cubeGame.setWindowName("Select a level");
     oldSize = game.getWindowSize();
     // check if returned from level
     // if level was finished, load to next level, if not proceed
@@ -149,7 +178,7 @@ void LevelSelector::Init() {
 
     // else check if levels are all loaded, if not load them
     if (!levelsLoaded) {
-        loadList();
+        loadLevels();
         levelsLoaded = true;
     }
     debugText = new Text(cubeGame, this, render, 500, "level selector", game.getSpriteStorage()->debugFont, {10, 10}, 1,

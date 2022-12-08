@@ -130,3 +130,9 @@ LevelLoader::LoadedLevelData LevelLoader::loadLevel(const std::string &path)
     is.close();
     return {.path = path, .name = levelName, .id = id, .sides = sides, .worldSize = worldSize, .worldField = worldField, .cubePos = cubePos, .playerPos = playerPos, .cubeSide = cubeSide};
 }
+
+LevelLoader::TutLoadedLevelData LevelLoader::loadTutLevel(const std::string &path) {
+    TutLoadedLevelData level;
+    level = loadLevel(path);
+    return level;
+}

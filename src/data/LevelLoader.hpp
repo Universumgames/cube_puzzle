@@ -21,5 +21,22 @@ public:
         int cubeSide = 0;
     };
 
+    struct TutLoadedLevelData:public LoadedLevelData{
+        std::string sideBarText;
+        TutLoadedLevelData& operator=(const LoadedLevelData& levelData){
+            this->path = levelData.path;
+            this->name = levelData.name;
+            this->id = levelData.id;
+            this->sides = levelData.sides;
+            this->worldField = levelData.worldField;
+            this->worldField = levelData.worldField;
+            this->cubePos = levelData.cubePos;
+            this->cubeSide = levelData.cubeSide;
+        }
+    };
+
     static LoadedLevelData loadLevel(const std::string& path);
+    static TutLoadedLevelData loadTutLevel(const std::string& path);
+
+
 };

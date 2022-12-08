@@ -6,7 +6,6 @@
 #include "WorldField.hpp"
 
 /// basic data of level
-// TODO extend data
 struct LevelData {
     /// path of file to retrieve leveldata
     std::string path;
@@ -24,5 +23,17 @@ struct LevelData {
 
     friend bool operator==(const LevelData rhs, const LevelData lhs){
         return rhs.id == lhs.id;
+    }
+};
+
+struct TutorialLevelData: public LevelData{
+    std::string sidebarText;
+
+    TutorialLevelData& operator=(const LevelData& levelData){
+        this->path = levelData.path;
+        this->id = levelData.id;
+        this->allStatesIndex = levelData.allStatesIndex;
+        this->name = levelData.name;
+        this->selectorTexture = levelData.selectorTexture;
     }
 };

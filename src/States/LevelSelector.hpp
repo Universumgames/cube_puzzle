@@ -37,10 +37,12 @@ protected:
 private:
 
     /// load level data list, for selection
-    void loadList();
+    void loadLevels();
+
+    void loadTutorialLevels();
 
     /// draw list for selection
-    void drawList();
+    void drawDebugList();
 
     /// play specific level
     void playLevel(const LevelData &level);
@@ -65,6 +67,7 @@ private:
     Point oldSize;
     int selectorIndex = 0;
     Vector<LevelData> levelData;
+    Vector<TutorialLevelData> tutLevelData;
     bool levelsLoaded = false;
     Text *debugText;
     Text* sideBarText;
