@@ -19,6 +19,9 @@ public:
     Vector<CubeField *> cubeFields;
     int width, height, sideID;
     Text *overlay = nullptr;
+
+    Texture* rawSideTexture = nullptr;
+    Point oldDrawableRect = {};
     
     CubeMapSide() = delete;
     CubeMapSide(Vector<CubeField *> cubeFields, int width, int height, int sideID);

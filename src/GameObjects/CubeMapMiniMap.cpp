@@ -267,10 +267,13 @@ void CubeMapMiniMap::draw3DMinimap(const u32 frame, const u32 totalMSec, const f
     for (int sideIndex = 0; sideIndex < 3; sideIndex++) {
         int startIndex = sideIndex * 4;
         int actualSide = sideIndexToSide(diceData, cubeMap->currentSideId, sideIndex);
+        bool isCurrent = actualSide == cubeMap->currentSideId;
         DiceSideRotation rotation = diceData.getDiceSideRotation(actualSide);
         if (sideIndex == 2) rotation = nRot;
         Vector<Vertex> vertices = toVertex(points, indices[startIndex], indices[startIndex + 1],
                                            indices[startIndex + 2], indices[startIndex + 3], rotation);
+
+
 
         SDL_RenderGeometry(render, game.getSpriteStorage()->sideSprites[actualSide - 1], vertices.data(),
                            vertices.size(),

@@ -1,4 +1,5 @@
 #include "CubeMapSide.hpp"
+#include "../recthelper.hpp"
 
 #include <utility>
 
@@ -21,32 +22,49 @@ CubeMapSide::CubeMapSide(Vector<CubeField *> cubeFields, Point size, int sideID)
 
 void CubeMapSide::Render(CubeGame &game, ComplexGameState* gameState, Renderer *render, const u32 frame, const u32 totalMSec, const float deltaT, Rect drawableRect) {
     int x = 0, y = 0;
-    Point size = getFieldSize(drawableRect);
-    Point offset = {drawableRect.x, drawableRect.y};
+    Point drawSize = {drawableRect.w, drawableRect.h};
+    if(oldDrawableRect != drawSize){
+        if(rawSideTexture != nullptr) SDL_DestroyTexture(rawSideTexture);
+        rawSideTexture = SDL_CreateTexture(render, SDL_PIXELFORMAT_ARGB8888,
+                                           SDL_TEXTUREACCESS_TARGET, drawableRect.w, drawableRect.h);
+        oldDrawableRect = drawSize;
+    }
+    Texture* oldTarget = SDL_GetRenderTarget(render);
+    SDL_SetRenderTarget(render, rawSideTexture);
+    Rect drawTo = {0,0,drawableRect.w, drawableRect.h};
+    Point fieldSize = getFieldSize(drawTo);
+    Point renderOffset = {0, 0};
     DiceSideRotation rotation = diceData->getDiceSideRotation(sideID);
+    // dimm background side texture
     int dimm = sin(frame / 120.0) * 20;
     SDL_SetTextureColorMod(game.getSpriteStorage()->sideSprites[sideID - 1], 230 + dimm,230 + dimm,230 + dimm);
-    drawSide(game.getSpriteStorage()->sideSprites[sideID - 1], render, drawableRect, rotation);
+    drawSide(game.getSpriteStorage()->sideSprites[sideID - 1], render, drawTo, rotation);
     SDL_SetTextureColorMod(game.getSpriteStorage()->sideSprites[sideID - 1], 255,255,255);
 
-    if(!game.isDebug()) return;
     
     if (overlay == nullptr) {
         overlay = new Text(game, gameState, render, 400, "", game.getSpriteStorage()->debugFont, {0, 0});
     }
     for (auto *field: cubeFields) {
-        Point pos = cubePositionToScreenPosition({x, y});
-        field->Render(game, render, size, {size.x * pos.x + offset.x, size.y * pos.y + offset.y},
+        Point rotatedCubePosition = cubePositionToScreenPosition({x, y});
+        Point screenPosition = {fieldSize.x * rotatedCubePosition.x + renderOffset.x, fieldSize.y * rotatedCubePosition.y + renderOffset.y};
+        field->Render(game, render, fieldSize, screenPosition,
                       BASIC_GO_DATA_PASSTHROUGH);
-        overlay->changePosition({size.x * pos.x + offset.x, size.y * pos.y + offset.y});
-        overlay->changeText(std::to_string(x) + "," + std::to_string(y));
-        overlay->RenderUI(BASIC_GO_DATA_PASSTHROUGH);
+        if(game.isDebug()) {
+            overlay->changePosition(screenPosition);
+            overlay->changeText(std::to_string(x) + "," + std::to_string(y));
+            overlay->RenderUI(BASIC_GO_DATA_PASSTHROUGH);
+        }
         x++;
         if (x >= width) {
             y++;
             x = 0;
         }
     }
+
+    SDL_SetRenderTarget(render, oldTarget);
+    Rect dst = {drawableRect.x, drawableRect.y, drawableRect.w, drawableRect.h};
+    SDL_RenderCopy(render, rawSideTexture, NULL, &dst);
     renderGridOverlay(game, render, BASIC_GO_DATA_PASSTHROUGH, drawableRect);
 }
 
