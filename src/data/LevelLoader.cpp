@@ -1,8 +1,7 @@
 #include "LevelLoader.hpp"
 #include "WorldField.hpp"
 #include "../GameObjects/CubeMap.hpp"
-#include <string>
-#include <fstream>
+
 #include "../GameObjects/CubeMapSide.hpp"
 
 /* File Format:
@@ -43,6 +42,25 @@ class CubeMapSide;
 
 LevelLoader::LoadedLevelData LevelLoader::loadLevel(const std::string &path)
 {
+    std::ifstream is(path);
+    auto data = loadLevel(path, is);
+    is.close();
+    return data;
+}
+
+LevelLoader::TutLoadedLevelData LevelLoader::loadTutLevel(const std::string &path) {
+    std::ifstream is(path);
+    TutLoadedLevelData level = loadLevel(path, is);
+
+    std::string sidebar((std::istreambuf_iterator<char>(is)),
+                        std::istreambuf_iterator<char>());
+    is.close();
+    level.sideBarText = sidebar;
+    level.id = -100 +  level.id;
+    return level;
+}
+
+LevelLoader::LoadedLevelData LevelLoader::loadLevel(const std::string& path, std::ifstream& is) {
 
     Vector<CubeMapSide *> sides;
     Point worldSize = {0, 0};
@@ -52,8 +70,6 @@ LevelLoader::LoadedLevelData LevelLoader::loadLevel(const std::string &path)
     int cubeSide = 2;
     std::string levelName;
     int id = 0;
-
-    std::ifstream is(path);
     is >> levelName;
     is >> id;
     for (int s = 1; s < 7; s++)
@@ -74,52 +90,52 @@ LevelLoader::LoadedLevelData LevelLoader::loadLevel(const std::string &path)
                 Vector<CubeObject *> vec_temp;
                 switch (inType)
                 {
-                case 0:
-                    temp = new EmptyField(sideID, x, y);
-                    break;
-                case 1:
-                    vec_temp.push_back(new Flag());
-                    temp = new EmptyField(sideID, x, y, vec_temp);
-                    break;
-                case 2:
-                    temp = new Wall(sideID, x, y);
-                    break;
-                case 3:
-                    temp = new Wall(sideID, x, y);
-                    break;
-                case 4:
-                    temp = new PressurePlate(sideID, x, y, 1);
-                    break;
-                case 5:
-                    vec_temp.push_back(new Slider(MovementDirection::moveToBigX, 1));
-                    temp = new EmptyField(sideID, x, y, vec_temp);
-                    break;
-                case 6:
-                    vec_temp.push_back(new Slider(MovementDirection::moveToSmallX, 1));
-                    temp = new EmptyField(sideID, x, y, vec_temp);
-                    break;
-                case 7:
-                    vec_temp.push_back(new Slider(MovementDirection::moveToBigY, 1));
-                    temp = new EmptyField(sideID, x, y, vec_temp);
-                    break;
-                case 8:
-                    vec_temp.push_back(new Slider(MovementDirection::moveToSmallY, 1));
-                    temp = new EmptyField(sideID, x, y, vec_temp);
-                    break;
-                case 9:
-                    vec_temp.push_back(new Magnet());
-                    temp = new EmptyField(sideID, x, y, vec_temp);
-                    break;
-                case 10:
-                    vec_temp.push_back(new Stone());
-                    temp = new EmptyField(sideID, x, y, vec_temp);
-                    break;
-                case 11:
-                    temp = new ObjectBarrier(sideID, x, y);
-                    break;
-                default:
-                    temp = new EmptyField(sideID, x, y);
-                    break;
+                    case 0:
+                        temp = new EmptyField(sideID, x, y);
+                        break;
+                    case 1:
+                        vec_temp.push_back(new Flag());
+                        temp = new EmptyField(sideID, x, y, vec_temp);
+                        break;
+                    case 2:
+                        temp = new Wall(sideID, x, y);
+                        break;
+                    case 3:
+                        temp = new Wall(sideID, x, y);
+                        break;
+                    case 4:
+                        temp = new PressurePlate(sideID, x, y, 1);
+                        break;
+                    case 5:
+                        vec_temp.push_back(new Slider(MovementDirection::moveToBigX, 1));
+                        temp = new EmptyField(sideID, x, y, vec_temp);
+                        break;
+                    case 6:
+                        vec_temp.push_back(new Slider(MovementDirection::moveToSmallX, 1));
+                        temp = new EmptyField(sideID, x, y, vec_temp);
+                        break;
+                    case 7:
+                        vec_temp.push_back(new Slider(MovementDirection::moveToBigY, 1));
+                        temp = new EmptyField(sideID, x, y, vec_temp);
+                        break;
+                    case 8:
+                        vec_temp.push_back(new Slider(MovementDirection::moveToSmallY, 1));
+                        temp = new EmptyField(sideID, x, y, vec_temp);
+                        break;
+                    case 9:
+                        vec_temp.push_back(new Magnet());
+                        temp = new EmptyField(sideID, x, y, vec_temp);
+                        break;
+                    case 10:
+                        vec_temp.push_back(new Stone());
+                        temp = new EmptyField(sideID, x, y, vec_temp);
+                        break;
+                    case 11:
+                        temp = new ObjectBarrier(sideID, x, y);
+                        break;
+                    default:
+                        temp = new EmptyField(sideID, x, y);
+                        break;
                 }
                 cubeFields.push_back(temp);
             }
@@ -127,12 +143,5 @@ LevelLoader::LoadedLevelData LevelLoader::loadLevel(const std::string &path)
         auto *sideTemp = new CubeMapSide(cubeFields, width, height, sideID);
         sides.push_back(sideTemp);
     }
-    is.close();
     return {.path = path, .name = levelName, .id = id, .sides = sides, .worldSize = worldSize, .worldField = worldField, .cubePos = cubePos, .playerPos = playerPos, .cubeSide = cubeSide};
-}
-
-LevelLoader::TutLoadedLevelData LevelLoader::loadTutLevel(const std::string &path) {
-    TutLoadedLevelData level;
-    level = loadLevel(path);
-    return level;
 }

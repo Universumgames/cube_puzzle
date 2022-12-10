@@ -56,13 +56,13 @@ public:
 
     void returnToLevelSelector(ExitState exitState) override;
 
-private:
+protected:
     void updateTextures();
 
     /// internal function to render game into game frame buffer
     void internalGameRender(const u32 frame, const u32 totalMSec, const float deltaT);
     /// internal funciton to render ui into ui frame buffer
-    void internalUIRender(const u32 frame, const u32 totalMSec, const float deltaT);
+    virtual void internalUIRender(const u32 frame, const u32 totalMSec, const float deltaT);
 
     void initLevel();
 
@@ -71,7 +71,7 @@ protected:
 
     Rect getUIRenderDst() override;
 
-private:
+protected:
     LevelLoader::LoadedLevelData originalLevelData;
     Vector<GameObject *> gameObjects;
     Player *player = nullptr;

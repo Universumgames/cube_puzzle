@@ -3,6 +3,8 @@
 #include <string>
 #include "../recthelper.hpp"
 #include "WorldField.hpp"
+#include <string>
+#include <fstream>
 
 class CubeMapSide;
 
@@ -23,7 +25,8 @@ public:
 
     struct TutLoadedLevelData:public LoadedLevelData{
         std::string sideBarText;
-        TutLoadedLevelData& operator=(const LoadedLevelData& levelData){
+
+        TutLoadedLevelData(const LoadedLevelData& levelData){
             this->path = levelData.path;
             this->name = levelData.name;
             this->id = levelData.id;
@@ -31,12 +34,18 @@ public:
             this->worldField = levelData.worldField;
             this->worldField = levelData.worldField;
             this->cubePos = levelData.cubePos;
+            this->playerPos = levelData.playerPos;
             this->cubeSide = levelData.cubeSide;
         }
+
+        TutLoadedLevelData() = default;
     };
 
     static LoadedLevelData loadLevel(const std::string& path);
     static TutLoadedLevelData loadTutLevel(const std::string& path);
+
+private:
+    static LoadedLevelData loadLevel(const std::string& path, std::ifstream& is);
 
 
 };

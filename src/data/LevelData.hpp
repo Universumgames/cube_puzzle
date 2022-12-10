@@ -27,9 +27,11 @@ struct LevelData {
 };
 
 struct TutorialLevelData: public LevelData{
+    TutorialLevelData() = default;
+
     std::string sidebarText;
 
-    TutorialLevelData& operator=(const LevelData& levelData){
+    TutorialLevelData(const LevelData& levelData){
         this->path = levelData.path;
         this->id = levelData.id;
         this->allStatesIndex = levelData.allStatesIndex;

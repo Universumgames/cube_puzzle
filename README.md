@@ -20,3 +20,7 @@ apt install -y libsdl2-dev libsdl2-image-dev libsdl2-mixer-dev libsdl2-ttf-dev c
 
 ## How to install and run
 The [`CMakeLists.txt`](CMakeLists.txt) file ist created with unix systems in mind and a personally configured to run on specifically setup windows machine. For unix users, assuming you have installed all dependencies, the easiest way to install and run the application via the [`run.sh`](run.sh) script or by typing `make` in the project directory. For Apple users wanting to compile this application in the XCode IDE the script [`genXcode.sh`](genXcode.sh) is provided to generate all necessary files to open and compile the project in XCode.
+
+## Create new levels
+
+## Create new tutorial levels

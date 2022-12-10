@@ -1,3 +1,6 @@
+# Für Vorlesung 2022/12/14
+- add tutorial levels
+
 # Für Vorlesung 2022/12/07
 - implement "hit wall" sound
 - player animation for moving left and right
