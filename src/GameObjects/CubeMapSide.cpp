@@ -28,6 +28,8 @@ void CubeMapSide::Render(CubeGame &game, ComplexGameState* gameState, Renderer *
     SDL_SetTextureColorMod(game.getSpriteStorage()->sideSprites[sideID - 1], 230 + dimm,230 + dimm,230 + dimm);
     drawSide(game.getSpriteStorage()->sideSprites[sideID - 1], render, drawableRect, rotation);
     SDL_SetTextureColorMod(game.getSpriteStorage()->sideSprites[sideID - 1], 255,255,255);
+
+    if(!game.isDebug()) return;
     
     if (overlay == nullptr) {
         overlay = new Text(game, gameState, render, 400, "", game.getSpriteStorage()->debugFont, {0, 0});
