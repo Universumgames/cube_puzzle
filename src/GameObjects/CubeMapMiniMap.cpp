@@ -270,12 +270,14 @@ void CubeMapMiniMap::draw3DMinimap(const u32 frame, const u32 totalMSec, const f
         bool isCurrent = actualSide == cubeMap->currentSideId;
         DiceSideRotation rotation = diceData.getDiceSideRotation(actualSide);
         if (sideIndex == 2) rotation = nRot;
+        if(isCurrent) rotation = DiceSideRotation::UP;
         Vector<Vertex> vertices = toVertex(points, indices[startIndex], indices[startIndex + 1],
                                            indices[startIndex + 2], indices[startIndex + 3], rotation);
 
+        //Texture* texToUse = isCurrent ? cubeMap->getCurrentSide()->rawSideTexture : game.getSpriteStorage()->sideSprites[actualSide - 1];
+        Texture * texToUse = cubeMap->sides[actualSide - 1]->rawSideTexture;
 
-
-        SDL_RenderGeometry(render, game.getSpriteStorage()->sideSprites[actualSide - 1], vertices.data(),
+        SDL_RenderGeometry(render, texToUse, vertices.data(),
                            vertices.size(),
                            nullptr, 0);
     }
