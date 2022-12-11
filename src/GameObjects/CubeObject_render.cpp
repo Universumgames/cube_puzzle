@@ -1,5 +1,6 @@
 #include "CubeObject.hpp"
 #include "../data/spriteDefs.hpp"
+#include "../recthelper.hpp"
 
 // ################################# Alle Render-Methoden ############################################################################
 
@@ -48,7 +49,7 @@ Slider::Render(CubeGame &game, Renderer *render, Point size, Point location, u32
             imageIndex = SPRITE_SLIDER_RIGHT_INDEX;
             break;
     }
-    drawCubeObject(render, game.getSpriteStorage()->cubeObjectSpriteSheet, size, location, imageIndex, rotation);
+    drawCubeObject(render, game.getSpriteStorage()->cubeObjectSpriteSheet, size, location, imageIndex + Point{0,id}, rotation);
 }
 
 void
