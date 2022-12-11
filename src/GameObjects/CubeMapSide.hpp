@@ -22,6 +22,7 @@ public:
 
     Texture* rawSideTexture = nullptr;
     Point oldDrawableRect = {};
+    DiceSideRotation oldRotation;
     
     CubeMapSide() = delete;
     CubeMapSide(Vector<CubeField *> cubeFields, int width, int height, int sideID);

@@ -24,6 +24,10 @@ enum class DiceSideRotation {
     UP = 0, DOWN = 180, LEFT = 270, RIGHT = 90
 };
 
+constexpr DiceSideRotation operator-(const DiceSideRotation lhs, const DiceSideRotation rhs){
+    return (DiceSideRotation)((360 + ((int)lhs - (int)rhs)) % 360);
+}
+
 /// Helper Class for Dice Logic
 class DiceData {
 public:

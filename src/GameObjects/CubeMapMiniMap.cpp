@@ -72,6 +72,17 @@ void CubeMapMiniMap::updateDebugText() {
 }
 
 Vector<Vertex> toVertex(Vector<FPoint> points, int tl, int tr, int bl, int br, DiceSideRotation rotation) {
+    /*Vector<FPoint> defaultUV = {
+            {0,0},
+            {1,0},
+            {0,1},
+            {1,1}
+    };
+    switch (rotation) {
+        
+    }
+    Vector<FPoint> texCoords = {defaultUV[0], defaultUV[1], defaultUV[3], defaultUV[0], defaultUV[2], defaultUV[3]};//*/
+    //std::rotate(texCoords.begin(), texCoords.begin()+3,texCoords.end());
     Vector<FPoint> texCoords;
     switch (rotation) {
         case DiceSideRotation::UP:
@@ -159,6 +170,8 @@ void CubeMapMiniMap::draw3DMinimap(const u32 frame, const u32 totalMSec, const f
         for (int x = 0; x < 2; x++) {
             for (int y = 0; y < 2; y++) {
                 FPoint p = startPoint + scaledDir * z - dirX * x + dirY * y;
+                //SDL_SetRenderDrawColor(render, 255*x, 255*y, 255*z, 255);
+                //SDL_RenderDrawPointF(render, p.x, p.y);
                 points.push_back(p);
             }
         }
@@ -176,7 +189,9 @@ void CubeMapMiniMap::draw3DMinimap(const u32 frame, const u32 totalMSec, const f
         int startIndex = sideIndex * 4;
         int actualSide = sideIndexToSide(diceData, cubeMap->currentSideId, sideIndex);
         bool isCurrent = actualSide == cubeMap->currentSideId;
-        DiceSideRotation rotation = diceData.getDiceSideRotation(actualSide);
+        DiceSideRotation imageSideRotation = cubeMap->sides[actualSide -1]->oldRotation;
+        DiceSideRotation diceSideRotation = diceData.getDiceSideRotation(actualSide);
+        DiceSideRotation rotation = imageSideRotation - diceSideRotation;
         if (sideIndex == 2) rotation = nRot;
         if(isCurrent) rotation = DiceSideRotation::UP;
         Vector<Vertex> vertices = toVertex(points, indices[startIndex], indices[startIndex + 1],

@@ -81,6 +81,8 @@ CubeMapSide::Render(CubeGame &game, ComplexGameState *gameState, Renderer *rende
     SDL_SetRenderTarget(render, oldTarget);
     Rect dst = {drawableRect.x, drawableRect.y, drawableRect.w, drawableRect.h};
     SDL_RenderCopy(render, rawSideTexture, NULL, &dst);
+
+    oldRotation = rotation;
 }
 
 void CubeMapSide::renderGridOverlay(CubeGame &game, Renderer *render, const u32 frame, const u32 totalMSec,
