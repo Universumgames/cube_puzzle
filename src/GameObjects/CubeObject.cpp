@@ -28,18 +28,18 @@ Magnet::Magnet() {
 
 // ################################# HandleEvent und Update-Methoden #################################################################
 
-void CubeObject::Update(CubeGame& game, const u32 frame, const u32 totalMSec, const float deltaT) {
-    CubeField* cubeField = this->cubeFieldRef;
+void CubeObject::Update(CubeGame &game, const u32 frame, const u32 totalMSec, const float deltaT) {
+    CubeField *cubeField = this->cubeFieldRef;
     int oldX = cubeField->getX();
     int oldY = cubeField->getY();
     int newX = oldX;
     int newY = oldY;
-    CubeMapSide* cubeMapSide = cubeField->getCubeMapSideRef();
+    CubeMapSide *cubeMapSide = cubeField->getCubeMapSideRef();
     int height = cubeMapSide->height;
     int width = cubeMapSide->width;
     switch (this->currentMovementDirection) {
         case MovementDirection::moveToBigX:
-            if (oldX < width - 1)  {
+            if (oldX < width - 1) {
                 newX = oldX + 1;
             }
             break;
@@ -84,12 +84,12 @@ void CubeObject::Update(CubeGame& game, const u32 frame, const u32 totalMSec, co
     }
 }
 
-void CubeObject::HandleEvent(CubeGame& game, const u32 frame, const u32 totalMSec, const float deltaT, Event event) {
+void CubeObject::HandleEvent(CubeGame &game, const u32 frame, const u32 totalMSec, const float deltaT, Event event) {
 }
 
 // ################################# Setter & Getter #################################################################################
 
-void CubeObject::setDiceData(DiceData* dice_data) {
+void CubeObject::setDiceData(DiceData *dice_data) {
     this->diceData = dice_data;
 }
 
@@ -97,7 +97,7 @@ void CubeObject::setSideId(int sideID) {
     this->sideId = sideID;
 }
 
-void CubeObject::setCubeFieldRef(CubeField* cube_field) {
+void CubeObject::setCubeFieldRef(CubeField *cube_field) {
     this->cubeFieldRef = cube_field;
 }
 
@@ -232,7 +232,7 @@ void Slider::activate() {
 
 void Slider::deactivate() {
     this->isActivated = false;
-    switch(this->directionIfActivated) {
+    switch (this->directionIfActivated) {
         case MovementDirection::moveToBigX:
             this->currentMovementDirection = MovementDirection::moveToSmallX;
             break;
@@ -253,17 +253,17 @@ void Slider::deactivate() {
 // ################################# Magnet Logic Methoden ###########################################################################
 
 void Magnet::move(MovementDirection direction) {
-    CubeField* cubeField = this->cubeFieldRef;
+    CubeField *cubeField = this->cubeFieldRef;
     int oldX = cubeField->getX();
     int oldY = cubeField->getY();
     int newX = oldX;
     int newY = oldY;
-    CubeMapSide* cubeMapSide = cubeField->getCubeMapSideRef();
+    CubeMapSide *cubeMapSide = cubeField->getCubeMapSideRef();
     int height = cubeMapSide->height;
     int width = cubeMapSide->width;
     switch (direction) {
         case MovementDirection::moveToBigX:
-            if (oldX < width - 1)  {
+            if (oldX < width - 1) {
                 newX = oldX + 1;
             }
             break;
@@ -285,20 +285,19 @@ void Magnet::move(MovementDirection direction) {
         default:
             break;
     }
-    if (oldX != newX || oldY != newY) {
-        if (cubeMapSide->canObjectEnterFieldAt(this, newX, newY)) {
-            auto newField = cubeMapSide->getField(newX, newY);
-            if (cubeField->removeObject(this)) {
-                newField->addObject(this);
-                this->cubeFieldRef = newField;
-                this->isGrabbed = true;
-            }
-        } else {
-            this->isGrabbed = false;
-        }
-    } else {
+    if (oldX == newX && oldY == newY) {
         this->isGrabbed = false;
+        return;
     }
+    if (!cubeMapSide->canObjectEnterFieldAt(this, newX, newY)) {
+        this->isGrabbed = false;
+        return;
+    }
+    auto newField = cubeMapSide->getField(newX, newY);
+    if (!cubeField->removeObject(this)) return;
+    newField->addObject(this);
+    this->cubeFieldRef = newField;
+    this->isGrabbed = true;
 }
 
 // ################################# Flag Logic Methoden #############################################################################

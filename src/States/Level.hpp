@@ -57,6 +57,7 @@ public:
     void returnToLevelSelector(ExitState exitState) override;
 
 protected:
+    /// internal function to change render texture sizes
     void updateTextures();
 
     /// internal function to render game into game frame buffer

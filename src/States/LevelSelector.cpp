@@ -16,36 +16,32 @@ void LevelSelector::Events(const u32 frame, const u32 totalMSec, const float del
     while (SDL_PollEvent(&event)) {
         if (game.HandleEvent(event)) // es wurde sich bereits um das Event gekümmert, deswegen nächstes Event laden
             continue;
-        if (event.type == SDL_KEYDOWN) {
-            const Keysym &what_key = event.key.keysym;
-            if (what_key.scancode >= SDL_SCANCODE_1 && what_key.scancode < SDL_SCANCODE_0) {
-                int id = what_key.scancode + 1 - SDL_SCANCODE_1;
-                playLevel(id);
-            } else if (what_key.scancode >= SDL_SCANCODE_KP_1 && what_key.scancode < SDL_SCANCODE_KP_0) {
-                int id = what_key.scancode + 1 - SDL_SCANCODE_KP_1;
-                playLevel(id);
-            }
-
-            // tutorial start
-            if(what_key.scancode == SDL_SCANCODE_T){
-                playLevel(tutLevelData[0]);
-            }
-
-            // navigation in selector
-            /*if (what_key.scancode == SDL_SCANCODE_RIGHT) {
-                selectorIndex = (selectorIndex + rows) % (int) levelData.size();
-            } else if (what_key.scancode == SDL_SCANCODE_LEFT) {
-                selectorIndex = (selectorIndex + 2 * rows) % (int) levelData.size();
-            } else */if (what_key.scancode == SDL_SCANCODE_UP) {
-                selectorIndex--;
-            } else if (what_key.scancode == SDL_SCANCODE_DOWN) {
-                selectorIndex++;
-            } else if (what_key.scancode == SDL_SCANCODE_KP_ENTER || what_key.scancode == SDL_SCANCODE_RETURN) {
-                playLevel(levelData[selectorIndex]);
-            }
-            selectorIndex = (int) (max(0, selectorIndex) % levelData.size());
+        if (event.type != SDL_KEYDOWN) continue;
+        const Keysym &what_key = event.key.keysym;
+        if (what_key.scancode >= SDL_SCANCODE_1 && what_key.scancode < SDL_SCANCODE_0) {
+            int id = what_key.scancode + 1 - SDL_SCANCODE_1;
+            playLevel(id);
+        } else if (what_key.scancode >= SDL_SCANCODE_KP_1 && what_key.scancode < SDL_SCANCODE_KP_0) {
+            int id = what_key.scancode + 1 - SDL_SCANCODE_KP_1;
+            playLevel(id);
         }
+
+        // tutorial start
+        if (what_key.scancode == SDL_SCANCODE_T) {
+            playLevel(tutLevelData[0]);
+        }
+
+        // navigation in selector
+        if (what_key.scancode == SDL_SCANCODE_UP) {
+            selectorIndex--;
+        } else if (what_key.scancode == SDL_SCANCODE_DOWN) {
+            selectorIndex++;
+        } else if (what_key.scancode == SDL_SCANCODE_KP_ENTER || what_key.scancode == SDL_SCANCODE_RETURN) {
+            playLevel(levelData[selectorIndex]);
+        }
+        selectorIndex = (int) (max(0, selectorIndex) % levelData.size());
     }
+
 }
 
 void LevelSelector::Update(const u32 frame, const u32 totalMSec, const float deltaT) {
@@ -58,7 +54,7 @@ void LevelSelector::Update(const u32 frame, const u32 totalMSec, const float del
 }
 
 void LevelSelector::Render(const u32 frame, const u32 totalMSec, const float deltaT) {
-    if(loadingNext) return;
+    if (loadingNext) return;
     SDL_SetRenderDrawColor(render, 20, 20, 20, 255);
     SDL_RenderClear(render);
 
@@ -181,7 +177,7 @@ void LevelSelector::Init() {
     if (cubeGame.interGameStateData.exitState == ExitState::FINISHED) {
         playNextLevel(cubeGame.interGameStateData.sourceStateID);
         loadingNext = true;
-    }else loadingNext = false;
+    } else loadingNext = false;
 
     // else check if levels are all loaded, if not load them
     if (!levelsLoaded) {
@@ -220,7 +216,7 @@ void LevelSelector::playLevel(int levelId) {
     // try nearest next level to levelId, if levelId is not found, increasee by 1
     auto allLevels = levelData;
     allLevels.insert(allLevels.end(), tutLevelData.begin(), tutLevelData.end());
-    for(int fallbackLevel = levelId; fallbackLevel < levelData[levelData.size() - 1].id; fallbackLevel++) {
+    for (int fallbackLevel = levelId; fallbackLevel < levelData[levelData.size() - 1].id; fallbackLevel++) {
         for (const auto &level: allLevels) {
             if (fallbackLevel == level.id) {
                 playLevel(level);
@@ -231,13 +227,9 @@ void LevelSelector::playLevel(int levelId) {
 }
 
 void LevelSelector::playNextLevel(int allStatesID) {
-    for (const auto &level: this->levelData) {
-        if (allStatesID == level.allStatesIndex) {
-            playLevel(level.id + 1);
-            return;
-        }
-    }
-    for (const auto &level: this->tutLevelData) {
+    auto allLevels = levelData;
+    allLevels.insert(allLevels.end(), tutLevelData.begin(), tutLevelData.end());
+    for (const auto &level: allLevels) {
         if (allStatesID == level.allStatesIndex) {
             playLevel(level.id + 1);
             return;

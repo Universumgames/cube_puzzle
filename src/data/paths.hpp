@@ -1,5 +1,7 @@
 #pragma once
 
+// settings file containing all paths used in game
+
 #define LEVELS_DIR "./asset/levels/"
 
 #define ROBOTO_FONT_FILEPATH "./asset/font/RobotoSlab-Bold.ttf"

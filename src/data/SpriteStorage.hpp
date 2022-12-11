@@ -49,11 +49,16 @@ inline void drawColoredFilledRect(Renderer *render, Color color, Rect *dst) {
     SDL_RenderFillRect(render, dst);
 }
 
+/**
+ * draw a fille rectangle in a specific color
+ * @param render sdl renderer
+ * @param color the color of the rect
+ * @param dst the location and size of the rect
+ */
 inline void drawColoredFilledRect(Renderer *render, Color color, Rect dst) {
     SDL_SetRenderDrawColor(render, color.r, color.g, color.b, color.a);
     SDL_RenderFillRect(render, &dst);
 }
-
 
 inline void drawBorder(Renderer * render, Rect dst, Color borderColor = spriteBorderColor){
     SDL_SetRenderDrawColor(render, borderColor.r, borderColor.g, borderColor.b, borderColor.a);

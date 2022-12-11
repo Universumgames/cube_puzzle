@@ -26,6 +26,7 @@ struct LevelData {
     }
 };
 
+/// extended level data for storing level data and additional information for the tutorial
 struct TutorialLevelData: public LevelData{
     TutorialLevelData() = default;
 

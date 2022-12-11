@@ -49,9 +49,6 @@ void Level::Render(const u32 frame, const u32 totalMSec, const float deltaT) {
     SDL_RenderClear(render);
     Rect gameTextureDstRect = getGameRenderDst();
     SDL_RenderCopyEx(render, gameTexture, NULL, &gameTextureDstRect, 0, NULL, SDL_FLIP_NONE);
-    /*Rect gameTextureDstRect2 = getGameRenderDst();
-    gameTextureDstRect2.x += gameTextureDstRect.w;
-    SDL_RenderCopyEx(render, gameTexture, NULL, &gameTextureDstRect2, 0, NULL, SDL_FLIP_NONE);*/
     SDL_RenderCopyEx(render, uiTexture, NULL, NULL, 0, NULL, SDL_FLIP_NONE);
 
     // render buffered frame

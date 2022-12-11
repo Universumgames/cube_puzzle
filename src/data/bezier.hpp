@@ -5,7 +5,7 @@
 
 // https://javascript.info/bezier-curve#maths
 
-// quadratic bezier curve
+/// quadratic bezier curve between a and c with b as control point
 static Point bezierPoint(Point a, Point b, Point c, double t) {
     // return (b-a) * (1*(1-t)) + (c - b) * 2 * t;
     /*double d = 1-t;

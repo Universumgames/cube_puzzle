@@ -44,7 +44,7 @@ void Text::RenderUI(const u32 frame, const u32 totalMSec, const float deltaT) {
         SDL_SetTextureColorMod(texture, color.r, color.g, color.b);
         const Rect dst_rect = {p.x, p.y, blendedTextSize.x, blendedTextSize.y};
         SDL_RenderCopy(render, texture, EntireRect, &dst_rect);
-        if(debug && game.isDebug()) drawSpriteBorder(dst_rect);
+        if (debug && game.isDebug()) drawSpriteBorder(dst_rect);
     }
 }
 
@@ -76,12 +76,12 @@ void Text::changeText(std::string text) {
 }
 
 void Text::reloadTexture() {
-    if (!enabled) {
+    if (!enabled)
         return;
-    }
-    if (texture != nullptr) {
+
+    if (texture != nullptr)
         SDL_DestroyTexture(texture);
-    }
+
     Surface *surface = TTF_RenderUTF8_Blended_Wrapped(font, text.c_str(), color, maxWidth);
     texture = SDL_CreateTextureFromSurface(render, surface);
     u32 format;
@@ -132,7 +132,7 @@ Rect Text::getDrawedRect() const {
 }
 
 void Text::setMaxWidth(int maxWidth) {
-    if(this->maxWidth == maxWidth) return;
+    if (this->maxWidth == maxWidth) return;
     this->maxWidth = maxWidth;
     reloadTexture();
 }

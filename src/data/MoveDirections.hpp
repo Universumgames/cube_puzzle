@@ -25,6 +25,7 @@ inline DiceRollDirection getOppositeDiceRollDirection(DiceRollDirection dir) {
     return DiceRollDirection::NORTH;
 }
 
+/// Movement directions for slider
 enum class MovementDirection {
     moveToBigX,
     moveToSmallX,
@@ -33,6 +34,7 @@ enum class MovementDirection {
     none
 };
 
+/// map function to get opposite of movement direction
 inline MovementDirection getOppositeMovementDirection(MovementDirection dir) {
     switch (dir) {
         case MovementDirection::moveToBigY:
