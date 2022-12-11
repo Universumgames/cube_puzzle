@@ -106,22 +106,22 @@ LevelLoader::LoadedLevelData LevelLoader::loadLevel(const std::string &path, std
                     temp = new Wall(sideID, x, y);
                     break;
                 case 4:
-                    temp = new PressurePlate(sideID, x, y, 1);
+                    temp = new PressurePlate(sideID, x, y, 0);
                     break;
                 case 5:
-                    vec_temp.push_back(new Slider(MovementDirection::moveToBigX, 1));
+                    vec_temp.push_back(new Slider(MovementDirection::moveToBigX, 0));
                     temp = new EmptyField(sideID, x, y, vec_temp);
                     break;
                 case 6:
-                    vec_temp.push_back(new Slider(MovementDirection::moveToSmallX, 1));
+                    vec_temp.push_back(new Slider(MovementDirection::moveToSmallX, 0));
                     temp = new EmptyField(sideID, x, y, vec_temp);
                     break;
                 case 7:
-                    vec_temp.push_back(new Slider(MovementDirection::moveToBigY, 1));
+                    vec_temp.push_back(new Slider(MovementDirection::moveToBigY, 0));
                     temp = new EmptyField(sideID, x, y, vec_temp);
                     break;
                 case 8:
-                    vec_temp.push_back(new Slider(MovementDirection::moveToSmallY, 1));
+                    vec_temp.push_back(new Slider(MovementDirection::moveToSmallY, 0));
                     temp = new EmptyField(sideID, x, y, vec_temp);
                     break;
                 case 9:
@@ -137,62 +137,62 @@ LevelLoader::LoadedLevelData LevelLoader::loadLevel(const std::string &path, std
                     break;
                 // ###############  green
                 case 12:
-                    temp = new PressurePlate(sideID, x, y, 2);
+                    temp = new PressurePlate(sideID, x, y, 1);
                     break;
                 case 13:
-                    vec_temp.push_back(new Slider(MovementDirection::moveToBigX, 2));
+                    vec_temp.push_back(new Slider(MovementDirection::moveToBigX, 1));
                     temp = new EmptyField(sideID, x, y, vec_temp);
                     break;
                 case 14:
-                    vec_temp.push_back(new Slider(MovementDirection::moveToSmallX, 2));
+                    vec_temp.push_back(new Slider(MovementDirection::moveToSmallX, 1));
                     temp = new EmptyField(sideID, x, y, vec_temp);
                     break;
                 case 15:
-                    vec_temp.push_back(new Slider(MovementDirection::moveToBigY, 2));
+                    vec_temp.push_back(new Slider(MovementDirection::moveToBigY, 1));
                     temp = new EmptyField(sideID, x, y, vec_temp);
                     break;
                 case 16:
-                    vec_temp.push_back(new Slider(MovementDirection::moveToSmallY, 2));
+                    vec_temp.push_back(new Slider(MovementDirection::moveToSmallY, 1));
                     temp = new EmptyField(sideID, x, y, vec_temp);
                     break;
                 // ############### yellow
                 case 17:
-                    temp = new PressurePlate(sideID, x, y, 3);
+                    temp = new PressurePlate(sideID, x, y, 2);
                     break;
                 case 18:
-                    vec_temp.push_back(new Slider(MovementDirection::moveToBigX, 3));
+                    vec_temp.push_back(new Slider(MovementDirection::moveToBigX, 2));
                     temp = new EmptyField(sideID, x, y, vec_temp);
                     break;
                 case 19:
-                    vec_temp.push_back(new Slider(MovementDirection::moveToSmallX, 3));
+                    vec_temp.push_back(new Slider(MovementDirection::moveToSmallX, 2));
                     temp = new EmptyField(sideID, x, y, vec_temp);
                     break;
                 case 20:
-                    vec_temp.push_back(new Slider(MovementDirection::moveToBigY, 3));
+                    vec_temp.push_back(new Slider(MovementDirection::moveToBigY, 2));
                     temp = new EmptyField(sideID, x, y, vec_temp);
                     break;
                 case 21:
-                    vec_temp.push_back(new Slider(MovementDirection::moveToSmallY, 3));
+                    vec_temp.push_back(new Slider(MovementDirection::moveToSmallY, 2));
                     temp = new EmptyField(sideID, x, y, vec_temp);
                     break;
                 // ############### blue
                 case 22:
-                    temp = new PressurePlate(sideID, x, y, 4);
+                    temp = new PressurePlate(sideID, x, y, 3);
                     break;
                 case 23:
-                    vec_temp.push_back(new Slider(MovementDirection::moveToBigX, 4));
+                    vec_temp.push_back(new Slider(MovementDirection::moveToBigX, 3));
                     temp = new EmptyField(sideID, x, y, vec_temp);
                     break;
                 case 24:
-                    vec_temp.push_back(new Slider(MovementDirection::moveToSmallX, 4));
+                    vec_temp.push_back(new Slider(MovementDirection::moveToSmallX, 3));
                     temp = new EmptyField(sideID, x, y, vec_temp);
                     break;
                 case 25:
-                    vec_temp.push_back(new Slider(MovementDirection::moveToBigY, 4));
+                    vec_temp.push_back(new Slider(MovementDirection::moveToBigY, 3));
                     temp = new EmptyField(sideID, x, y, vec_temp);
                     break;
                 case 26:
-                    vec_temp.push_back(new Slider(MovementDirection::moveToSmallY, 4));
+                    vec_temp.push_back(new Slider(MovementDirection::moveToSmallY, 3));
                     temp = new EmptyField(sideID, x, y, vec_temp);
                     break;
                 default:
