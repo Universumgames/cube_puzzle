@@ -161,6 +161,8 @@ void CubeMap::moveCubeInWorld(DiceRollDirection rollDirection) {
     diceData.rotate(rollDirection);
 }
 
+u32 lastTotalMSec = 0;
+
 void CubeMap::drawMap(const u32 frame, const u32 totalMSec, const float deltaT) {
     Rect drawableRect = getDrawableRect();
     if (isSideTransitionAnimationInProgress) {
@@ -168,7 +170,8 @@ void CubeMap::drawMap(const u32 frame, const u32 totalMSec, const float deltaT) 
         Rect newSide = getDrawableRect();
         updateAnimationSidePosition(oldSide, newSide, sideTransitionState, lastNormalizedMove);
         SDL_RenderCopy(render, oldSideFrame, nullptr, &oldSide);
-        sideTransitionState += deltaT * 10;
+        u32 deltaI = totalMSec - lastTotalMSec;
+        sideTransitionState += deltaI / 100.0;
         if (sideTransitionState >= 1) {
             sideTransitionState = 0;
             isSideTransitionAnimationInProgress = false;
@@ -176,6 +179,8 @@ void CubeMap::drawMap(const u32 frame, const u32 totalMSec, const float deltaT) 
         getCurrentSide()->Render(game, gameState, render, BASIC_GO_DATA_PASSTHROUGH, newSide);
     } else
         getCurrentSide()->Render(game, gameState, render, BASIC_GO_DATA_PASSTHROUGH, drawableRect);
+    
+    lastTotalMSec = totalMSec;
 }
 
 void CubeMap::saveCurrentFrame() {

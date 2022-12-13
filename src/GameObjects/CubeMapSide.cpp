@@ -15,6 +15,7 @@ CubeMapSide::CubeMapSide(Vector<CubeField *> cubeFields, int width, int height, 
         cubeField->setGravityDirection(MovementDirection::moveToBigY);
     }
     this->currentGravityDirection = MovementDirection::moveToBigY;
+    this->oldRotation = DiceSideRotation::UP;
 }
 
 CubeMapSide::CubeMapSide(Vector<CubeField *> cubeFields, Point size, int sideID)
