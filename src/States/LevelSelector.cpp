@@ -104,12 +104,12 @@ LevelSelector::LevelSelector(CubeGame &game, Renderer *render) : ComplexGameStat
 void LevelSelector::loadLevels() {
 
     /// first add template level
-    {
+    /*{
         auto *tempLevel = new Level(cubeGame, render);
         auto levelD = tempLevel->loadTemplateLevel(cubeGame.allStates.size());
         levelData.push_back(levelD);
         cubeGame.allStates.push_back(tempLevel);
-    }
+    }*/
 
     const std::filesystem::path levels{LEVELS_DIR};
 
