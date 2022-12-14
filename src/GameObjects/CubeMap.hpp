@@ -83,9 +83,11 @@ private:
     
     // the following 4 methods are implemented in CubeMap_playerMovement:
     PlayerMoveDirection screenDirectionToDirectionOnCubeSide(PlayerMoveDirection direction);
-    bool rotateCubeIfNecessary(Point &newPlayerPos, PlayerMoveDirection moveDirection);
+    bool isCubeRotationNecessary(Point& newPlayerPos, PlayerMoveDirection moveDirection, DiceRollDirection& diceRollDirection);
     [[nodiscard]] bool checkCubeSideTransition(int sideAId, int sideBId, int oldSideId) const;
     void doLevelFinishedLogic();
+    void dropAllMagnets(const Vector<Magnet*>& listGrabbedMagnets);
+    void setGravityOnNewCubeMapSide();
 
     static AudioPlayer* getFinishedJingle();
 };

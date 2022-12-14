@@ -154,7 +154,24 @@ bool Slider::canAnotherObjectEnter() {
 
 bool Magnet::canPlayerEnter() {
     if (this->isGrabbed) {
-        return true;
+        CubeField* oldMagnetField = this->cubeFieldRef;
+        Point oldMagnetFieldCoordinates = oldMagnetField->getCoordinates();
+        CubeField* newMagnetField = nullptr;
+        CubeMapSide* currentCubeMapSide = oldMagnetField->getCubeMapSideRef();
+        CubeMap* cubeMap = currentCubeMapSide->getCubeMapRef();
+        Point oldPlayerPosition = cubeMap->getCurrentPlayerPos();
+        if (oldPlayerPosition.x < oldMagnetFieldCoordinates.x) {
+            newMagnetField = currentCubeMapSide->getField(oldMagnetFieldCoordinates.x + 1, oldMagnetFieldCoordinates.y);
+        } else if (oldPlayerPosition.x > oldMagnetFieldCoordinates.x) {
+            newMagnetField = currentCubeMapSide->getField(oldMagnetFieldCoordinates.x - 1, oldMagnetFieldCoordinates.y);
+        } else if (oldPlayerPosition.y > oldMagnetFieldCoordinates.y) {
+            newMagnetField = currentCubeMapSide->getField(oldMagnetFieldCoordinates.x, oldMagnetFieldCoordinates.y - 1);
+        } else if (oldPlayerPosition.y < oldMagnetFieldCoordinates.y) {
+            newMagnetField = currentCubeMapSide->getField(oldMagnetFieldCoordinates.x, oldMagnetFieldCoordinates.y + 1);
+        }
+        if (newMagnetField->canObjectEnter(this)) {
+            return true;
+        }
     }
     return false;
 }
@@ -252,7 +269,7 @@ void Slider::deactivate() {
 
 // ################################# Magnet Logic Methoden ###########################################################################
 
-void Magnet::move(MovementDirection direction, bool isRollback, Point& playerPos) {
+void Magnet::move(MovementDirection direction) {
     CubeField *cubeField = this->cubeFieldRef;
     int oldX = cubeField->getX();
     int oldY = cubeField->getY();
@@ -293,12 +310,11 @@ void Magnet::move(MovementDirection direction, bool isRollback, Point& playerPos
         this->isGrabbed = false;
         return;
     }
-    if (isRollback && newX == playerPos.x && newY == playerPos.y) {
+    auto newField = cubeMapSide->getField(newX, newY);
+    if (!cubeField->removeObject(this)) {
         this->isGrabbed = false;
         return;
     }
-    auto newField = cubeMapSide->getField(newX, newY);
-    if (!cubeField->removeObject(this)) return;
     newField->addObject(this);
     this->cubeFieldRef = newField;
     this->isGrabbed = true;

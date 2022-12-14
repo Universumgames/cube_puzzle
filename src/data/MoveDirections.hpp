@@ -21,8 +21,9 @@ inline DiceRollDirection getOppositeDiceRollDirection(DiceRollDirection dir) {
             return DiceRollDirection::EAST;
         case DiceRollDirection::EAST:
             return DiceRollDirection::WEST;
+        default:
+            return DiceRollDirection::NORTH;
     }
-    return DiceRollDirection::NORTH;
 }
 
 /// Movement directions for slider
