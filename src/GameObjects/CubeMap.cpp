@@ -91,7 +91,7 @@ Rect CubeMap::getPlayerDrawPosition() {
     CubeMapSide *side = getCurrentSide();
     auto origSize = side->getFieldSize(getDrawableRect());
     auto size = origSize * 0.8;
-    auto gridOffset = getDrawableRect() + ((origSize - size) / 2);
+    auto gridOffset = Point{0,0};//getDrawableRect() + ((origSize - size) / 2);
     auto screenGridPos = getCurrentSide()->cubePositionToScreenPosition(playerPos);
     return {origSize.x * screenGridPos.x + gridOffset.x, origSize.y * screenGridPos.y + gridOffset.y, size.x, size.y};
 }
@@ -230,4 +230,8 @@ AudioPlayer *CubeMap::getFinishedJingle() {
         finishJingle = new AudioPlayer(MUSIC_LEVEL_FINISHED);
     }
     return finishJingle;
+}
+
+void CubeMap::SetPlayer(Player *player) {
+    this->player = player;
 }

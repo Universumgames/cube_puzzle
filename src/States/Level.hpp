@@ -74,7 +74,7 @@ protected:
 
 protected:
     LevelLoader::LoadedLevelData originalLevelData;
-    Vector<GameObject *> gameObjects;
+    //Vector<GameObject *> gameObjects;
     Player *player = nullptr;
     CubeMap *cubeMap = nullptr;
     WorldMap *worldMap = nullptr;

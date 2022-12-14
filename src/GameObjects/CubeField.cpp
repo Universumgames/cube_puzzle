@@ -126,7 +126,7 @@ Wall::Render(CubeGame &game, Renderer *render, Point size, Point location, u32 f
 
 void PressurePlate::Render(CubeGame &game, Renderer *render, Point size, Point location, u32 frame, u32 totalMSec,
                            float deltaT) {
-    drawSprite(game.getSpriteStorage()->cubeFieldSpriteSheet, render, SPRITE_PRESSURE_PLATE_INDEX + Point{0, id},
+    drawSprite(game.getSpriteStorage()->cubeFieldSpriteSheet, render, SPRITE_PRESSURE_PLATE_INDEX + Point{0, id} + Point{isActivated ? 5:0,0},
                {location.x, location.y, size.x, size.y});
     CubeField::Render(game, render, size, location, frame, totalMSec, deltaT);
 }

@@ -195,7 +195,8 @@ void LevelSelector::Init() {
     sideBarText = new Text(cubeGame, this, render, 500,
                            "Use the up/down keys to select a level\n"
                            "Press Enter to start level\n\n"
-                           "Want to play the tutorial? Press t",
+                           "Want to play the tutorial? Press T\n\n"
+                           "To mute/play the music press M",
                            game.getSpriteStorage()->basicFont, {});
     sideBarText->Init();
 

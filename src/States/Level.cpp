@@ -8,7 +8,18 @@
 #include "../recthelper.hpp"
 #include "../CubeGame.hpp"
 
-#define iterateGameObjects(method) for(auto gameobject:gameObjects){gameobject->method;}
+#define iterateGameObjectsVector(method) for(auto gameobject:gameObjects){gameobject->method;}
+
+#define iterateGameObjectsNoPlayer(method){ \
+                                    worldMap->method; \
+                                    cubeMap->method;\
+                                    text->method;   \
+                                    }
+
+#define iterateGameObjects(method) { \
+                                    iterateGameObjectsNoPlayer(method); \
+                                    player->method; \
+                                    }
 
 void Level::Events(const u32 frame, const u32 totalMSec, const float deltaT) {
     SDL_PumpEvents();
@@ -25,7 +36,7 @@ u32 lastMSec = 0;
 u32 lastFrame = 0;
 
 void Level::Update(const u32 frame, const u32 totalMSec, const float deltaT) {
-    iterateGameObjects(Update(BASIC_GO_DATA_PASSTHROUGH));
+    //iterateGameObjectsVector(Update(BASIC_GO_DATA_PASSTHROUGH));
     text->setEnabled(cubeGame.isDebug());
     if (frame % 50 == 0) {
         u32 deltaSec = totalMSec - lastMSec;
@@ -68,10 +79,10 @@ void Level::Init() {
     initLevel();
 
     GameState::Init();
-    gameObjects.push_back(worldMap);
-    gameObjects.push_back(cubeMap);
-    gameObjects.push_back(player);
-    gameObjects.push_back(text);
+    //gameObjects.push_back(worldMap);
+    //gameObjects.push_back(cubeMap);
+    //gameObjects.push_back(player);
+    //gameObjects.push_back(text);
     iterateGameObjects(Init())
     game.SetPerfDrawMode(Game::PerformanceDrawMode::None);
     cubeGame.setWindowName("Level " + std::to_string(levelData.id) + " " + levelData.name);
@@ -81,7 +92,7 @@ void Level::Init() {
 
 void Level::UnInit() {
     GameState::UnInit();
-    iterateGameObjects(UnInit())
+    //iterateGameObjectsVector(UnInit())
 }
 
 LevelData Level::loadTemplateLevel(size_t id) {
@@ -134,7 +145,7 @@ void Level::internalGameRender(const u32 frame, const u32 totalMSec, const float
     SDL_SetTextureBlendMode(gameTexture, SDL_BLENDMODE_BLEND);
     SDL_SetRenderDrawColor(render, 0, 0, 0, 0);
     SDL_RenderClear(render);
-    iterateGameObjects(Render(BASIC_GO_DATA_PASSTHROUGH))
+    iterateGameObjectsNoPlayer(Render(BASIC_GO_DATA_PASSTHROUGH))
 }
 
 #define GAMERECT_USE_FULL_WINDOW true
@@ -196,11 +207,12 @@ void Level::initLevel() {
     delete worldMap;
     delete cubeMap;
     delete player;
-    gameObjects = Vector<GameObject *>();
+    //gameObjects = Vector<GameObject *>();
     worldMap = new WorldMap(cubeGame, this, render, data.worldSize, data.worldField, data.cubePos);
     cubeMap = new CubeMap(cubeGame, this, render, data.sides, data.cubeSide, data.playerPos);
     worldMap->setCubeMap(cubeMap);
     cubeMap->SetWorldMap(worldMap);
     player = new Player(cubeGame, this, render);
     player->setCubeMap(cubeMap);
+    cubeMap->SetPlayer(player);
 }

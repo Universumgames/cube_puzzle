@@ -1,6 +1,6 @@
 #include "CubeMapSide.hpp"
 #include "../recthelper.hpp"
-
+#include "Player.hpp"
 #include <utility>
 
 // ################################# Konstruktoren ###################################################################################
@@ -77,6 +77,9 @@ CubeMapSide::Render(CubeGame &game, ComplexGameState *gameState, Renderer *rende
 
     // render grid on top
     renderGridOverlay(game, render, BASIC_GO_DATA_PASSTHROUGH, drawableRect);
+
+    // TODO render player here
+    cubeMapRef->player->Render(BASIC_GO_DATA_PASSTHROUGH);
 
     // copy current cube map side to screen
     SDL_SetRenderTarget(render, oldTarget);

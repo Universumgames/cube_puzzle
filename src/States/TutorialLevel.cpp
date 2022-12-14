@@ -22,13 +22,15 @@ TutorialLevel::TutorialLevel(CubeGame& game, Renderer *render) :
 
 void TutorialLevel::Init() {
     Level::Init();
-    gameObjects.push_back(sidebarText);
+    //gameObjects.push_back(sidebarText);
+    sidebarText->Init();
 
     //sidebarText->Init();
 }
 
 void TutorialLevel::Update(const u32 frame, const u32 totalMSec, const float deltaT) {
     Level::Update(BASIC_GO_DATA_PASSTHROUGH);
+    sidebarText->Update(BASIC_GO_DATA_PASSTHROUGH);
 }
 
 void TutorialLevel::internalUIRender(const u32 frame, const u32 totalMSec, const float deltaT) {
@@ -41,6 +43,6 @@ void TutorialLevel::internalUIRender(const u32 frame, const u32 totalMSec, const
     Rect textLoc = {startXOffset,0, textSize.x, textSize.y};
     Rect renderTextLoc = centerInVertical(textLoc, uiRect);
     sidebarText->changePosition({renderTextLoc.x, renderTextLoc.y});
-    //sidebarText->RenderUI(BASIC_GO_DATA_PASSTHROUGH);
+    sidebarText->RenderUI(BASIC_GO_DATA_PASSTHROUGH);
     Level::internalUIRender(BASIC_GO_DATA_PASSTHROUGH);
 }

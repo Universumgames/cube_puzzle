@@ -48,7 +48,7 @@ Slider::Render(CubeGame &game, Renderer *render, Point size, Point location, u32
             imageIndex = SPRITE_SLIDER_RIGHT_INDEX;
             break;
     }
-    drawCubeObject(render, game.getSpriteStorage()->cubeObjectSpriteSheet, size, location, imageIndex + Point{0,id}, rotation);
+    drawCubeObject(render, game.getSpriteStorage()->cubeObjectSpriteSheet, size, location, imageIndex + Point{0,id} + Point{isActivated ? 5:0,0}, rotation);
 }
 
 void

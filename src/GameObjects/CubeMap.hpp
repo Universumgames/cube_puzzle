@@ -19,6 +19,7 @@ class Magnet;
 class CubeMap final : public GameObject {
     friend class WorldMap;
     friend class CubeMapMiniMap;
+    friend class CubeMapSide;
     
 public:
     CubeMap() = delete;
@@ -35,6 +36,8 @@ public:
     
     /// set world map pointer, has to be set before run
     void SetWorldMap(WorldMap *worldMap);
+
+    void SetPlayer(Player* player);
     void setIsAnimating(bool isAnimating);
     [[nodiscard]] Rect getPlayerDrawPosition();
     [[nodiscard]] CubeMapSide *getCurrentSide();
@@ -52,6 +55,7 @@ public:
 private:
     WorldMap *worldMap = nullptr;
     CubeMapMiniMap *miniMap;
+    Player* player;
     Vector<CubeMapSide *> sides;
     int currentSideId;
     Point playerPos{};
