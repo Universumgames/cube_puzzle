@@ -40,31 +40,53 @@ bool CubeMap::movePlayer(PlayerMoveDirection dir, const Vector<Magnet*>& listGra
         return false;
     }
     bool rollbackPlayerMovement = false;
+    bool rollbackMagnets = moved;
     if (newPlayerPos.x != this->playerPos.x || newPlayerPos.y != this->playerPos.y) {
-        if (newPlayerPos.x > this->playerPos.x) {
-            for (auto magnet : listGrabbedMagnets) {
-                magnet->move(MovementDirection::moveToBigX);
-            }
-        } else if (newPlayerPos.x < this->playerPos.x) {
-            for (auto magnet : listGrabbedMagnets) {
-                magnet->move(MovementDirection::moveToSmallX);
-            }
-        } else if (newPlayerPos.y > this->playerPos.y) {
-            for (auto magnet : listGrabbedMagnets) {
-                magnet->move(MovementDirection::moveToBigY);
-            }
-        } else if (newPlayerPos.y < this->playerPos.y) {
-            for (auto magnet : listGrabbedMagnets) {
-                magnet->move(MovementDirection::moveToSmallY);
-            }
-        }
         if (!getCurrentSide()->getField(newPlayerPos)->canPlayerEnter()) {
             rollbackPlayerMovement = true;
+            rollbackMagnets = true;
         }
-        if (!rollbackPlayerMovement) {
+        if (!rollbackMagnets) {
+            if (newPlayerPos.x > this->playerPos.x) {
+                for (auto magnet : listGrabbedMagnets) {
+                    magnet->move(MovementDirection::moveToBigX, false, this->playerPos);
+                }
+            } else if (newPlayerPos.x < this->playerPos.x) {
+                for (auto magnet : listGrabbedMagnets) {
+                    magnet->move(MovementDirection::moveToSmallX, false, this->playerPos);
+                }
+            } else if (newPlayerPos.y > this->playerPos.y) {
+                for (auto magnet : listGrabbedMagnets) {
+                    magnet->move(MovementDirection::moveToBigY, false, this->playerPos);
+                }
+            } else if (newPlayerPos.y < this->playerPos.y) {
+                for (auto magnet : listGrabbedMagnets) {
+                    magnet->move(MovementDirection::moveToSmallY, false, this->playerPos);
+                }
+            }
+        }
+        if (!rollbackPlayerMovement && getCurrentSide()->getField(newPlayerPos)->canPlayerEnter()) {
             this->playerPos = newPlayerPos;
             doLevelFinishedLogic();
             return true;
+        } else { // rollback Magnets
+            if (newPlayerPos.x > this->playerPos.x) {
+                for (auto magnet : listGrabbedMagnets) {
+                    magnet->move(MovementDirection::moveToSmallX, true, this->playerPos);
+                }
+            } else if (newPlayerPos.x < this->playerPos.x) {
+                for (auto magnet : listGrabbedMagnets) {
+                    magnet->move(MovementDirection::moveToBigX, true, this->playerPos);
+                }
+            } else if (newPlayerPos.y > this->playerPos.y) {
+                for (auto magnet : listGrabbedMagnets) {
+                    magnet->move(MovementDirection::moveToSmallY, true, this->playerPos);
+                }
+            } else if (newPlayerPos.y < this->playerPos.y) {
+                for (auto magnet : listGrabbedMagnets) {
+                    magnet->move(MovementDirection::moveToBigY, true, this->playerPos);
+                }
+            }
         }
     }
     return false;

@@ -117,7 +117,7 @@ public:
     [[nodiscard]] bool canEnterPressurePlate() override;
     [[nodiscard]] bool canActivatePressurePlate() override;
     
-    void move(MovementDirection direction);
+    void move(MovementDirection direction, bool isRollback, Point& playerPos);
 };
 
 // ################################# Collectible #####################################################################################

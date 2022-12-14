@@ -252,7 +252,7 @@ void Slider::deactivate() {
 
 // ################################# Magnet Logic Methoden ###########################################################################
 
-void Magnet::move(MovementDirection direction) {
+void Magnet::move(MovementDirection direction, bool isRollback, Point& playerPos) {
     CubeField *cubeField = this->cubeFieldRef;
     int oldX = cubeField->getX();
     int oldY = cubeField->getY();
@@ -290,6 +290,10 @@ void Magnet::move(MovementDirection direction) {
         return;
     }
     if (!cubeMapSide->canObjectEnterFieldAt(this, newX, newY)) {
+        this->isGrabbed = false;
+        return;
+    }
+    if (isRollback && newX == playerPos.x && newY == playerPos.y) {
         this->isGrabbed = false;
         return;
     }
