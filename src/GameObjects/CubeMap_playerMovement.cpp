@@ -307,6 +307,7 @@ void CubeMap::doLevelFinishedLogic() {
     CubeMapSide *currentSide = getCurrentSide();
     CubeField *currentCubeField = currentSide->getField(this->playerPos);
     if (currentCubeField->isLevelFinishedIfEntered()) {
+        CubeMap::getFinishedJingle()->playOnce();
         gameState->returnToLevelSelector(ExitState::FINISHED);
     }
 }

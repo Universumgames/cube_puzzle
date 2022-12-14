@@ -127,4 +127,6 @@ public:
     int deactivate();
     void activateAllSlidersWithSameId();
     void deactivateAllSlidersWithSameId();
+
+    static AudioPlayer* getAudioEnter();
 };

@@ -9,6 +9,8 @@
 
 #define MUSIC_BACKGROUND_PATH "asset/audio/background.wav"
 #define MUSIC_HIT_WALL_PATH "asset/audio/hit2.wav"
+#define MUSIC_PRESSURE_PLATE_PRESSED "asset/audio/pressed.wav"
+#define MUSIC_LEVEL_FINISHED "asset/audio/finish.wav"
 
 #define ICON_PATH "./asset/graphic/mac1024_2.png"
 // "./asset/graphic/mac1024.png"

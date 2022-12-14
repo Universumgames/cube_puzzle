@@ -23,7 +23,8 @@ EmptyField::EmptyField(int sideId, int x, int y, const Vector<CubeObject *> &cub
 ObjectBarrier::ObjectBarrier(int sideId, int x, int y, const Vector<CubeObject *> &cubeObjects)
         : EmptyField(sideId, x, y, cubeObjects) {}
 
-ArrowField::ArrowField(int sideId, int x, int y, MovementDirection arrowDirection, const Vector<CubeObject *> &cubeObjects)
+ArrowField::ArrowField(int sideId, int x, int y, MovementDirection arrowDirection,
+                       const Vector<CubeObject *> &cubeObjects)
         : EmptyField(sideId, x, y, cubeObjects) {
     this->arrowDirection = arrowDirection;
 }
@@ -77,7 +78,7 @@ void ArrowField::Render(CubeGame &game, Renderer *render, Point size, Point loca
                         float deltaT) {
     int angle = 0;
     auto flip = SDL_FLIP_NONE;
-    switch(arrowDirection){
+    switch (arrowDirection) {
         case MovementDirection::moveToBigX:
             angle = 0;
             break;
@@ -94,7 +95,7 @@ void ArrowField::Render(CubeGame &game, Renderer *render, Point size, Point loca
             break;
     }
 
-    angle += (int)diceData->getDiceSideRotation(sideId);
+    angle += (int) diceData->getDiceSideRotation(sideId);
     Rect dst = {location.x, location.y, size.x, size.y};
     SDL_RenderCopyEx(render, game.getSpriteStorage()->arrowStraight, NULL, &dst, angle, NULL, flip);
 }
@@ -125,7 +126,7 @@ Wall::Render(CubeGame &game, Renderer *render, Point size, Point location, u32 f
 
 void PressurePlate::Render(CubeGame &game, Renderer *render, Point size, Point location, u32 frame, u32 totalMSec,
                            float deltaT) {
-    drawSprite(game.getSpriteStorage()->cubeFieldSpriteSheet, render, SPRITE_PRESSURE_PLATE_INDEX + Point{0,id},
+    drawSprite(game.getSpriteStorage()->cubeFieldSpriteSheet, render, SPRITE_PRESSURE_PLATE_INDEX + Point{0, id},
                {location.x, location.y, size.x, size.y});
     CubeField::Render(game, render, size, location, frame, totalMSec, deltaT);
 }
@@ -317,6 +318,7 @@ int PressurePlate::enter() {
     if (!this->isActivated) {
         this->isActivated = true;
         this->activateAllSlidersWithSameId();
+
         return this->id;
     }
     return -1;
@@ -342,21 +344,21 @@ int PressurePlate::leave() {
 }
 
 int PressurePlate::activate() {
-    if (!this->isActivated) {
-        this->isActivated = true;
-        this->activateAllSlidersWithSameId();
-        return this->id;
-    }
-    return -1;
+    if (this->isActivated)
+        return -1;
+    this->isActivated = true;
+    this->activateAllSlidersWithSameId();
+    PressurePlate::getAudioEnter()->playOnce();
+    return this->id;
 }
 
 int PressurePlate::deactivate() {
-    if (this->isActivated) {
-        this->isActivated = false;
-        this->deactivateAllSlidersWithSameId();
-        return this->id;
-    }
-    return -1;
+    if (!this->isActivated)
+        return -1;
+    this->isActivated = false;
+    this->deactivateAllSlidersWithSameId();
+    PressurePlate::getAudioEnter()->playOnce();
+    return this->id;
 }
 
 void PressurePlate::activateAllSlidersWithSameId() {
@@ -365,11 +367,10 @@ void PressurePlate::activateAllSlidersWithSameId() {
     for (auto anyCubeMapSide: allCubeMapSides) {
         for (auto cubeField: anyCubeMapSide->cubeFields) {
             for (auto cubeObject: cubeField->cubeObjects) {
-                if (cubeObject->isSlider()) {
-                    auto *slider = dynamic_cast<Slider *>(cubeObject);
-                    if (slider->getId() == this->id) {
-                        slider->activate();
-                    }
+                if (!cubeObject->isSlider()) continue;
+                auto *slider = dynamic_cast<Slider *>(cubeObject);
+                if (slider->getId() == this->id) {
+                    slider->activate();
                 }
             }
         }
@@ -382,13 +383,21 @@ void PressurePlate::deactivateAllSlidersWithSameId() {
     for (auto anyCubeMapSide: allCubeMapSides) {
         for (auto cubeField: anyCubeMapSide->cubeFields) {
             for (auto cubeObject: cubeField->cubeObjects) {
-                if (cubeObject->isSlider()) {
-                    auto *slider = dynamic_cast<Slider *>(cubeObject);
-                    if (slider->getId() == this->id) {
-                        slider->deactivate();
-                    }
+                if (!cubeObject->isSlider()) continue;
+                auto *slider = dynamic_cast<Slider *>(cubeObject);
+                if (slider->getId() == this->id) {
+                    slider->deactivate();
                 }
             }
         }
     }
+}
+
+AudioPlayer *enterPressurePlateSound = nullptr;
+
+AudioPlayer *PressurePlate::getAudioEnter() {
+    if (enterPressurePlateSound == nullptr) {
+        enterPressurePlateSound = new AudioPlayer(MUSIC_PRESSURE_PLATE_PRESSED);
+    }
+    return enterPressurePlateSound;
 }

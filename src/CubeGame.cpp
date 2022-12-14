@@ -30,28 +30,30 @@ CubeGame::CubeGame() : Game("CubeGame") {
 }
 
 bool CubeGame::HandleEvent(const Event event) {
+    bool handled = false;
     // Global Keybindings, will be checked before the ones in GameState
     switch (event.type) {
         case SDL_KEYDOWN: {
             const Keysym &what_key = event.key.keysym;
-            if (what_key.scancode == SDL_SCANCODE_0) {
+            if (what_key.scancode == SDL_SCANCODE_ESCAPE) {
                 interGameStateData = {.sourceStateID = -1, .exitState = ExitState::CANCELLED};
                 returnToLevelSelector();
-                return true;
+                handled = true;
             }
             if (what_key.scancode == SDL_SCANCODE_F3) {
                 debugView = !debugView;
-                return true;
+                handled = true;
             }
             if (what_key.scancode == SDL_SCANCODE_M) {
                 audioHandler->enableAudio(!audioHandler->getAudioEnabled());
+                handled = true;
             }
             break;
         }
-
         default:
             break;
     }
+    if(handled) return true;
     return Game::HandleEvent(event);
 }
 

@@ -222,3 +222,12 @@ void updateAnimationSidePosition(Rect& oldSide, Rect& newSide, double transition
             break;
     }
 }
+
+AudioPlayer* finishJingle = nullptr;
+
+AudioPlayer *CubeMap::getFinishedJingle() {
+    if(finishJingle == nullptr){
+        finishJingle = new AudioPlayer(MUSIC_LEVEL_FINISHED);
+    }
+    return finishJingle;
+}

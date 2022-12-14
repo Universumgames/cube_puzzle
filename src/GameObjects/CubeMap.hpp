@@ -82,4 +82,6 @@ private:
     bool rotateCubeIfNecessary(Point &newPlayerPos, PlayerMoveDirection moveDirection);
     [[nodiscard]] bool checkCubeSideTransition(int sideAId, int sideBId, int oldSideId) const;
     void doLevelFinishedLogic();
+
+    static AudioPlayer* getFinishedJingle();
 };
