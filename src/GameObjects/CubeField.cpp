@@ -23,6 +23,11 @@ EmptyField::EmptyField(int sideId, int x, int y, const Vector<CubeObject *> &cub
 ObjectBarrier::ObjectBarrier(int sideId, int x, int y, const Vector<CubeObject *> &cubeObjects)
         : EmptyField(sideId, x, y, cubeObjects) {}
 
+ArrowField::ArrowField(int sideId, int x, int y, MovementDirection arrowDirection, const Vector<CubeObject *> &cubeObjects)
+        : EmptyField(sideId, x, y, cubeObjects) {
+    this->arrowDirection = arrowDirection;
+}
+
 Static::Static(int sideId, int x, int y, const Vector<CubeObject *> &cubeObjects)
         : CubeField(sideId, x, y, cubeObjects) {}
 
@@ -66,6 +71,12 @@ void ObjectBarrier::Render(CubeGame &game, Renderer *render, Point size, Point l
     drawSprite(game.getSpriteStorage()->cubeFieldSpriteSheet, render, SPRITE_OBJECTBLOCKER_INDEX,
                {location.x, location.y, size.x, size.y});
     CubeField::Render(game, render, size, location, frame, totalMSec, deltaT);
+}
+
+void ArrowField::Render(CubeGame &game, Renderer *render, Point size, Point location, u32 frame, u32 totalMSec,
+                        float deltaT) {
+    EmptyField::Render(game, render, size, location, frame, totalMSec, deltaT);
+    // TODO hier muss je nach this->arrowDirection und Ausrichtung der CubeMapSide das entsprechende ArrowField gerendert werden.
 }
 
 void

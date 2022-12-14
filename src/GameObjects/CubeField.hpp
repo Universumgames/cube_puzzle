@@ -70,6 +70,17 @@ public:
     bool canObjectEnter(CubeObject *cubeObject) override;
 };
 
+class ArrowField : public EmptyField {
+private:
+    MovementDirection arrowDirection;
+
+public:
+    ArrowField() = delete;
+    explicit ArrowField(int sideId, int x, int y, MovementDirection arrowDirection, const Vector<CubeObject *>& cubeObjects = Vector<CubeObject *>());
+
+    void Render(CubeGame &game, Renderer *render, Point size, Point location, u32 frame, u32 totalMSec, float deltaT) override;
+};
+
 // ################################# Walls ###########################################################################################
 
 class Static : public CubeField { // walls, unmovable obstacles
