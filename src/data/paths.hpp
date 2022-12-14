@@ -8,7 +8,7 @@
 #define ROBOTO_FONT_LIGHT_FILEPATH "./asset/font/Roboto/Roboto-Regular.ttf"
 
 #define MUSIC_BACKGROUND_PATH "asset/audio/background.wav"
-#define MUSIC_HIT_WALL_PATH "asset/audio/puck.wav"
+#define MUSIC_HIT_WALL_PATH "asset/audio/hit2.wav"
 
 #define ICON_PATH "./asset/graphic/mac1024_2.png"
 // "./asset/graphic/mac1024.png"
