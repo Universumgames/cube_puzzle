@@ -75,8 +75,8 @@ void ObjectBarrier::Render(CubeGame &game, Renderer *render, Point size, Point l
 
 void ArrowField::Render(CubeGame &game, Renderer *render, Point size, Point location, u32 frame, u32 totalMSec,
                         float deltaT) {
-    CubeField::Render(game, render, size, location, frame, totalMSec, deltaT);
     // TODO hier muss je nach this->arrowDirection und Ausrichtung der CubeMapSide das entsprechende ArrowField gerendert werden.
+    CubeField::Render(game, render, size, location, frame, totalMSec, deltaT);
 }
 
 void
