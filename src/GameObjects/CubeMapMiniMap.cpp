@@ -56,7 +56,7 @@ void CubeMapMiniMap::RenderUI(const u32 frame, const u32 totalMSec, const float 
     drawMinimap(BASIC_GO_DATA_PASSTHROUGH);
 
     Point wSize = game.getWindowSize();
-    int size = max(wSize.x, wSize.y) / 13;
+    int size = max(wSize.x, wSize.y) / 8;
     draw3DMinimap(BASIC_GO_DATA_PASSTHROUGH, {wSize.x - size - 10, 10, size, size});
 }
 

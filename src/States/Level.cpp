@@ -36,7 +36,7 @@ u32 lastMSec = 0;
 u32 lastFrame = 0;
 
 void Level::Update(const u32 frame, const u32 totalMSec, const float deltaT) {
-    //iterateGameObjectsVector(Update(BASIC_GO_DATA_PASSTHROUGH));
+    iterateGameObjects(Update(BASIC_GO_DATA_PASSTHROUGH));
     text->setEnabled(cubeGame.isDebug());
     if (frame % 50 == 0) {
         u32 deltaSec = totalMSec - lastMSec;
