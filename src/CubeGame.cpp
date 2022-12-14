@@ -36,7 +36,7 @@ bool CubeGame::HandleEvent(const Event event) {
         case SDL_KEYDOWN: {
             const Keysym &what_key = event.key.keysym;
             if (what_key.scancode == SDL_SCANCODE_ESCAPE) {
-                interGameStateData = {.sourceStateID = -1, .exitState = ExitState::CANCELLED};
+                interGameStateData = {.sourceStateID = currentStateIdx, .exitState = ExitState::CANCELLED};
                 returnToLevelSelector();
                 handled = true;
             }

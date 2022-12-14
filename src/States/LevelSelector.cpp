@@ -180,11 +180,14 @@ void LevelSelector::Init() {
     } else loadingNext = false;
 
     // else check if levels are all loaded, if not load them
-    if (!levelsLoaded) {
+    if (cubeGame.interGameStateData.sourceStateID != -1 ||!levelsLoaded) {
+        levelData.clear();
+        tutLevelData.clear();
         loadLevels();
         loadTutorialLevels();
         levelsLoaded = true;
     }
+
     debugText = new Text(cubeGame, this, render, 500, "level selector", game.getSpriteStorage()->debugFont, {10, 10}, 1,
                          white);
     debugText->Init();
