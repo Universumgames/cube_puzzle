@@ -1,5 +1,7 @@
 # Für Vorlesung 2022/12/14
 - add tutorial levels
+- Created 6 Levels
+- Fixed Magnet bug
 
 # Für Vorlesung 2022/12/07
 - implement "hit wall" sound
