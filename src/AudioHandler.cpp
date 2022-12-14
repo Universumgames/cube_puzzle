@@ -28,7 +28,7 @@ void AudioHandler::init()
     SDL_Init(SDL_INIT_AUDIO);
     // Initialize SDL_mixer
     if (int err = Mix_OpenAudio(44100, MIX_DEFAULT_FORMAT, 2, 2048) < 0)
-        printf("SDL_mixer could not initialize! SDL_mixer Error: %s", err);
+        printf("SDL_mixer could not initialize! SDL_mixer Error: %d", err);
 }
 
 void AudioHandler::playAll()

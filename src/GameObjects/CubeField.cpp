@@ -75,8 +75,28 @@ void ObjectBarrier::Render(CubeGame &game, Renderer *render, Point size, Point l
 
 void ArrowField::Render(CubeGame &game, Renderer *render, Point size, Point location, u32 frame, u32 totalMSec,
                         float deltaT) {
-    // TODO hier muss je nach this->arrowDirection und Ausrichtung der CubeMapSide das entsprechende ArrowField gerendert werden.
-    CubeField::Render(game, render, size, location, frame, totalMSec, deltaT);
+    int angle = 0;
+    auto flip = SDL_FLIP_NONE;
+    switch(arrowDirection){
+        case MovementDirection::moveToBigX:
+            angle = 0;
+            break;
+        case MovementDirection::moveToSmallX:
+            angle = 180;
+            break;
+        case MovementDirection::moveToBigY:
+            angle = 90;
+            break;
+        case MovementDirection::moveToSmallY:
+            angle = 270;
+            break;
+        case MovementDirection::none:
+            break;
+    }
+
+    angle += (int)diceData->getDiceSideRotation(sideId);
+    Rect dst = {location.x, location.y, size.x, size.y};
+    SDL_RenderCopyEx(render, game.getSpriteStorage()->arrowStraight, NULL, &dst, angle, NULL, flip);
 }
 
 void

@@ -30,7 +30,6 @@ void
 Slider::Render(CubeGame &game, Renderer *render, Point size, Point location, u32 frame, u32 totalMSec, float deltaT) {
     DiceSideRotation rotation = diceData->getDiceSideRotation(sideId);
 
-    // TODO implement rotated rendering depending on orientation of slider
     Point imageIndex = {};
     switch (directionIfActivated) {
         case MovementDirection::moveToBigX:

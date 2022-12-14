@@ -40,16 +40,14 @@ class CubeMapSide;
 #define LINE_INDEX_CUBEPOS (LINE_INDEX_WORLDMAP + 1)
 #define LINE_INDEX_PLAYERPOS (LINE_INDEX_CUBEPOS + 1)
 
-LevelLoader::LoadedLevelData LevelLoader::loadLevel(const std::string &path)
-{
+LevelLoader::LoadedLevelData LevelLoader::loadLevel(const std::string &path) {
     std::ifstream is(path);
     auto data = loadLevel(path, is);
     is.close();
     return data;
 }
 
-LevelLoader::TutLoadedLevelData LevelLoader::loadTutLevel(const std::string &path)
-{
+LevelLoader::TutLoadedLevelData LevelLoader::loadTutLevel(const std::string &path) {
     std::ifstream is(path);
     TutLoadedLevelData level = loadLevel(path, is);
 
@@ -61,8 +59,7 @@ LevelLoader::TutLoadedLevelData LevelLoader::loadTutLevel(const std::string &pat
     return level;
 }
 
-LevelLoader::LoadedLevelData LevelLoader::loadLevel(const std::string &path, std::ifstream &is)
-{
+LevelLoader::LoadedLevelData LevelLoader::loadLevel(const std::string &path, std::ifstream &is) {
 
     Vector<CubeMapSide *> sides;
     Point worldSize = {0, 0};
@@ -74,128 +71,136 @@ LevelLoader::LoadedLevelData LevelLoader::loadLevel(const std::string &path, std
     int id = 0;
     is >> levelName;
     is >> id;
-    for (int s = 1; s < 7; s++)
-    {
+    for (int s = 1; s < 7; s++) {
         int width, height, sideID;
         Vector<CubeField *> cubeFields;
         is >> width;
         is >> height;
         sideID = s;
 
-        for (int y = 0; y < height; y++)
-        {
-            for (int x = 0; x < width; x++)
-            {
+        for (int y = 0; y < height; y++) {
+            for (int x = 0; x < width; x++) {
                 int inType = -1;
                 is >> inType;
                 CubeField *temp = nullptr;
                 Vector<CubeObject *> vec_temp;
-                switch (inType)
-                {
-                case 0:
-                    temp = new EmptyField(sideID, x, y);
-                    break;
-                case 1:
-                    vec_temp.push_back(new Flag());
-                    temp = new EmptyField(sideID, x, y, vec_temp);
-                    break;
-                case 2:
-                case 3:
-                    temp = new Wall(sideID, x, y);
-                    break;
-                case 4:
-                    temp = new PressurePlate(sideID, x, y, 0);
-                    break;
-                case 5:
-                    vec_temp.push_back(new Slider(MovementDirection::moveToBigX, 0));
-                    temp = new EmptyField(sideID, x, y, vec_temp);
-                    break;
-                case 6:
-                    vec_temp.push_back(new Slider(MovementDirection::moveToSmallX, 0));
-                    temp = new EmptyField(sideID, x, y, vec_temp);
-                    break;
-                case 7:
-                    vec_temp.push_back(new Slider(MovementDirection::moveToBigY, 0));
-                    temp = new EmptyField(sideID, x, y, vec_temp);
-                    break;
-                case 8:
-                    vec_temp.push_back(new Slider(MovementDirection::moveToSmallY, 0));
-                    temp = new EmptyField(sideID, x, y, vec_temp);
-                    break;
-                case 9:
-                    vec_temp.push_back(new Magnet());
-                    temp = new EmptyField(sideID, x, y, vec_temp);
-                    break;
-                case 10:
-                    vec_temp.push_back(new Stone());
-                    temp = new EmptyField(sideID, x, y, vec_temp);
-                    break;
-                case 11:
-                    temp = new ObjectBarrier(sideID, x, y);
-                    break;
-                // ###############  green
-                case 12:
-                    temp = new PressurePlate(sideID, x, y, 1);
-                    break;
-                case 13:
-                    vec_temp.push_back(new Slider(MovementDirection::moveToBigX, 1));
-                    temp = new EmptyField(sideID, x, y, vec_temp);
-                    break;
-                case 14:
-                    vec_temp.push_back(new Slider(MovementDirection::moveToSmallX, 1));
-                    temp = new EmptyField(sideID, x, y, vec_temp);
-                    break;
-                case 15:
-                    vec_temp.push_back(new Slider(MovementDirection::moveToBigY, 1));
-                    temp = new EmptyField(sideID, x, y, vec_temp);
-                    break;
-                case 16:
-                    vec_temp.push_back(new Slider(MovementDirection::moveToSmallY, 1));
-                    temp = new EmptyField(sideID, x, y, vec_temp);
-                    break;
-                // ############### yellow
-                case 17:
-                    temp = new PressurePlate(sideID, x, y, 2);
-                    break;
-                case 18:
-                    vec_temp.push_back(new Slider(MovementDirection::moveToBigX, 2));
-                    temp = new EmptyField(sideID, x, y, vec_temp);
-                    break;
-                case 19:
-                    vec_temp.push_back(new Slider(MovementDirection::moveToSmallX, 2));
-                    temp = new EmptyField(sideID, x, y, vec_temp);
-                    break;
-                case 20:
-                    vec_temp.push_back(new Slider(MovementDirection::moveToBigY, 2));
-                    temp = new EmptyField(sideID, x, y, vec_temp);
-                    break;
-                case 21:
-                    vec_temp.push_back(new Slider(MovementDirection::moveToSmallY, 2));
-                    temp = new EmptyField(sideID, x, y, vec_temp);
-                    break;
-                // ############### blue
-                case 22:
-                    temp = new PressurePlate(sideID, x, y, 3);
-                    break;
-                case 23:
-                    vec_temp.push_back(new Slider(MovementDirection::moveToBigX, 3));
-                    temp = new EmptyField(sideID, x, y, vec_temp);
-                    break;
-                case 24:
-                    vec_temp.push_back(new Slider(MovementDirection::moveToSmallX, 3));
-                    temp = new EmptyField(sideID, x, y, vec_temp);
-                    break;
-                case 25:
-                    vec_temp.push_back(new Slider(MovementDirection::moveToBigY, 3));
-                    temp = new EmptyField(sideID, x, y, vec_temp);
-                    break;
-                case 26:
-                    vec_temp.push_back(new Slider(MovementDirection::moveToSmallY, 3));
-                    temp = new EmptyField(sideID, x, y, vec_temp);
-                    break;
-                default:
-                    temp = new EmptyField(sideID, x, y);
-                    break;
+                switch (inType) {
+                    case 0:
+                        temp = new EmptyField(sideID, x, y);
+                        break;
+                    case 1:
+                        vec_temp.push_back(new Flag());
+                        temp = new EmptyField(sideID, x, y, vec_temp);
+                        break;
+                    case 2:
+                    case 3:
+                        temp = new Wall(sideID, x, y);
+                        break;
+                    case 4:
+                        temp = new PressurePlate(sideID, x, y, 0);
+                        break;
+                    case 5:
+                        vec_temp.push_back(new Slider(MovementDirection::moveToBigX, 0));
+                        temp = new EmptyField(sideID, x, y, vec_temp);
+                        break;
+                    case 6:
+                        vec_temp.push_back(new Slider(MovementDirection::moveToSmallX, 0));
+                        temp = new EmptyField(sideID, x, y, vec_temp);
+                        break;
+                    case 7:
+                        vec_temp.push_back(new Slider(MovementDirection::moveToBigY, 0));
+                        temp = new EmptyField(sideID, x, y, vec_temp);
+                        break;
+                    case 8:
+                        vec_temp.push_back(new Slider(MovementDirection::moveToSmallY, 0));
+                        temp = new EmptyField(sideID, x, y, vec_temp);
+                        break;
+                    case 9:
+                        vec_temp.push_back(new Magnet());
+                        temp = new EmptyField(sideID, x, y, vec_temp);
+                        break;
+                    case 10:
+                        vec_temp.push_back(new Stone());
+                        temp = new EmptyField(sideID, x, y, vec_temp);
+                        break;
+                    case 11:
+                        temp = new ObjectBarrier(sideID, x, y);
+                        break;
+                        // ###############  green
+                    case 12:
+                        temp = new PressurePlate(sideID, x, y, 1);
+                        break;
+                    case 13:
+                        vec_temp.push_back(new Slider(MovementDirection::moveToBigX, 1));
+                        temp = new EmptyField(sideID, x, y, vec_temp);
+                        break;
+                    case 14:
+                        vec_temp.push_back(new Slider(MovementDirection::moveToSmallX, 1));
+                        temp = new EmptyField(sideID, x, y, vec_temp);
+                        break;
+                    case 15:
+                        vec_temp.push_back(new Slider(MovementDirection::moveToBigY, 1));
+                        temp = new EmptyField(sideID, x, y, vec_temp);
+                        break;
+                    case 16:
+                        vec_temp.push_back(new Slider(MovementDirection::moveToSmallY, 1));
+                        temp = new EmptyField(sideID, x, y, vec_temp);
+                        break;
+                        // ############### yellow
+                    case 17:
+                        temp = new PressurePlate(sideID, x, y, 2);
+                        break;
+                    case 18:
+                        vec_temp.push_back(new Slider(MovementDirection::moveToBigX, 2));
+                        temp = new EmptyField(sideID, x, y, vec_temp);
+                        break;
+                    case 19:
+                        vec_temp.push_back(new Slider(MovementDirection::moveToSmallX, 2));
+                        temp = new EmptyField(sideID, x, y, vec_temp);
+                        break;
+                    case 20:
+                        vec_temp.push_back(new Slider(MovementDirection::moveToBigY, 2));
+                        temp = new EmptyField(sideID, x, y, vec_temp);
+                        break;
+                    case 21:
+                        vec_temp.push_back(new Slider(MovementDirection::moveToSmallY, 2));
+                        temp = new EmptyField(sideID, x, y, vec_temp);
+                        break;
+                        // ############### blue
+                    case 22:
+                        temp = new PressurePlate(sideID, x, y, 3);
+                        break;
+                    case 23:
+                        vec_temp.push_back(new Slider(MovementDirection::moveToBigX, 3));
+                        temp = new EmptyField(sideID, x, y, vec_temp);
+                        break;
+                    case 24:
+                        vec_temp.push_back(new Slider(MovementDirection::moveToSmallX, 3));
+                        temp = new EmptyField(sideID, x, y, vec_temp);
+                        break;
+                    case 25:
+                        vec_temp.push_back(new Slider(MovementDirection::moveToBigY, 3));
+                        temp = new EmptyField(sideID, x, y, vec_temp);
+                        break;
+                    case 26:
+                        vec_temp.push_back(new Slider(MovementDirection::moveToSmallY, 3));
+                        temp = new EmptyField(sideID, x, y, vec_temp);
+                        break;
+                    case 27:
+                        temp = new ArrowField(sideID, x, y, MovementDirection::moveToBigX);
+                        break;
+                    case 28:
+                        temp = new ArrowField(sideID, x, y, MovementDirection::moveToSmallX);
+                        break;
+                    case 29:
+                        temp = new ArrowField(sideID, x, y, MovementDirection::moveToBigY);
+                        break;
+                    case 30:
+                        temp = new ArrowField(sideID, x, y, MovementDirection::moveToSmallY);
+                        break;
+                    default:
+                        temp = new EmptyField(sideID, x, y);
+                        break;
                 }
                 cubeFields.push_back(temp);
             }
