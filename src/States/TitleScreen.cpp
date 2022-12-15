@@ -53,7 +53,7 @@ void TitleScreen::Init() {
     game.SetPerfDrawMode(Game::PerformanceDrawMode::None);
     cubeGame.setWindowName("Qube Puzzle");
 
-    versionInfo = new Text(cubeGame, this, render, 500, "v" VERSION " b" COMMIT_HASH,
+    versionInfo = new Text(cubeGame, this, render, 500, "v" VERSION " " COMMIT_HASH,
             game.getSpriteStorage()->smallFont, {});
     versionInfo->Init();
 }
