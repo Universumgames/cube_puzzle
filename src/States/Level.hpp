@@ -25,7 +25,7 @@ class Level : public ComplexGameState {
 public:
     Level(CubeGame &game, Renderer *render);
 
-    void Events(const u32 frame, const u32 totalMSec, const float deltaT) override;
+    void HandleEvent(const u32 frame, const u32 totalMSec, const float deltaT, Event event) override;
 
     void Update(const u32 frame, const u32 totalMSec, const float deltaT) override;
 

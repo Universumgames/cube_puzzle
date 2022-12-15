@@ -21,16 +21,6 @@
                                     player->method; \
                                     }
 
-void Level::Events(const u32 frame, const u32 totalMSec, const float deltaT) {
-    SDL_PumpEvents();
-
-    Event event;
-    while (SDL_PollEvent(&event)) {
-        if (game.HandleEvent(event))
-            continue;
-        iterateGameObjects(HandleEvent(BASIC_GO_DATA_PASSTHROUGH, event));
-    }
-}
 
 u32 lastMSec = 0;
 u32 lastFrame = 0;
@@ -215,4 +205,8 @@ void Level::initLevel() {
     player = new Player(cubeGame, this, render);
     player->setCubeMap(cubeMap);
     cubeMap->SetPlayer(player);
+}
+
+void Level::HandleEvent(const u32 frame, const u32 totalMSec, const float deltaT, Event event) {
+    iterateGameObjects(HandleEvent(BASIC_GO_DATA_PASSTHROUGH, event));
 }

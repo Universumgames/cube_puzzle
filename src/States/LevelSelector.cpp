@@ -10,41 +10,6 @@
 #include "../filehelper.hpp"
 #include "config.hpp"
 
-void LevelSelector::Events(const u32 frame, const u32 totalMSec, const float deltaT) {
-    SDL_PumpEvents();
-
-    Event event;
-    while (SDL_PollEvent(&event)) {
-        if (game.HandleEvent(event)) // es wurde sich bereits um das Event gekümmert, deswegen nächstes Event laden
-            continue;
-        if (event.type != SDL_KEYDOWN) continue;
-        const Keysym &what_key = event.key.keysym;
-        if (what_key.scancode >= SDL_SCANCODE_1 && what_key.scancode < SDL_SCANCODE_0) {
-            int id = what_key.scancode + 1 - SDL_SCANCODE_1;
-            playLevel(id);
-        } else if (what_key.scancode >= SDL_SCANCODE_KP_1 && what_key.scancode < SDL_SCANCODE_KP_0) {
-            int id = what_key.scancode + 1 - SDL_SCANCODE_KP_1;
-            playLevel(id);
-        }
-
-        // tutorial start
-        if (what_key.scancode == SDL_SCANCODE_T) {
-            playLevel(tutLevelData[0]);
-        }
-
-        // navigation in selector
-        if (what_key.scancode == SDL_SCANCODE_UP) {
-            selectorIndex--;
-        } else if (what_key.scancode == SDL_SCANCODE_DOWN) {
-            selectorIndex++;
-        } else if (what_key.scancode == SDL_SCANCODE_KP_ENTER || what_key.scancode == SDL_SCANCODE_RETURN) {
-            playLevel(levelData[selectorIndex]);
-        }
-        selectorIndex = (int) (max(0, selectorIndex) % levelData.size());
-    }
-
-}
-
 void LevelSelector::Update(const u32 frame, const u32 totalMSec, const float deltaT) {
     debugText->setEnabled(cubeGame.isDebug());
     drawDebugList();
@@ -326,6 +291,33 @@ int LevelSelector::getLevelIDByState(int stateIndex) {
         }
     }
     return -1;
+}
+
+void LevelSelector::HandleEvent(const u32 frame, const u32 totalMSec, const float deltaT, Event event) {
+    if (event.type != SDL_KEYDOWN) return;
+    const Keysym &what_key = event.key.keysym;
+    if (what_key.scancode >= SDL_SCANCODE_1 && what_key.scancode < SDL_SCANCODE_0) {
+        int id = what_key.scancode + 1 - SDL_SCANCODE_1;
+        playLevel(id);
+    } else if (what_key.scancode >= SDL_SCANCODE_KP_1 && what_key.scancode < SDL_SCANCODE_KP_0) {
+        int id = what_key.scancode + 1 - SDL_SCANCODE_KP_1;
+        playLevel(id);
+    }
+
+    // tutorial start
+    if (what_key.scancode == SDL_SCANCODE_T) {
+        playLevel(tutLevelData[0]);
+    }
+
+    // navigation in selector
+    if (what_key.scancode == SDL_SCANCODE_UP) {
+        selectorIndex--;
+    } else if (what_key.scancode == SDL_SCANCODE_DOWN) {
+        selectorIndex++;
+    } else if (what_key.scancode == SDL_SCANCODE_KP_ENTER || what_key.scancode == SDL_SCANCODE_RETURN) {
+        playLevel(levelData[selectorIndex]);
+    }
+    selectorIndex = (int) (max(0, selectorIndex) % levelData.size());
 }
 
 

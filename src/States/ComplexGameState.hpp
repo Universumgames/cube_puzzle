@@ -16,6 +16,10 @@ public:
 
     virtual void returnToLevelSelector(ExitState exitState);
 
+    virtual void HandleEvent(const u32 frame, const u32 totalMSec, const float deltaT, Event event){}
+
+    void Events(const u32 frame, const u32 totalMSec, const float deltaT) override;
+
 protected:
     virtual Rect getGameRenderDst() = 0;
     virtual Rect getUIRenderDst() = 0;

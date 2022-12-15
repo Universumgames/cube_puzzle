@@ -13,3 +13,14 @@ void ComplexGameState::returnToLevelSelector(ExitState exitState) {
     cubeGame.interGameStateData.sourceStateID = -1;
     cubeGame.returnToLevelSelector();
 }
+
+void ComplexGameState::Events(const u32 frame, const u32 totalMSec, const float deltaT) {
+    SDL_PumpEvents();
+
+    Event event;
+    while (SDL_PollEvent(&event)) {
+        if (game.HandleEvent(event))
+            continue;
+        HandleEvent(BASIC_GO_DATA_PASSTHROUGH, event);
+    }
+}
