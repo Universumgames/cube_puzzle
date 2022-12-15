@@ -12,24 +12,14 @@ Message(STATUS "CMAKE_FINDCMAKE: " ${CMAKE_SOURCE_DIR}/CMAKE)
 project(cube_puzzle VERSION 0.9)
 
 message("Version = ${CMAKE_PROJECT_VERSION}")
+
+string(TIMESTAMP COMPILETIME "%Y%M%d_%H%M" UTC)
+
 # ------- Set Vars ------- #
 set(CMAKE_CXX_STANDARD 23)
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin)
 set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} "${CMAKE_SOURCE_DIR}/CMAKE")
 set(CMAKE_XCODE_SCHEME_WORKING_DIRECTORY ./)
-#[[set(SOURCE_FILES src/main.cpp src/global.hpp src/gamebase.hpp src/gamebase.cpp src/recthelper.hpp src/CubeGame.cpp
-        src/CubeGame.hpp src/States/LevelSelector.cpp src/States/LevelSelector.hpp src/States/Level.cpp
-        src/States/Level.hpp src/GameObjects/GameObject.cpp src/GameObjects/GameObject.hpp
-        src/GameObjects/Player.cpp src/GameObjects/Player.hpp src/GameObjects/CubeMap.cpp
-        src/GameObjects/CubeMap.hpp src/GameObjects/WorldMap.cpp src/GameObjects/WorldMap.hpp
-        src/GameObjects/CubeField.cpp src/GameObjects/CubeField.hpp src/data/WorldField.hpp
-        src/data/LevelData.hpp src/data/MoveDirections.hpp src/data/DiceData.hpp src/data/DiceData.cpp
-        src/data/EmptyData.hpp src/data/SpriteStorage.hpp src/GameObjects/Text.cpp src/GameObjects/Text.hpp
-        src/data/Colors.hpp src/States/ComplexGameState.hpp src/States/ComplexGameState.cpp
-        src/GameObjects/CubeMapSide.cpp src/GameObjects/CubeMapSide.hpp src/GameObjects/CubeMap_playerMovement.cpp src/data/WorldField.cpp
-        src/data/paths.hpp src/stringhelper.hpp src/data/LevelLoader.cpp src/data/LevelLoader.hpp src/filehelper.hpp
-        src/AudioHandler.hpp src/AudioHandler.cpp src/matrix.hpp src/GameObjects/CubeMapMiniMap.cpp
-        src/GameObjects/CubeMapMiniMap.hpp src/data/bezier.hpp src/mathhelper.hpp src/data/spriteDefs.hpp)]]
 
 # find all source files
 file(GLOB_RECURSE SOURCE_FILES src/*.*)
@@ -138,3 +128,7 @@ target_include_directories(${PROJECT_NAME}
         PRIVATE
         ${CMAKE_CURRENT_BINARY_DIR}/generated
         )
+
+string(REPLACE "." "_" FileVersion ${CMAKE_PROJECT_VERSION})
+
+set_target_properties(${PROJECT_NAME} PROPERTIES OUTPUT_NAME "qube_puzzle_v${FileVersion}_b${COMPILETIME}")

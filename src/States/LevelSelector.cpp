@@ -8,6 +8,7 @@
 #include <utility>
 #include <filesystem>
 #include "../filehelper.hpp"
+#include "config.hpp"
 
 void LevelSelector::Events(const u32 frame, const u32 totalMSec, const float deltaT) {
     SDL_PumpEvents();
@@ -51,6 +52,7 @@ void LevelSelector::Update(const u32 frame, const u32 totalMSec, const float del
         prepareLevelListItems();
         oldSize = game.getWindowSize();
     }
+    versionInfo->changePosition(cubeGame.getWindowSize() - versionInfo->getTextSize() - Point{10,10});
 }
 
 void LevelSelector::Render(const u32 frame, const u32 totalMSec, const float deltaT) {
@@ -93,6 +95,8 @@ void LevelSelector::Render(const u32 frame, const u32 totalMSec, const float del
 
     debugText->RenderUI(frame, totalMSec, deltaT);
     headline->RenderUI(BASIC_GO_DATA_PASSTHROUGH);
+
+    versionInfo->RenderUI(BASIC_GO_DATA_PASSTHROUGH);
 
 
     SDL_RenderPresent(render);
@@ -208,6 +212,9 @@ void LevelSelector::Init() {
                            game.getSpriteStorage()->basicFont, {});
     sideBarText->Init();
 
+    versionInfo = new Text(cubeGame, this, render, 500, "v" VERSION " b" COMPILE_TIME, game.getSpriteStorage()->smallFont, {});
+    versionInfo->Init();
+
     prepareLevelListItems();
 }
 
@@ -318,6 +325,7 @@ int LevelSelector::getLevelIDByState(int stateIndex) {
             return level.id;
         }
     }
+    return -1;
 }
 
 

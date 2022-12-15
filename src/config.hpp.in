@@ -1,3 +1,4 @@
 #pragma once
 
 #define VERSION "@CMAKE_PROJECT_VERSION@"
+#define COMPILE_TIME "@COMPILETIME@"

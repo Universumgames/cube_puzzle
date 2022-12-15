@@ -83,6 +83,7 @@ struct SpriteStorage {
     Texture *cubeObjectSpriteSheet = nullptr;
     Texture *temp = nullptr;
     Font *basicFont = nullptr;
+    Font *smallFont = nullptr;
     Font *debugFont = nullptr;
 
     /// dice backgrounds, cubeFields x is stored in [x-1]

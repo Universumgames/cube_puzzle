@@ -28,7 +28,7 @@ public:
 
     explicit Game(
             const char *windowTitle = "SDL Game",
-            const Point windowSize = Point{1024, 720},
+            const Point windowSize = Point{1980, 1024},
             const bool vSync = true);
 
     virtual ~Game();

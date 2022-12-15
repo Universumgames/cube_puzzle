@@ -74,6 +74,7 @@ private:
     Text *debugText;
     Text* sideBarText;
     Text* headline;
+    Text* versionInfo;
 
     bool loadingNext;
 };
