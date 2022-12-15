@@ -51,6 +51,8 @@ private:
 
     void playNextLevel(int allStatesID);
 
+    int getLevelIDByState(int stateIndex);
+
     void prepareLevelListItems();
 
     void prepareLevelListItemTexture(LevelData& leveldata, Point drawableRect);

@@ -1,6 +1,7 @@
 #include "global.hpp"
 #include "CubeGame.hpp"
 #include "data/DiceData.hpp"
+#include "config.hpp"
 
 void tests() {
     /*auto data = DiceData();
@@ -9,6 +10,7 @@ void tests() {
     cout << data.toString() << std::endl;
     data.rotate(DiceRollDirection::WEST);
     cout << data.toString() << std::endl;*/
+    cout << VERSION << endl;
 }
 
 extern "C" int main(int argc, char *argv[])

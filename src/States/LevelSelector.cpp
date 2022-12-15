@@ -174,19 +174,24 @@ void LevelSelector::Init() {
     oldSize = game.getWindowSize();
     // check if returned from level
     // if level was finished, load to next level, if not proceed
-    if (cubeGame.interGameStateData.exitState == ExitState::FINISHED) {
-        playNextLevel(cubeGame.interGameStateData.sourceStateID);
-        loadingNext = true;
-    } else loadingNext = false;
 
-    // else check if levels are all loaded, if not load them
-    if (cubeGame.interGameStateData.sourceStateID != -1 ||!levelsLoaded) {
+    int nextLevelId = getLevelIDByState(cubeGame.interGameStateData.sourceStateID);
+
+    if (cubeGame.interGameStateData.sourceStateID != -1 || !levelsLoaded) {
         levelData.clear();
         tutLevelData.clear();
         loadLevels();
         loadTutorialLevels();
         levelsLoaded = true;
     }
+
+    if (cubeGame.interGameStateData.exitState == ExitState::FINISHED) {
+        playLevel(nextLevelId + 1);
+        loadingNext = true;
+    } else loadingNext = false;
+
+    // else check if levels are all loaded, if not load them
+
 
     debugText = new Text(cubeGame, this, render, 500, "level selector", game.getSpriteStorage()->debugFont, {10, 10}, 1,
                          white);
@@ -213,7 +218,7 @@ void LevelSelector::UnInit() {
 void LevelSelector::playLevel(const LevelData &level) {
     game.SetNextState(level.allStatesIndex);
     long index = std::find(levelData.begin(), levelData.end(), level) - levelData.begin();
-    selectorIndex = (int) index;
+    selectorIndex = level.id < 0 ? 0 : (int) index;
 }
 
 void LevelSelector::playLevel(int levelId) {
@@ -303,6 +308,16 @@ Rect LevelSelector::getSideBarSpace(int topPadding) {
 
 Rect LevelSelector::getDrawableUISpace() {
     return centerIn(addPadding(getDrawableUIRect(), 20), getDrawableUIRect());
+}
+
+int LevelSelector::getLevelIDByState(int stateIndex) {
+    auto allLevels = levelData;
+    allLevels.insert(allLevels.end(), tutLevelData.begin(), tutLevelData.end());
+    for (const auto &level: allLevels) {
+        if (stateIndex == level.allStatesIndex) {
+            return level.id;
+        }
+    }
 }
 
 

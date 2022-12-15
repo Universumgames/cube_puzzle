@@ -9,7 +9,9 @@ Message(STATUS "CMAKE_C_COMPILER: " ${CMAKE_C_COMPILER})
 Message(STATUS "CMAKE_PROJECT_NAME: " ${CMAKE_PROJECT_NAME})
 Message(STATUS "CMAKE_FINDCMAKE: " ${CMAKE_SOURCE_DIR}/CMAKE)
 
-project(cube_puzzle)
+project(cube_puzzle VERSION 0.9)
+
+message("Version = ${CMAKE_PROJECT_VERSION}")
 # ------- Set Vars ------- #
 set(CMAKE_CXX_STANDARD 23)
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin)
@@ -127,3 +129,12 @@ else ()
 
     # ------- End ----------- #
 ENDIF ()
+
+configure_file (
+        "src/config.hpp.in"
+        "generated/config.hpp"  )
+
+target_include_directories(${PROJECT_NAME}
+        PRIVATE
+        ${CMAKE_CURRENT_BINARY_DIR}/generated
+        )
