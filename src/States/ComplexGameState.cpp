@@ -19,7 +19,7 @@ void ComplexGameState::Events(const u32 frame, const u32 totalMSec, const float 
 
     Event event;
     while (SDL_PollEvent(&event)) {
-        if (game.HandleEvent(event))
+        if (cubeGame.HandleEvent(event))
             continue;
         HandleEvent(BASIC_GO_DATA_PASSTHROUGH, event);
     }

@@ -17,7 +17,6 @@ void LevelSelector::Update(const u32 frame, const u32 totalMSec, const float del
         prepareLevelListItems();
         oldSize = game.getWindowSize();
     }
-    versionInfo->changePosition(cubeGame.getWindowSize() - versionInfo->getTextSize() - Point{10,10});
 }
 
 void LevelSelector::Render(const u32 frame, const u32 totalMSec, const float deltaT) {
@@ -61,7 +60,6 @@ void LevelSelector::Render(const u32 frame, const u32 totalMSec, const float del
     debugText->RenderUI(frame, totalMSec, deltaT);
     headline->RenderUI(BASIC_GO_DATA_PASSTHROUGH);
 
-    versionInfo->RenderUI(BASIC_GO_DATA_PASSTHROUGH);
 
 
     SDL_RenderPresent(render);
@@ -146,13 +144,7 @@ void LevelSelector::Init() {
 
     int nextLevelId = getLevelIDByState(cubeGame.interGameStateData.sourceStateID);
 
-    if (cubeGame.interGameStateData.sourceStateID != -1 || !levelsLoaded) {
-        levelData.clear();
-        tutLevelData.clear();
-        loadLevels();
-        loadTutorialLevels();
-        levelsLoaded = true;
-    }
+    levelsInit();
 
     if (cubeGame.interGameStateData.exitState == ExitState::FINISHED) {
         playLevel(nextLevelId + 1);
@@ -177,8 +169,7 @@ void LevelSelector::Init() {
                            game.getSpriteStorage()->basicFont, {});
     sideBarText->Init();
 
-    versionInfo = new Text(cubeGame, this, render, 500, "v" VERSION " b" COMPILE_TIME, game.getSpriteStorage()->smallFont, {});
-    versionInfo->Init();
+
 
     prepareLevelListItems();
 }
@@ -318,6 +309,15 @@ void LevelSelector::HandleEvent(const u32 frame, const u32 totalMSec, const floa
         playLevel(levelData[selectorIndex]);
     }
     selectorIndex = (int) (max(0, selectorIndex) % levelData.size());
+}
+
+void LevelSelector::levelsInit() {
+    if (cubeGame.interGameStateData.sourceStateID == -1 && levelsLoaded) return;
+    levelData.clear();
+    tutLevelData.clear();
+    loadLevels();
+    loadTutorialLevels();
+    levelsLoaded = true;
 }
 
 

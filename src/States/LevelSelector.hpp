@@ -9,6 +9,8 @@
 #include "ComplexGameState.hpp"
 #include "../global.hpp"
 
+class TitleScreen;
+
 /// Level Selector GameState, initializes level selecting and loading data
 class LevelSelector final : public ComplexGameState {
 public:
@@ -35,6 +37,7 @@ protected:
     Rect getUIRenderDst() override;
 
 private:
+    void levelsInit();
 
     /// load level data list, for selection
     void loadLevels();
@@ -74,8 +77,10 @@ private:
     Text *debugText;
     Text* sideBarText;
     Text* headline;
-    Text* versionInfo;
 
     bool loadingNext;
+
+    friend class TitleScreen;
+    friend class CubeGame;
 };
 

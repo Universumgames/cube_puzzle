@@ -1,0 +1,25 @@
+{
+  "name": "Qube Puzzle",
+  "short_description": "2D puzzle game on a dice",
+  "github": "https://github.com/Universumgames/cube_puzzle",
+  "tags": [
+    "2d", "dice", "puzzle"
+  ],
+  "license": "GNU AGPL3",
+  "other_urls": [
+    "https://github.com/Universumgames/cube_puzzle",
+    "TODO add level editor"
+  ],
+  "contributors": [
+    {
+      "username": "leonfab"
+    },
+    {
+      "username": "padmina"
+    },
+    {
+      "username": "universum",
+      "website": "https://universegame.de"
+    }
+  ]
+}

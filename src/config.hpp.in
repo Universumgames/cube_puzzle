@@ -1,4 +1,6 @@
 #pragma once
 
 #define VERSION "@CMAKE_PROJECT_VERSION@"
-#define COMPILE_TIME "@COMPILETIME@"
+#define COMMIT_HASH "@GIT_HASH@"
+#define ARCHITECTURE "@ARCHITECTURE@"
+#define OS "@CMAKE_SYSTEM_NAME@"

@@ -11,9 +11,6 @@ Message(STATUS "CMAKE_FINDCMAKE: " ${CMAKE_SOURCE_DIR}/CMAKE)
 
 project(cube_puzzle VERSION 0.9)
 
-message("Version = ${CMAKE_PROJECT_VERSION}")
-
-string(TIMESTAMP COMPILETIME "%Y%M%d_%H%M" UTC)
 
 # ------- Set Vars ------- #
 set(CMAKE_CXX_STANDARD 23)
@@ -59,9 +56,11 @@ IF (WIN32 OR MINGW)
 
     ADD_EXECUTABLE(${PROJECT_NAME} ${SOURCE_FILES})
 
-    target_link_libraries(${PROJECT_NAME} SDL2 SDL2main SDL2_ttf SDL2_image SDL2_mixer)
+    target_link_libraries(${PROJECT_NAME} PRIVATE SDL2 SDL2main SDL2_ttf SDL2_image SDL2_mixer)
 
     file(COPY asset DESTINATION ${CMAKE_RUNTIME_OUTPUT_DIRECTORY})
+
+    install(TARGETS ${PROJECT_NAME} DESTINATION ${CMAKE_INSTALL_BINDIR})
 
 else ()
     ADD_EXECUTABLE(${PROJECT_NAME} ${SOURCE_FILES})
@@ -120,6 +119,19 @@ else ()
     # ------- End ----------- #
 ENDIF ()
 
+# architecture
+EXECUTE_PROCESS( COMMAND uname -m COMMAND tr -d '\n' OUTPUT_VARIABLE ARCHITECTURE )
+
+# git hash
+execute_process(
+        COMMAND git log -1 --format=%h
+        WORKING_DIRECTORY ${CMAKE_CURRENT_LIST_DIR}
+        OUTPUT_VARIABLE GIT_HASH
+        OUTPUT_STRIP_TRAILING_WHITESPACE
+)
+
+
+#configure config header
 configure_file (
         "src/config.hpp.in"
         "generated/config.hpp"  )
@@ -131,4 +143,15 @@ target_include_directories(${PROJECT_NAME}
 
 string(REPLACE "." "_" FileVersion ${CMAKE_PROJECT_VERSION})
 
-set_target_properties(${PROJECT_NAME} PROPERTIES OUTPUT_NAME "qube_puzzle_v${FileVersion}_b${COMPILETIME}")
+set(EXE_NAME "qube_puzzle_${CMAKE_SYSTEM_NAME}_${ARCHITECTURE}_${GIT_HASH}")
+
+# compile info
+file(WRITE ${CMAKE_RUNTIME_OUTPUT_DIRECTORY}/appInfo
+"Version: ${CMAKE_PROJECT_VERSION}
+Commit: ${GIT_HASH}
+Architecture: ${ARCHITECTURE}
+System: ${CMAKE_SYSTEM_NAME}
+Executable Base Name: ${EXE_NAME}")
+
+#change exe name
+set_target_properties(${PROJECT_NAME} PROPERTIES OUTPUT_NAME ${EXE_NAME})

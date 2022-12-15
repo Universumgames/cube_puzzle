@@ -10,8 +10,6 @@ void tests() {
     cout << data.toString() << std::endl;
     data.rotate(DiceRollDirection::WEST);
     cout << data.toString() << std::endl;*/
-    cout << "Version " << VERSION << endl;
-    cout << "Compile Start " << COMPILE_TIME << endl;
 }
 
 extern "C" int main(int argc, char *argv[])

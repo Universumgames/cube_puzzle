@@ -2,6 +2,7 @@
 #include "States/LevelSelector.hpp"
 #include "States/Level.hpp"
 #include "States/LevelSelector.hpp"
+#include "States/TitleScreen.hpp"
 
 #define loadPNGTexture(variable, render, path) { \
                                         Surface* temp = IMG_Load(path); \
@@ -16,7 +17,10 @@
 CubeGame::CubeGame() : Game("CubeGame") {
     loadSprites();
     // Level selector loads all levels and adds them procedually to the states
-    allStates = {new LevelSelector(*this, render)};
+    auto titleScreen = new TitleScreen(*this, render);
+    auto levelSelector = new LevelSelector(*this, render);
+    titleScreen->levelSelector = levelSelector;
+    allStates = {titleScreen, levelSelector};
     audioHandler = AudioHandler::getInstance();
     audioHandler->init();
     backgroundMusic = new AudioPlayer(MUSIC_BACKGROUND_PATH);
@@ -96,7 +100,7 @@ Point CubeGame::getCurrentRenderTargetSize() {
 }
 
 void CubeGame::returnToLevelSelector() {
-    SetNextState(0);
+    SetNextState(1);
 }
 
 void CubeGame::setWindowName(std::string windowName) {
