@@ -119,39 +119,18 @@ else ()
     # ------- End ----------- #
 ENDIF ()
 
-# architecture
-EXECUTE_PROCESS( COMMAND uname -m COMMAND tr -d '\n' OUTPUT_VARIABLE ARCHITECTURE )
-
-# git hash
-execute_process(
-        COMMAND git log -1 --format=%h
-        WORKING_DIRECTORY ${CMAKE_CURRENT_LIST_DIR}
-        OUTPUT_VARIABLE GIT_HASH
-        OUTPUT_STRIP_TRAILING_WHITESPACE
-)
-
-
-#configure config header
-configure_file (
-        "src/config.hpp.in"
-        "generated/config.hpp"  )
-
+set(REAL_SRC_DIR ${CMAKE_SOURCE_DIR})
+include(CMAKE_configure.cmake)
 target_include_directories(${PROJECT_NAME}
         PRIVATE
         ${CMAKE_CURRENT_BINARY_DIR}/generated
         )
 
-string(REPLACE "." "_" FileVersion ${CMAKE_PROJECT_VERSION})
+add_custom_command( TARGET ${PROJECT_NAME}
+        PRE_BUILD
+        COMMAND ${CMAKE_COMMAND} -D REAL_SRC_DIR="${CMAKE_SOURCE_DIR}" -D CMAKE_PROJECT_VERSION="${CMAKE_PROJECT_VERSION}" -D CMAKE_RUNTIME_OUTPUT_DIRECTORY="${CMAKE_RUNTIME_OUTPUT_DIRECTORY}" -D CMAKE_SYSTEM_NAME="${CMAKE_SYSTEM_NAME}" -P ${CMAKE_SOURCE_DIR}/CMAKE_configure.cmake
+        )
 
-set(EXE_NAME "qube_puzzle_${CMAKE_SYSTEM_NAME}_${ARCHITECTURE}_${GIT_HASH}")
-
-# compile info
-file(WRITE ${CMAKE_RUNTIME_OUTPUT_DIRECTORY}/appInfo
-"Version: ${CMAKE_PROJECT_VERSION}
-Commit: ${GIT_HASH}
-Architecture: ${ARCHITECTURE}
-System: ${CMAKE_SYSTEM_NAME}
-Executable Base Name: ${EXE_NAME}")
-
-#change exe name
-set_target_properties(${PROJECT_NAME} PROPERTIES OUTPUT_NAME ${EXE_NAME})
+add_custom_command(TARGET ${PROJECT_NAME}
+        POST_BUILD
+        COMMAND ${CMAKE_COMMAND} -D CMAKE_SYSTEM_NAME="${CMAKE_SYSTEM_NAME}" -D CMAKE_PROJECT_VERSION="${CMAKE_PROJECT_VERSION}" -P ${CMAKE_SOURCE_DIR}/CMAKE_package.cmake)
