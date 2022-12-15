@@ -1,6 +1,8 @@
 # Cube puzzle
 This is a simple 2D SDL2 puzzle game.
 
+## View on [itch.io](https://universegame.itch.io/qubepuzzle)
+
 ## Dependencies
 Here is a list of all dependencies to compile and run the application on a Debian system (you may have to adjust these names for your package manager):
 - libsdl2-dev 
