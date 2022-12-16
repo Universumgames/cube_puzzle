@@ -48,11 +48,11 @@ private:
     void drawDebugList();
 
     /// play specific level
-    void playLevel(const LevelData &level);
+    bool playLevel(const LevelData &level);
 
-    void playLevel(int levelID);
+    bool playLevel(int levelID);
 
-    void playNextLevel(int allStatesID);
+    bool playNextLevel(int allStatesID);
 
     int getLevelIDByState(int stateIndex);
 

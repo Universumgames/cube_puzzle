@@ -20,7 +20,10 @@ void LevelSelector::Update(const u32 frame, const u32 totalMSec, const float del
 }
 
 void LevelSelector::Render(const u32 frame, const u32 totalMSec, const float deltaT) {
-    if (loadingNext) return;
+    if (loadingNext){
+        loadingNext = false;
+        return;
+    }
     SDL_SetRenderDrawColor(render, 20, 20, 20, 255);
     SDL_RenderClear(render);
 
@@ -147,8 +150,7 @@ void LevelSelector::Init() {
     levelsInit();
 
     if (cubeGame.interGameStateData.exitState == ExitState::FINISHED) {
-        playLevel(nextLevelId + 1);
-        loadingNext = true;
+        loadingNext = playLevel(nextLevelId + 1);
     } else loadingNext = false;
 
     // else check if levels are all loaded, if not load them
@@ -171,42 +173,43 @@ void LevelSelector::Init() {
 
 
 
-    prepareLevelListItems();
+    if(!loadingNext) prepareLevelListItems();
 }
 
 void LevelSelector::UnInit() {
     GameState::UnInit();
 }
 
-void LevelSelector::playLevel(const LevelData &level) {
+bool LevelSelector::playLevel(const LevelData &level) {
     game.SetNextState(level.allStatesIndex);
     long index = std::find(levelData.begin(), levelData.end(), level) - levelData.begin();
     selectorIndex = level.id < 0 ? 0 : (int) index;
+    return true;
 }
 
-void LevelSelector::playLevel(int levelId) {
+bool LevelSelector::playLevel(int levelId) {
     // try nearest next level to levelId, if levelId is not found, increasee by 1
     auto allLevels = levelData;
     allLevels.insert(allLevels.end(), tutLevelData.begin(), tutLevelData.end());
-    for (int fallbackLevel = levelId; fallbackLevel < levelData[levelData.size() - 1].id; fallbackLevel++) {
+    for (int fallbackLevel = levelId; fallbackLevel <= levelData[levelData.size() - 1].id; fallbackLevel++) {
         for (const auto &level: allLevels) {
             if (fallbackLevel == level.id) {
-                playLevel(level);
-                return;
+                return playLevel(level);
             }
         }
     }
+    return false;
 }
 
-void LevelSelector::playNextLevel(int allStatesID) {
+bool LevelSelector::playNextLevel(int allStatesID) {
     auto allLevels = levelData;
     allLevels.insert(allLevels.end(), tutLevelData.begin(), tutLevelData.end());
     for (const auto &level: allLevels) {
         if (allStatesID == level.allStatesIndex) {
-            playLevel(level.id + 1);
-            return;
+            return playLevel(level.id + 1);
         }
     }
+    return false;
 }
 
 Rect LevelSelector::getDrawableGameRect() {
