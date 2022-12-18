@@ -30,97 +30,13 @@ Message("")
 
 # ------- Finds ---------- #
 IF (WIN32 OR MINGW)
-    set(SDL2_INCLUDE_DIR ./SDL2-2.24.2/include)
-    set(SDL2_LIB_DIR ./SDL2-2.24.2/lib)
-
-    set(SDL2_TTF_INCLUDE_DIR ./SDL2_ttf-2.20.1/include)
-    set(SDL2_TTF_LIB_DIR ./SDL2_ttf-2.20.1/lib)
-
-    set(SDL2_IMAGE_INCLUDE_DIR ./SDL2_image-2.6.2/include)
-    set(SDL2_IMAGE_LIB_DIR ./SDL2_image-2.6.2/lib)
-
-    set(SDL2_MIXER_INCLUDE_DIR ./SDL2_mixer-2.6.2/include)
-    set(SDL2_MIXER_LIB_DIR ./SDL2_mixer-2.6.2/lib)
-
-    include_directories(${SDL2_INCLUDE_DIR})
-    link_directories(${SDL2_LIB_DIR})
-
-    include_directories(${SDL2_TTF_INCLUDE_DIR})
-    link_directories(${SDL2_TTF_LIB_DIR})
-
-    include_directories(${SDL2_IMAGE_INCLUDE_DIR})
-    link_directories(${SDL2_IMAGE_LIB_DIR})
-
-    include_directories(${SDL2_MIXER_INCLUDE_DIR})
-    link_directories(${SDL2_MIXER_LIB_DIR})
-
-    ADD_EXECUTABLE(${PROJECT_NAME} ${SOURCE_FILES})
-
-    target_link_libraries(${PROJECT_NAME} PRIVATE SDL2 SDL2main SDL2_ttf SDL2_image SDL2_mixer)
-
-    file(COPY asset DESTINATION ${CMAKE_RUNTIME_OUTPUT_DIRECTORY})
-
-    install(TARGETS ${PROJECT_NAME} DESTINATION ${CMAKE_INSTALL_BINDIR})
-
+    include(CMAKE_configure_win.cmake)
 else ()
-    ADD_EXECUTABLE(${PROJECT_NAME} ${SOURCE_FILES})
-
-    FIND_PACKAGE(SDL2 REQUIRED)
-    Message("")
-    Message(STATUS "FINDING SDL2")
-    IF (${SDL2_FOUND})
-        Message(STATUS "SDL2_FOUND: " ${SDL2_FOUND})
-        Message(STATUS "SDL2_INCLUDE_DIR:" ${SDL2_INCLUDE_DIR})
-        Message(STATUS "SDL2_LIBRARY: " ${SDL2_LIBRARY})
-    ELSE ()
-        Message(STATUS "SDL2_FOUND: " ${SDL2_FOUND})
-        Message(FATAL_ERROR "SDL2 NOT FOUND")
-    ENDIF ()
-
-    FIND_PACKAGE(SDL2_IMAGE)
-    Message("")
-    Message(STATUS "FINDING SDL2_IMAGE")
-    Message(STATUS "SDL2_IMAGE_FOUND: " ${SDL2_IMAGE_FOUND})
-    IF (${SDL2_IMAGE_FOUND})
-        Message(STATUS "SDL2_IMAGE_INCLUDE_DIR: " ${SDL2_IMAGE_INCLUDE_DIR})
-        Message(STATUS "SDL2_IMAGE_LIBRARY: " ${SDL2_IMAGE_LIBRARY})
-    ELSE ()
-        Message(FATAL_ERROR "SDL2_IMAGE NOT FOUND")
-    ENDIF ()
-
-    FIND_PACKAGE(SDL2TTF)
-    Message("")
-    Message(STATUS "FINDING SDL2TTF")
-    Message(STATUS "SDL2TTF_FOUND: " ${SDL2TTF_FOUND})
-    IF (${SDL2TTF_FOUND})
-        Message(STATUS "SDL2TTF_INCLUDE_DIR: " ${SDL2TTF_INCLUDE_DIR})
-        Message(STATUS "SDL2TTF_LIBRARY: " ${SDL2TTF_LIBRARY})
-    ELSE ()
-        Message(FATAL_ERROR "SDL2TTF NOT FOUND")
-    ENDIF ()
-    Message("")
-
-    FIND_PACKAGE(SDL2Mixer)
-
-    Message(STATUS "FINDING SDL2Mixer")
-    Message(STATUS "SDL2Mixer_FOUND: " ${SDL2Mixer_FOUND})
-
-    Message("")
-
-    file(COPY asset DESTINATION ${CMAKE_RUNTIME_OUTPUT_DIRECTORY})
-
-    # ------- End Finds ------ #
-
-    # ------- Inc & Link ---- #
-
-    INCLUDE_DIRECTORIES(${SDL2_INCLUDE_DIR} ${SDL2TTF_INCLUDE_DIR} ${SDL2_IMAGE_INCLUDE_DIR} ${SDL2Mixer_INCLUDE_DIR})
-    TARGET_LINK_LIBRARIES(${PROJECT_NAME} ${SDL2_LIBRARY} ${SDL2TTF_LIBRARY} ${SDL2_IMAGE_LIBRARY} ${SDL2Mixer_LIBRARY})
-
-    # ------- End ----------- #
+    include(CMAKE_configure_unix.cmake)
 ENDIF ()
 
 set(REAL_SRC_DIR ${CMAKE_SOURCE_DIR})
-include(CMAKE_configure.cmake)
+include(CMAKE_configure_package.cmake)
 target_include_directories(${PROJECT_NAME}
         PRIVATE
         ${CMAKE_CURRENT_BINARY_DIR}/generated
