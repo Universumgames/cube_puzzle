@@ -18,12 +18,3 @@ execute_process(
         OUTPUT_VARIABLE GIT_HASH
         OUTPUT_STRIP_TRAILING_WHITESPACE
 )
-
-# replace "." to "_" to fix executable name
-string(REPLACE "." "_" FileVersion ${CMAKE_PROJECT_VERSION})
-
-set(EXE_NAME "qube_puzzle_${CMAKE_SYSTEM_NAME}_${ARCHITECTURE}_${GIT_HASH}")
-
-# create zip archive
-file(MAKE_DIRECTORY packaged)
-file(ARCHIVE_CREATE OUTPUT packaged/${EXE_NAME}.zip PATHS ${CMAKE_CURRENT_BINARY_DIR}/bin/)
