@@ -30,10 +30,16 @@ Message("")
 
 # ------- Finds ---------- #
 IF (WIN32 OR MINGW)
-    include(CMAKE_configure_win.cmake)
-else ()
-    include(CMAKE_configure_unix.cmake)
-ENDIF ()
+    #include(CMAKE_configure_win.cmake)
+#else ()\
+    set(ENV{SDL2} dev_lib/SDL2-2.26.1/)
+    set(ENV{SDL2_IMAGE} dev_lib/SDL2_image-2.6.2/)
+    set(ENV{SDL2TTFDIR} dev_lib/SDL2_ttf-2.20.1/)
+    set(ENV{SDL2_MIXER} dev_lib/SDL2_mixer-2.6.2/)
+endif()
+include(CMAKE_configure_unix.cmake)
+include(CMAKE_copy_dev_dll.cmake)
+
 
 set(REAL_SRC_DIR ${CMAKE_SOURCE_DIR})
 include(CMAKE_configure_package.cmake)
@@ -44,7 +50,7 @@ target_include_directories(${PROJECT_NAME}
 
 add_custom_command( TARGET ${PROJECT_NAME}
         PRE_BUILD
-        COMMAND ${CMAKE_COMMAND} -D REAL_SRC_DIR="${CMAKE_SOURCE_DIR}" -D CMAKE_PROJECT_VERSION="${CMAKE_PROJECT_VERSION}" -D CMAKE_RUNTIME_OUTPUT_DIRECTORY="${CMAKE_RUNTIME_OUTPUT_DIRECTORY}" -D CMAKE_SYSTEM_NAME="${CMAKE_SYSTEM_NAME}" -P ${CMAKE_SOURCE_DIR}/CMAKE_configure.cmake
+        COMMAND ${CMAKE_COMMAND} -D REAL_SRC_DIR="${CMAKE_SOURCE_DIR}" -D CMAKE_PROJECT_VERSION="${CMAKE_PROJECT_VERSION}" -D CMAKE_RUNTIME_OUTPUT_DIRECTORY="${CMAKE_RUNTIME_OUTPUT_DIRECTORY}" -D CMAKE_SYSTEM_NAME="${CMAKE_SYSTEM_NAME}" -P ${CMAKE_SOURCE_DIR}/CMAKE_configure_package.cmake
         )
 
 add_custom_command(TARGET ${PROJECT_NAME}

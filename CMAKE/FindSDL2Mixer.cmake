@@ -1,35 +1,78 @@
-# OpenClonk, http://www.openclonk.org
-#
-# Copyright (c) 2016, The OpenClonk Team and contributors
-#
-# Distributed under the terms of the ISC license; see accompanying file
-# "COPYING" for details.
-#
-# "Clonk" is a registered trademark of Matthes Bender, used with permission.
-# See accompanying file "TRADEMARK" for details.
-#
-# To redistribute this file separately, substitute the full license texts
-# for the above references.
+FIND_PATH(SDL2Mixer_INCLUDE_DIR SDL_mixer.h
+        HINTS
+        ${SDL2}
+        $ENV{SDL2}
+        $ENV{SDL2_MIXER}
+        PATH_SUFFIXES include/SDL2 include SDL2
+        i686-w64-mingw32/include/SDL2
+        x86_64-w64-mingw32/include/SDL2
+        PATHS
+        ~/Library/Frameworks
+        /Library/Frameworks
+        /usr/local/include/SDL2
+        /usr/include/SDL2
+        /sw # Fink
+        /opt/local # DarwinPorts
+        /opt/csw # Blastwave
+        /opt
+        )
 
-# Locate SDL_Mixer 2.
-# This module defines
-#  SDL2Mixer_INCLUDE_DIRS - a list of directories that need to be added to the include path
-#  SDL2Mixer_LIBRARIES - a list of libraries to link against to use SDL2
-#  SDL2Mixer_FOUND - if false, SDL2 cannot be used
+# Lookup the 64 bit libs on x64
+IF(CMAKE_SIZEOF_VOID_P EQUAL 8)
+    FIND_LIBRARY(SDL2Mixer_LIBRARY_TEMP
+            NAMES SDL2_mixer
+            HINTS
+            ${SDL2}
+            $ENV{SDL2}
+            $ENV{SDL2_MIXER}
+            PATH_SUFFIXES lib64 lib
+            lib/x64
+            x86_64-w64-mingw32/lib
+            PATHS
+            ~/Library/Frameworks
+            /Library/Frameworks
+            /usr/local
+            /usr
+            /sw # Fink
+            /opt/local # DarwinPorts
+            /opt/csw # Blastwave
+            /opt
+            )
+    # On 32bit build find the 32bit libs
+ELSE(CMAKE_SIZEOF_VOID_P EQUAL 8)
+    FIND_LIBRARY(SDL2Mixer_LIBRARY_TEMP
+            NAMES SDL2_mixer
+            HINTS
+            ${SDL2}
+            $ENV{SDL2}
+            $ENV{SDL2_MIXER}
+            PATH_SUFFIXES lib
+            lib/x86
+            i686-w64-mingw32/lib
+            PATHS
+            ~/Library/Frameworks
+            /Library/Frameworks
+            /usr/local
+            /usr
+            /sw # Fink
+            /opt/local # DarwinPorts
+            /opt/csw # Blastwave
+            /opt
+            )
+ENDIF(CMAKE_SIZEOF_VOID_P EQUAL 8)
 
-if(SDL2Mixer_FIND_QUIETLY)
-    set(_FIND_SDL2_ARG QUIET)
-endif()
+SET(SDL2Mixer_FOUND "NO")
+IF(SDL2Mixer_LIBRARY_TEMP)
+    # Set the final string here so the GUI reflects the final state.
+    SET(SDL2Mixer_LIBRARY ${SDL2Mixer_LIBRARY_TEMP} CACHE STRING "Where the SDL2_mixer Library can be found")
+    # Set the temp variable to INTERNAL so it is not seen in the CMake GUI
+    SET(SDL2Mixer_LIBRARY_TEMP "${SDL2Mixer_LIBRARY_TEMP}" CACHE INTERNAL "")
+    SET(SDL2Mixer_FOUND "YES")
+ENDIF(SDL2Mixer_LIBRARY_TEMP)
 
-find_package(SDL2 ${_FIND_SDL2_ARG})
-find_path(SDL2Mixer_INCLUDE_DIR SDL_mixer.h PATH_SUFFIXES SDL2 HINTS ENV SDL2DIR)
-mark_as_advanced(SDL2Mixer_INCLUDE_DIR)
-find_library(SDL2Mixer_LIBRARY SDL2_mixer HINTS ENV SDL2DIR)
-mark_as_advanced(SDL2Mixer_LIBRARY)
+INCLUDE(FindPackageHandleStandardArgs)
 
-include(FindPackageHandleStandardArgs)
-find_package_handle_standard_args(SDL2Mixer REQUIRED_VARS SDL2Mixer_LIBRARY SDL2Mixer_INCLUDE_DIR
-        SDL2_LIBRARY SDL2_INCLUDE_DIR)
+FIND_PACKAGE_HANDLE_STANDARD_ARGS(SDL2Mixer REQUIRED_VARS SDL2Mixer_LIBRARY SDL2Mixer_INCLUDE_DIR)
 
 if (SDL2Mixer_FOUND)
     set(SDL2Mixer_LIBRARIES ${SDL2Mixer_LIBRARY} ${SDL2_LIBRARIES})

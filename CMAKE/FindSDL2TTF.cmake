@@ -80,6 +80,9 @@ FIND_PATH(SDL2TTF_INCLUDE_DIR SDL_ttf.h
         HINTS
         $ENV{SDL2TTFDIR}
         PATH_SUFFIXES include/SDL2 include
+        include/SDL2 include
+        i686-w64-mingw32/include/SDL2
+        x86_64-w64-mingw32/include/SDL2
         PATHS ${SDL2TTF_SEARCH_PATHS}
         )
 
@@ -88,6 +91,8 @@ FIND_LIBRARY(SDL2TTF_LIBRARY_TEMP
         HINTS
         $ENV{SDL2TTFDIR}
         PATH_SUFFIXES lib64 lib
+        lib/x64
+        x86_64-w64-mingw32/lib
         PATHS ${SDL2TTF_SEARCH_PATHS}
         )
 
