@@ -26,4 +26,19 @@ set(EXE_NAME "qube_puzzle_${CMAKE_SYSTEM_NAME}_${ARCHITECTURE}_${GIT_HASH}")
 
 # create zip archive
 file(MAKE_DIRECTORY packaged)
-file(ARCHIVE_CREATE OUTPUT packaged/${EXE_NAME}.zip PATHS ${CMAKE_CURRENT_BINARY_DIR}/bin/)
+file(REMOVE_RECURSE prepared)
+file(MAKE_DIRECTORY prepared/qube_game)
+file(COPY ${CMAKE_CURRENT_BINARY_DIR}/bin/ DESTINATION prepared/qube_game/)
+file(COPY ../README.md DESTINATION prepared/qube_game/)
+if(WIN32)
+    set(ARCHIVE_FILE_TYPE zip)
+else()
+    set(ARCHIVE_FILE_TYPE zip)
+    set(ARCHIVE_ARGS FORMAT zip)
+endif()
+
+#file(ARCHIVE_CREATE OUTPUT packaged/${EXE_NAME}.${ARCHIVE_FILE_TYPE}
+#        PATHS prepared/qube_game/
+#        ${ARCHIVE_ARGS})
+execute_process(COMMAND tar -acf ../packaged/${EXE_NAME}.${ARCHIVE_FILE_TYPE} qube_game
+        WORKING_DIRECTORY prepared)

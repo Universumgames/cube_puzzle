@@ -34,6 +34,5 @@ file(WRITE ${CMAKE_RUNTIME_OUTPUT_DIRECTORY}/appInfo
 Commit: ${GIT_HASH}
 Architecture: ${ARCHITECTURE}
 System: ${CMAKE_SYSTEM_NAME}
-
 ")
 #Executable Base Name: ${EXE_NAME}
