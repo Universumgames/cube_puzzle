@@ -58,6 +58,8 @@ public:
 
     void setMaxWidth(int maxWidth);
 
+    Texture * getBlendedTextTexture();
+
 private:
     /// regenerate texture
     void reloadTexture();

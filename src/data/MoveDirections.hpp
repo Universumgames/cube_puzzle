@@ -1,8 +1,8 @@
 #pragma once
 
 /// player movement relative to screen
-enum class PlayerMoveDirection {
-    UP, DOWN, LEFT, RIGHT
+enum class PlayerMoveDirection : int {
+    UP = 0, DOWN = 1, LEFT = 2, RIGHT = 3
 };
 
 /// Directions when viewing on monitor (north is up, west is left - on monitor)

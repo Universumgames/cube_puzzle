@@ -136,3 +136,7 @@ void Text::setMaxWidth(int maxWidth) {
     this->maxWidth = maxWidth;
     reloadTexture();
 }
+
+Texture *Text::getBlendedTextTexture() {
+    return texture;
+}

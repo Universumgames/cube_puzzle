@@ -3,6 +3,8 @@
 // settings file containing all paths used in game
 
 #define LEVELS_DIR "./asset/levels/"
+#define TITLESCREEN_LEVEL_PATH LEVELS_DIR "title.screen"
+#define TITLESCREEN_LEVEL_SOLUTION_PATH LEVELS_DIR "titlescreen.solution"
 
 #define ROBOTO_FONT_FILEPATH "./asset/font/RobotoSlab-Bold.ttf"
 #define ROBOTO_FONT_LIGHT_FILEPATH "./asset/font/Roboto/Roboto-Regular.ttf"

@@ -5,6 +5,7 @@
 #include "AudioHandler.hpp"
 
 class LevelSelector;
+class TitleScreen;
 
 enum class ExitState {
     UNSET, FINISHED, CANCELLED
@@ -57,4 +58,5 @@ private:
     AudioPlayer* backgroundMusic;
 protected:
     friend class LevelSelector;
+    friend class TitleScreen;
 };
