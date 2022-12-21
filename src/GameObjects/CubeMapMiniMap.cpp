@@ -192,7 +192,7 @@ void CubeMapMiniMap::draw3DMinimap(const u32 frame, const u32 totalMSec, const f
         DiceSideRotation imageSideRotation = cubeMap->sides[actualSide -1]->oldRotation;
         DiceSideRotation diceSideRotation = diceData.getDiceSideRotation(actualSide);
         DiceSideRotation rotation = imageSideRotation - diceSideRotation;
-        if (sideIndex == 2) rotation = nRot;
+        if (sideIndex == 2) rotation = imageSideRotation - nRot;
         if(isCurrent) rotation = DiceSideRotation::UP;
         Vector<Vertex> vertices = toVertex(points, indices[startIndex], indices[startIndex + 1],
                                            indices[startIndex + 2], indices[startIndex + 3], rotation);
