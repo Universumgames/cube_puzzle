@@ -54,6 +54,7 @@ add_custom_command( TARGET ${PROJECT_NAME}
         )
 
 # post build scripts
+
 ## zip program
 add_custom_command(TARGET ${PROJECT_NAME}
         POST_BUILD

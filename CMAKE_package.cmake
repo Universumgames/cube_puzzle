@@ -29,7 +29,13 @@ file(MAKE_DIRECTORY packaged)
 file(REMOVE_RECURSE prepared)
 file(MAKE_DIRECTORY prepared/qube_game)
 file(COPY ${CMAKE_CURRENT_BINARY_DIR}/bin/ DESTINATION prepared/qube_game/)
+file(COPY ../asset DESTINATION prepared/qube_game/)
 file(COPY ../README.md ../LICENSE ../CONTRIBUTORS DESTINATION prepared/qube_game/)
+
+if(WIN32)
+    file(COPY ../package_lib/win/ DESTINATION prepared/qube_game/.)
+endif()
+
 if(WIN32)
     set(ARCHIVE_FILE_TYPE zip)
 else()
