@@ -22,5 +22,6 @@
 #define ARROW_STRAIGHT_PATH "./asset/graphic/rrowig.png"
 #define CUBE_FIELD_PATH "./asset/graphic/AllTestTyle.png"
 #define CUBE_OBJECT_PATH "./asset/graphic/AllTestTyle.png"
+#define TITLESCREEEN_GAME_BANNER_PATH "./asset/graphic/titlescreen.png"
 
 #define CUBE_SIDE_BACKGROUND_PATH(side) ("./asset/graphic/Cube" + std::to_string(side) + ".png").c_str()

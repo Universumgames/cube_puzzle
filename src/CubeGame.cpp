@@ -75,6 +75,7 @@ void CubeGame::loadSprites() {
     loadPNGTexture(spriteStorage.arrowStraight, render, ARROW_STRAIGHT_PATH)
     loadPNGTexture(spriteStorage.cubeFieldSpriteSheet, render, CUBE_FIELD_PATH)
     loadPNGTexture(spriteStorage.cubeObjectSpriteSheet, render, CUBE_OBJECT_PATH)
+    loadPNGTexture(spriteStorage.titleScreenGameBanner, render, TITLESCREEEN_GAME_BANNER_PATH)
 
     for (int i = 1; i <= 6; i++) {
         Texture *tmp;

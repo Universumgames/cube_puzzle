@@ -81,6 +81,7 @@ struct SpriteStorage {
     Texture *arrowStraight = nullptr;
     Texture *cubeFieldSpriteSheet = nullptr;
     Texture *cubeObjectSpriteSheet = nullptr;
+    Texture *titleScreenGameBanner = nullptr;
     Texture *temp = nullptr;
     Font *basicFont = nullptr;
     Font *smallFont = nullptr;

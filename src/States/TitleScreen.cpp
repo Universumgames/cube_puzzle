@@ -44,5 +44,10 @@ void TitleScreen::Init() {
 void TitleScreen::internalUIRender(const u32 frame, const u32 totalMSec, const float deltaT) {
     TutorialLevel::internalUIRender(frame, totalMSec, deltaT);
     versionInfo->RenderUI(BASIC_GO_DATA_PASSTHROUGH);
+    Rect dst = Level::getDrawableUIRect();
+    dst = scale(dst, 0.5);
+    dst = addPadding(dst,  20);
+    dst = centerInVertical(dst, Level::getDrawableUIRect());
+    SDL_RenderCopy(render, game.getSpriteStorage()->titleScreenGameBanner, NULL, &dst);
 }
 
