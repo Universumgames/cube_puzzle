@@ -311,7 +311,8 @@ void LevelSelector::HandleEvent(const u32 frame, const u32 totalMSec, const floa
     } else if (what_key.scancode == SDL_SCANCODE_KP_ENTER || what_key.scancode == SDL_SCANCODE_RETURN) {
         playLevel(levelData[selectorIndex]);
     }
-    selectorIndex = (int) (max(0, selectorIndex) % levelData.size());
+    if(selectorIndex < 0) selectorIndex = levelData.size() - 1;
+    selectorIndex = (int) selectorIndex % levelData.size();
 }
 
 void LevelSelector::levelsInit() {
