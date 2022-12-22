@@ -66,7 +66,6 @@ SpriteStorage *CubeGame::getSpriteStorage() {
 }
 
 void CubeGame::loadSprites() {
-    loadPNGTexture(spriteStorage.temp, render, "./asset/graphic/AllTestTileWater.png")
     loadFont(spriteStorage.basicFont, ROBOTO_FONT_FILEPATH, 30)
     loadFont(spriteStorage.smallFont, ROBOTO_FONT_LIGHT_FILEPATH, 18)
     loadFont(spriteStorage.debugFont, ROBOTO_FONT_LIGHT_FILEPATH, 18)

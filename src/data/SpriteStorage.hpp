@@ -74,15 +74,12 @@ inline void drawSpriteBorder(bool isDebug, Renderer *render, Rect dst) {
 
 /// Storage object to store all global textures and fonts
 struct SpriteStorage {
-    Texture *cubeMapSpriteSheet = nullptr;
-    Texture *worldMapSpriteSheet = nullptr;
     Texture *playerSpriteSheet = nullptr;
     Texture *arrowSemiCircle = nullptr;
     Texture *arrowStraight = nullptr;
     Texture *cubeFieldSpriteSheet = nullptr;
     Texture *cubeObjectSpriteSheet = nullptr;
     Texture *titleScreenGameBanner = nullptr;
-    Texture *temp = nullptr;
     Font *basicFont = nullptr;
     Font *smallFont = nullptr;
     Font *debugFont = nullptr;

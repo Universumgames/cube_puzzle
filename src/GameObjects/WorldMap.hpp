@@ -43,13 +43,11 @@ private:
 inline void getWorldFieldTextureSource(WorldField::WorldFieldEnum field, SpriteStorage *spriteStorage, Texture **texture, Rect *src) {
     switch (field) {
         case WorldField::WorldFieldEnum::DEFAULT:
-            *texture = spriteStorage->temp;
             *src = {0, 0, 16, 16};
             break;
         case WorldField::WorldFieldEnum::LAVA:
             break;
         case WorldField::WorldFieldEnum::ICE:
-            *texture = spriteStorage->temp;
             *src = {16, 16, 16, 16};
             break;
     }
