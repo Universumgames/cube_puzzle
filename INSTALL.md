@@ -11,3 +11,6 @@ Please make sure that the following packages (or similar) are installed, here is
 ```
 brew install sdl2 sdl2_mixer sdl2_image sdl2_ttf
 ```
+
+# Run
+If double clicking the executable is not working, you may need to open the application via the terminal by executing "cd <your directory>;./cube_puzzle" 
