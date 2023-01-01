@@ -37,7 +37,7 @@ public:
     /**
      * Roll cube in direction
      * @param direction direction to roll to
-     * @param side
+     * @param side the side number
      * @return new cubeFields facing in same direction
      */
     int rotate(DiceRollDirection direction, int side = 1);
@@ -54,13 +54,13 @@ public:
      * get the cubeFields of the cube where the top left corner is relative to
      * example: the anchor of cubeFields 1 is 5, because rotating the cube like above, you can see what is meant with top left corner of cubeFields 1
      * @param side cubeFields to which you want to get the anchor from
-     * @return
+     * @return the anchor side number
      */
     static int getAnchorSideOfTopLeftCorner(int side);
 
     /**
      * get global orientation of cubeFields when looking straight on cubeFields
-     * @param side
+     * @param side side number
      * @return get rotation of cubeFields on global space (no result for top and bottom of dice)
      */
     DiceSideRotation getDiceSideRotation(int side);

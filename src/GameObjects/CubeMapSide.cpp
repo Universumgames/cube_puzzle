@@ -136,13 +136,13 @@ void CubeMapSide::renderGridOverlay(CubeGame &game, Renderer *render, const u32 
 
 void CubeMapSide::renderCubeFields(CubeGame &game, Renderer *render, const u32 frame, const u32 totalMSec,
                                    const float deltaT, Rect drawableRect) {
-    for (int w = 0; w < this->width; w++) {
+    /*for (int w = 0; w < this->width; w++) {
         for (int h = 0; h < this->height; h++) {
             //getDrawPosition({w, h}, 0.9);
             int index = getIndex(w, h);
             //cubeFields[index]->Render(game, render, size, location, frame, totalMSec, deltaT);
         }
-    }
+    }*/
     //CubeGame &game, Renderer *render, Point size, Point location, u32 frame, u32 totalMSec, float deltaT
 }
 

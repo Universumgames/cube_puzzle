@@ -201,7 +201,7 @@ void CubeMapMiniMap::draw3DMinimap(const u32 frame, const u32 totalMSec, const f
         Texture * texToUse = cubeMap->sides[actualSide - 1]->rawSideTexture;
 
         SDL_RenderGeometry(render, texToUse, vertices.data(),
-                           vertices.size(),
+                           (int) vertices.size(),
                            nullptr, 0);
     }
 

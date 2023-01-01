@@ -38,7 +38,7 @@ public:
 
     /**
      *  load level from file into memory, called by LevelSelector
-     * @param path path to file to load from
+     * @param data the loaded level data from levelloader
      * @param arrayIndex the arrayIndex the level should have (index in allstates vector)
      * @return loaded leveldata
      */

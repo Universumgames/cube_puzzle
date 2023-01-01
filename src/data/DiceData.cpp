@@ -78,8 +78,8 @@ DiceSide DiceData::getSideFacing(int side) const {
  *          2
  *         ´|`
  *          6
- * @param side
- * @return
+ * @param side side number to get the anchor rom
+ * @return the anchor of the side
  */
 
 int DiceData::getAnchorSideOfTopLeftCorner(int side) {

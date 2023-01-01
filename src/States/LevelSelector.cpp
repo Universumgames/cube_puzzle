@@ -181,7 +181,7 @@ void LevelSelector::UnInit() {
 }
 
 bool LevelSelector::playLevel(const LevelData &level) {
-    game.SetNextState(level.allStatesIndex);
+    game.SetNextState((int) level.allStatesIndex);
     long index = std::find(levelData.begin(), levelData.end(), level) - levelData.begin();
     selectorIndex = level.id < 0 ? 0 : (int) index;
     return true;
@@ -311,7 +311,7 @@ void LevelSelector::HandleEvent(const u32 frame, const u32 totalMSec, const floa
     } else if (what_key.scancode == SDL_SCANCODE_KP_ENTER || what_key.scancode == SDL_SCANCODE_RETURN) {
         playLevel(levelData[selectorIndex]);
     }
-    if(selectorIndex < 0) selectorIndex = levelData.size() - 1;
+    if(selectorIndex < 0) selectorIndex = (int) levelData.size() - 1;
     selectorIndex = (int) selectorIndex % levelData.size();
 }
 

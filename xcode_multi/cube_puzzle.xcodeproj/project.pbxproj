@@ -23,7 +23,6 @@
 		5513F4C729623581007C9B13 /* SDL2_ttf.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 55238E852961D77500AC0C43 /* SDL2_ttf.framework */; };
 		5513F4C829623581007C9B13 /* SDL2_ttf.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 55238E852961D77500AC0C43 /* SDL2_ttf.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		5513F4D229623669007C9B13 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5513F4D129623669007C9B13 /* LaunchScreen.storyboard */; };
-		5513F4D429623FAA007C9B13 /* SETUP.md in Resources */ = {isa = PBXBuildFile; fileRef = 5513F4D329623FAA007C9B13 /* SETUP.md */; };
 		55238DE02961C9B500AC0C43 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 55238DDE2961C9B500AC0C43 /* Main.storyboard */; };
 		55238DE32961C9B500AC0C43 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 55238DE12961C9B500AC0C43 /* LaunchScreen.storyboard */; };
 		55238DF42961C9B500AC0C43 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 55238DF22961C9B500AC0C43 /* Main.storyboard */; };
@@ -48,9 +47,6 @@
 		55238EAE2961DB0300AC0C43 /* SDL2_ttf.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 55238E852961D77500AC0C43 /* SDL2_ttf.framework */; };
 		55238EAF2961DB0300AC0C43 /* SDL2_ttf.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 55238E852961D77500AC0C43 /* SDL2_ttf.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		55238EB12961DB0500AC0C43 /* SDL2.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 55238E4D2961D74300AC0C43 /* SDL2.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		55238EB82961DF3A00AC0C43 /* configureConfigHeader.sh in Resources */ = {isa = PBXBuildFile; fileRef = 55238EB72961DF3A00AC0C43 /* configureConfigHeader.sh */; };
-		55238EB92961DF3A00AC0C43 /* configureConfigHeader.sh in Resources */ = {isa = PBXBuildFile; fileRef = 55238EB72961DF3A00AC0C43 /* configureConfigHeader.sh */; };
-		55238EBA2961DF3A00AC0C43 /* configureConfigHeader.sh in Resources */ = {isa = PBXBuildFile; fileRef = 55238EB72961DF3A00AC0C43 /* configureConfigHeader.sh */; };
 		55238EBC2961E88500AC0C43 /* osname.sh in Resources */ = {isa = PBXBuildFile; fileRef = 55238EBB2961E88500AC0C43 /* osname.sh */; };
 		55238EBD2961E88500AC0C43 /* osname.sh in Resources */ = {isa = PBXBuildFile; fileRef = 55238EBB2961E88500AC0C43 /* osname.sh */; };
 		55238EBE2961E88500AC0C43 /* osname.sh in Resources */ = {isa = PBXBuildFile; fileRef = 55238EBB2961E88500AC0C43 /* osname.sh */; };
@@ -1246,7 +1242,6 @@
 				552390FB2962262200AC0C43 /* Level_5.level in Resources */,
 				552390AD2962262200AC0C43 /* Roboto-Light.ttf in Resources */,
 				55238E392961D6F700AC0C43 /* .gitignore in Resources */,
-				55238EB82961DF3A00AC0C43 /* configureConfigHeader.sh in Resources */,
 				552390E32962262200AC0C43 /* Level_13.level in Resources */,
 				552390BC2962262200AC0C43 /* Roboto-LightItalic.ttf in Resources */,
 				55238EBC2961E88500AC0C43 /* osname.sh in Resources */,
@@ -1271,7 +1266,6 @@
 				552390E62962262200AC0C43 /* Level_2.level in Resources */,
 				552390F82962262200AC0C43 /* Level_1.level in Resources */,
 				552390102962239800AC0C43 /* config.hpp.in in Resources */,
-				5513F4D429623FAA007C9B13 /* SETUP.md in Resources */,
 				552390E92962262200AC0C43 /* Level_6.level in Resources */,
 				552390D12962262200AC0C43 /* title.screen in Resources */,
 				552390862962262200AC0C43 /* mac1024_2.png in Resources */,
@@ -1313,7 +1307,6 @@
 				552390FC2962262200AC0C43 /* Level_5.level in Resources */,
 				552390AE2962262200AC0C43 /* Roboto-Light.ttf in Resources */,
 				55238E3A2961D6F700AC0C43 /* .gitignore in Resources */,
-				55238EB92961DF3A00AC0C43 /* configureConfigHeader.sh in Resources */,
 				552390E42962262200AC0C43 /* Level_13.level in Resources */,
 				552390BD2962262200AC0C43 /* Roboto-LightItalic.ttf in Resources */,
 				55238EBD2961E88500AC0C43 /* osname.sh in Resources */,
@@ -1373,7 +1366,6 @@
 				552390F12962262200AC0C43 /* Level_4.level in Resources */,
 				552390D32962262200AC0C43 /* title.screen in Resources */,
 				552390CD2962262200AC0C43 /* Roboto-Thin.ttf in Resources */,
-				55238EBA2961DF3A00AC0C43 /* configureConfigHeader.sh in Resources */,
 				5523909D2962262200AC0C43 /* hit2.wav in Resources */,
 				552390732962262200AC0C43 /* Cube4.png in Resources */,
 				5523908E2962262200AC0C43 /* titlescreen.png in Resources */,
@@ -1684,9 +1676,8 @@
 					"\"$(SRCROOT)/SDL/include\"",
 					"\"$(SRCROOT)/prepared\"",
 				);
-				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.puzzle-games";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
-				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
+				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen.storyboard;
 				INFOPLIST_KEY_UIStatusBarHidden = YES;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
@@ -1723,9 +1714,8 @@
 					"\"$(SRCROOT)/SDL/include\"",
 					"\"$(SRCROOT)/prepared\"",
 				);
-				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.puzzle-games";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
-				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
+				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen.storyboard;
 				INFOPLIST_KEY_UIStatusBarHidden = YES;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
