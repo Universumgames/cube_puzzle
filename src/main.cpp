@@ -11,8 +11,12 @@ void tests() {
     data.rotate(DiceRollDirection::WEST);
     cout << data.toString() << std::endl;*/
 }
+#if defined(__IPHONEOS__) || defined(__TVOS__)
 
-extern "C" int main(int argc, char *argv[])
+int SDL_main(int argc, char* argv[])
+#else
+int main(int argc, char *argv[])
+#endif
 try {
     tests();
     CubeGame game;

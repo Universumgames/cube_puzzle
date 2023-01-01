@@ -4,3 +4,4 @@
 #define COMMIT_HASH "@GIT_HASH@"
 #define ARCHITECTURE "@ARCHITECTURE@"
 #define OS "@CMAKE_SYSTEM_NAME@"
+

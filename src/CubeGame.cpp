@@ -3,6 +3,7 @@
 #include "States/Level.hpp"
 #include "States/LevelSelector.hpp"
 #include "States/TitleScreen.hpp"
+#include "touchhelper.hpp"
 
 #define loadPNGTexture(variable, render, path) { \
                                         Surface* temp = IMG_Load(path); \
@@ -52,6 +53,21 @@ bool CubeGame::HandleEvent(const Event event) {
                 audioHandler->enableAudio(!audioHandler->getAudioEnabled());
                 handled = true;
             }
+            break;
+        }
+        case SDL_FINGERMOTION:{
+            cout << "MOVE x: " << event.tfinger.x << " y: " << event.tfinger.y << " dx: " << event.tfinger.dx << " dy: " << event.tfinger.dy << endl;
+            break;
+            
+        }
+        case SDL_FINGERUP:{
+            cout << "UP x: " << event.tfinger.x << " y: " << event.tfinger.y << endl;
+            auto pos = uvToPixel(getWindowSize(), FPoint{event.tfinger.x, event.tfinger.y});
+            cout << "UP PIXEL x: " << pos.x << " y: " << pos.y << endl;
+            break;
+        }
+        case SDL_FINGERDOWN:{
+            cout << "DOWN x: " << event.tfinger.x << " y: " << event.tfinger.y << endl;
             break;
         }
         default:
