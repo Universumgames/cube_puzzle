@@ -23,6 +23,7 @@
 		5513F4C729623581007C9B13 /* SDL2_ttf.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 55238E852961D77500AC0C43 /* SDL2_ttf.framework */; };
 		5513F4C829623581007C9B13 /* SDL2_ttf.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 55238E852961D77500AC0C43 /* SDL2_ttf.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		5513F4D229623669007C9B13 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5513F4D129623669007C9B13 /* LaunchScreen.storyboard */; };
+		5513F4D429623FAA007C9B13 /* SETUP.md in Resources */ = {isa = PBXBuildFile; fileRef = 5513F4D329623FAA007C9B13 /* SETUP.md */; };
 		55238DE02961C9B500AC0C43 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 55238DDE2961C9B500AC0C43 /* Main.storyboard */; };
 		55238DE32961C9B500AC0C43 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 55238DE12961C9B500AC0C43 /* LaunchScreen.storyboard */; };
 		55238DF42961C9B500AC0C43 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 55238DF22961C9B500AC0C43 /* Main.storyboard */; };
@@ -476,6 +477,7 @@
 		5502186129622A7200F0509F /* asset */ = {isa = PBXFileReference; lastKnownFileType = folder; name = asset; path = ../asset; sourceTree = "<group>"; };
 		5502186F29622E4B00F0509F /* touchhelper.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = touchhelper.hpp; sourceTree = "<group>"; };
 		5513F4D129623669007C9B13 /* LaunchScreen.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = LaunchScreen.storyboard; sourceTree = "<group>"; };
+		5513F4D329623FAA007C9B13 /* SETUP.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = SETUP.md; sourceTree = "<group>"; };
 		55238DC12961C9B500AC0C43 /* cube_puzzle.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = cube_puzzle.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		55238DD62961C9B500AC0C43 /* cube_puzzle.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = cube_puzzle.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		55238DDF2961C9B500AC0C43 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
@@ -657,6 +659,7 @@
 				55238E382961D6F700AC0C43 /* .gitignore */,
 				55238E342961CD1100AC0C43 /* download_dependencies.sh */,
 				55238EB72961DF3A00AC0C43 /* configureConfigHeader.sh */,
+				5513F4D329623FAA007C9B13 /* SETUP.md */,
 				55238EBF2961EB9400AC0C43 /* extractXCodeData.sh */,
 				55238EBB2961E88500AC0C43 /* osname.sh */,
 				55238E0E2961CA0A00AC0C43 /* tvos */,
@@ -1268,6 +1271,7 @@
 				552390E62962262200AC0C43 /* Level_2.level in Resources */,
 				552390F82962262200AC0C43 /* Level_1.level in Resources */,
 				552390102962239800AC0C43 /* config.hpp.in in Resources */,
+				5513F4D429623FAA007C9B13 /* SETUP.md in Resources */,
 				552390E92962262200AC0C43 /* Level_6.level in Resources */,
 				552390D12962262200AC0C43 /* title.screen in Resources */,
 				552390862962262200AC0C43 /* mac1024_2.png in Resources */,
