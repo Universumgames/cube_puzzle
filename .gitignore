@@ -12,6 +12,6 @@ SDL2-2.24.2
 SDL2_mixer-2.6.2
 cmake-build-release
 cmake-build-relwithdebinfo
-xcode
+xcode_native
 temp*
 dev_lib
