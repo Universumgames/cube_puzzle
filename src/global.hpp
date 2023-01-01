@@ -27,7 +27,7 @@
 #include <SDL_render.h>
 #include <SDL_video.h>
 
-    #if defined(__IPHONEOS__) || defined(__TVOS__) || defined(__APPLE__)
+    #if defined(__IPHONEOS__) || defined(__TVOS__)
     #include <SDL2_ttf/SDL_ttf.h>
     #include <SDL2_image/SDL_image.h>
     #include <SDL2_mixer/SDL_mixer.h>
