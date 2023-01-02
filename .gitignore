@@ -15,3 +15,5 @@ cmake-build-relwithdebinfo
 xcode_native
 temp*
 dev_lib
+xcode_multi/prepared
+xcode_multi/appInfo
