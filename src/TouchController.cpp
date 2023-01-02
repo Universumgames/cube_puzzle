@@ -9,14 +9,15 @@
 
 
 void TouchController::HandleEvent(const u32 frame, const u32 totalMSec, const float deltaT, Event event) {
-    registerTouchEvent(event);
+    bool isTouchDevice = registerTouchEvent(event);
+    if (isTouchDevice) showTouchAccomodations = true; // when touch is used, enable touch buttons
 }
 
 void TouchController::Update(const u32 frame, const u32 totalMSec, const float deltaT) {
-    if (showTouchAccomodations)
-        for (auto touch: touchObjects[scene]) {
-            touch->Update(BASIC_GO_DATA_PASSTHROUGH);
-        }
+    if (!showTouchAccomodations) return;
+    for (auto touch: touchObjects[scene]) {
+        touch->Update(BASIC_GO_DATA_PASSTHROUGH);
+    }
     for (auto touch: always) {
         touch->Update(BASIC_GO_DATA_PASSTHROUGH);
     }
@@ -27,10 +28,10 @@ void TouchController::Render(const u32 frame, const u32 totalMSec, const float d
 }
 
 void TouchController::RenderUI(const u32 frame, const u32 totalMSec, const float deltaT) {
-    if (showTouchAccomodations)
-        for (auto touch: touchObjects[scene]) {
-            touch->RenderUI(BASIC_GO_DATA_PASSTHROUGH);
-        }
+    if (!showTouchAccomodations) return;
+    for (auto touch: touchObjects[scene]) {
+        touch->RenderUI(BASIC_GO_DATA_PASSTHROUGH);
+    }
     for (auto touch: always) {
         touch->RenderUI(BASIC_GO_DATA_PASSTHROUGH);
     }
@@ -226,7 +227,7 @@ TouchController::TouchController(CubeGame &game, ComplexGameState *gameState, SD
             Rect r = placeButtonTopLeft(game, 0, 0, max(30, max(game.getWindowSize().x, game.getWindowSize().y) / 20));
             musicButton->setSize({r.w, r.h});
             musicButton->setLocation({r.x, r.y});
-            ((UIButton*) musicButton)->setColor(game.audioHandler->getAudioEnabled() ? green : red);
+            ((UIButton *) musicButton)->setColor(game.audioHandler->getAudioEnabled() ? green : red);
         });
         musicButton->setPressedLambda([](CubeGame &, TouchObject *touch) {
             simulateKeyPress(SDL_SCANCODE_M);
@@ -242,7 +243,7 @@ TouchController::TouchController(CubeGame &game, ComplexGameState *gameState, SD
         });
 
         always = {
-                musicButton, touchDisable
+                musicButton//, touchDisable
         };
     }
 }

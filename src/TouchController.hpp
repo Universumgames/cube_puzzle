@@ -19,7 +19,7 @@ public:
 
     void setScene(TouchScene scene);
 
-    bool showTouchAccomodations = true;
+    bool showTouchAccomodations = false;
 
 private:
     TouchScene scene = TouchScene::RUDIMENTARY;

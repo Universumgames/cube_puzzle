@@ -7,10 +7,12 @@ constexpr Point uvToPixel(Point screenSize, FPoint uvLocation){
     return {(int) (screenSize.x * uvLocation.x), (int) (screenSize.y * uvLocation.y)};
 }
 
-inline void registerTouchEvent(Event event){
+inline bool registerTouchEvent(Event event){
     if(event.type == SDL_FINGERUP || event.type == SDL_FINGERDOWN || event.type == SDL_FINGERMOTION){
         lastTouchEvents[event.tfinger.fingerId] = event.tfinger;
+        return true;
     }
+    return false;
 }
 
 inline void clearTouchEvents(){
