@@ -76,6 +76,10 @@ constexpr Rect &operator-=(Rect &lhs, const Rect rhs) {
     return lhs;
 }
 
+constexpr bool operator==(const Rect &lhs, const Rect rhs) {
+    return lhs.x == rhs.x && lhs.y == rhs.y && lhs.w == rhs.w && lhs.h == rhs.h;
+}
+
 constexpr Rect addPadding(Rect r, int padding) {
     return {r.x + padding, r.y + padding, r.w - 2 * padding, r.h - 2 * padding};
 }

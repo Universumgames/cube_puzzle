@@ -7,6 +7,8 @@
 #include "../GameObjects/Text.hpp"
 #include "ComplexGameState.hpp"
 #include "../data/LevelLoader.hpp"
+#include "../GameObjects/UIButton.hpp"
+
 
 class Player;
 

@@ -271,6 +271,6 @@ void CubeMapMiniMap::draw3DMinimap(const u32 frame, const u32 totalMSec, const f
         oldSide = cubeMap->currentSideId;
     }
 
-    drawSpriteBorder(drawableRect);
+    drawSpriteBorderSimple(drawableRect);
 }
 

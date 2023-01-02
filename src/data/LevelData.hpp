@@ -5,6 +5,8 @@
 #include <map>
 #include "WorldField.hpp"
 
+class TouchObject;
+
 /// basic data of level
 struct LevelData {
     /// path of file to retrieve leveldata
@@ -16,6 +18,7 @@ struct LevelData {
     std::string name = "unknown";
 
     Texture * selectorTexture = nullptr;
+    TouchObject* clickHandler = nullptr;
 
     static bool sort(const LevelData& d1, const LevelData& d2){
         return d1.id < d2.id;

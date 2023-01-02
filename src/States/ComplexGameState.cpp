@@ -3,6 +3,7 @@
 //
 #include "ComplexGameState.hpp"
 #include "../CubeGame.hpp"
+#include "../touchhelper.hpp"
 
 ComplexGameState::ComplexGameState(CubeGame &cubeGame, Renderer *render) : GameState(cubeGame, render),
                                                                            cubeGame(cubeGame) {
@@ -23,4 +24,9 @@ void ComplexGameState::Events(const u32 frame, const u32 totalMSec, const float 
             continue;
         HandleEvent(BASIC_GO_DATA_PASSTHROUGH, event);
     }
+
+}
+
+void ComplexGameState::afterRenderCycle() {
+    clearTouchEvents();
 }

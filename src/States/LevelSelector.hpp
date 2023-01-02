@@ -8,6 +8,7 @@
 #include "../GameObjects/Text.hpp"
 #include "ComplexGameState.hpp"
 #include "../global.hpp"
+#include "../GameObjects/UIButton.hpp"
 
 class TitleScreen;
 

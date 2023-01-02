@@ -6,6 +6,7 @@
 
 class LevelSelector;
 class TitleScreen;
+class TouchController;
 
 enum class ExitState {
     UNSET, FINISHED, CANCELLED
@@ -43,6 +44,8 @@ public:
     GameStateData interGameStateData;
 
     void setWindowName(std::string windowName);
+
+    TouchController* touchController;
 
 private:
     SpriteStorage spriteStorage;

@@ -76,7 +76,7 @@ void Player::Render(const u32 frame, const u32 totalMSec, const float deltaT) {
     r.y += (int) (sin(frame / 20.0) * 2);
     drawSprite(game.getSpriteStorage()->playerSpriteSheet, render, {getAnimationIndex(totalMSec), (int) currentState},
                r);
-    drawSpriteBorder(r);
+    drawSpriteBorderSimple(r);
 }
 
 void Player::setCubeMap(CubeMap *cubeMap) {

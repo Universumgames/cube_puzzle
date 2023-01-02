@@ -35,5 +35,5 @@ public:
     /// render ui elements on top of normal elements, called after every render method
     virtual void RenderUI(const u32 frame, const u32 totalMSec, const float deltaT) {};
 
-    void drawSpriteBorder(Rect dst);
+    void drawSpriteBorderSimple(Rect dst);
 };

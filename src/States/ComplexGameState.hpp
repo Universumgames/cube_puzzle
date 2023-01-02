@@ -1,6 +1,7 @@
 #pragma once
 
 #include "../gamebase.hpp"
+#include "../TouchController.hpp"
 
 class CubeGame;
 
@@ -19,6 +20,8 @@ public:
     virtual void HandleEvent(const u32 frame, const u32 totalMSec, const float deltaT, Event event){}
 
     void Events(const u32 frame, const u32 totalMSec, const float deltaT) override;
+
+    void afterRenderCycle();
 
 protected:
     virtual Rect getGameRenderDst() = 0;

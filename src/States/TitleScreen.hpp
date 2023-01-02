@@ -17,5 +17,7 @@ private:
     std::ifstream solution;
     u32 lastMovementTotalMSec = 0;
 
+    TouchObject* startButton;
+
     friend class CubeGame;
 };

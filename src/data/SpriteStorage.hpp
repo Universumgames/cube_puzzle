@@ -65,11 +65,11 @@ inline void drawBorder(Renderer * render, Rect dst, Color borderColor = spriteBo
     SDL_RenderDrawRect(render, &dst);
 }
 
-inline void drawSpriteBorder(bool isDebug, Renderer *render, Rect dst) {
+inline void drawSpriteBorder(bool isDebug, Renderer *render, Rect dst, Color c = spriteBorderColor) {
     if (!isDebug) {
         return;
     }
-    drawBorder(render, dst, spriteBorderColor);
+    drawBorder(render, dst, c);
 }
 
 /// Storage object to store all global textures and fonts

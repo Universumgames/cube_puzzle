@@ -9,6 +9,8 @@
 #include <filesystem>
 #include "../filehelper.hpp"
 #include "config.hpp"
+#include "../GameObjects/TouchObject.hpp"
+#include "../touchhelper.hpp"
 
 void LevelSelector::Update(const u32 frame, const u32 totalMSec, const float deltaT) {
     debugText->setEnabled(cubeGame.isDebug());
@@ -17,10 +19,23 @@ void LevelSelector::Update(const u32 frame, const u32 totalMSec, const float del
         prepareLevelListItems();
         oldSize = game.getWindowSize();
     }
+
+    // touch handling
+
+    for (auto level: levelData) {
+        if (level.clickHandler->isPressed())
+            playLevel(level);
+    }
+
+    if (selectorIndex < 0) selectorIndex = (int) levelData.size() - 1;
+    selectorIndex = (int) selectorIndex % levelData.size();
+
+    cubeGame.touchController->Update(BASIC_GO_DATA_PASSTHROUGH);
+
 }
 
 void LevelSelector::Render(const u32 frame, const u32 totalMSec, const float deltaT) {
-    if (loadingNext){
+    if (loadingNext) {
         loadingNext = false;
         return;
     }
@@ -47,6 +62,9 @@ void LevelSelector::Render(const u32 frame, const u32 totalMSec, const float del
         Point rectStartPoint =
                 selectedPos + Point{0, (levelRectSize.y + padding) * (i - selectorIndex)};
         Rect drawable = {rectStartPoint.x, rectStartPoint.y, levelRectSize.x, levelRectSize.y};
+        levelData[i].clickHandler->setSize(levelRectSize);
+        levelData[i].clickHandler->setLocation(rectStartPoint);
+        levelData[i].clickHandler->RenderUI(BASIC_GO_DATA_PASSTHROUGH);
 
         SDL_RenderCopy(render, levelData[i].selectorTexture, NULL, &drawable);
     }
@@ -63,9 +81,12 @@ void LevelSelector::Render(const u32 frame, const u32 totalMSec, const float del
     debugText->RenderUI(frame, totalMSec, deltaT);
     headline->RenderUI(BASIC_GO_DATA_PASSTHROUGH);
 
+    cubeGame.touchController->RenderUI(BASIC_GO_DATA_PASSTHROUGH);
+
 
 
     SDL_RenderPresent(render);
+    afterRenderCycle();
 }
 
 LevelSelector::LevelSelector(CubeGame &game, Renderer *render) : ComplexGameState(game, render) {
@@ -165,7 +186,7 @@ void LevelSelector::Init() {
 
     sideBarText = new Text(cubeGame, this, render, 500,
                            "Use the up/down keys to select a level\n"
-                           "Press Enter to start level\n\n"
+                           "Press Enter to start level (or tap on the desired level)\n\n"
                            "Want to play the tutorial? Press T\n\n"
                            "To mute/play the music press M",
                            game.getSpriteStorage()->basicFont, {});
@@ -173,7 +194,10 @@ void LevelSelector::Init() {
 
 
 
-    if(!loadingNext) prepareLevelListItems();
+
+    if (!loadingNext) prepareLevelListItems();
+    
+    cubeGame.touchController->setScene(TouchController::TouchScene::SELECT);
 }
 
 void LevelSelector::UnInit() {
@@ -242,6 +266,8 @@ void LevelSelector::prepareLevelListItemTexture(LevelData &leveldata, Point draw
     t->setDebug(false);
     t->RenderUI(0, 0, 0);
 
+    leveldata.clickHandler = new TouchObject(cubeGame, this, render, {0, 0}, {0, 0});
+
     SDL_SetRenderTarget(render, oldTarget);
 }
 
@@ -288,31 +314,30 @@ int LevelSelector::getLevelIDByState(int stateIndex) {
 }
 
 void LevelSelector::HandleEvent(const u32 frame, const u32 totalMSec, const float deltaT, Event event) {
-    if (event.type != SDL_KEYDOWN) return;
-    const Keysym &what_key = event.key.keysym;
-    if (what_key.scancode >= SDL_SCANCODE_1 && what_key.scancode < SDL_SCANCODE_0) {
-        int id = what_key.scancode + 1 - SDL_SCANCODE_1;
-        playLevel(id);
-    } else if (what_key.scancode >= SDL_SCANCODE_KP_1 && what_key.scancode < SDL_SCANCODE_KP_0) {
-        int id = what_key.scancode + 1 - SDL_SCANCODE_KP_1;
-        playLevel(id);
-    }
+    if (event.type == SDL_KEYDOWN) {
+        const Keysym &what_key = event.key.keysym;
+        if (what_key.scancode >= SDL_SCANCODE_1 && what_key.scancode < SDL_SCANCODE_0) {
+            int id = what_key.scancode + 1 - SDL_SCANCODE_1;
+            playLevel(id);
+        } else if (what_key.scancode >= SDL_SCANCODE_KP_1 && what_key.scancode < SDL_SCANCODE_KP_0) {
+            int id = what_key.scancode + 1 - SDL_SCANCODE_KP_1;
+            playLevel(id);
+        }
 
-    // tutorial start
-    if (what_key.scancode == SDL_SCANCODE_T) {
-        playLevel(tutLevelData[0]);
-    }
+        // tutorial start
+        if (what_key.scancode == SDL_SCANCODE_T) {
+            playLevel(tutLevelData[0]);
+        }
 
-    // navigation in selector
-    if (what_key.scancode == SDL_SCANCODE_UP) {
-        selectorIndex--;
-    } else if (what_key.scancode == SDL_SCANCODE_DOWN) {
-        selectorIndex++;
-    } else if (what_key.scancode == SDL_SCANCODE_KP_ENTER || what_key.scancode == SDL_SCANCODE_RETURN) {
-        playLevel(levelData[selectorIndex]);
+        // navigation in selector
+        if (what_key.scancode == SDL_SCANCODE_UP) {
+            selectorIndex--;
+        } else if (what_key.scancode == SDL_SCANCODE_DOWN) {
+            selectorIndex++;
+        } else if (what_key.scancode == SDL_SCANCODE_KP_ENTER || what_key.scancode == SDL_SCANCODE_RETURN) {
+            playLevel(levelData[selectorIndex]);
+        }
     }
-    if(selectorIndex < 0) selectorIndex = (int) levelData.size() - 1;
-    selectorIndex = (int) selectorIndex % levelData.size();
 }
 
 void LevelSelector::levelsInit() {

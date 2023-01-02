@@ -4,6 +4,7 @@
 #include "States/LevelSelector.hpp"
 #include "States/TitleScreen.hpp"
 #include "touchhelper.hpp"
+#include "TouchController.hpp"
 
 #define loadPNGTexture(variable, render, path) { \
                                         Surface* temp = IMG_Load(path); \
@@ -27,6 +28,8 @@ CubeGame::CubeGame() : Game("CubeGame") {
     backgroundMusic = new AudioPlayer(MUSIC_BACKGROUND_PATH);
     backgroundMusic->playLoop();
     SetNextState(0);
+
+    touchController = new TouchController(*this, titleScreen, render);
 
     SDL_SetRenderDrawBlendMode(render, SDL_BLENDMODE_BLEND);
 
@@ -56,23 +59,24 @@ bool CubeGame::HandleEvent(const Event event) {
             break;
         }
         case SDL_FINGERMOTION:{
-            cout << "MOVE x: " << event.tfinger.x << " y: " << event.tfinger.y << " dx: " << event.tfinger.dx << " dy: " << event.tfinger.dy << endl;
+            cout << "MOVE id: "<< event.tfinger.fingerId << " x: " << event.tfinger.x << " y: " << event.tfinger.y << " dx: " << event.tfinger.dx << " dy: " << event.tfinger.dy << endl;
             break;
             
         }
         case SDL_FINGERUP:{
-            cout << "UP x: " << event.tfinger.x << " y: " << event.tfinger.y << endl;
+            cout << "UP id: "<< event.tfinger.fingerId << " x: " << event.tfinger.x << " y: " << event.tfinger.y << endl;
             auto pos = uvToPixel(getWindowSize(), FPoint{event.tfinger.x, event.tfinger.y});
             cout << "UP PIXEL x: " << pos.x << " y: " << pos.y << endl;
             break;
         }
         case SDL_FINGERDOWN:{
-            cout << "DOWN x: " << event.tfinger.x << " y: " << event.tfinger.y << endl;
+            cout << "DOWN id: "<< event.tfinger.fingerId << " x: " << event.tfinger.x << " y: " << event.tfinger.y << endl;
             break;
         }
         default:
             break;
     }
+    touchController->HandleEvent(0,0,0, event);
     if(handled) return true;
     return Game::HandleEvent(event);
 }

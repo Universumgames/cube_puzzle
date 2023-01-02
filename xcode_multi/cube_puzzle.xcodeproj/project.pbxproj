@@ -23,6 +23,9 @@
 		5513F4C729623581007C9B13 /* SDL2_ttf.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 55238E852961D77500AC0C43 /* SDL2_ttf.framework */; };
 		5513F4C829623581007C9B13 /* SDL2_ttf.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 55238E852961D77500AC0C43 /* SDL2_ttf.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		5513F4D229623669007C9B13 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5513F4D129623669007C9B13 /* LaunchScreen.storyboard */; };
+		5513F51729631104007C9B13 /* UIButton.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5513F51529631104007C9B13 /* UIButton.cpp */; };
+		5513F51829631104007C9B13 /* UIButton.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5513F51529631104007C9B13 /* UIButton.cpp */; };
+		5513F51929631104007C9B13 /* UIButton.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5513F51529631104007C9B13 /* UIButton.cpp */; };
 		55238DE02961C9B500AC0C43 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 55238DDE2961C9B500AC0C43 /* Main.storyboard */; };
 		55238DE32961C9B500AC0C43 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 55238DE12961C9B500AC0C43 /* LaunchScreen.storyboard */; };
 		55238DF42961C9B500AC0C43 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 55238DF22961C9B500AC0C43 /* Main.storyboard */; };
@@ -278,6 +281,15 @@
 		552391032962267E00AC0C43 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 552391022962267E00AC0C43 /* Assets.xcassets */; };
 		552391042962267E00AC0C43 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 552391022962267E00AC0C43 /* Assets.xcassets */; };
 		552391052962267E00AC0C43 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 552391022962267E00AC0C43 /* Assets.xcassets */; };
+		5581E04F2963354D00953CD1 /* touchhelper.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5581E03A2963354D00953CD1 /* touchhelper.cpp */; };
+		5581E0502963354D00953CD1 /* touchhelper.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5581E03A2963354D00953CD1 /* touchhelper.cpp */; };
+		5581E0512963354D00953CD1 /* touchhelper.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5581E03A2963354D00953CD1 /* touchhelper.cpp */; };
+		5581E05429633F3E00953CD1 /* TouchObject.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5581E05329633F3E00953CD1 /* TouchObject.cpp */; };
+		5581E05529633F3E00953CD1 /* TouchObject.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5581E05329633F3E00953CD1 /* TouchObject.cpp */; };
+		5581E05629633F3E00953CD1 /* TouchObject.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5581E05329633F3E00953CD1 /* TouchObject.cpp */; };
+		5581E05929637FA000953CD1 /* TouchController.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5581E05729637FA000953CD1 /* TouchController.cpp */; };
+		5581E05A29637FA000953CD1 /* TouchController.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5581E05729637FA000953CD1 /* TouchController.cpp */; };
+		5581E05B29637FA000953CD1 /* TouchController.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5581E05729637FA000953CD1 /* TouchController.cpp */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -474,6 +486,8 @@
 		5502186F29622E4B00F0509F /* touchhelper.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = touchhelper.hpp; sourceTree = "<group>"; };
 		5513F4D129623669007C9B13 /* LaunchScreen.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = LaunchScreen.storyboard; sourceTree = "<group>"; };
 		5513F4D329623FAA007C9B13 /* SETUP.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = SETUP.md; sourceTree = "<group>"; };
+		5513F51529631104007C9B13 /* UIButton.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = UIButton.cpp; sourceTree = "<group>"; };
+		5513F51629631104007C9B13 /* UIButton.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = UIButton.hpp; sourceTree = "<group>"; };
 		55238DC12961C9B500AC0C43 /* cube_puzzle.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = cube_puzzle.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		55238DD62961C9B500AC0C43 /* cube_puzzle.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = cube_puzzle.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		55238DDF2961C9B500AC0C43 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
@@ -600,6 +614,11 @@
 		552390692962262200AC0C43 /* Level_1.level */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Level_1.level; sourceTree = "<group>"; };
 		5523906A2962262200AC0C43 /* Level_5.level */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Level_5.level; sourceTree = "<group>"; };
 		552391022962267E00AC0C43 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		5581E03A2963354D00953CD1 /* touchhelper.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = touchhelper.cpp; sourceTree = "<group>"; };
+		5581E05229633F3E00953CD1 /* TouchObject.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = TouchObject.hpp; sourceTree = "<group>"; };
+		5581E05329633F3E00953CD1 /* TouchObject.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = TouchObject.cpp; sourceTree = "<group>"; };
+		5581E05729637FA000953CD1 /* TouchController.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = TouchController.cpp; sourceTree = "<group>"; };
+		5581E05829637FA000953CD1 /* TouchController.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = TouchController.hpp; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -773,6 +792,7 @@
 				55238FAD2962239800AC0C43 /* gamebase.hpp */,
 				55238FAE2962239800AC0C43 /* matrix.hpp */,
 				5502186F29622E4B00F0509F /* touchhelper.hpp */,
+				5581E03A2963354D00953CD1 /* touchhelper.cpp */,
 				55238FAF2962239800AC0C43 /* CubeGame.cpp */,
 				55238FB02962239800AC0C43 /* AudioHandler.cpp */,
 				55238FB12962239800AC0C43 /* filehelper.hpp */,
@@ -783,6 +803,8 @@
 				55238FD42962239800AC0C43 /* CubeGame.hpp */,
 				55238FD52962239800AC0C43 /* AudioHandler.hpp */,
 				55238FD62962239800AC0C43 /* SDL_uikit_main.c */,
+				5581E05729637FA000953CD1 /* TouchController.cpp */,
+				5581E05829637FA000953CD1 /* TouchController.hpp */,
 				55238FD72962239800AC0C43 /* stringhelper.hpp */,
 				55238FD82962239800AC0C43 /* data */,
 				55238FE72962239800AC0C43 /* main.cpp */,
@@ -795,6 +817,10 @@
 		55238FB22962239800AC0C43 /* GameObjects */ = {
 			isa = PBXGroup;
 			children = (
+				5513F51529631104007C9B13 /* UIButton.cpp */,
+				5581E05329633F3E00953CD1 /* TouchObject.cpp */,
+				5581E05229633F3E00953CD1 /* TouchObject.hpp */,
+				5513F51629631104007C9B13 /* UIButton.hpp */,
 				55238FB32962239800AC0C43 /* CubeObject_render.cpp */,
 				55238FB42962239800AC0C43 /* CubeObject.cpp */,
 				55238FB52962239800AC0C43 /* Player.cpp */,
@@ -1420,6 +1446,8 @@
 			files = (
 				552390252962239800AC0C43 /* DiceData.cpp in Sources */,
 				552390072962239800AC0C43 /* CubeMap_playerMovement.cpp in Sources */,
+				5513F51729631104007C9B13 /* UIButton.cpp in Sources */,
+				5581E05429633F3E00953CD1 /* TouchObject.cpp in Sources */,
 				55238FF82962239800AC0C43 /* Text.cpp in Sources */,
 				552390192962239800AC0C43 /* TitleScreen.cpp in Sources */,
 				55238FEF2962239800AC0C43 /* CubeObject_render.cpp in Sources */,
@@ -1438,10 +1466,12 @@
 				5523900A2962239800AC0C43 /* CubeField.cpp in Sources */,
 				552390312962239800AC0C43 /* gamebase.cpp in Sources */,
 				552390132962239800AC0C43 /* Level.cpp in Sources */,
+				5581E04F2963354D00953CD1 /* touchhelper.cpp in Sources */,
 				55238FF52962239800AC0C43 /* Player.cpp in Sources */,
 				552390012962239800AC0C43 /* GameObject.cpp in Sources */,
 				5523901C2962239800AC0C43 /* ComplexGameState.cpp in Sources */,
 				5523900D2962239800AC0C43 /* CubeMap.cpp in Sources */,
+				5581E05929637FA000953CD1 /* TouchController.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1451,6 +1481,8 @@
 			files = (
 				552390262962239800AC0C43 /* DiceData.cpp in Sources */,
 				552390082962239800AC0C43 /* CubeMap_playerMovement.cpp in Sources */,
+				5513F51829631104007C9B13 /* UIButton.cpp in Sources */,
+				5581E05529633F3E00953CD1 /* TouchObject.cpp in Sources */,
 				55238FF92962239800AC0C43 /* Text.cpp in Sources */,
 				5523901A2962239800AC0C43 /* TitleScreen.cpp in Sources */,
 				55238FF02962239800AC0C43 /* CubeObject_render.cpp in Sources */,
@@ -1469,10 +1501,12 @@
 				5523900B2962239800AC0C43 /* CubeField.cpp in Sources */,
 				552390322962239800AC0C43 /* gamebase.cpp in Sources */,
 				552390142962239800AC0C43 /* Level.cpp in Sources */,
+				5581E0502963354D00953CD1 /* touchhelper.cpp in Sources */,
 				55238FF62962239800AC0C43 /* Player.cpp in Sources */,
 				552390022962239800AC0C43 /* GameObject.cpp in Sources */,
 				5523901D2962239800AC0C43 /* ComplexGameState.cpp in Sources */,
 				5523900E2962239800AC0C43 /* CubeMap.cpp in Sources */,
+				5581E05A29637FA000953CD1 /* TouchController.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1482,6 +1516,8 @@
 			files = (
 				552390272962239800AC0C43 /* DiceData.cpp in Sources */,
 				552390092962239800AC0C43 /* CubeMap_playerMovement.cpp in Sources */,
+				5513F51929631104007C9B13 /* UIButton.cpp in Sources */,
+				5581E05629633F3E00953CD1 /* TouchObject.cpp in Sources */,
 				55238FFA2962239800AC0C43 /* Text.cpp in Sources */,
 				5523901B2962239800AC0C43 /* TitleScreen.cpp in Sources */,
 				55238FF12962239800AC0C43 /* CubeObject_render.cpp in Sources */,
@@ -1500,10 +1536,12 @@
 				5523900C2962239800AC0C43 /* CubeField.cpp in Sources */,
 				552390332962239800AC0C43 /* gamebase.cpp in Sources */,
 				552390152962239800AC0C43 /* Level.cpp in Sources */,
+				5581E0512963354D00953CD1 /* touchhelper.cpp in Sources */,
 				55238FF72962239800AC0C43 /* Player.cpp in Sources */,
 				552390032962239800AC0C43 /* GameObject.cpp in Sources */,
 				5523901E2962239800AC0C43 /* ComplexGameState.cpp in Sources */,
 				5523900F2962239800AC0C43 /* CubeMap.cpp in Sources */,
+				5581E05B29637FA000953CD1 /* TouchController.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1666,7 +1704,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 2;
+				CURRENT_PROJECT_VERSION = 3;
 				DEVELOPMENT_TEAM = 98ZXK38P8L;
 				GENERATE_INFOPLIST_FILE = YES;
 				HEADER_SEARCH_PATHS = (
@@ -1684,7 +1722,7 @@
 				INFOPLIST_KEY_UIStatusBarHidden = YES;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
-				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(LD_RUNPATH_SEARCH_PATHS_$(IS_MACCATALYST))",
 					"@executable_path/Frameworks",
@@ -1707,7 +1745,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 2;
+				CURRENT_PROJECT_VERSION = 3;
 				DEVELOPMENT_TEAM = 98ZXK38P8L;
 				GENERATE_INFOPLIST_FILE = YES;
 				HEADER_SEARCH_PATHS = (
@@ -1725,7 +1763,7 @@
 				INFOPLIST_KEY_UIStatusBarHidden = YES;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
-				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(LD_RUNPATH_SEARCH_PATHS_$(IS_MACCATALYST))",
 					"@executable_path/Frameworks",

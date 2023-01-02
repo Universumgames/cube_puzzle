@@ -36,6 +36,7 @@ void Level::Update(const u32 frame, const u32 totalMSec, const float deltaT) {
         lastMSec = totalMSec;
         lastFrame = frame;
     }
+    cubeGame.touchController->Update(BASIC_GO_DATA_PASSTHROUGH);
 }
 
 void Level::Render(const u32 frame, const u32 totalMSec, const float deltaT) {
@@ -57,7 +58,7 @@ void Level::Render(const u32 frame, const u32 totalMSec, const float deltaT) {
     SDL_RenderClear(render);
     SDL_RenderCopyEx(render, prepareTex, NULL, NULL, 0, NULL, SDL_FLIP_NONE);
     SDL_RenderPresent(render);
-
+    afterRenderCycle();
 }
 
 Level::Level(CubeGame &game, Renderer *render) : ComplexGameState(game, render) {
@@ -78,6 +79,7 @@ void Level::Init() {
     cubeGame.setWindowName("Level " + std::to_string(levelData.id) + " " + levelData.name);
     oldSize = {};
     updateTextures();
+    cubeGame.touchController->setScene(TouchController::TouchScene::MOVE);
 }
 
 void Level::UnInit() {
@@ -127,6 +129,7 @@ void Level::internalUIRender(const u32 frame, const u32 totalMSec, const float d
     SDL_SetRenderDrawColor(render, 0, 0, 0, 0);
     SDL_RenderClear(render);
     iterateGameObjects(RenderUI(BASIC_GO_DATA_PASSTHROUGH))
+    cubeGame.touchController->RenderUI(BASIC_GO_DATA_PASSTHROUGH);
 }
 
 void Level::internalGameRender(const u32 frame, const u32 totalMSec, const float deltaT) {

@@ -31,18 +31,19 @@ void TutorialLevel::Init() {
 void TutorialLevel::Update(const u32 frame, const u32 totalMSec, const float deltaT) {
     Level::Update(BASIC_GO_DATA_PASSTHROUGH);
     sidebarText->Update(BASIC_GO_DATA_PASSTHROUGH);
-}
-
-void TutorialLevel::internalUIRender(const u32 frame, const u32 totalMSec, const float deltaT) {
+    
     Rect gameRect = Level::getDrawableGameRect();
     Rect uiRect = Level::getDrawableUIRect();
     int width = max(200, uiRect.w - (gameRect.x + gameRect.w));
     sidebarText->setMaxWidth(width);
     Point textSize = sidebarText->getTextSize();
-    int startXOffset = min(gameRect.x + gameRect.w + 20, uiRect .x + uiRect.w - width + 20);
+    int startXOffset = uiRect.x + uiRect.w - width - 10;
     Rect textLoc = {startXOffset,0, textSize.x, textSize.y};
     Rect renderTextLoc = centerInVertical(textLoc, uiRect);
     sidebarText->changePosition({renderTextLoc.x, renderTextLoc.y});
+}
+
+void TutorialLevel::internalUIRender(const u32 frame, const u32 totalMSec, const float deltaT) {
     sidebarText->RenderUI(BASIC_GO_DATA_PASSTHROUGH);
     Level::internalUIRender(BASIC_GO_DATA_PASSTHROUGH);
 }
