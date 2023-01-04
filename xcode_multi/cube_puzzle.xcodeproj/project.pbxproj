@@ -290,6 +290,12 @@
 		5581E05929637FA000953CD1 /* TouchController.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5581E05729637FA000953CD1 /* TouchController.cpp */; };
 		5581E05A29637FA000953CD1 /* TouchController.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5581E05729637FA000953CD1 /* TouchController.cpp */; };
 		5581E05B29637FA000953CD1 /* TouchController.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5581E05729637FA000953CD1 /* TouchController.cpp */; };
+		5581E0622965C10600953CD1 /* exit.png in Resources */ = {isa = PBXBuildFile; fileRef = 5581E0602965C10600953CD1 /* exit.png */; };
+		5581E0632965C10600953CD1 /* exit.png in Resources */ = {isa = PBXBuildFile; fileRef = 5581E0602965C10600953CD1 /* exit.png */; };
+		5581E0642965C10600953CD1 /* exit.png in Resources */ = {isa = PBXBuildFile; fileRef = 5581E0602965C10600953CD1 /* exit.png */; };
+		5581E0652965C10600953CD1 /* arrow.png in Resources */ = {isa = PBXBuildFile; fileRef = 5581E0612965C10600953CD1 /* arrow.png */; };
+		5581E0662965C10600953CD1 /* arrow.png in Resources */ = {isa = PBXBuildFile; fileRef = 5581E0612965C10600953CD1 /* arrow.png */; };
+		5581E0672965C10600953CD1 /* arrow.png in Resources */ = {isa = PBXBuildFile; fileRef = 5581E0612965C10600953CD1 /* arrow.png */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -619,6 +625,9 @@
 		5581E05329633F3E00953CD1 /* TouchObject.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = TouchObject.cpp; sourceTree = "<group>"; };
 		5581E05729637FA000953CD1 /* TouchController.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = TouchController.cpp; sourceTree = "<group>"; };
 		5581E05829637FA000953CD1 /* TouchController.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = TouchController.hpp; sourceTree = "<group>"; };
+		5581E05D2964A48D00953CD1 /* cube-puzzle-iOS-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = "cube-puzzle-iOS-Info.plist"; sourceTree = "<group>"; };
+		5581E0602965C10600953CD1 /* exit.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = exit.png; sourceTree = "<group>"; };
+		5581E0612965C10600953CD1 /* arrow.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = arrow.png; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -661,6 +670,7 @@
 		55238DB22961C9B400AC0C43 = {
 			isa = PBXGroup;
 			children = (
+				5581E05D2964A48D00953CD1 /* cube-puzzle-iOS-Info.plist */,
 				5502186129622A7200F0509F /* asset */,
 				552391022962267E00AC0C43 /* Assets.xcassets */,
 				5502185D29622A3D00F0509F /* config.xcconfig */,
@@ -898,6 +908,8 @@
 		552390352962262100AC0C43 /* graphic */ = {
 			isa = PBXGroup;
 			children = (
+				5581E0612965C10600953CD1 /* arrow.png */,
+				5581E0602965C10600953CD1 /* exit.png */,
 				552390362962262100AC0C43 /* playerSheet.xcf */,
 				552390372962262100AC0C43 /* Cube6.png */,
 				552390382962262100AC0C43 /* Cube4.png */,
@@ -1283,11 +1295,13 @@
 				552390DD2962262200AC0C43 /* fall.tut in Resources */,
 				552391032962267E00AC0C43 /* Assets.xcassets in Resources */,
 				5523907A2962262200AC0C43 /* Cube1.png in Resources */,
+				5581E0622965C10600953CD1 /* exit.png in Resources */,
 				552390712962262200AC0C43 /* Cube4.png in Resources */,
 				55238E352961CD1100AC0C43 /* download_dependencies.sh in Resources */,
 				552390AA2962262200AC0C43 /* Roboto-Medium.ttf in Resources */,
 				552390A42962262200AC0C43 /* finish.wav in Resources */,
 				5502185E29622A3D00F0509F /* config.xcconfig in Resources */,
+				5581E0652965C10600953CD1 /* arrow.png in Resources */,
 				552390982962262200AC0C43 /* playerSheet.png in Resources */,
 				5502186229622A7200F0509F /* asset in Resources */,
 				552390E62962262200AC0C43 /* Level_2.level in Resources */,
@@ -1316,6 +1330,7 @@
 				552390C02962262200AC0C43 /* Roboto-Italic.ttf in Resources */,
 				552390F02962262200AC0C43 /* Level_4.level in Resources */,
 				5523909C2962262200AC0C43 /* hit2.wav in Resources */,
+				5581E0662965C10600953CD1 /* arrow.png in Resources */,
 				552390B12962262200AC0C43 /* Roboto-Regular.ttf in Resources */,
 				552390C32962262200AC0C43 /* LICENSE.txt in Resources */,
 				5523908D2962262200AC0C43 /* titlescreen.png in Resources */,
@@ -1352,6 +1367,7 @@
 				552390722962262200AC0C43 /* Cube4.png in Resources */,
 				55238E362961CD1100AC0C43 /* download_dependencies.sh in Resources */,
 				552390AB2962262200AC0C43 /* Roboto-Medium.ttf in Resources */,
+				5581E0632965C10600953CD1 /* exit.png in Resources */,
 				552390A52962262200AC0C43 /* finish.wav in Resources */,
 				5502185F29622A3D00F0509F /* config.xcconfig in Resources */,
 				552390992962262200AC0C43 /* playerSheet.png in Resources */,
@@ -1414,11 +1430,13 @@
 				552390EB2962262200AC0C43 /* Level_6.level in Resources */,
 				552390B22962262200AC0C43 /* Roboto-Regular.ttf in Resources */,
 				552390A32962262200AC0C43 /* pressed.wav in Resources */,
+				5581E0642965C10600953CD1 /* exit.png in Resources */,
 				5523907F2962262200AC0C43 /* Cube2.png in Resources */,
 				55238E3B2961D6F700AC0C43 /* .gitignore in Resources */,
 				5523907C2962262200AC0C43 /* Cube1.png in Resources */,
 				552390A92962262200AC0C43 /* RobotoSlab-Bold.ttf in Resources */,
 				5523906D2962262200AC0C43 /* playerSheet.xcf in Resources */,
+				5581E0672965C10600953CD1 /* arrow.png in Resources */,
 				552390942962262200AC0C43 /* arroMini.png in Resources */,
 				552390D92962262200AC0C43 /* demoSHEEB.tut in Resources */,
 				5502186029622A3D00F0509F /* config.xcconfig in Resources */,
@@ -1654,7 +1672,8 @@
 					"\"$(SRCROOT)/SDL/include\"",
 					"\"$(SRCROOT)/prepared\"",
 				);
-				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
+				MACOSX_DEPLOYMENT_TARGET = 12.0;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;
@@ -1713,7 +1732,8 @@
 					"\"$(SRCROOT)/SDL/include\"",
 					"\"$(SRCROOT)/prepared\"",
 				);
-				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
+				MACOSX_DEPLOYMENT_TARGET = 12.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
 			};
@@ -1725,7 +1745,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 4;
+				CURRENT_PROJECT_VERSION = 5;
 				DEVELOPMENT_TEAM = 98ZXK38P8L;
 				GENERATE_INFOPLIST_FILE = YES;
 				HEADER_SEARCH_PATHS = (
@@ -1735,6 +1755,7 @@
 					"\"$(SRCROOT)/SDL/include\"",
 					"\"$(SRCROOT)/prepared\"",
 				);
+				INFOPLIST_FILE = "cube-puzzle-iOS-Info.plist";
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.puzzle-games";
 				INFOPLIST_KEY_NSBluetoothAlwaysUsageDescription = "Connecting to bluetooth devices to play music or to get controller input ist required.";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
@@ -1766,7 +1787,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 4;
+				CURRENT_PROJECT_VERSION = 5;
 				DEVELOPMENT_TEAM = 98ZXK38P8L;
 				GENERATE_INFOPLIST_FILE = YES;
 				HEADER_SEARCH_PATHS = (
@@ -1776,6 +1797,7 @@
 					"\"$(SRCROOT)/SDL/include\"",
 					"\"$(SRCROOT)/prepared\"",
 				);
+				INFOPLIST_FILE = "cube-puzzle-iOS-Info.plist";
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.puzzle-games";
 				INFOPLIST_KEY_NSBluetoothAlwaysUsageDescription = "Connecting to bluetooth devices to play music or to get controller input ist required.";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;

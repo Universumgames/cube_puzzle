@@ -95,8 +95,8 @@ TouchController::TouchController(CubeGame &game, ComplexGameState *gameState, SD
         UIButton *enterButton;
 
         tutorialButton = new UIButton(game, gameState, render, {0, 0}, {0, 0}, blue);
-        upButton = new UIButton(game, gameState, render, {0, 0}, {0, 0}, red);
-        downButton = new UIButton(game, gameState, render, {0, 0}, {0, 0}, green);
+        upButton = new UIButton(game, gameState, render, {0, 0}, {0, 0}, game.getSpriteStorage()->touchArrow);
+        downButton = new UIButton(game, gameState, render, {0, 0}, {0, 0}, game.getSpriteStorage()->touchArrow);
         enterButton = new UIButton(game, gameState, render, {0, 0}, {0, 0}, {100, 100, 100, 255});
 
         tutorialButton->setUpdateLambda([](CubeGame &game, TouchObject *tutorialButton) {
@@ -107,6 +107,7 @@ TouchController::TouchController(CubeGame &game, ComplexGameState *gameState, SD
         tutorialButton->setPressedLambda([](CubeGame &, TouchObject *touch) {
             simulateKeyPress(SDL_SCANCODE_T);
         });
+        upButton->setTextureSettings(-90);
         upButton->setUpdateLambda([](CubeGame &game, TouchObject *upButton) {
             Rect r = placeButtonBottomRight(game, 3, 2, 1, 0);
             upButton->setSize({r.w, r.h});
@@ -115,6 +116,7 @@ TouchController::TouchController(CubeGame &game, ComplexGameState *gameState, SD
         upButton->setPressedLambda([](CubeGame &, TouchObject *touch) {
             simulateKeyPress(SDL_SCANCODE_UP);
         });
+        downButton->setTextureSettings(90);
         downButton->setUpdateLambda([](CubeGame &game, TouchObject *downButton) {
             Rect r = placeButtonBottomRight(game, 3, 2, 1, 1);
             downButton->setSize({r.w, r.h});
@@ -146,13 +148,14 @@ TouchController::TouchController(CubeGame &game, ComplexGameState *gameState, SD
         UIButton *escapeButton;
         UIButton *holdMagnetButton;
 
-        upButton = new UIButton(game, gameState, render, {0, 0}, {0, 0}, red);
-        downButton = new UIButton(game, gameState, render, {0, 0}, {0, 0}, green);
-        leftButton = new UIButton(game, gameState, render, {0, 0}, {0, 0}, blue);
-        rightButton = new UIButton(game, gameState, render, {0, 0}, {0, 0}, violet);
-        escapeButton = new UIButton(game, gameState, render, {0, 0}, {0, 0}, green);
+        upButton = new UIButton(game, gameState, render, {0, 0}, {0, 0}, game.getSpriteStorage()->touchArrow);
+        downButton = new UIButton(game, gameState, render, {0, 0}, {0, 0}, game.getSpriteStorage()->touchArrow);
+        leftButton = new UIButton(game, gameState, render, {0, 0}, {0, 0}, game.getSpriteStorage()->touchArrow);
+        rightButton = new UIButton(game, gameState, render, {0, 0}, {0, 0}, game.getSpriteStorage()->touchArrow);
+        escapeButton = new UIButton(game, gameState, render, {0, 0}, {0, 0}, game.getSpriteStorage()->touchExit);
         holdMagnetButton = new UIButton(game, gameState, render, {0, 0}, {0, 0}, green);
 
+        upButton->setTextureSettings(-90);
         upButton->setUpdateLambda([](CubeGame &game, TouchObject *touch) {
             Rect r = placeButtonBottomRight(game, 3, 3, 1, 0);
             touch->setSize({r.w, r.h});
@@ -161,6 +164,7 @@ TouchController::TouchController(CubeGame &game, ComplexGameState *gameState, SD
         upButton->setPressedLambda([](CubeGame &, TouchObject *touch) {
             simulateKeyPress(SDL_SCANCODE_W);
         });
+        downButton->setTextureSettings(90);
         downButton->setUpdateLambda([](CubeGame &game, TouchObject *touch) {
             Rect r = placeButtonBottomRight(game, 3, 3, 1, 2);
             touch->setSize({r.w, r.h});
@@ -169,6 +173,7 @@ TouchController::TouchController(CubeGame &game, ComplexGameState *gameState, SD
         downButton->setPressedLambda([](CubeGame &, TouchObject *touch) {
             simulateKeyPress(SDL_SCANCODE_S);
         });
+        leftButton->setTextureSettings(180);
         leftButton->setUpdateLambda([](CubeGame &game, TouchObject *touch) {
             Rect r = placeButtonBottomRight(game, 3, 3, 0, 1);
             touch->setSize({r.w, r.h});
@@ -177,6 +182,7 @@ TouchController::TouchController(CubeGame &game, ComplexGameState *gameState, SD
         leftButton->setPressedLambda([](CubeGame &, TouchObject *touch) {
             simulateKeyPress(SDL_SCANCODE_A);
         });
+        rightButton->setTextureSettings(0);
         rightButton->setUpdateLambda([](CubeGame &game, TouchObject *touch) {
             Rect r = placeButtonBottomRight(game, 3, 3, 2, 1);
             touch->setSize({r.w, r.h});

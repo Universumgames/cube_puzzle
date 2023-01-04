@@ -23,4 +23,7 @@
 #define CUBE_OBJECT_PATH "asset/graphic/AllTestTyle.png"
 #define TITLESCREEEN_GAME_BANNER_PATH "asset/graphic/titlescreen.png"
 
+#define TOUCH_ARROW_PATH "asset/graphic/arrow.png"
+#define TOUCH_EXIT_PATH "asset/graphic/exit.png"
+
 #define CUBE_SIDE_BACKGROUND_PATH(side) ("asset/graphic/Cube" + std::to_string(side) + ".png").c_str()

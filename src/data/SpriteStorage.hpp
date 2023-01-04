@@ -80,6 +80,10 @@ struct SpriteStorage {
     Texture *cubeFieldSpriteSheet = nullptr;
     Texture *cubeObjectSpriteSheet = nullptr;
     Texture *titleScreenGameBanner = nullptr;
+
+    Texture* touchArrow = nullptr;
+    Texture* touchExit = nullptr;
+
     Font *basicFont = nullptr;
     Font *smallFont = nullptr;
     Font *debugFont = nullptr;
