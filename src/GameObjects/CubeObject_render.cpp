@@ -53,6 +53,12 @@ Slider::Render(CubeGame &game, Renderer *render, Point size, Point location, u32
 
 void
 Magnet::Render(CubeGame &game, Renderer *render, Point size, Point location, u32 frame, u32 totalMSec, float deltaT) {
+    if(this->isGrabbed) {
+        SDL_SetTextureColorMod(game.getSpriteStorage()->cubeObjectSpriteSheet, 0, 0, 0);
+        drawCubeObject(render, game.getSpriteStorage()->cubeObjectSpriteSheet, size + Point{4, 4},
+                       location - Point{2, 2}, SPRITE_MAGNET_INDEX);
+        SDL_SetTextureColorMod(game.getSpriteStorage()->cubeObjectSpriteSheet, 255, 255, 255);
+    }
     drawCubeObject(render, game.getSpriteStorage()->cubeObjectSpriteSheet, size, location, SPRITE_MAGNET_INDEX);
 }
 
