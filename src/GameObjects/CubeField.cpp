@@ -51,8 +51,9 @@ CubeField::Render(CubeGame &game, Renderer *render, Point size, Point location, 
                   const float deltaT) {
     Rect dst = {location.x, location.y, size.x, size.y};
     drawSpriteBorder(game.isDebug(), render, dst);
-    Point locationNew = {location.x + 10, location.y + 10};
-    Point sizeNew = {size.x - 20, size.y - 20};
+    Point sizeNew = size * 0.85;
+    Rect tmpNewLoc = centerIn({location.x, location.y, sizeNew.x, sizeNew.y}, {location.x, location.y, size.x, size.y});
+    Point locationNew = {tmpNewLoc.x, tmpNewLoc.y};
     for (CubeObject *cubeObject: this->cubeObjects) {
         cubeObject->Render(game, render, sizeNew, locationNew, frame, totalMSec, deltaT);
         locationNew = {locationNew.x + 10, locationNew.y + 10};
