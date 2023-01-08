@@ -13,6 +13,11 @@ protected:
     void internalUIRender(const u32 frame, const u32 totalMSec, const float deltaT) override;
 
 private:
+    void resetSidebarText(Font* font);
+
+private:
     TutorialLevelData levelData;
-    Text* sidebarText;
+    bool loaded = false;
+    Text* sidebarText = nullptr;
+    Font* usedSidebarFont = nullptr;
 };

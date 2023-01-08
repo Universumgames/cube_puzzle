@@ -68,6 +68,8 @@ private:
     Rect getListSpace();
 
     Rect getSideBarSpace(int topPadding);
+
+    void resetSidebarText(Font* font);
     
 private:
     Point oldSize;
@@ -75,9 +77,10 @@ private:
     Vector<LevelData> levelData;
     Vector<TutorialLevelData> tutLevelData;
     bool levelsLoaded = false;
-    Text *debugText;
-    Text* sideBarText;
-    Text* headline;
+    Text *debugText = nullptr;
+    Text* sideBarText = nullptr;
+    Text* headline = nullptr;
+    Font* usedSidebarFont = nullptr;
 
     bool loadingNext;
 

@@ -32,6 +32,13 @@ void LevelSelector::Update(const u32 frame, const u32 totalMSec, const float del
 
     cubeGame.touchController->Update(BASIC_GO_DATA_PASSTHROUGH);
 
+    Rect sideRect = sideBarText->getDrawedRect();
+    if (sideRect.y + sideRect.h > game.getWindowSize().y) {
+        resetSidebarText(game.getSpriteStorage()->smallFont);
+    } else if ((sideRect.y + sideRect.h) * 2 < game.getWindowSize().y) {
+        resetSidebarText(game.getSpriteStorage()->basicFont);
+    }
+
 }
 
 void LevelSelector::Render(const u32 frame, const u32 totalMSec, const float deltaT) {
@@ -82,7 +89,6 @@ void LevelSelector::Render(const u32 frame, const u32 totalMSec, const float del
     headline->RenderUI(BASIC_GO_DATA_PASSTHROUGH);
 
     cubeGame.touchController->RenderUI(BASIC_GO_DATA_PASSTHROUGH);
-
 
 
     SDL_RenderPresent(render);
@@ -184,19 +190,11 @@ void LevelSelector::Init() {
     headline = new Text(cubeGame, this, render, 500, "Select a level to play", game.getSpriteStorage()->basicFont, {});
     headline->Init();
 
-    sideBarText = new Text(cubeGame, this, render, 500,
-                           "Use the up/down keys to select a level\n"
-                           "Press Enter to start level (or tap on the desired level)\n\n"
-                           "Want to play the tutorial? Press T\n\n"
-                           "To mute/play the music press M",
-                           game.getSpriteStorage()->basicFont, {});
-    sideBarText->Init();
-
-
+    resetSidebarText(game.getSpriteStorage()->basicFont);
 
 
     if (!loadingNext) prepareLevelListItems();
-    
+
     cubeGame.touchController->setScene(TouchController::TouchScene::SELECT);
 }
 
@@ -347,6 +345,19 @@ void LevelSelector::levelsInit() {
     loadLevels();
     loadTutorialLevels();
     levelsLoaded = true;
+}
+
+void LevelSelector::resetSidebarText(Font *font) {
+    if (font == usedSidebarFont) return;
+    if (sideBarText != nullptr) delete sideBarText;
+    sideBarText = new Text(cubeGame, this, render, 500,
+                           "Use the up/down keys to select a level\n"
+                           "Press Enter to start level (or tap on the desired level)\n\n"
+                           "Want to play the tutorial? Press T\n\n"
+                           "To mute/play the music press M",
+                           font, {});
+    sideBarText->Init();
+    usedSidebarFont = font;
 }
 
 
