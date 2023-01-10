@@ -59,7 +59,7 @@ LevelLoader::TutLoadedLevelData LevelLoader::loadTutLevel(const std::string &pat
     return level;
 }
 
-LevelLoader::LoadedLevelData LevelLoader::loadLevel(const std::string &path, std::ifstream &is) {
+LevelLoader::LoadedLevelData LevelLoader::loadLevel(const std::string &path, std::istream &is) {
 
     Vector<CubeMapSide *> sides;
     Point worldSize = {0, 0};
@@ -208,5 +208,10 @@ LevelLoader::LoadedLevelData LevelLoader::loadLevel(const std::string &path, std
         auto *sideTemp = new CubeMapSide(cubeFields, width, height, sideID);
         sides.push_back(sideTemp);
     }
-    return {.path = path, .name = levelName, .id = id, .sides = sides, .worldSize = worldSize, .worldField = worldField, .cubePos = cubePos, .playerPos = playerPos, .cubeSide = cubeSide};
+    return {.path = path, .name = replaceAll(levelName, "#", " "), .id = id, .sides = sides, .worldSize = worldSize, .worldField = worldField, .cubePos = cubePos, .playerPos = playerPos, .cubeSide = cubeSide};
+}
+
+LevelLoader::LoadedLevelData LevelLoader::loadLevelString(const std::string &levelString) {
+    auto iStream = std::stringstream {levelString};
+    return loadLevel("remote", iStream);
 }

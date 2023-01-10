@@ -2,6 +2,7 @@
 #include "CubeGame.hpp"
 #include "data/DiceData.hpp"
 #include "config.hpp"
+#include "data/RemoteLevelFetch.hpp"
 
 void tests() {
     /*auto data = DiceData();
@@ -10,6 +11,9 @@ void tests() {
     cout << data.toString() << std::endl;
     data.rotate(DiceRollDirection::WEST);
     cout << data.toString() << std::endl;*/
+    //cout << RemoteLevelFetch::getInstance()->getHttpRequestBody(REMOTE_LEVELS_LIST_URL);
+    //cout << RemoteLevelFetch::getInstance()->getLevelData()[0];
+
 }
 #if defined(__IPHONEOS__) || defined(__TVOS__)
 
@@ -20,6 +24,7 @@ int main(int argc, char *argv[])
 try {
     tests();
     CubeGame game;
+    RemoteLevelFetch::getInstance()->startLoading();
     return game.Run();
 }
 catch (...) {

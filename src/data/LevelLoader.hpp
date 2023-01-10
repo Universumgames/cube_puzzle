@@ -45,12 +45,13 @@ public:
 
     /// load normal level from file
     static LoadedLevelData loadLevel(const std::string& path);
+    static LoadedLevelData loadLevelString(const std::string& levelString);
     /// load tutorial level
     static TutLoadedLevelData loadTutLevel(const std::string& path);
 
 private:
     /// internal loading method for identical loading processes between normal levels and tutorial levels
-    static LoadedLevelData loadLevel(const std::string& path, std::ifstream& is);
+    static LoadedLevelData loadLevel(const std::string& path, std::istream& is);
 
 
 };

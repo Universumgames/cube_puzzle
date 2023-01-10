@@ -14,6 +14,7 @@ protected:
 private:
     LevelSelector* levelSelector;
     Text* versionInfo;
+    Text* remoteLevelLoading;
     std::ifstream solution;
     u32 lastMovementTotalMSec = 0;
 

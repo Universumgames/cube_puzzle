@@ -11,6 +11,7 @@
 #include "config.hpp"
 #include "../GameObjects/TouchObject.hpp"
 #include "../touchhelper.hpp"
+#include "../data/RemoteLevelFetch.hpp"
 
 void LevelSelector::Update(const u32 frame, const u32 totalMSec, const float deltaT) {
     debugText->setEnabled(cubeGame.isDebug());
@@ -125,6 +126,16 @@ void LevelSelector::loadLevels() {
         auto levelD = levelX->load(data, cubeGame.allStates.size());
         levelData.push_back(levelD);
         cubeGame.allStates.push_back(levelX);
+    }
+
+    if(RemoteLevelFetch::getInstance()->getLoadingState() == RemoteLevelFetch::LoadingState::FINISHED){
+        for(const auto& levelString : RemoteLevelFetch::getInstance()->getLevelData()){
+            auto data = LevelLoader::loadLevelString(levelString);
+            auto *levelX = new Level(cubeGame, render);
+            auto levelD = levelX->load(data, cubeGame.allStates.size());
+            levelData.push_back(levelD);
+            cubeGame.allStates.push_back(levelX);
+        }
     }
 
 

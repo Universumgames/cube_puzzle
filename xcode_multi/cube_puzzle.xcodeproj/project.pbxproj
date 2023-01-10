@@ -296,6 +296,9 @@
 		5581E0652965C10600953CD1 /* arrow.png in Resources */ = {isa = PBXBuildFile; fileRef = 5581E0612965C10600953CD1 /* arrow.png */; };
 		5581E0662965C10600953CD1 /* arrow.png in Resources */ = {isa = PBXBuildFile; fileRef = 5581E0612965C10600953CD1 /* arrow.png */; };
 		5581E0672965C10600953CD1 /* arrow.png in Resources */ = {isa = PBXBuildFile; fileRef = 5581E0612965C10600953CD1 /* arrow.png */; };
+		55FDC953296DDC9E006862C9 /* RemoteLevelFetch.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 55FDC951296DDC9E006862C9 /* RemoteLevelFetch.cpp */; };
+		55FDC954296DDC9E006862C9 /* RemoteLevelFetch.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 55FDC951296DDC9E006862C9 /* RemoteLevelFetch.cpp */; };
+		55FDC955296DDC9E006862C9 /* RemoteLevelFetch.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 55FDC951296DDC9E006862C9 /* RemoteLevelFetch.cpp */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -628,6 +631,9 @@
 		5581E05D2964A48D00953CD1 /* cube-puzzle-iOS-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = "cube-puzzle-iOS-Info.plist"; sourceTree = "<group>"; };
 		5581E0602965C10600953CD1 /* exit.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = exit.png; sourceTree = "<group>"; };
 		5581E0612965C10600953CD1 /* arrow.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = arrow.png; sourceTree = "<group>"; };
+		55FDC93C296DDC56006862C9 /* HTTPRequest.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = HTTPRequest.hpp; sourceTree = "<group>"; };
+		55FDC951296DDC9E006862C9 /* RemoteLevelFetch.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = RemoteLevelFetch.cpp; sourceTree = "<group>"; };
+		55FDC952296DDC9E006862C9 /* RemoteLevelFetch.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = RemoteLevelFetch.hpp; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -797,6 +803,7 @@
 		55238FAA2962239800AC0C43 /* src */ = {
 			isa = PBXGroup;
 			children = (
+				55FDC93B296DDC56006862C9 /* lib */,
 				55238FAB2962239800AC0C43 /* recthelper.hpp */,
 				55238FAC2962239800AC0C43 /* global.hpp */,
 				55238FAD2962239800AC0C43 /* gamebase.hpp */,
@@ -875,6 +882,8 @@
 		55238FD82962239800AC0C43 /* data */ = {
 			isa = PBXGroup;
 			children = (
+				55FDC951296DDC9E006862C9 /* RemoteLevelFetch.cpp */,
+				55FDC952296DDC9E006862C9 /* RemoteLevelFetch.hpp */,
 				55238FD92962239800AC0C43 /* Colors.hpp */,
 				55238FDA2962239800AC0C43 /* paths.hpp */,
 				55238FDB2962239800AC0C43 /* spriteDefs.hpp */,
@@ -990,6 +999,14 @@
 				5523906A2962262200AC0C43 /* Level_5.level */,
 			);
 			path = levels;
+			sourceTree = "<group>";
+		};
+		55FDC93B296DDC56006862C9 /* lib */ = {
+			isa = PBXGroup;
+			children = (
+				55FDC93C296DDC56006862C9 /* HTTPRequest.hpp */,
+			);
+			path = lib;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -1491,6 +1508,7 @@
 				552390192962239800AC0C43 /* TitleScreen.cpp in Sources */,
 				55238FEF2962239800AC0C43 /* CubeObject_render.cpp in Sources */,
 				552390162962239800AC0C43 /* LevelSelector.cpp in Sources */,
+				55FDC953296DDC9E006862C9 /* RemoteLevelFetch.cpp in Sources */,
 				552390282962239800AC0C43 /* LevelLoader.cpp in Sources */,
 				5523902E2962239800AC0C43 /* main.cpp in Sources */,
 				552390222962239800AC0C43 /* SDL_uikit_main.c in Sources */,
@@ -1526,6 +1544,7 @@
 				5523901A2962239800AC0C43 /* TitleScreen.cpp in Sources */,
 				55238FF02962239800AC0C43 /* CubeObject_render.cpp in Sources */,
 				552390172962239800AC0C43 /* LevelSelector.cpp in Sources */,
+				55FDC954296DDC9E006862C9 /* RemoteLevelFetch.cpp in Sources */,
 				552390292962239800AC0C43 /* LevelLoader.cpp in Sources */,
 				5523902F2962239800AC0C43 /* main.cpp in Sources */,
 				552390232962239800AC0C43 /* SDL_uikit_main.c in Sources */,
@@ -1561,6 +1580,7 @@
 				5523901B2962239800AC0C43 /* TitleScreen.cpp in Sources */,
 				55238FF12962239800AC0C43 /* CubeObject_render.cpp in Sources */,
 				552390182962239800AC0C43 /* LevelSelector.cpp in Sources */,
+				55FDC955296DDC9E006862C9 /* RemoteLevelFetch.cpp in Sources */,
 				5523902A2962239800AC0C43 /* LevelLoader.cpp in Sources */,
 				552390302962239800AC0C43 /* main.cpp in Sources */,
 				552390242962239800AC0C43 /* SDL_uikit_main.c in Sources */,
@@ -1745,7 +1765,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 8;
+				CURRENT_PROJECT_VERSION = 9;
 				DEVELOPMENT_TEAM = 98ZXK38P8L;
 				GENERATE_INFOPLIST_FILE = YES;
 				HEADER_SEARCH_PATHS = (
@@ -1787,7 +1807,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 8;
+				CURRENT_PROJECT_VERSION = 9;
 				DEVELOPMENT_TEAM = 98ZXK38P8L;
 				GENERATE_INFOPLIST_FILE = YES;
 				HEADER_SEARCH_PATHS = (

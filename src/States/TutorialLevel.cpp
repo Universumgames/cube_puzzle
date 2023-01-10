@@ -11,7 +11,7 @@ TutorialLevelData TutorialLevel::load(const LevelLoader::TutLoadedLevelData &dat
     TutorialLevelData level = Level::load(data, arrayIndex);
     this->levelData = level;
     this->levelData.sidebarText = data.sideBarText;
-    sidebarText->changeText(data.sideBarText);
+    this->sidebarText->changeText(data.sideBarText);
     loaded = true;
     return level;
 }
