@@ -14,6 +14,30 @@
 		5502186229622A7200F0509F /* asset in Resources */ = {isa = PBXBuildFile; fileRef = 5502186129622A7200F0509F /* asset */; };
 		5502186329622A7300F0509F /* asset in Resources */ = {isa = PBXBuildFile; fileRef = 5502186129622A7200F0509F /* asset */; };
 		5502186429622A7300F0509F /* asset in Resources */ = {isa = PBXBuildFile; fileRef = 5502186129622A7200F0509F /* asset */; };
+		55096C6F29886E830018A63A /* music_touch.png in Resources */ = {isa = PBXBuildFile; fileRef = 55096C5A29886E830018A63A /* music_touch.png */; };
+		55096C7029886E830018A63A /* music_touch.png in Resources */ = {isa = PBXBuildFile; fileRef = 55096C5A29886E830018A63A /* music_touch.png */; };
+		55096C7129886E830018A63A /* music_touch.png in Resources */ = {isa = PBXBuildFile; fileRef = 55096C5A29886E830018A63A /* music_touch.png */; };
+		55096C73298871310018A63A /* tut_touch.png in Resources */ = {isa = PBXBuildFile; fileRef = 55096C72298871310018A63A /* tut_touch.png */; };
+		55096C74298871310018A63A /* tut_touch.png in Resources */ = {isa = PBXBuildFile; fileRef = 55096C72298871310018A63A /* tut_touch.png */; };
+		55096C75298871310018A63A /* tut_touch.png in Resources */ = {isa = PBXBuildFile; fileRef = 55096C72298871310018A63A /* tut_touch.png */; };
+		55096C7A298875800018A63A /* shift_touch.xcf in Resources */ = {isa = PBXBuildFile; fileRef = 55096C762988757F0018A63A /* shift_touch.xcf */; };
+		55096C7B298875800018A63A /* shift_touch.xcf in Resources */ = {isa = PBXBuildFile; fileRef = 55096C762988757F0018A63A /* shift_touch.xcf */; };
+		55096C7C298875800018A63A /* shift_touch.xcf in Resources */ = {isa = PBXBuildFile; fileRef = 55096C762988757F0018A63A /* shift_touch.xcf */; };
+		55096C7D298875800018A63A /* music_touch.xcf in Resources */ = {isa = PBXBuildFile; fileRef = 55096C772988757F0018A63A /* music_touch.xcf */; };
+		55096C7E298875800018A63A /* music_touch.xcf in Resources */ = {isa = PBXBuildFile; fileRef = 55096C772988757F0018A63A /* music_touch.xcf */; };
+		55096C7F298875800018A63A /* music_touch.xcf in Resources */ = {isa = PBXBuildFile; fileRef = 55096C772988757F0018A63A /* music_touch.xcf */; };
+		55096C80298875800018A63A /* tut_touch.xcf in Resources */ = {isa = PBXBuildFile; fileRef = 55096C782988757F0018A63A /* tut_touch.xcf */; };
+		55096C81298875800018A63A /* tut_touch.xcf in Resources */ = {isa = PBXBuildFile; fileRef = 55096C782988757F0018A63A /* tut_touch.xcf */; };
+		55096C82298875800018A63A /* tut_touch.xcf in Resources */ = {isa = PBXBuildFile; fileRef = 55096C782988757F0018A63A /* tut_touch.xcf */; };
+		55096C83298875800018A63A /* shift_touch.png in Resources */ = {isa = PBXBuildFile; fileRef = 55096C79298875800018A63A /* shift_touch.png */; };
+		55096C84298875800018A63A /* shift_touch.png in Resources */ = {isa = PBXBuildFile; fileRef = 55096C79298875800018A63A /* shift_touch.png */; };
+		55096C85298875800018A63A /* shift_touch.png in Resources */ = {isa = PBXBuildFile; fileRef = 55096C79298875800018A63A /* shift_touch.png */; };
+		55096C88298876C50018A63A /* enter_touch.xcf in Resources */ = {isa = PBXBuildFile; fileRef = 55096C86298876C50018A63A /* enter_touch.xcf */; };
+		55096C89298876C50018A63A /* enter_touch.xcf in Resources */ = {isa = PBXBuildFile; fileRef = 55096C86298876C50018A63A /* enter_touch.xcf */; };
+		55096C8A298876C50018A63A /* enter_touch.xcf in Resources */ = {isa = PBXBuildFile; fileRef = 55096C86298876C50018A63A /* enter_touch.xcf */; };
+		55096C8B298876C50018A63A /* enter_touch.png in Resources */ = {isa = PBXBuildFile; fileRef = 55096C87298876C50018A63A /* enter_touch.png */; };
+		55096C8C298876C50018A63A /* enter_touch.png in Resources */ = {isa = PBXBuildFile; fileRef = 55096C87298876C50018A63A /* enter_touch.png */; };
+		55096C8D298876C50018A63A /* enter_touch.png in Resources */ = {isa = PBXBuildFile; fileRef = 55096C87298876C50018A63A /* enter_touch.png */; };
 		5513F4C029623555007C9B13 /* SDL2.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 55238E4D2961D74300AC0C43 /* SDL2.framework */; };
 		5513F4C129623555007C9B13 /* SDL2.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 55238E4D2961D74300AC0C43 /* SDL2.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		5513F4C329623581007C9B13 /* SDL2_image.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 55238E6A2961D75700AC0C43 /* SDL2_image.framework */; };
@@ -493,6 +517,14 @@
 		5502185D29622A3D00F0509F /* config.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; path = config.xcconfig; sourceTree = "<group>"; };
 		5502186129622A7200F0509F /* asset */ = {isa = PBXFileReference; lastKnownFileType = folder; name = asset; path = ../asset; sourceTree = "<group>"; };
 		5502186F29622E4B00F0509F /* touchhelper.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = touchhelper.hpp; sourceTree = "<group>"; };
+		55096C5A29886E830018A63A /* music_touch.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = music_touch.png; sourceTree = "<group>"; };
+		55096C72298871310018A63A /* tut_touch.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = tut_touch.png; sourceTree = "<group>"; };
+		55096C762988757F0018A63A /* shift_touch.xcf */ = {isa = PBXFileReference; lastKnownFileType = file; path = shift_touch.xcf; sourceTree = "<group>"; };
+		55096C772988757F0018A63A /* music_touch.xcf */ = {isa = PBXFileReference; lastKnownFileType = file; path = music_touch.xcf; sourceTree = "<group>"; };
+		55096C782988757F0018A63A /* tut_touch.xcf */ = {isa = PBXFileReference; lastKnownFileType = file; path = tut_touch.xcf; sourceTree = "<group>"; };
+		55096C79298875800018A63A /* shift_touch.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = shift_touch.png; sourceTree = "<group>"; };
+		55096C86298876C50018A63A /* enter_touch.xcf */ = {isa = PBXFileReference; lastKnownFileType = file; path = enter_touch.xcf; sourceTree = "<group>"; };
+		55096C87298876C50018A63A /* enter_touch.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = enter_touch.png; sourceTree = "<group>"; };
 		5513F4D129623669007C9B13 /* LaunchScreen.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = LaunchScreen.storyboard; sourceTree = "<group>"; };
 		5513F4D329623FAA007C9B13 /* SETUP.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = SETUP.md; sourceTree = "<group>"; };
 		5513F51529631104007C9B13 /* UIButton.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = UIButton.cpp; sourceTree = "<group>"; };
@@ -917,6 +949,14 @@
 		552390352962262100AC0C43 /* graphic */ = {
 			isa = PBXGroup;
 			children = (
+				55096C87298876C50018A63A /* enter_touch.png */,
+				55096C86298876C50018A63A /* enter_touch.xcf */,
+				55096C772988757F0018A63A /* music_touch.xcf */,
+				55096C79298875800018A63A /* shift_touch.png */,
+				55096C762988757F0018A63A /* shift_touch.xcf */,
+				55096C782988757F0018A63A /* tut_touch.xcf */,
+				55096C72298871310018A63A /* tut_touch.png */,
+				55096C5A29886E830018A63A /* music_touch.png */,
 				5581E0612965C10600953CD1 /* arrow.png */,
 				5581E0602965C10600953CD1 /* exit.png */,
 				552390362962262100AC0C43 /* playerSheet.xcf */,
@@ -1279,6 +1319,7 @@
 				552390E02962262200AC0C43 /* titlescreen.solution in Resources */,
 				552390BF2962262200AC0C43 /* Roboto-Italic.ttf in Resources */,
 				552390EF2962262200AC0C43 /* Level_4.level in Resources */,
+				55096C83298875800018A63A /* shift_touch.png in Resources */,
 				5523909B2962262200AC0C43 /* hit2.wav in Resources */,
 				552390B02962262200AC0C43 /* Roboto-Regular.ttf in Resources */,
 				552390C22962262200AC0C43 /* LICENSE.txt in Resources */,
@@ -1294,6 +1335,7 @@
 				552390DA2962262200AC0C43 /* flag.tut in Resources */,
 				552390D42962262200AC0C43 /* slider.tut in Resources */,
 				552390742962262200AC0C43 /* Icon.png in Resources */,
+				55096C7A298875800018A63A /* shift_touch.xcf in Resources */,
 				552390B62962262200AC0C43 /* Roboto-ThinItalic.ttf in Resources */,
 				552390FB2962262200AC0C43 /* Level_5.level in Resources */,
 				552390AD2962262200AC0C43 /* Roboto-Light.ttf in Resources */,
@@ -1304,15 +1346,19 @@
 				552390F22962262200AC0C43 /* Level_12.level in Resources */,
 				552390832962262200AC0C43 /* idle.png in Resources */,
 				552390F52962262200AC0C43 /* Level_3.level in Resources */,
+				55096C80298875800018A63A /* tut_touch.xcf in Resources */,
 				552390C52962262200AC0C43 /* Roboto-BlackItalic.ttf in Resources */,
 				55238EC02961EB9400AC0C43 /* extractXCodeData.sh in Resources */,
 				5523906B2962262200AC0C43 /* playerSheet.xcf in Resources */,
+				55096C7D298875800018A63A /* music_touch.xcf in Resources */,
 				552390C82962262200AC0C43 /* Roboto-Bold.ttf in Resources */,
 				5523907D2962262200AC0C43 /* Cube2.png in Resources */,
+				55096C8B298876C50018A63A /* enter_touch.png in Resources */,
 				552390DD2962262200AC0C43 /* fall.tut in Resources */,
 				552391032962267E00AC0C43 /* Assets.xcassets in Resources */,
 				5523907A2962262200AC0C43 /* Cube1.png in Resources */,
 				5581E0622965C10600953CD1 /* exit.png in Resources */,
+				55096C88298876C50018A63A /* enter_touch.xcf in Resources */,
 				552390712962262200AC0C43 /* Cube4.png in Resources */,
 				55238E352961CD1100AC0C43 /* download_dependencies.sh in Resources */,
 				552390AA2962262200AC0C43 /* Roboto-Medium.ttf in Resources */,
@@ -1328,7 +1374,9 @@
 				552390D12962262200AC0C43 /* title.screen in Resources */,
 				552390862962262200AC0C43 /* mac1024_2.png in Resources */,
 				552390802962262200AC0C43 /* Cube3.png in Resources */,
+				55096C73298871310018A63A /* tut_touch.png in Resources */,
 				552390952962262200AC0C43 /* rrowig.png in Resources */,
+				55096C6F29886E830018A63A /* music_touch.png in Resources */,
 				5513F4D229623669007C9B13 /* LaunchScreen.storyboard in Resources */,
 				5523906E2962262200AC0C43 /* Cube6.png in Resources */,
 				552390B32962262200AC0C43 /* Roboto-MediumItalic.ttf in Resources */,
@@ -1349,6 +1397,7 @@
 				5523909C2962262200AC0C43 /* hit2.wav in Resources */,
 				5581E0662965C10600953CD1 /* arrow.png in Resources */,
 				552390B12962262200AC0C43 /* Roboto-Regular.ttf in Resources */,
+				55096C7029886E830018A63A /* music_touch.png in Resources */,
 				552390C32962262200AC0C43 /* LICENSE.txt in Resources */,
 				5523908D2962262200AC0C43 /* titlescreen.png in Resources */,
 				552390D82962262200AC0C43 /* demoSHEEB.tut in Resources */,
@@ -1358,6 +1407,7 @@
 				552390ED2962262200AC0C43 /* level_17.level in Resources */,
 				552390932962262200AC0C43 /* arroMini.png in Resources */,
 				552390902962262200AC0C43 /* walk.png in Resources */,
+				55096C74298871310018A63A /* tut_touch.png in Resources */,
 				552390CF2962262200AC0C43 /* Roboto-Black.ttf in Resources */,
 				552390DB2962262200AC0C43 /* flag.tut in Resources */,
 				552390D52962262200AC0C43 /* slider.tut in Resources */,
@@ -1366,13 +1416,17 @@
 				552390FC2962262200AC0C43 /* Level_5.level in Resources */,
 				552390AE2962262200AC0C43 /* Roboto-Light.ttf in Resources */,
 				55238E3A2961D6F700AC0C43 /* .gitignore in Resources */,
+				55096C89298876C50018A63A /* enter_touch.xcf in Resources */,
 				552390E42962262200AC0C43 /* Level_13.level in Resources */,
+				55096C7E298875800018A63A /* music_touch.xcf in Resources */,
 				552390BD2962262200AC0C43 /* Roboto-LightItalic.ttf in Resources */,
 				55238EBD2961E88500AC0C43 /* osname.sh in Resources */,
 				552390F32962262200AC0C43 /* Level_12.level in Resources */,
+				55096C7B298875800018A63A /* shift_touch.xcf in Resources */,
 				552390842962262200AC0C43 /* idle.png in Resources */,
 				552390F62962262200AC0C43 /* Level_3.level in Resources */,
 				552390C62962262200AC0C43 /* Roboto-BlackItalic.ttf in Resources */,
+				55096C8C298876C50018A63A /* enter_touch.png in Resources */,
 				55238EC12961EB9400AC0C43 /* extractXCodeData.sh in Resources */,
 				5523906C2962262200AC0C43 /* playerSheet.xcf in Resources */,
 				552390C92962262200AC0C43 /* Roboto-Bold.ttf in Resources */,
@@ -1390,6 +1444,7 @@
 				552390992962262200AC0C43 /* playerSheet.png in Resources */,
 				5502186329622A7300F0509F /* asset in Resources */,
 				552390E72962262200AC0C43 /* Level_2.level in Resources */,
+				55096C84298875800018A63A /* shift_touch.png in Resources */,
 				552390F92962262200AC0C43 /* Level_1.level in Resources */,
 				552390112962239800AC0C43 /* config.hpp.in in Resources */,
 				55238DE32961C9B500AC0C43 /* LaunchScreen.storyboard in Resources */,
@@ -1403,6 +1458,7 @@
 				552390BA2962262200AC0C43 /* Roboto-BoldItalic.ttf in Resources */,
 				552390CC2962262200AC0C43 /* Roboto-Thin.ttf in Resources */,
 				5523908A2962262200AC0C43 /* AllTestTyle.png in Resources */,
+				55096C81298875800018A63A /* tut_touch.xcf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1414,6 +1470,7 @@
 				552390D62962262200AC0C43 /* slider.tut in Resources */,
 				552390C12962262200AC0C43 /* Roboto-Italic.ttf in Resources */,
 				55238DF42961C9B500AC0C43 /* Main.storyboard in Resources */,
+				55096C85298875800018A63A /* shift_touch.png in Resources */,
 				552390BE2962262200AC0C43 /* Roboto-LightItalic.ttf in Resources */,
 				552390F72962262200AC0C43 /* Level_3.level in Resources */,
 				552390A02962262200AC0C43 /* background.wav in Resources */,
@@ -1429,6 +1486,7 @@
 				5523909D2962262200AC0C43 /* hit2.wav in Resources */,
 				552390732962262200AC0C43 /* Cube4.png in Resources */,
 				5523908E2962262200AC0C43 /* titlescreen.png in Resources */,
+				55096C7C298875800018A63A /* shift_touch.xcf in Resources */,
 				552390882962262200AC0C43 /* mac1024_2.png in Resources */,
 				552390AC2962262200AC0C43 /* Roboto-Medium.ttf in Resources */,
 				552390E22962262200AC0C43 /* titlescreen.solution in Resources */,
@@ -1439,15 +1497,19 @@
 				552391052962267E00AC0C43 /* Assets.xcassets in Resources */,
 				5523909A2962262200AC0C43 /* playerSheet.png in Resources */,
 				552390B52962262200AC0C43 /* Roboto-MediumItalic.ttf in Resources */,
+				55096C82298875800018A63A /* tut_touch.xcf in Resources */,
 				552390DC2962262200AC0C43 /* flag.tut in Resources */,
 				552390912962262200AC0C43 /* walk.png in Resources */,
 				552390792962262200AC0C43 /* Cube5.png in Resources */,
+				55096C7F298875800018A63A /* music_touch.xcf in Resources */,
 				552390FD2962262200AC0C43 /* Level_5.level in Resources */,
 				552390EE2962262200AC0C43 /* level_17.level in Resources */,
+				55096C8D298876C50018A63A /* enter_touch.png in Resources */,
 				552390EB2962262200AC0C43 /* Level_6.level in Resources */,
 				552390B22962262200AC0C43 /* Roboto-Regular.ttf in Resources */,
 				552390A32962262200AC0C43 /* pressed.wav in Resources */,
 				5581E0642965C10600953CD1 /* exit.png in Resources */,
+				55096C8A298876C50018A63A /* enter_touch.xcf in Resources */,
 				5523907F2962262200AC0C43 /* Cube2.png in Resources */,
 				55238E3B2961D6F700AC0C43 /* .gitignore in Resources */,
 				5523907C2962262200AC0C43 /* Cube1.png in Resources */,
@@ -1463,7 +1525,9 @@
 				55238E372961CD1100AC0C43 /* download_dependencies.sh in Resources */,
 				552390822962262200AC0C43 /* Cube3.png in Resources */,
 				552390122962239800AC0C43 /* config.hpp.in in Resources */,
+				55096C75298871310018A63A /* tut_touch.png in Resources */,
 				552390762962262200AC0C43 /* Icon.png in Resources */,
+				55096C7129886E830018A63A /* music_touch.png in Resources */,
 				5523908B2962262200AC0C43 /* AllTestTyle.png in Resources */,
 				552390C42962262200AC0C43 /* LICENSE.txt in Resources */,
 				552390702962262200AC0C43 /* Cube6.png in Resources */,
@@ -1765,7 +1829,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 9;
+				CURRENT_PROJECT_VERSION = 10;
 				DEVELOPMENT_TEAM = 98ZXK38P8L;
 				GENERATE_INFOPLIST_FILE = YES;
 				HEADER_SEARCH_PATHS = (
@@ -1807,7 +1871,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 9;
+				CURRENT_PROJECT_VERSION = 10;
 				DEVELOPMENT_TEAM = 98ZXK38P8L;
 				GENERATE_INFOPLIST_FILE = YES;
 				HEADER_SEARCH_PATHS = (

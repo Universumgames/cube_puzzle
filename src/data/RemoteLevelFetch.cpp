@@ -32,10 +32,9 @@ std::string RemoteLevelFetch::getHttpRequestBody(const std::string& url, int* st
     }
 }
 
-Vector<std::string> RemoteLevelFetch::getLevelUrls() {
-    int status = 0;
-    std::string body = getHttpRequestBody(REMOTE_LEVELS_LIST_URL, &status);
-    if(status == 404) return {};
+Vector<std::string> RemoteLevelFetch::getLevelUrls(int* status) {
+    std::string body = getHttpRequestBody(REMOTE_LEVELS_LIST_URL, status);
+    if(*status == 404) return {};
     return split(body, '\n');
 }
 
@@ -55,8 +54,9 @@ RemoteLevelFetch::LoadingState RemoteLevelFetch::getLoadingState() {
 
 void RemoteLevelFetch::fetchLevels() {
     state = LoadingState::LOADING;
-    auto levelUrls = getLevelUrls();
-    if(levelUrls.empty()){
+    int status = 0;
+    auto levelUrls = getLevelUrls(&status);
+    if(levelUrls.empty() && status != 200){
         state = LoadingState::ERROR;
         return;
     }
@@ -66,7 +66,7 @@ void RemoteLevelFetch::fetchLevels() {
         if (!level.empty())
             levels.push_back(level);
     }
-    state = levels.size() == 0 ? LoadingState::ERROR : LoadingState::FINISHED;
+    state = LoadingState::FINISHED;
 }
 
 Vector<std::string> RemoteLevelFetch::fetchLevelData() {

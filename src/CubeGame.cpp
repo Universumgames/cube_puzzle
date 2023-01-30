@@ -98,6 +98,10 @@ void CubeGame::loadSprites() {
 
     loadPNGTexture(spriteStorage.touchArrow, render, TOUCH_ARROW_PATH)
     loadPNGTexture(spriteStorage.touchExit, render, TOUCH_EXIT_PATH)
+    loadPNGTexture(spriteStorage.touchMusic, render, TOUCH_MUSIC_PATH)
+    loadPNGTexture(spriteStorage.touchTutorial, render, TOUCH_TUTORIAL_PATH)
+    loadPNGTexture(spriteStorage.touchGrab, render, TOUCH_SHIFT_PATH)
+    loadPNGTexture(spriteStorage.touchEnter, render, TOUCH_ENTER_PATH)
 
     for (int i = 1; i <= 6; i++) {
         Texture *tmp;

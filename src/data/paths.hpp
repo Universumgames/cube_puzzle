@@ -25,5 +25,9 @@
 
 #define TOUCH_ARROW_PATH "asset/graphic/arrow.png"
 #define TOUCH_EXIT_PATH "asset/graphic/exit.png"
+#define TOUCH_MUSIC_PATH "asset/graphic/music_touch.png"
+#define TOUCH_TUTORIAL_PATH "asset/graphic/tut_touch.png"
+#define TOUCH_SHIFT_PATH "asset/graphic/shift_touch.png"
+#define TOUCH_ENTER_PATH "asset/graphic/enter_touch.png"
 
 #define CUBE_SIDE_BACKGROUND_PATH(side) ("asset/graphic/Cube" + std::to_string(side) + ".png").c_str()

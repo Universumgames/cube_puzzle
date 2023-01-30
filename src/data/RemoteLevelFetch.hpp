@@ -36,6 +36,6 @@ private:
     LoadingState state = LoadingState::NOT_STARTED;
     std::string fetchLevel(const std::string &url);
     void fetchLevels();
-    Vector<std::string> getLevelUrls();
+    Vector<std::string> getLevelUrls(int* statusCode = nullptr);
 
 };

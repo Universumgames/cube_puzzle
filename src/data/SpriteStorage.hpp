@@ -83,6 +83,11 @@ struct SpriteStorage {
 
     Texture* touchArrow = nullptr;
     Texture* touchExit = nullptr;
+    Texture* touchMusic = nullptr;
+    Texture* touchTutorial = nullptr;
+    Texture* touchGrab = nullptr;
+    Texture* touchEnter = nullptr;
+
 
     Font *basicFont = nullptr;
     Font *smallFont = nullptr;

@@ -94,11 +94,12 @@ TouchController::TouchController(CubeGame &game, ComplexGameState *gameState, SD
         UIButton *downButton;
         UIButton *enterButton;
 
-        tutorialButton = new UIButton(game, gameState, render, {0, 0}, {0, 0}, blue);
+        tutorialButton = new UIButton(game, gameState, render, {0, 0}, {0, 0}, game.getSpriteStorage()->touchTutorial);
         upButton = new UIButton(game, gameState, render, {0, 0}, {0, 0}, game.getSpriteStorage()->touchArrow);
         downButton = new UIButton(game, gameState, render, {0, 0}, {0, 0}, game.getSpriteStorage()->touchArrow);
-        enterButton = new UIButton(game, gameState, render, {0, 0}, {0, 0}, {100, 100, 100, 255});
+        enterButton = new UIButton(game, gameState, render, {0, 0}, {0, 0}, game.getSpriteStorage()->touchEnter);
 
+        tutorialButton->setTextureSettings(0, {0,0,32,32});
         tutorialButton->setUpdateLambda([](CubeGame &game, TouchObject *tutorialButton) {
             Rect r = placeButtonBottomRight(game, 3, 2, 0, 1);
             tutorialButton->setSize({r.w, r.h});
@@ -153,7 +154,7 @@ TouchController::TouchController(CubeGame &game, ComplexGameState *gameState, SD
         leftButton = new UIButton(game, gameState, render, {0, 0}, {0, 0}, game.getSpriteStorage()->touchArrow);
         rightButton = new UIButton(game, gameState, render, {0, 0}, {0, 0}, game.getSpriteStorage()->touchArrow);
         escapeButton = new UIButton(game, gameState, render, {0, 0}, {0, 0}, game.getSpriteStorage()->touchExit);
-        holdMagnetButton = new UIButton(game, gameState, render, {0, 0}, {0, 0}, green);
+        holdMagnetButton = new UIButton(game, gameState, render, {0, 0}, {0, 0}, game.getSpriteStorage()->touchGrab);
 
         upButton->setTextureSettings(-90);
         upButton->setUpdateLambda([](CubeGame &game, TouchObject *touch) {
@@ -212,7 +213,7 @@ TouchController::TouchController(CubeGame &game, ComplexGameState *gameState, SD
             else simulateKeyRelease(SDL_SCANCODE_RSHIFT);
 
             UIButton *lockButton = (UIButton *) touch;
-            lockButton->setColor(magnetHoldingState ? red : green);
+            //lockButton->setColor(magnetHoldingState ? red : green);
         });
 
         Vector<TouchObject *> moveTouchObjects = {
@@ -226,14 +227,15 @@ TouchController::TouchController(CubeGame &game, ComplexGameState *gameState, SD
         UIButton *musicButton;
         UIButton *touchDisable;
 
-        musicButton = new UIButton(game, gameState, render, {0, 0}, {0, 0}, green);
+        musicButton = new UIButton(game, gameState, render, {0, 0}, {0, 0}, game.getSpriteStorage()->touchMusic);
         touchDisable = new UIButton(game, gameState, render, {0, 0}, {0, 0}, violet);
 
+        musicButton->setTextureSettings(0, {0,0,16,16});
         musicButton->setUpdateLambda([](CubeGame &game, TouchObject *musicButton) {
             Rect r = placeButtonTopLeft(game, 0, 0, max(30, max(game.getWindowSize().x, game.getWindowSize().y) / 20));
             musicButton->setSize({r.w, r.h});
             musicButton->setLocation({r.x, r.y});
-            ((UIButton *) musicButton)->setColor(game.audioHandler->getAudioEnabled() ? green : red);
+            ((UIButton *) musicButton)->setTextureSettings(0, game.audioHandler->getAudioEnabled() ? Rect{0,0,16,16}: Rect{16,0,16,16});
         });
         musicButton->setPressedLambda([](CubeGame &, TouchObject *touch) {
             simulateKeyPress(SDL_SCANCODE_M);
