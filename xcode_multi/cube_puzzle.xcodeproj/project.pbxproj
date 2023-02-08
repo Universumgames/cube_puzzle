@@ -320,6 +320,17 @@
 		5581E0652965C10600953CD1 /* arrow.png in Resources */ = {isa = PBXBuildFile; fileRef = 5581E0612965C10600953CD1 /* arrow.png */; };
 		5581E0662965C10600953CD1 /* arrow.png in Resources */ = {isa = PBXBuildFile; fileRef = 5581E0612965C10600953CD1 /* arrow.png */; };
 		5581E0672965C10600953CD1 /* arrow.png in Resources */ = {isa = PBXBuildFile; fileRef = 5581E0612965C10600953CD1 /* arrow.png */; };
+		55A9C9EE299402FA00AEF66E /* online_presence in Resources */ = {isa = PBXBuildFile; fileRef = 55A9C9D9299402FA00AEF66E /* online_presence */; };
+		55A9C9F7299406E400AEF66E /* testtest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55A9C9F6299406E400AEF66E /* testtest.swift */; };
+		55A9C9F9299406E400AEF66E /* testtestLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55A9C9F8299406E400AEF66E /* testtestLaunchTests.swift */; };
+		55C29940299014FF0018224F /* SimulatorsList.txt in Resources */ = {isa = PBXBuildFile; fileRef = 55C2993F299014FF0018224F /* SimulatorsList.txt */; };
+		55C29941299014FF0018224F /* SimulatorsList.txt in Resources */ = {isa = PBXBuildFile; fileRef = 55C2993F299014FF0018224F /* SimulatorsList.txt */; };
+		55C29942299014FF0018224F /* SimulatorsList.txt in Resources */ = {isa = PBXBuildFile; fileRef = 55C2993F299014FF0018224F /* SimulatorsList.txt */; };
+		55C29944299015B40018224F /* multipleSimulatorStartup.sh in Resources */ = {isa = PBXBuildFile; fileRef = 55C29943299015B40018224F /* multipleSimulatorStartup.sh */; };
+		55C29945299015B40018224F /* multipleSimulatorStartup.sh in Resources */ = {isa = PBXBuildFile; fileRef = 55C29943299015B40018224F /* multipleSimulatorStartup.sh */; };
+		55C29946299015B40018224F /* multipleSimulatorStartup.sh in Resources */ = {isa = PBXBuildFile; fileRef = 55C29943299015B40018224F /* multipleSimulatorStartup.sh */; };
+		55C2995129901A130018224F /* cube_puzzleUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55C2995029901A130018224F /* cube_puzzleUITestsLaunchTests.swift */; };
+		55C2995729901BEB0018224F /* cube_puzzleTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55C299242990121C0018224F /* cube_puzzleTests.swift */; };
 		55FDC953296DDC9E006862C9 /* RemoteLevelFetch.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 55FDC951296DDC9E006862C9 /* RemoteLevelFetch.cpp */; };
 		55FDC954296DDC9E006862C9 /* RemoteLevelFetch.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 55FDC951296DDC9E006862C9 /* RemoteLevelFetch.cpp */; };
 		55FDC955296DDC9E006862C9 /* RemoteLevelFetch.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 55FDC951296DDC9E006862C9 /* RemoteLevelFetch.cpp */; };
@@ -466,18 +477,32 @@
 			remoteGlobalIDString = BE48FD7207AFA17000BB41DA;
 			remoteInfo = "Create DMG";
 		};
+		55A9C9FA299406E400AEF66E /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 55238DB32961C9B400AC0C43 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 55238DC02961C9B500AC0C43;
+			remoteInfo = "cube_puzzle iOS";
+		};
+		55C2995229901A130018224F /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 55238DB32961C9B400AC0C43 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 55238DC02961C9B500AC0C43;
+			remoteInfo = "cube_puzzle iOS";
+		};
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXCopyFilesBuildPhase section */
 		5513F4C229623555007C9B13 /* Embed Frameworks */ = {
 			isa = PBXCopyFilesBuildPhase;
-			buildActionMask = 2147483647;
+			buildActionMask = 12;
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
+				5513F4C129623555007C9B13 /* SDL2.framework in Embed Frameworks */,
 				5513F4C829623581007C9B13 /* SDL2_ttf.framework in Embed Frameworks */,
 				5513F4C629623581007C9B13 /* SDL2_mixer.framework in Embed Frameworks */,
-				5513F4C129623555007C9B13 /* SDL2.framework in Embed Frameworks */,
 				5513F4C429623581007C9B13 /* SDL2_image.framework in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
@@ -663,6 +688,16 @@
 		5581E05D2964A48D00953CD1 /* cube-puzzle-iOS-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = "cube-puzzle-iOS-Info.plist"; sourceTree = "<group>"; };
 		5581E0602965C10600953CD1 /* exit.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = exit.png; sourceTree = "<group>"; };
 		5581E0612965C10600953CD1 /* arrow.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = arrow.png; sourceTree = "<group>"; };
+		55A9C9D9299402FA00AEF66E /* online_presence */ = {isa = PBXFileReference; lastKnownFileType = folder; name = online_presence; path = ../online_presence; sourceTree = "<group>"; };
+		55A9C9F4299406E400AEF66E /* testtest.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = testtest.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		55A9C9F6299406E400AEF66E /* testtest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = testtest.swift; sourceTree = "<group>"; };
+		55A9C9F8299406E400AEF66E /* testtestLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = testtestLaunchTests.swift; sourceTree = "<group>"; };
+		55C299242990121C0018224F /* cube_puzzleTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = cube_puzzleTests.swift; sourceTree = "<group>"; };
+		55C2993F299014FF0018224F /* SimulatorsList.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = SimulatorsList.txt; sourceTree = "<group>"; };
+		55C29943299015B40018224F /* multipleSimulatorStartup.sh */ = {isa = PBXFileReference; lastKnownFileType = text.script.sh; path = multipleSimulatorStartup.sh; sourceTree = "<group>"; };
+		55C2994C29901A130018224F /* cube_puzzleUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = cube_puzzleUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		55C2994E29901A130018224F /* cube_puzzleUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = cube_puzzleUITests.swift; sourceTree = "<group>"; };
+		55C2995029901A130018224F /* cube_puzzleUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = cube_puzzleUITestsLaunchTests.swift; sourceTree = "<group>"; };
 		55FDC93C296DDC56006862C9 /* HTTPRequest.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = HTTPRequest.hpp; sourceTree = "<group>"; };
 		55FDC951296DDC9E006862C9 /* RemoteLevelFetch.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = RemoteLevelFetch.cpp; sourceTree = "<group>"; };
 		55FDC952296DDC9E006862C9 /* RemoteLevelFetch.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = RemoteLevelFetch.hpp; sourceTree = "<group>"; };
@@ -673,9 +708,9 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				5513F4C029623555007C9B13 /* SDL2.framework in Frameworks */,
 				5513F4C729623581007C9B13 /* SDL2_ttf.framework in Frameworks */,
 				5513F4C529623581007C9B13 /* SDL2_mixer.framework in Frameworks */,
-				5513F4C029623555007C9B13 /* SDL2.framework in Frameworks */,
 				5513F4C329623581007C9B13 /* SDL2_image.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -702,12 +737,29 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		55A9C9F1299406E400AEF66E /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		55C2994929901A130018224F /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
 		55238DB22961C9B400AC0C43 = {
 			isa = PBXGroup;
 			children = (
+				55A9C9D9299402FA00AEF66E /* online_presence */,
+				55C29943299015B40018224F /* multipleSimulatorStartup.sh */,
+				55C2993F299014FF0018224F /* SimulatorsList.txt */,
 				5581E05D2964A48D00953CD1 /* cube-puzzle-iOS-Info.plist */,
 				5502186129622A7200F0509F /* asset */,
 				552391022962267E00AC0C43 /* Assets.xcassets */,
@@ -728,6 +780,8 @@
 				55238E0E2961CA0A00AC0C43 /* tvos */,
 				55238E0D2961C9FC00AC0C43 /* macOS */,
 				55238E0C2961C9EB00AC0C43 /* iOS */,
+				55C2994D29901A130018224F /* cube_puzzleUITests */,
+				55A9C9F5299406E400AEF66E /* testtest */,
 				55238DC22961C9B500AC0C43 /* Products */,
 				55238E8A2961D90000AC0C43 /* Frameworks */,
 			);
@@ -739,6 +793,8 @@
 				55238DC12961C9B500AC0C43 /* cube_puzzle.app */,
 				55238DD62961C9B500AC0C43 /* cube_puzzle.app */,
 				55238DEA2961C9B500AC0C43 /* cube_puzzle.app */,
+				55C2994C29901A130018224F /* cube_puzzleUITests.xctest */,
+				55A9C9F4299406E400AEF66E /* testtest.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -1041,6 +1097,25 @@
 			path = levels;
 			sourceTree = "<group>";
 		};
+		55A9C9F5299406E400AEF66E /* testtest */ = {
+			isa = PBXGroup;
+			children = (
+				55A9C9F6299406E400AEF66E /* testtest.swift */,
+				55A9C9F8299406E400AEF66E /* testtestLaunchTests.swift */,
+			);
+			path = testtest;
+			sourceTree = "<group>";
+		};
+		55C2994D29901A130018224F /* cube_puzzleUITests */ = {
+			isa = PBXGroup;
+			children = (
+				55C299242990121C0018224F /* cube_puzzleTests.swift */,
+				55C2994E29901A130018224F /* cube_puzzleUITests.swift */,
+				55C2995029901A130018224F /* cube_puzzleUITestsLaunchTests.swift */,
+			);
+			path = cube_puzzleUITests;
+			sourceTree = "<group>";
+		};
 		55FDC93B296DDC56006862C9 /* lib */ = {
 			isa = PBXGroup;
 			children = (
@@ -1107,6 +1182,42 @@
 			productReference = 55238DEA2961C9B500AC0C43 /* cube_puzzle.app */;
 			productType = "com.apple.product-type.application";
 		};
+		55A9C9F3299406E400AEF66E /* testtest */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 55A9C9FC299406E400AEF66E /* Build configuration list for PBXNativeTarget "testtest" */;
+			buildPhases = (
+				55A9C9F0299406E400AEF66E /* Sources */,
+				55A9C9F1299406E400AEF66E /* Frameworks */,
+				55A9C9F2299406E400AEF66E /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				55A9C9FB299406E400AEF66E /* PBXTargetDependency */,
+			);
+			name = testtest;
+			productName = testtest;
+			productReference = 55A9C9F4299406E400AEF66E /* testtest.xctest */;
+			productType = "com.apple.product-type.bundle.ui-testing";
+		};
+		55C2994B29901A130018224F /* cube_puzzleUITests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 55C2995429901A130018224F /* Build configuration list for PBXNativeTarget "cube_puzzleUITests" */;
+			buildPhases = (
+				55C2994829901A130018224F /* Sources */,
+				55C2994929901A130018224F /* Frameworks */,
+				55C2994A29901A130018224F /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				55C2995329901A130018224F /* PBXTargetDependency */,
+			);
+			name = cube_puzzleUITests;
+			productName = cube_puzzleUITests;
+			productReference = 55C2994C29901A130018224F /* cube_puzzleUITests.xctest */;
+			productType = "com.apple.product-type.bundle.ui-testing";
+		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -1114,6 +1225,7 @@
 			isa = PBXProject;
 			attributes = {
 				BuildIndependentTargetsInParallel = 1;
+				LastSwiftUpdateCheck = 1420;
 				LastUpgradeCheck = 1420;
 				TargetAttributes = {
 					55238DC02961C9B500AC0C43 = {
@@ -1124,6 +1236,14 @@
 					};
 					55238DE92961C9B500AC0C43 = {
 						CreatedOnToolsVersion = 14.2;
+					};
+					55A9C9F3299406E400AEF66E = {
+						CreatedOnToolsVersion = 14.2;
+						TestTargetID = 55238DC02961C9B500AC0C43;
+					};
+					55C2994B29901A130018224F = {
+						CreatedOnToolsVersion = 14.2;
+						TestTargetID = 55238DC02961C9B500AC0C43;
 					};
 				};
 			};
@@ -1163,6 +1283,8 @@
 				55238DC02961C9B500AC0C43 /* cube_puzzle iOS */,
 				55238DD52961C9B500AC0C43 /* cube_puzzle tvOS */,
 				55238DE92961C9B500AC0C43 /* cube_puzzle macOS */,
+				55C2994B29901A130018224F /* cube_puzzleUITests */,
+				55A9C9F3299406E400AEF66E /* testtest */,
 			);
 		};
 /* End PBXProject section */
@@ -1355,6 +1477,7 @@
 				5523907D2962262200AC0C43 /* Cube2.png in Resources */,
 				55096C8B298876C50018A63A /* enter_touch.png in Resources */,
 				552390DD2962262200AC0C43 /* fall.tut in Resources */,
+				55C29940299014FF0018224F /* SimulatorsList.txt in Resources */,
 				552391032962267E00AC0C43 /* Assets.xcassets in Resources */,
 				5523907A2962262200AC0C43 /* Cube1.png in Resources */,
 				5581E0622965C10600953CD1 /* exit.png in Resources */,
@@ -1365,6 +1488,7 @@
 				552390A42962262200AC0C43 /* finish.wav in Resources */,
 				5502185E29622A3D00F0509F /* config.xcconfig in Resources */,
 				5581E0652965C10600953CD1 /* arrow.png in Resources */,
+				55C29944299015B40018224F /* multipleSimulatorStartup.sh in Resources */,
 				552390982962262200AC0C43 /* playerSheet.png in Resources */,
 				5502186229622A7200F0509F /* asset in Resources */,
 				552390E62962262200AC0C43 /* Level_2.level in Resources */,
@@ -1391,12 +1515,14 @@
 			buildActionMask = 2147483647;
 			files = (
 				552390A82962262200AC0C43 /* RobotoSlab-Bold.ttf in Resources */,
+				55C29945299015B40018224F /* multipleSimulatorStartup.sh in Resources */,
 				552390E12962262200AC0C43 /* titlescreen.solution in Resources */,
 				552390C02962262200AC0C43 /* Roboto-Italic.ttf in Resources */,
 				552390F02962262200AC0C43 /* Level_4.level in Resources */,
 				5523909C2962262200AC0C43 /* hit2.wav in Resources */,
 				5581E0662965C10600953CD1 /* arrow.png in Resources */,
 				552390B12962262200AC0C43 /* Roboto-Regular.ttf in Resources */,
+				55C29941299014FF0018224F /* SimulatorsList.txt in Resources */,
 				55096C7029886E830018A63A /* music_touch.png in Resources */,
 				552390C32962262200AC0C43 /* LICENSE.txt in Resources */,
 				5523908D2962262200AC0C43 /* titlescreen.png in Resources */,
@@ -1506,6 +1632,7 @@
 				552390EE2962262200AC0C43 /* level_17.level in Resources */,
 				55096C8D298876C50018A63A /* enter_touch.png in Resources */,
 				552390EB2962262200AC0C43 /* Level_6.level in Resources */,
+				55C29942299014FF0018224F /* SimulatorsList.txt in Resources */,
 				552390B22962262200AC0C43 /* Roboto-Regular.ttf in Resources */,
 				552390A32962262200AC0C43 /* pressed.wav in Resources */,
 				5581E0642965C10600953CD1 /* exit.png in Resources */,
@@ -1516,6 +1643,7 @@
 				552390A92962262200AC0C43 /* RobotoSlab-Bold.ttf in Resources */,
 				5523906D2962262200AC0C43 /* playerSheet.xcf in Resources */,
 				5581E0672965C10600953CD1 /* arrow.png in Resources */,
+				55C29946299015B40018224F /* multipleSimulatorStartup.sh in Resources */,
 				552390942962262200AC0C43 /* arroMini.png in Resources */,
 				552390D92962262200AC0C43 /* demoSHEEB.tut in Resources */,
 				5502186029622A3D00F0509F /* config.xcconfig in Resources */,
@@ -1527,6 +1655,7 @@
 				552390122962239800AC0C43 /* config.hpp.in in Resources */,
 				55096C75298871310018A63A /* tut_touch.png in Resources */,
 				552390762962262200AC0C43 /* Icon.png in Resources */,
+				55A9C9EE299402FA00AEF66E /* online_presence in Resources */,
 				55096C7129886E830018A63A /* music_touch.png in Resources */,
 				5523908B2962262200AC0C43 /* AllTestTyle.png in Resources */,
 				552390C42962262200AC0C43 /* LICENSE.txt in Resources */,
@@ -1534,6 +1663,20 @@
 				55238EC22961EB9400AC0C43 /* extractXCodeData.sh in Resources */,
 				552390972962262200AC0C43 /* rrowig.png in Resources */,
 				552390E52962262200AC0C43 /* Level_13.level in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		55A9C9F2299406E400AEF66E /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		55C2994A29901A130018224F /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1668,7 +1811,38 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		55A9C9F0299406E400AEF66E /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				55A9C9F9299406E400AEF66E /* testtestLaunchTests.swift in Sources */,
+				55A9C9F7299406E400AEF66E /* testtest.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		55C2994829901A130018224F /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				55C2995129901A130018224F /* cube_puzzleUITestsLaunchTests.swift in Sources */,
+				55C2995729901BEB0018224F /* cube_puzzleTests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		55A9C9FB299406E400AEF66E /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 55238DC02961C9B500AC0C43 /* cube_puzzle iOS */;
+			targetProxy = 55A9C9FA299406E400AEF66E /* PBXContainerItemProxy */;
+		};
+		55C2995329901A130018224F /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 55238DC02961C9B500AC0C43 /* cube_puzzle iOS */;
+			targetProxy = 55C2995229901A130018224F /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
 		55238DDE2961C9B500AC0C43 /* Main.storyboard */ = {
@@ -1750,10 +1924,10 @@
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				HEADER_SEARCH_PATHS = (
+					"\"$(SRCROOT)/SDL/include\"/**",
 					"\"$(SRCROOT)/SDL_mixer/include\"",
 					"\"$(SRCROOT)/SDL_image/Xcode\"",
 					"\"$(SRCROOT)/SDL_ttf/Xcode\"",
-					"\"$(SRCROOT)/SDL/include\"",
 					"\"$(SRCROOT)/prepared\"",
 				);
 				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
@@ -1761,6 +1935,7 @@
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;
+				PLATFORM = iOS;
 			};
 			name = Debug;
 		};
@@ -1810,22 +1985,25 @@
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				HEADER_SEARCH_PATHS = (
+					"\"$(SRCROOT)/SDL/include\"/**",
 					"\"$(SRCROOT)/SDL_mixer/include\"",
 					"\"$(SRCROOT)/SDL_image/Xcode\"",
 					"\"$(SRCROOT)/SDL_ttf/Xcode\"",
-					"\"$(SRCROOT)/SDL/include\"",
 					"\"$(SRCROOT)/prepared\"",
 				);
 				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				MACOSX_DEPLOYMENT_TARGET = 12.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
+				PLATFORM = iOS;
 			};
 			name = Release;
 		};
 		55238E042961C9B500AC0C43 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 5502185D29622A3D00F0509F /* config.xcconfig */;
 			buildSettings = {
+				ALLOW_TARGET_PLATFORM_SPECIALIZATION = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
@@ -1857,8 +2035,8 @@
 				PRODUCT_BUNDLE_IDENTIFIER = "de.universegame.cube-puzzle";
 				PRODUCT_NAME = cube_puzzle;
 				SDKROOT = iphoneos;
-				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
-				SUPPORTS_MACCATALYST = NO;
+				SUPPORTED_PLATFORMS = "iphonesimulator iphoneos";
+				SUPPORTS_MACCATALYST = YES;
 				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = YES;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -1867,7 +2045,9 @@
 		};
 		55238E052961C9B500AC0C43 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 5502185D29622A3D00F0509F /* config.xcconfig */;
 			buildSettings = {
+				ALLOW_TARGET_PLATFORM_SPECIALIZATION = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
@@ -1899,8 +2079,8 @@
 				PRODUCT_BUNDLE_IDENTIFIER = "de.universegame.cube-puzzle";
 				PRODUCT_NAME = cube_puzzle;
 				SDKROOT = iphoneos;
-				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
-				SUPPORTS_MACCATALYST = NO;
+				SUPPORTED_PLATFORMS = "iphonesimulator iphoneos";
+				SUPPORTS_MACCATALYST = YES;
 				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = YES;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -2038,6 +2218,92 @@
 			};
 			name = Release;
 		};
+		55A9C9FD299406E400AEF66E /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 98ZXK38P8L;
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.2;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = de.universegame.testtest;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = iphoneos;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_TARGET_NAME = "cube_puzzle iOS";
+			};
+			name = Debug;
+		};
+		55A9C9FE299406E400AEF66E /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 98ZXK38P8L;
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.2;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = de.universegame.testtest;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = iphoneos;
+				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_TARGET_NAME = "cube_puzzle iOS";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		55C2995529901A130018224F /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 98ZXK38P8L;
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.2;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "de.universegame.cube-puzzleUITests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = iphoneos;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_TARGET_NAME = "cube_puzzle iOS";
+			};
+			name = Debug;
+		};
+		55C2995629901A130018224F /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 98ZXK38P8L;
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.2;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "de.universegame.cube-puzzleUITests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = iphoneos;
+				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_TARGET_NAME = "cube_puzzle iOS";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -2073,6 +2339,24 @@
 			buildConfigurations = (
 				55238E0A2961C9B500AC0C43 /* Debug */,
 				55238E0B2961C9B500AC0C43 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		55A9C9FC299406E400AEF66E /* Build configuration list for PBXNativeTarget "testtest" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				55A9C9FD299406E400AEF66E /* Debug */,
+				55A9C9FE299406E400AEF66E /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		55C2995429901A130018224F /* Build configuration list for PBXNativeTarget "cube_puzzleUITests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				55C2995529901A130018224F /* Debug */,
+				55C2995629901A130018224F /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
