@@ -3,6 +3,9 @@ This is a simple 2D SDL2 puzzle game.
 
 ## View on [itch.io](https://universegame.itch.io/qubepuzzle)
 
+## Download iOS app
+The iOS equivalent is currently in development, but you can join the beta via [Testflight](https://testflight.apple.com/join/QovvxX22)
+
 ## Install and Run release versions
 For further information, please see [`INSTALL.md`](./INSTALL.md)
 
