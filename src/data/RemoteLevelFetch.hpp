@@ -17,6 +17,8 @@ public:
     Vector<std::string> fetchLevelData();
     std::string getHttpRequestBody(const std::string &url, int *status = nullptr);
 
+    void waitForFinish();
+
 
     void startLoading();
 

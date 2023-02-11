@@ -115,18 +115,7 @@ void LevelSelector::loadLevels() {
         return;
     }
 
-    // level loading
-    for (auto const &dirEntry: std::filesystem::directory_iterator{levels}) {
-        std::string path = dirEntry.path().string();
-        if (!dirEntry.is_regular_file() || dirEntry.path().extension() != ".level") {
-            continue;
-        }
-        auto data = LevelLoader::loadLevel(path);
-        auto *levelX = new Level(cubeGame, render);
-        auto levelD = levelX->load(data, cubeGame.allStates.size());
-        levelData.push_back(levelD);
-        cubeGame.allStates.push_back(levelX);
-    }
+    RemoteLevelFetch::getInstance()->waitForFinish();
 
     if(RemoteLevelFetch::getInstance()->getLoadingState() == RemoteLevelFetch::LoadingState::FINISHED){
         for(const auto& levelString : RemoteLevelFetch::getInstance()->getLevelData()){
@@ -137,6 +126,26 @@ void LevelSelector::loadLevels() {
             cubeGame.allStates.push_back(levelX);
         }
     }
+
+    // level loading
+    for (auto const &dirEntry: std::filesystem::directory_iterator{levels}) {
+        std::string path = dirEntry.path().string();
+        if (!dirEntry.is_regular_file() || dirEntry.path().extension() != ".level") {
+            continue;
+        }
+        auto data = LevelLoader::loadLevel(path);
+        auto *levelX = new Level(cubeGame, render);
+        auto levelD = levelX->load(data, cubeGame.allStates.size());
+        auto existingItem = std::find_if(levelData.begin(), levelData.end(), [levelD](const LevelData& level){
+            return level.id == levelD.id;
+        });
+        // do not add level if already loaded from remote with same id
+        if(existingItem != levelData.end()) continue;
+        levelData.push_back(levelD);
+        cubeGame.allStates.push_back(levelX);
+    }
+
+
 
 
     std::sort(levelData.begin(), levelData.end(), LevelData::sort);

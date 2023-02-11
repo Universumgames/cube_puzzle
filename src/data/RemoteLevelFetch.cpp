@@ -94,3 +94,7 @@ RemoteLevelFetch::~RemoteLevelFetch() {
 RemoteLevelFetch::RemoteLevelFetch() {
     levels = {};
 }
+
+void RemoteLevelFetch::waitForFinish() {
+    loader.join();
+}

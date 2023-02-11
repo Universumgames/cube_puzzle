@@ -9,7 +9,7 @@ Message(STATUS "CMAKE_C_COMPILER: " ${CMAKE_C_COMPILER})
 Message(STATUS "CMAKE_PROJECT_NAME: " ${CMAKE_PROJECT_NAME})
 Message(STATUS "CMAKE_FINDCMAKE: " ${CMAKE_SOURCE_DIR}/CMAKE)
 
-project(cube_puzzle VERSION 0.9)
+project(cube_puzzle VERSION 1.0)
 
 # set cmake variables
 set(CMAKE_CXX_STANDARD 23)
