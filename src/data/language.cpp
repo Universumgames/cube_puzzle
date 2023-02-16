@@ -10,8 +10,6 @@ Language getLanguage() {
     std::string langString;
     langFile >> langString;
     langFile.close();
-    
-    std::cout << LANGUAGE_FILE_PATH << std::endl;
 
     if (langString == "en") {
         return Language::ENGLISH;

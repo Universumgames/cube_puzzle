@@ -5,6 +5,7 @@ This is a simple 2D SDL2 puzzle game.
 
 ## Download iOS app
 The iOS equivalent is currently in development, but you can join the beta via [Testflight](https://testflight.apple.com/join/QovvxX22)
+The first releases are published now on the AppStore, install the app for iPhone, iPad or mac [here](https://apps.apple.com/us/app/qube-puzzle-game/id1662279107)
 
 ## Install and Run release versions
 For further information, please see [`INSTALL.md`](./INSTALL.md)
