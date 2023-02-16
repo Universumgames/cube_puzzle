@@ -3,15 +3,25 @@
 #include "gamebase.hpp"
 #include "data/SpriteStorage.hpp"
 #include "AudioHandler.hpp"
+#include "data/language.hpp"
+
+#define LANGUAGE_SELECTOR_ID 0
+#define TITLESCREEN_ID 1
+#define LEVEL_SELECTOR_ID 2
+
 
 class LevelSelector;
 class TitleScreen;
 class TouchController;
 
-enum class ExitState {
-    UNSET, FINISHED, CANCELLED
+enum class ExitState
+{
+    UNSET,
+    FINISHED,
+    CANCELLED
 };
-struct GameStateData {
+struct GameStateData
+{
     int sourceStateID = -1;
     ExitState exitState = ExitState::UNSET;
     char optionalDataTypeIdentifier = '\0';
@@ -20,13 +30,13 @@ struct GameStateData {
 };
 
 /// Cube Game handler
-class CubeGame final : public Game {
+class CubeGame final : public Game
+{
 public:
-
 public:
     CubeGame();
 
-    AudioHandler* audioHandler;
+    AudioHandler *audioHandler;
 
     bool HandleEvent(const Event event) override;
 
@@ -45,7 +55,9 @@ public:
 
     void setWindowName(std::string windowName);
 
-    TouchController* touchController;
+    TouchController *touchController;
+
+    Language getLanguage() const;
 
 private:
     SpriteStorage spriteStorage;
@@ -58,7 +70,10 @@ private:
     /// this should be set to false in final version
     bool debugView = false;
 
-    AudioPlayer* backgroundMusic;
+    AudioPlayer *backgroundMusic;
+
+    Language language = Language::ENGLISH;
+
 protected:
     friend class LevelSelector;
     friend class TitleScreen;

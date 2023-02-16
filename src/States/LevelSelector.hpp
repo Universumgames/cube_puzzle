@@ -70,6 +70,8 @@ private:
     Rect getSideBarSpace(int topPadding);
 
     void resetSidebarText(Font* font);
+
+    void loadLocalizedData();
     
 private:
     Point oldSize;
@@ -83,6 +85,13 @@ private:
     Font* usedSidebarFont = nullptr;
 
     bool loadingNext;
+
+    struct LocalizedData{
+        std::string windowTitle;
+        std::string sidebar;
+    };
+
+    LocalizedData localizedData;
 
     friend class TitleScreen;
     friend class CubeGame;

@@ -31,12 +31,14 @@ void TitleScreen::HandleEvent(const u32 frame, const u32 totalMSec, const float 
 }
 
 TitleScreen::TitleScreen(CubeGame &game, Renderer *renderer) : TutorialLevel(game, renderer) {
-    auto level = LevelLoader::loadTutLevel(TITLESCREEN_LEVEL_PATH);
-    TutorialLevel::load(level, cubeGame.allStates.size());
-    solution = std::ifstream(TITLESCREEN_LEVEL_SOLUTION_PATH);
+
 }
 
 void TitleScreen::Init() {
+    auto level = LevelLoader::loadTutLevel(TITLESCREEN_LEVEL_PATH);
+    TutorialLevel::load(level, cubeGame.allStates.size());
+    solution = std::ifstream(TITLESCREEN_LEVEL_SOLUTION_PATH);
+
     TutorialLevel::Init();
     game.SetPerfDrawMode(Game::PerformanceDrawMode::None);
     cubeGame.setWindowName("Qube Puzzle");

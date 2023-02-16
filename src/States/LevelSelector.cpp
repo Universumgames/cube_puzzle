@@ -28,7 +28,8 @@ void LevelSelector::Update(const u32 frame, const u32 totalMSec, const float del
             playLevel(level);
     }
 
-    if (selectorIndex < 0) selectorIndex = (int) levelData.size() - 1;
+    if (selectorIndex < 0)
+        selectorIndex = (int) levelData.size() - 1;
     selectorIndex = (int) selectorIndex % levelData.size();
 
     cubeGame.touchController->Update(BASIC_GO_DATA_PASSTHROUGH);
@@ -39,7 +40,6 @@ void LevelSelector::Update(const u32 frame, const u32 totalMSec, const float del
     } else if ((sideRect.y + sideRect.h) * 2 < game.getWindowSize().y) {
         resetSidebarText(game.getSpriteStorage()->basicFont);
     }
-
 }
 
 void LevelSelector::Render(const u32 frame, const u32 totalMSec, const float deltaT) {
@@ -85,12 +85,10 @@ void LevelSelector::Render(const u32 frame, const u32 totalMSec, const float del
     sideBarText->changePosition({centeredSideBarTextRect.x, centeredSideBarTextRect.y});
     sideBarText->RenderUI(BASIC_GO_DATA_PASSTHROUGH);
 
-
     debugText->RenderUI(frame, totalMSec, deltaT);
     headline->RenderUI(BASIC_GO_DATA_PASSTHROUGH);
 
     cubeGame.touchController->RenderUI(BASIC_GO_DATA_PASSTHROUGH);
-
 
     SDL_RenderPresent(render);
     afterRenderCycle();
@@ -117,8 +115,8 @@ void LevelSelector::loadLevels() {
 
     RemoteLevelFetch::getInstance()->waitForFinish();
 
-    if(RemoteLevelFetch::getInstance()->getLoadingState() == RemoteLevelFetch::LoadingState::FINISHED){
-        for(const auto& levelString : RemoteLevelFetch::getInstance()->getLevelData()){
+    if (RemoteLevelFetch::getInstance()->getLoadingState() == RemoteLevelFetch::LoadingState::FINISHED) {
+        for (const auto &levelString: RemoteLevelFetch::getInstance()->getLevelData()) {
             auto data = LevelLoader::loadLevelString(levelString);
             auto *levelX = new Level(cubeGame, render);
             auto levelD = levelX->load(data, cubeGame.allStates.size());
@@ -136,21 +134,17 @@ void LevelSelector::loadLevels() {
         auto data = LevelLoader::loadLevel(path);
         auto *levelX = new Level(cubeGame, render);
         auto levelD = levelX->load(data, cubeGame.allStates.size());
-        auto existingItem = std::find_if(levelData.begin(), levelData.end(), [levelD](const LevelData& level){
-            return level.id == levelD.id;
-        });
+        auto existingItem = std::find_if(levelData.begin(), levelData.end(),
+                                         [levelD](const LevelData &level) { return level.id == levelD.id; });
         // do not add level if already loaded from remote with same id
-        if(existingItem != levelData.end()) continue;
+        if (existingItem != levelData.end())
+            continue;
         levelData.push_back(levelD);
         cubeGame.allStates.push_back(levelX);
     }
 
-
-
-
     std::sort(levelData.begin(), levelData.end(), LevelData::sort);
 }
-
 
 void LevelSelector::loadTutorialLevels() {
     const std::filesystem::path levels{LEVELS_DIR};
@@ -175,7 +169,6 @@ void LevelSelector::loadTutorialLevels() {
     std::sort(tutLevelData.begin(), tutLevelData.end(), LevelData::sort);
 }
 
-
 void LevelSelector::drawDebugList() {
     std::string debugString = "Bitte wähle ein Level aus der Liste\n";
     for (const auto &level: levelData) {
@@ -187,7 +180,6 @@ void LevelSelector::drawDebugList() {
 void LevelSelector::Init() {
     GameState::Init();
     game.SetPerfDrawMode(Game::PerformanceDrawMode::None);
-    cubeGame.setWindowName("Select a level");
     oldSize = game.getWindowSize();
     // check if returned from level
     // if level was finished, load to next level, if not proceed
@@ -198,22 +190,25 @@ void LevelSelector::Init() {
 
     if (cubeGame.interGameStateData.exitState == ExitState::FINISHED) {
         loadingNext = playLevel(nextLevelId + 1);
-    } else loadingNext = false;
+    } else
+        loadingNext = false;
+
+    loadLocalizedData();
+    cubeGame.setWindowName(localizedData.windowTitle);
 
     // else check if levels are all loaded, if not load them
-
 
     debugText = new Text(cubeGame, this, render, 500, "level selector", game.getSpriteStorage()->debugFont, {10, 10}, 1,
                          white);
     debugText->Init();
 
-    headline = new Text(cubeGame, this, render, 500, "Select a level to play", game.getSpriteStorage()->basicFont, {});
+    headline = new Text(cubeGame, this, render, 500, localizedData.windowTitle, game.getSpriteStorage()->basicFont, {});
     headline->Init();
 
     resetSidebarText(game.getSpriteStorage()->basicFont);
 
-
-    if (!loadingNext) prepareLevelListItems();
+    if (!loadingNext)
+        prepareLevelListItems();
 
     cubeGame.touchController->setScene(TouchController::TouchScene::SELECT);
 }
@@ -272,7 +267,8 @@ Rect LevelSelector::getUIRenderDst() {
 }
 
 void LevelSelector::prepareLevelListItemTexture(LevelData &leveldata, Point drawableRect) {
-    if (leveldata.selectorTexture == nullptr) SDL_DestroyTexture(leveldata.selectorTexture);
+    if (leveldata.selectorTexture == nullptr)
+        SDL_DestroyTexture(leveldata.selectorTexture);
     leveldata.selectorTexture = SDL_CreateTexture(render, SDL_PIXELFORMAT_ARGB8888,
                                                   SDL_TEXTUREACCESS_TARGET, drawableRect.x, drawableRect.y);
     Texture *oldTarget = SDL_GetRenderTarget(render);
@@ -359,7 +355,8 @@ void LevelSelector::HandleEvent(const u32 frame, const u32 totalMSec, const floa
 }
 
 void LevelSelector::levelsInit() {
-    if (cubeGame.interGameStateData.sourceStateID == -1 && levelsLoaded) return;
+    if (cubeGame.interGameStateData.sourceStateID == -1 && levelsLoaded)
+        return;
     levelData.clear();
     tutLevelData.clear();
     loadLevels();
@@ -368,18 +365,27 @@ void LevelSelector::levelsInit() {
 }
 
 void LevelSelector::resetSidebarText(Font *font) {
-    if (font == usedSidebarFont) return;
-    if (sideBarText != nullptr) delete sideBarText;
+    if (font == usedSidebarFont)
+        return;
+    if (sideBarText != nullptr)
+        delete sideBarText;
     sideBarText = new Text(cubeGame, this, render, 500,
-                           "Use the up/down keys to select a level\n"
-                           "Press Enter to start level (or tap on the desired level)\n\n"
-                           "Want to play the tutorial? Press T\n\n"
-                           "To mute/play the music press M",
+                           localizedData.sidebar,
                            font, {});
     sideBarText->Init();
     usedSidebarFont = font;
 }
 
+void LevelSelector::loadLocalizedData() {
+    Language lang = getLanguage();
+    std::string localizationPath = LEVEL_SELECTOR_LOCALIZATION_PATH(lang);
+    std::ifstream is{localizationPath};
+    std::string windowTitle;
+    std::string sidebar;
 
+    std::getline(is, windowTitle);
+    sidebar = std::string((std::istreambuf_iterator<char>(is)),
+                     std::istreambuf_iterator<char>());
 
-
+    this->localizedData = {windowTitle, sidebar};
+}

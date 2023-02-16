@@ -54,13 +54,12 @@ LevelLoader::TutLoadedLevelData LevelLoader::loadTutLevel(const std::string &pat
     std::string sidebar((std::istreambuf_iterator<char>(is)),
                         std::istreambuf_iterator<char>());
     is.close();
-    level.sideBarText = sidebar;
+    level.sideBarText = level.localizationFound ? level.localizedData.sidebar : sidebar;
     level.id = -100 + level.id;
     return level;
 }
 
 LevelLoader::LoadedLevelData LevelLoader::loadLevel(const std::string &path, std::istream &is) {
-
     Vector<CubeMapSide *> sides;
     Point worldSize = {0, 0};
     Vector<WorldField::WorldFieldEnum> worldField;
@@ -208,10 +207,29 @@ LevelLoader::LoadedLevelData LevelLoader::loadLevel(const std::string &path, std
         auto *sideTemp = new CubeMapSide(cubeFields, width, height, sideID);
         sides.push_back(sideTemp);
     }
-    return {.path = path, .name = replaceAll(levelName, "#", " "), .id = id, .sides = sides, .worldSize = worldSize, .worldField = worldField, .cubePos = cubePos, .playerPos = playerPos, .cubeSide = cubeSide};
+    std::string filename = path.substr(path.find_last_of('/') + 1);
+    LocalizedData localizedData = getLocalizedData(filename, getLanguage());
+    bool localisationFound = localizedData.name != "";
+    return {.path = path, .name = replaceAll(localisationFound ? localizedData.name : levelName, "#",
+                                             " "), .id = id, .sides = sides, .worldSize = worldSize, .worldField = worldField, .cubePos = cubePos, .playerPos = playerPos, .cubeSide = cubeSide, .localizedData = localizedData, .localizationFound = localisationFound};
 }
 
 LevelLoader::LoadedLevelData LevelLoader::loadLevelString(const std::string &levelString) {
-    auto iStream = std::stringstream {levelString};
+    auto iStream = std::stringstream{levelString};
     return loadLevel("remote", iStream);
+}
+
+LevelLoader::LocalizedData LevelLoader::getLocalizedData(std::string levelFileName, Language language) {
+    std::string localizedFilePath = LEVELS_TRANSLATION_PATH(language) + levelFileName;
+    std::ifstream file(localizedFilePath);
+    if (!file.is_open())
+        return {language, "", ""};
+
+    std::string name;
+    std::string sidebar;
+
+    std::getline(file, name, ';');
+    std::getline(file, sidebar, ';');
+
+    return {language, name, sidebar};
 }

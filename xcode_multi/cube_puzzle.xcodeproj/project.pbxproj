@@ -14,6 +14,7 @@
 		5502186229622A7200F0509F /* asset in Resources */ = {isa = PBXBuildFile; fileRef = 5502186129622A7200F0509F /* asset */; };
 		5502186329622A7300F0509F /* asset in Resources */ = {isa = PBXBuildFile; fileRef = 5502186129622A7200F0509F /* asset */; };
 		5502186429622A7300F0509F /* asset in Resources */ = {isa = PBXBuildFile; fileRef = 5502186129622A7200F0509F /* asset */; };
+		5504DE45299D935E00F7C920 /* language.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5504DE43299D935E00F7C920 /* language.cpp */; };
 		55096C6F29886E830018A63A /* music_touch.png in Resources */ = {isa = PBXBuildFile; fileRef = 55096C5A29886E830018A63A /* music_touch.png */; };
 		55096C7029886E830018A63A /* music_touch.png in Resources */ = {isa = PBXBuildFile; fileRef = 55096C5A29886E830018A63A /* music_touch.png */; };
 		55096C7129886E830018A63A /* music_touch.png in Resources */ = {isa = PBXBuildFile; fileRef = 55096C5A29886E830018A63A /* music_touch.png */; };
@@ -542,6 +543,8 @@
 		5502185D29622A3D00F0509F /* config.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; path = config.xcconfig; sourceTree = "<group>"; };
 		5502186129622A7200F0509F /* asset */ = {isa = PBXFileReference; lastKnownFileType = folder; name = asset; path = ../asset; sourceTree = "<group>"; };
 		5502186F29622E4B00F0509F /* touchhelper.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = touchhelper.hpp; sourceTree = "<group>"; };
+		5504DE43299D935E00F7C920 /* language.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = language.cpp; sourceTree = "<group>"; };
+		5504DE44299D935E00F7C920 /* language.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = language.hpp; sourceTree = "<group>"; };
 		55096C5A29886E830018A63A /* music_touch.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = music_touch.png; sourceTree = "<group>"; };
 		55096C72298871310018A63A /* tut_touch.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = tut_touch.png; sourceTree = "<group>"; };
 		55096C762988757F0018A63A /* shift_touch.xcf */ = {isa = PBXFileReference; lastKnownFileType = file; path = shift_touch.xcf; sourceTree = "<group>"; };
@@ -986,6 +989,8 @@
 				55238FE42962239800AC0C43 /* bezier.hpp */,
 				55238FE52962239800AC0C43 /* DiceData.hpp */,
 				55238FE62962239800AC0C43 /* LevelLoader.hpp */,
+				5504DE43299D935E00F7C920 /* language.cpp */,
+				5504DE44299D935E00F7C920 /* language.hpp */,
 			);
 			path = data;
 			sourceTree = "<group>";
@@ -1730,6 +1735,7 @@
 				5523900A2962239800AC0C43 /* CubeField.cpp in Sources */,
 				552390312962239800AC0C43 /* gamebase.cpp in Sources */,
 				552390132962239800AC0C43 /* Level.cpp in Sources */,
+				5504DE45299D935E00F7C920 /* language.cpp in Sources */,
 				5581E04F2963354D00953CD1 /* touchhelper.cpp in Sources */,
 				55238FF52962239800AC0C43 /* Player.cpp in Sources */,
 				552390012962239800AC0C43 /* GameObject.cpp in Sources */,
@@ -2007,7 +2013,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 11;
+				CURRENT_PROJECT_VERSION = 12;
 				DEVELOPMENT_TEAM = 98ZXK38P8L;
 				GENERATE_INFOPLIST_FILE = YES;
 				HEADER_SEARCH_PATHS = (
@@ -2031,7 +2037,7 @@
 					"$(LD_RUNPATH_SEARCH_PATHS_$(IS_MACCATALYST))",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.0;
+				MARKETING_VERSION = 1.1;
 				PRODUCT_BUNDLE_IDENTIFIER = "de.universegame.cube-puzzle";
 				PRODUCT_NAME = cube_puzzle;
 				SDKROOT = iphoneos;
@@ -2051,7 +2057,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 11;
+				CURRENT_PROJECT_VERSION = 12;
 				DEVELOPMENT_TEAM = 98ZXK38P8L;
 				GENERATE_INFOPLIST_FILE = YES;
 				HEADER_SEARCH_PATHS = (
@@ -2075,7 +2081,7 @@
 					"$(LD_RUNPATH_SEARCH_PATHS_$(IS_MACCATALYST))",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.0;
+				MARKETING_VERSION = 1.1;
 				PRODUCT_BUNDLE_IDENTIFIER = "de.universegame.cube-puzzle";
 				PRODUCT_NAME = cube_puzzle;
 				SDKROOT = iphoneos;

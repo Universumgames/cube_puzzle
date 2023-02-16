@@ -72,7 +72,12 @@ void TouchObject::Update(const u32 frame, const u32 totalMSec, const float delta
 }
 
 void TouchObject::HandleEvent(const u32 frame, const u32 totalMSec, const float deltaT, Event event) {
-
+    if (event.type == SDL_MOUSEBUTTONDOWN) {
+        Point location = {event.motion.x, event.motion.y};
+        if(SDL_PointInRect(&location, &touchRect)){
+            justPressedLambda(game, this);
+        }
+    }
 }
 
 TouchObject::TouchObject(CubeGame &game, ComplexGameState *gameState, SDL_Renderer *render, Point location, Point size,
