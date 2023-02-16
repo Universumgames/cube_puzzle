@@ -18,7 +18,12 @@
 
 #define ICON_PATH "asset/graphic/mac1024_2.png"
 
+#include "SDL_main.h"
+#if defined(__IPHONEOS__) || defined(__TVOS__)
+#define LANGUAGE_FILE_PATH (std::string(getenv("HOME")) + "/Documents/language.conf")
+#else
 #define LANGUAGE_FILE_PATH "asset/lang/language.conf"
+#endif
 
 #define PLAYER_SPRITE_SHEET_PATH "asset/graphic/playerSheet.png"
 #define ARROW_SEMICIRCLE_PATH "asset/graphic/arroMini.png"

@@ -2,6 +2,7 @@
 #include "./paths.hpp"
 #include <stdio.h>
 #include <fstream>
+#include <iostream>
 
 // read language from file in cpp way
 Language getLanguage() {
@@ -9,6 +10,8 @@ Language getLanguage() {
     std::string langString;
     langFile >> langString;
     langFile.close();
+    
+    std::cout << LANGUAGE_FILE_PATH << std::endl;
 
     if (langString == "en") {
         return Language::ENGLISH;
@@ -21,6 +24,7 @@ Language getLanguage() {
 
 // write language to file
 void setLanguage(Language language) {
+    // save language to file
     std::ofstream langFile(LANGUAGE_FILE_PATH);
     langFile << getLanguageString(language);
     langFile.close();
@@ -28,6 +32,8 @@ void setLanguage(Language language) {
 
 std::string getLanguageString(Language language) {
     switch (language) {
+        case Language::UNDEFINED:
+            return "";
         case Language::ENGLISH:
             return "en";
         case Language::GERMAN:
