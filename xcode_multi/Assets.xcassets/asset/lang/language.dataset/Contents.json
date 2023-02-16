@@ -1,0 +1,12 @@
+{
+  "data" : [
+    {
+      "filename" : "language.conf",
+      "idiom" : "universal"
+    }
+  ],
+  "info" : {
+    "author" : "xcode",
+    "version" : 1
+  }
+}
