@@ -56,8 +56,8 @@ void TutorialLevel::Update(const u32 frame, const u32 totalMSec, const float del
 }
 
 void TutorialLevel::internalUIRender(const u32 frame, const u32 totalMSec, const float deltaT) {
-    sidebarText->RenderUI(BASIC_GO_DATA_PASSTHROUGH);
     Level::internalUIRender(BASIC_GO_DATA_PASSTHROUGH);
+    sidebarText->RenderUI(BASIC_GO_DATA_PASSTHROUGH);
 }
 
 void TutorialLevel::resetSidebarText(Font *font) {
