@@ -4,6 +4,7 @@
 #include "DiceData.hpp"
 #include "paths.hpp"
 #include "Colors.hpp"
+#include "language.hpp"
 
 #define SPRITE_TILE_SIZE 16
 #define SIDE_SIZE 48
@@ -99,3 +100,13 @@ struct SpriteStorage {
     /// dice backgrounds, cubeFields x is stored in [x-1]
     std::vector<Texture *> sideSprites;
 };
+
+inline Texture *getFlagTexture(SpriteStorage* spriteStorage, Language language){
+    switch (language) {
+        case Language::ENGLISH:
+            return spriteStorage->flagEnglish;
+        case Language::GERMAN:
+            return spriteStorage->flagGerman;
+    }
+    return spriteStorage->flagEnglish;
+}

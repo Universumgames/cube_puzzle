@@ -51,13 +51,15 @@ public:
     void returnToLevelSelector();
 
     /// set gamestate data for next gamestate to load
-    GameStateData interGameStateData;
+    GameStateData interGameStateData = {.sourceStateID = -1};
 
     void setWindowName(std::string windowName);
 
     TouchController *touchController;
 
     Language getLanguage() const;
+
+    void SetNextState(int index) override;
 
 private:
     SpriteStorage spriteStorage;

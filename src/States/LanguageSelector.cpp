@@ -45,19 +45,6 @@ Rect LanguageSelector::getUIRenderDst() {
 
 LanguageSelector::LanguageSelector(CubeGame &cubeGame, Renderer *render) : ComplexGameState(cubeGame, render) {
     skip = false;
-}
-
-void LanguageSelector::Init() {
-    GameState::Init();
-
-    auto language = getLanguage();
-    if (language != Language::UNDEFINED) {
-        continueGame();
-        skip = true;
-    }
-
-    cubeGame.touchController->setScene(TouchController::TouchScene::RUDIMENTARY);
-
     en = new UIButton(cubeGame, this, render, {0,0}, {0,0}, getTextureForLang(Language::ENGLISH));
     en->setPressedLambda([&](CubeGame &game, TouchObject *downButton) {
         setLanguage(Language::ENGLISH);
@@ -73,6 +60,20 @@ void LanguageSelector::Init() {
             {Language::ENGLISH, en},
             {Language::GERMAN, de}
     };
+}
+
+void LanguageSelector::Init() {
+    GameState::Init();
+
+    auto language = getLanguage();
+    if (language != Language::UNDEFINED && cubeGame.interGameStateData.sourceStateID != LEVEL_SELECTOR_ID) {
+        continueGame();
+        skip = true;
+    }else{
+        skip = false;
+    }
+
+    cubeGame.touchController->setScene(TouchController::TouchScene::RUDIMENTARY);
 }
 
 Rect LanguageSelector::getDrawRectForLanguage(Language lang) {
@@ -108,5 +109,7 @@ void LanguageSelector::HandleEvent(const u32 frame, const u32 totalMSec, const f
 }
 
 void LanguageSelector::continueGame() {
-    cubeGame.SetNextState(TITLESCREEN_ID);
+    int dest = cubeGame.interGameStateData.sourceStateID == -1 ? TITLESCREEN_ID : cubeGame.interGameStateData.sourceStateID;
+    cubeGame.interGameStateData = {.sourceStateID = LANGUAGE_SELECTOR_ID, .exitState = ExitState::UNSET};
+    cubeGame.SetNextState(dest);
 }

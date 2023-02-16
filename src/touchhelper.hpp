@@ -26,6 +26,10 @@ inline void clearTouchEvents(){
     }
 }
 
+inline void wipeTouchEvents(){
+    lastTouchEvents.clear();
+}
+
 inline void simulateKeyPress(SDL_KeyboardEvent keyboard){
     SDL_Event sdlevent = {};
     sdlevent.type = SDL_KEYDOWN;

@@ -148,3 +148,9 @@ void CubeGame::setWindowName(std::string windowName) {
 Language CubeGame::getLanguage() const {
     return language;
 }
+
+void CubeGame::SetNextState(int index) {
+    interGameStateData.sourceStateID = currentStateIdx;
+    Game::SetNextState(index);
+    wipeTouchEvents();
+}

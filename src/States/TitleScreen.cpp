@@ -55,6 +55,7 @@ void TitleScreen::Init() {
     startButton->Init();
 
     cubeGame.touchController->setScene(TouchController::TouchScene::RUDIMENTARY);
+    wipeTouchEvents();
 }
 
 void TitleScreen::internalUIRender(const u32 frame, const u32 totalMSec, const float deltaT) {

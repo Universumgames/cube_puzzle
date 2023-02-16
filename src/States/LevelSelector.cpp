@@ -24,7 +24,7 @@ void LevelSelector::Update(const u32 frame, const u32 totalMSec, const float del
     // touch handling
 
     for (auto level: levelData) {
-        if (level.clickHandler->isPressed())
+        if (level.clickHandler != nullptr && level.clickHandler->wasJustReleased())
             playLevel(level);
     }
 
@@ -211,6 +211,8 @@ void LevelSelector::Init() {
         prepareLevelListItems();
 
     cubeGame.touchController->setScene(TouchController::TouchScene::SELECT);
+    
+    wipeTouchEvents();
 }
 
 void LevelSelector::UnInit() {
@@ -355,7 +357,7 @@ void LevelSelector::HandleEvent(const u32 frame, const u32 totalMSec, const floa
 }
 
 void LevelSelector::levelsInit() {
-    if (cubeGame.interGameStateData.sourceStateID == -1 && levelsLoaded)
+    if (cubeGame.interGameStateData.sourceStateID == LEVEL_SELECTOR_ID && levelsLoaded)
         return;
     levelData.clear();
     tutLevelData.clear();
@@ -365,8 +367,8 @@ void LevelSelector::levelsInit() {
 }
 
 void LevelSelector::resetSidebarText(Font *font) {
-    if (font == usedSidebarFont)
-        return;
+    //if (font == usedSidebarFont)
+    //    return;
     if (sideBarText != nullptr)
         delete sideBarText;
     sideBarText = new Text(cubeGame, this, render, 500,

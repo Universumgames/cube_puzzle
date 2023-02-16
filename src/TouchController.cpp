@@ -89,15 +89,28 @@ TouchController::TouchController(CubeGame &game, ComplexGameState *gameState, SD
 
     // level selector
     {
+        UIButton* languageButton;
         UIButton *tutorialButton;
         UIButton *upButton;
         UIButton *downButton;
         UIButton *enterButton;
 
+        languageButton = new UIButton(game, gameState, render, {0,0}, {0,0}, getFlagTexture(game.getSpriteStorage(), getLanguage()));
         tutorialButton = new UIButton(game, gameState, render, {0, 0}, {0, 0}, game.getSpriteStorage()->touchTutorial);
         upButton = new UIButton(game, gameState, render, {0, 0}, {0, 0}, game.getSpriteStorage()->touchArrow);
         downButton = new UIButton(game, gameState, render, {0, 0}, {0, 0}, game.getSpriteStorage()->touchArrow);
         enterButton = new UIButton(game, gameState, render, {0, 0}, {0, 0}, game.getSpriteStorage()->touchEnter);
+
+        languageButton->setUpdateLambda([languageButton](CubeGame &game, TouchObject* langBtn){
+            Rect r = placeButtonTopLeft(game, 0, 1, max(30, max(game.getWindowSize().x, game.getWindowSize().y) / 20));
+            langBtn->setSize({r.w, r.h});
+            langBtn->setLocation({r.x, r.y});
+            languageButton->setTexture(getFlagTexture(game.getSpriteStorage(), getLanguage()));
+        });
+        languageButton->setPressedLambda([](CubeGame& game, TouchObject* touch){
+            game.interGameStateData = {.sourceStateID = LEVEL_SELECTOR_ID, .exitState = ExitState::UNSET};
+            game.SetNextState(LANGUAGE_SELECTOR_ID);
+        });
 
         tutorialButton->setTextureSettings(0, {0,0,32,32});
         tutorialButton->setUpdateLambda([](CubeGame &game, TouchObject *tutorialButton) {
@@ -135,7 +148,7 @@ TouchController::TouchController(CubeGame &game, ComplexGameState *gameState, SD
             simulateKeyPress(SDL_SCANCODE_RETURN);
         });
         Vector<TouchObject *> selectorTouchObjects = {
-                tutorialButton, upButton, downButton, enterButton
+                languageButton, tutorialButton, upButton, downButton, enterButton
         };
         touchObjects[TouchScene::SELECT] = selectorTouchObjects;
     }
