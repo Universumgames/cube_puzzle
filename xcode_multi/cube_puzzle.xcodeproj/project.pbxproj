@@ -16,6 +16,7 @@
 		5502186429622A7300F0509F /* asset in Resources */ = {isa = PBXBuildFile; fileRef = 5502186129622A7200F0509F /* asset */; };
 		5504DE45299D935E00F7C920 /* language.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5504DE43299D935E00F7C920 /* language.cpp */; };
 		5504DE7A299E218D00F7C920 /* LanguageSelector.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5504DE78299E218D00F7C920 /* LanguageSelector.cpp */; };
+		5504DE96299E275C00F7C920 /* language.conf in Resources */ = {isa = PBXBuildFile; fileRef = 5504DE95299E275C00F7C920 /* language.conf */; };
 		5513F4C029623555007C9B13 /* SDL2.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 55238E4D2961D74300AC0C43 /* SDL2.framework */; };
 		5513F4C129623555007C9B13 /* SDL2.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 55238E4D2961D74300AC0C43 /* SDL2.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		5513F4C329623581007C9B13 /* SDL2_image.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 55238E6A2961D75700AC0C43 /* SDL2_image.framework */; };
@@ -371,6 +372,7 @@
 		5504DE44299D935E00F7C920 /* language.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = language.hpp; sourceTree = "<group>"; };
 		5504DE78299E218D00F7C920 /* LanguageSelector.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = LanguageSelector.cpp; sourceTree = "<group>"; };
 		5504DE79299E218D00F7C920 /* LanguageSelector.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = LanguageSelector.hpp; sourceTree = "<group>"; };
+		5504DE95299E275C00F7C920 /* language.conf */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = language.conf; path = ../asset/lang/language.conf; sourceTree = "<group>"; };
 		5513F4D129623669007C9B13 /* LaunchScreen.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = LaunchScreen.storyboard; sourceTree = "<group>"; };
 		5513F4D329623FAA007C9B13 /* SETUP.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = SETUP.md; sourceTree = "<group>"; };
 		5513F51529631104007C9B13 /* UIButton.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = UIButton.cpp; sourceTree = "<group>"; };
@@ -527,6 +529,7 @@
 		55238DB22961C9B400AC0C43 = {
 			isa = PBXGroup;
 			children = (
+				5504DE95299E275C00F7C920 /* language.conf */,
 				55A9C9D9299402FA00AEF66E /* online_presence */,
 				55C29943299015B40018224F /* multipleSimulatorStartup.sh */,
 				55C2993F299014FF0018224F /* SimulatorsList.txt */,
@@ -1104,6 +1107,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				55238E392961D6F700AC0C43 /* .gitignore in Resources */,
+				5504DE96299E275C00F7C920 /* language.conf in Resources */,
 				55238EBC2961E88500AC0C43 /* osname.sh in Resources */,
 				55238EC02961EB9400AC0C43 /* extractXCodeData.sh in Resources */,
 				55C29940299014FF0018224F /* SimulatorsList.txt in Resources */,
@@ -1498,7 +1502,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 12;
+				CURRENT_PROJECT_VERSION = 13;
 				DEVELOPMENT_TEAM = 98ZXK38P8L;
 				GENERATE_INFOPLIST_FILE = YES;
 				HEADER_SEARCH_PATHS = (
@@ -1542,7 +1546,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 12;
+				CURRENT_PROJECT_VERSION = 13;
 				DEVELOPMENT_TEAM = 98ZXK38P8L;
 				GENERATE_INFOPLIST_FILE = YES;
 				HEADER_SEARCH_PATHS = (
