@@ -89,30 +89,31 @@ TouchController::TouchController(CubeGame &game, ComplexGameState *gameState, SD
 
     // level selector
     {
-        UIButton* languageButton;
+        UIButton *languageButton;
         UIButton *tutorialButton;
         UIButton *upButton;
         UIButton *downButton;
         UIButton *enterButton;
 
-        languageButton = new UIButton(game, gameState, render, {0,0}, {0,0}, getFlagTexture(game.getSpriteStorage(), getLanguage()));
+        languageButton = new UIButton(game, gameState, render, {0, 0}, {0, 0},
+                                      getFlagTexture(game.getSpriteStorage(), getLanguage()));
         tutorialButton = new UIButton(game, gameState, render, {0, 0}, {0, 0}, game.getSpriteStorage()->touchTutorial);
         upButton = new UIButton(game, gameState, render, {0, 0}, {0, 0}, game.getSpriteStorage()->touchArrow);
         downButton = new UIButton(game, gameState, render, {0, 0}, {0, 0}, game.getSpriteStorage()->touchArrow);
         enterButton = new UIButton(game, gameState, render, {0, 0}, {0, 0}, game.getSpriteStorage()->touchEnter);
 
-        languageButton->setUpdateLambda([languageButton](CubeGame &game, TouchObject* langBtn){
+        languageButton->setUpdateLambda([languageButton](CubeGame &game, TouchObject *langBtn) {
             Rect r = placeButtonTopLeft(game, 0, 1, max(30, max(game.getWindowSize().x, game.getWindowSize().y) / 20));
             langBtn->setSize({r.w, r.h});
             langBtn->setLocation({r.x, r.y});
             languageButton->setTexture(getFlagTexture(game.getSpriteStorage(), getLanguage()));
         });
-        languageButton->setPressedLambda([](CubeGame& game, TouchObject* touch){
+        languageButton->setPressedLambda([](CubeGame &game, TouchObject *touch) {
             game.interGameStateData = {.sourceStateID = LEVEL_SELECTOR_ID, .exitState = ExitState::UNSET};
             game.SetNextState(LANGUAGE_SELECTOR_ID);
         });
 
-        tutorialButton->setTextureSettings(0, {0,0,32,32});
+        tutorialButton->setTextureSettings(0, {0, 0, 32, 32});
         tutorialButton->setUpdateLambda([](CubeGame &game, TouchObject *tutorialButton) {
             Rect r = placeButtonBottomRight(game, 3, 2, 0, 1);
             tutorialButton->setSize({r.w, r.h});
@@ -214,16 +215,21 @@ TouchController::TouchController(CubeGame &game, ComplexGameState *gameState, SD
             simulateKeyPress(SDL_SCANCODE_ESCAPE);
         });
 
+        holdMagnetButton->setTextureSettings(0, {32, 0, 32, 32});
         holdMagnetButton->setUpdateLambda([](CubeGame &game, TouchObject *touch) {
             Rect r = placeButtonBottomLeft(game, 2, 1, 0);
             touch->setSize({r.w, r.h});
             touch->setLocation({r.x, r.y});
         });
-        holdMagnetButton->setPressedLambda([](CubeGame &, TouchObject *touch) {
+        holdMagnetButton->setPressedLambda([holdMagnetButton](CubeGame &, TouchObject *touch) {
             magnetHoldingState = !magnetHoldingState;
-            if (magnetHoldingState)
+            if (magnetHoldingState) {
                 simulateKeyPress(SDL_SCANCODE_RSHIFT);
-            else simulateKeyRelease(SDL_SCANCODE_RSHIFT);
+                holdMagnetButton->setTextureSettings(0, {0, 0, 32, 32});
+            } else {
+                simulateKeyRelease(SDL_SCANCODE_RSHIFT);
+                holdMagnetButton->setTextureSettings(0, {32, 0, 32, 32});
+            }
 
             UIButton *lockButton = (UIButton *) touch;
             //lockButton->setColor(magnetHoldingState ? red : green);
@@ -243,12 +249,14 @@ TouchController::TouchController(CubeGame &game, ComplexGameState *gameState, SD
         musicButton = new UIButton(game, gameState, render, {0, 0}, {0, 0}, game.getSpriteStorage()->touchMusic);
         touchDisable = new UIButton(game, gameState, render, {0, 0}, {0, 0}, violet);
 
-        musicButton->setTextureSettings(0, {0,0,16,16});
+        musicButton->setTextureSettings(0, {0, 0, 16, 16});
         musicButton->setUpdateLambda([](CubeGame &game, TouchObject *musicButton) {
             Rect r = placeButtonTopLeft(game, 0, 0, max(30, max(game.getWindowSize().x, game.getWindowSize().y) / 20));
             musicButton->setSize({r.w, r.h});
             musicButton->setLocation({r.x, r.y});
-            ((UIButton *) musicButton)->setTextureSettings(0, game.audioHandler->getAudioEnabled() ? Rect{0,0,16,16}: Rect{16,0,16,16});
+            ((UIButton *) musicButton)->setTextureSettings(0, game.audioHandler->getAudioEnabled() ? Rect{0, 0, 16, 16}
+                                                                                                   : Rect{16, 0, 16,
+                                                                                                          16});
         });
         musicButton->setPressedLambda([](CubeGame &, TouchObject *touch) {
             simulateKeyPress(SDL_SCANCODE_M);
