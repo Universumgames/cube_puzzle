@@ -38,7 +38,7 @@ void TutorialLevel::Update(const u32 frame, const u32 totalMSec, const float del
     Rect uiRect = Level::getDrawableUIRect();
     Rect sideRect = sidebarText->getDrawedRect();
 
-    if (sideRect.y + sideRect.h > game.getWindowSize().y) {
+    if (sideRect.y + sideRect.h > game.getWindowSize().y / 2) {
         resetSidebarText(game.getSpriteStorage()->smallFont);
     } else if ((sideRect.y + sideRect.h) * 2 < game.getWindowSize().y) {
         resetSidebarText(game.getSpriteStorage()->basicFont);
